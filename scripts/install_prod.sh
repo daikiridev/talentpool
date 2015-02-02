@@ -1,14 +1,19 @@
 #!/bin/sh
 cd /srv/123vpc/www/tew-test.123vpc.com
 
-# MAJ svn
-svn --update
+# cloning the git master branch
+git clone https://github.com/daikiridev/talentpool.git
 
-# nettoyage du cache
+# composer dependencies...
+composer install
+
+# DB updating
+
+# cache cleaning
 app/console cache:clear # --env=prod --no-debug
 
-# installation des assets dans le repertoire web
+# assets installaiton into web directory
 app/console assets:install --symlink
 
-# restauration des droits
+# checking rights
 chown -R www-data:www-data /srv/123vpc/www/tew-test.123vpc.com
