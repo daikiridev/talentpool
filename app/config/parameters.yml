@@ -1,0 +1,14 @@
+# This file is auto-generated during the composer install
+parameters:
+    database_driver: pdo_mysql
+    database_host: localhost
+    database_port: '8889'
+    database_name: talentpool
+    database_user: talentwm
+    database_password: hUC8vv8L6hvtfWxA
+    mailer_transport: smtp
+    mailer_host: localhost
+    mailer_user: null
+    mailer_password: null
+    locale: en
+    secret: 04892509379169960642bcc0eb7030fd1fc1865d

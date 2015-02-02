@@ -1,0 +1,207 @@
+# app/config/config.yml
+
+imports:
+    - { resource: parameters.yml }
+    - { resource: security.yml }
+    - { resource: sonata_core.yml }
+
+framework:
+    #esi:             ~
+    translator:      { fallback: "%locale%" }
+    secret:          "%secret%"
+    router:
+        resource: "%kernel.root_dir%/config/routing.yml"
+        strict_requirements: ~
+    form:            ~
+    csrf_protection: ~
+    validation:      { enable_annotations: true }
+    templating:
+        engines: ['twig']
+        #assets_version: SomeVersionScheme
+    default_locale:  "%locale%"
+    trusted_proxies: ~
+    session:         ~
+    fragments:       ~
+    http_method_override: true
+
+# Twig Configuration
+twig:
+    debug:            "%kernel.debug%"
+    strict_variables: "%kernel.debug%"
+
+## Twitter bootstrap configuration
+#braincrafted_bootstrap:
+#    less_filter: less
+#    auto_configure:
+#        knp_menu: false
+        
+
+#knp_menu:
+#    twig:
+#        template: BraincraftedBootstrapBundle:Menu:bootstrap.html.twig
+    
+# Assetic Configuration
+assetic:
+    debug:          "%kernel.debug%"
+    use_controller: false
+    bundles:        [ ]
+    #java: /usr/bin/java
+    filters:
+        less:
+            node: /usr/local/bin/node
+            node_paths: [/usr/local/lib/node_modules]
+            apply_to: "\.less$"
+        cssrewrite: ~
+        #closure:
+        #    jar: "%kernel.root_dir%/Resources/java/compiler.jar"
+        #yui_css:
+        #    jar: "%kernel.root_dir%/Resources/java/yuicompressor-2.4.7.jar"
+
+# Doctrine Configuration
+doctrine:
+    dbal:
+        driver:   "%database_driver%"
+        host:     "%database_host%"
+        port:     "%database_port%"
+        dbname:   "%database_name%"
+        user:     "%database_user%"
+        password: "%database_password%"
+        charset:  UTF8
+        unix_socket:    "/Applications/MAMP/tmp/mysql/mysql.sock" # on my Mac (otherwise, comment it)
+
+        types:
+            json: Sonata\Doctrine\Types\JsonType
+
+    orm:
+        auto_generate_proxy_classes: "%kernel.debug%"
+        #auto_mapping: true
+        entity_managers:
+            default:
+                mappings: # to be declared for each entity in MySQL DB
+                    ApplicationSonataUserBundle: ~
+                    TEWTPBundle: ~
+                    SonataUserBundle: ~
+                    FOSUserBundle: ~  
+
+
+# Swiftmailer Configuration
+swiftmailer:
+    transport: "%mailer_transport%"
+    host:      "%mailer_host%"
+    username:  "%mailer_user%"
+    password:  "%mailer_password%"
+    spool:     { type: memory }
+
+# FOSUser Configuration
+fos_user:
+    db_driver: orm
+    firewall_name: main
+    user_class: Application\Sonata\UserBundle\Entity\User
+    group:
+        group_class: Application\Sonata\UserBundle\Entity\Group
+        group_manager: sonata.user.orm.group_manager
+
+    service:
+        user_manager: sonata.user.orm.user_manager
+    
+# Sonata configuration
+sonata_user:
+    security_acl:           false
+
+    manager_type: orm # Can be orm or mongodb
+
+#    table:
+#        user_group: "my_custom_user_group_association_table_name"
+#
+#    impersonating:
+#        route:                page_slug
+#        parameters:           { path: / }
+
+    class:                  # Entity Classes
+        user:               Application\Sonata\UserBundle\Entity\User
+        group:              Application\Sonata\UserBundle\Entity\Group
+
+    admin:                  # Admin Classes
+        user:
+            class:          Sonata\UserBundle\Admin\Entity\UserAdmin
+            controller:     SonataAdminBundle:CRUD
+            translation:    SonataUserBundle
+
+        group:
+            class:          Sonata\UserBundle\Admin\Entity\GroupAdmin
+            controller:     SonataAdminBundle:CRUD
+            translation:    SonataUserBundle
+
+## Sonata TP Bundle configuration
+#sonata_tp:
+#    security_acl:           false
+#
+#    manager_type: orm # Can be orm or mongodb
+#
+#    class:                  # Entity Classes
+#        language:           TEW\TPBundle\Entity\Language
+#
+#    admin:                  # Admin Classes
+#        language:
+#            class:          TEW\TPBundle\Admin\LanguageAdmin
+#            controller:     SonataAdminBundle:CRUD
+##            translation:    SonataUserBundle
+
+# Sonata admin configuration
+sonata_admin:
+    title: backoffice
+    title_logo: /bundles/tewtp/images/icons/tew.png
+#    dashboard:
+#        blocks:
+#            # display a dashboard block
+#            - { position: left, type: sonata.admin.block.admin_list }
+#        groups:
+#            admin:
+#                label: Users
+#            tp:
+#                label: Languages
+                
+sonata_block:
+    default_contexts: [cms]
+    blocks:
+        sonata.admin.block.admin_list:  #default sonata admin block
+            contexts: [admin]
+        sonata.admin.block.search_result:
+            contexts: [admin]
+        sonata.admin_doctrine_orm.block.audit:
+            contexts:   [admin]
+        
+        # Sonata user blocks
+        sonata.user.block.menu:        # used to display the menu in profile pages
+        sonata.user.block.account:     # used to display menu option (login option)
+        
+#        # TP Blocks 
+#        tewtp.admin.language: # useless ?
+        
+        sonata.block.service.text:      # used to if you plan to use Sonata user routes
+        sonata.block.service.action:
+        sonata.block.service.rss:
+            
+
+#templates:
+#    layout: SonataAdminBundle::standard_layout_override.html.twig
+
+# Customizing Sonata admin classes
+parameters:
+#    sonata.user.admin.user.class: TEW\UserBundle\Admin\UserAdmin
+#    sonata.user.admin.user.entity: TEW\UserBundle\Entity\User
+
+#    sonata.user.admin.user.class: Application\Sonata\UserBundle\Admin\UserAdmin
+#    sonata.user.admin.user.entity: Application\Sonata\UserBundle\Entity\User
+
+# Services
+#services:
+#    tew.admin.user:
+#        class: TEW\UserBundle\Admin\UserAdmin
+#        tags:
+#            - { name: sonata.admin, manager_type: doctrine_orm, group: "Content", label: "User" }
+#        arguments:
+#            - ~
+#            - Acme\MediaBundle\Document\Media
+#            - '%sonata.media.admin.media.controller%'
+#            - @sonata.media.pool

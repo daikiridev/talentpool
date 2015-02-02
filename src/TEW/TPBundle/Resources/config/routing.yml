@@ -1,0 +1,29 @@
+# FrontEnd routes
+tp_home:
+    path:       /
+    defaults:   { _controller: TEWTPBundle:Home:index }
+    
+tp_contact:
+    path:       /contact
+    defaults:   { _controller: TEWTPBundle:Home:contact }
+
+tp_echo:
+    path:       /echo/{name}
+    defaults:   { _controller: TEWTPBundle:Home:echo }
+
+# Candidates routes
+TEWTPBundle_tew_candidate:
+    resource: "@TEWTPBundle/Resources/config/routing/candidate.yml"
+    prefix:   /tew_candidate
+    
+# Talent pools routes
+TEWTPBundle_tew_talentpool:
+    resource: "@TEWTPBundle/Resources/config/routing/talentpool.yml"
+    prefix:   /tew_talentpool
+        
+# BackEnd routes
+# handled by SonataAdminBundle
+#tp_back:
+#    path:       /bck
+#    defaults:   { _controller: TEWTPBundle:BackEnd:index }
+    

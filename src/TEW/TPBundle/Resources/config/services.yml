@@ -1,0 +1,84 @@
+services:
+#    twig.extension.tew.tp:
+#        class: TEW\TPBundle\Twig\Extension\TPExtension
+#        public: false
+#        tags:
+#            - {name: twig.extension }
+#        arguments:
+#            - {type=service, id:twig.loader}
+#            
+#    tew.tp.listener:
+#        class: TEW\TPBundle\EventListener\ControllerListener
+#        tags:
+#            - {name: kernel.event_listener, event:kernel.controller, method:onKernelController}
+#        arguments:
+#            - {type=service, id:twig.extension.tew.tp}
+ 
+# Backoffice parameters...
+    tew_tp.admin.language:
+        class: TEW\TPBundle\Admin\LanguageAdmin
+        arguments: [~, TEW\TPBundle\Entity\Language, TEWTPBundle:LanguageAdmin]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: admin, label: Language}
+            
+    tewtp.admin.cdteposition:
+        class: TEW\TPBundle\Admin\CdtePositionAdmin
+        arguments: [~, TEW\TPBundle\Entity\CdtePosition, TEWTPBundle:CdtePositionAdmin]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: admin, label: Position}
+ 
+# Frontoffice menu management
+    # managing active links
+    tew_tp.menu.voter.request:
+        class: TEW\TPBundle\Menu\RequestVoter
+        arguments:
+            - @service_container
+        tags:
+            - { name: knp_menu.voter }
+    # factory menu service
+    tew_tp.menu_builder:
+        class: TEW\TPBundle\Menu\MenuBuilder
+        arguments: ["@knp_menu.factory", "@security.context"]
+
+    # main front office menu
+    tew_tp.menu.main:
+        class: Knp\Menu\MenuItem # the service definition requires setting the class
+        factory_service: tew_tp.menu_builder
+        factory_method: createMainMenu
+        arguments: ["@request"]
+        scope: request # needed as we have the request as a dependency here
+        tags:
+            - { name: knp_menu.menu, alias: tp_topmenu_main } # alias is the name called in the twig view
+            
+    tew_tp.menu.user:
+        class: Knp\Menu\MenuItem # the service definition requires setting the class
+        factory_service: tew_tp.menu_builder
+        factory_method: createUserMenu
+        arguments: ["@request"]
+        scope: request # needed as we have the request as a dependency here
+        tags:
+            - { name: knp_menu.menu, alias: tp_topmenu_user } # alias is the name called in the twig view
+
+    tewtp.admin.talent_pool:
+        class: TEW\TPBundle\Admin\TalentPoolAdmin
+        arguments: [~, TEW\TPBundle\Entity\TalentPool, TEWTPBundle:TalentPoolAdmin]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: admin, label: TalentPool}
+
+    tewtp.admin.cdte_level:
+        class: TEW\TPBundle\Admin\CdteLevelAdmin
+        arguments: [~, TEW\TPBundle\Entity\CdteLevel, TEWTPBundle:CdteLevelAdmin]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: admin, label: CdteLevel}
+
+    tewtp.admin.cdte_function:
+        class: TEW\TPBundle\Admin\CdteFunctionAdmin
+        arguments: [~, TEW\TPBundle\Entity\CdteFunction, TEWTPBundle:CdteFunctionAdmin]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: admin, label: CdteFunction}
+
+    tewtp.admin.candidate:
+        class: TEW\TPBundle\Admin\CandidateAdmin
+        arguments: [~, TEW\TPBundle\Entity\Candidate, TEWTPBundle:CandidateAdmin]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: admin, label: Candidate}

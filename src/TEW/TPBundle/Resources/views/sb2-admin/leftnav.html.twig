@@ -1,0 +1,175 @@
+<div class="navbar-default sidebar" role="navigation">
+    <div class="sidebar-nav navbar-collapse">
+        <ul class="nav" id="side-menu">
+            <li class="sidebar-search">
+                <div class="input-group custom-search-form">
+                    <input type="text" class="form-control" placeholder="Search...">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </span>
+                </div>
+                <!-- /input-group -->
+            </li>
+            {% if is_granted("ROLE_ADMIN") %}
+                <li>
+                    <a href="{{ url('sonata_admin_redirect') }}"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                </li>
+            {% endif %}
+            <!-- candidates -->
+            {% if is_granted("ROLE_CLIENT") %}
+                <li>
+                    <a href="#"><i class="fa fa-users fa-fw"></i> Candidates<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a href="{{ url('tew_candidate') }}"><i class="fa fa-list fa-fw"></i> List</a>
+                        </li>
+                        <li>
+                            <a href="{{ url('tp_echo', { 'name': 'candidate search' })}}"><i class="fa fa-search-plus fa-fw"></i> Search</a>
+                        </li>
+                        <li>
+                            <a href="{{ url('tew_candidate_new') }}"><i class="fa fa-plus fa-fw"></i> Add</a>
+                        </li>
+                    </ul>
+                    <!-- /.nav-second-level -->
+                </li>
+            {% endif %} {# is_granted("ROLE_ADMIN") #}
+            <!-- /candidates -->
+
+            <!-- talent pools -->
+            {% if is_granted("ROLE_TEW_EXECUTOR") %}
+                <li>
+                    <a href="#"><i class="fa fa-cubes fa-fw"></i> Talent pools<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a href="{{ url('tp_echo', { 'name': 'talent pool list' })}}"><i class="fa fa-list fa-fw"></i> List</a>
+                        </li>
+                        <li>
+                            <a href="{{ url('tp_echo', { 'name': 'add talent pool' })}}"><i class="fa fa-plus fa-fw"></i> Add</a>
+                        </li>
+                    </ul>
+                    <!-- /.nav-second-level -->
+                </li>
+            {% endif %} {# is_granted("ROLE_TEW_EXECUTOR") #}
+            <!-- /talent pools -->
+
+
+            {% if is_granted("ROLE_ADMIN") %}
+                <li class="sidebar-search">
+                    Admin panel
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-user fa-fw"></i> Users<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a href="{{ url('tp_echo', { 'name': 'user list' })}}"><i class="fa fa-list fa-fw"></i> List</a>
+                        </li>
+                        <li>
+                            <a href="{{ url('tp_echo', { 'name': 'add user' })}}"><i class="fa fa-plus fa-fw"></i> Add</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-bar-chart fa-fw"></i> Stats<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a href="{{ url('tp_echo', { 'name': 'stats #1' })}}"><i class="fa fa-area-chart fa-fw"></i> Stats #1</a>
+                        </li>
+                        <li>
+                            <a href="{{ url('tp_echo', { 'name': 'stats #2' })}}"><i class="fa fa-line-chart fa-fw"></i> Stats #2</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-wrench fa-fw"></i> Criteria<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a href="{{ url('tp_echo', { 'name': 'must criteria' })}}"><i class="fa fa-check-square fa-fw"></i> Musts</a>
+                        </li>
+                        <li>
+                            <a href="{{ url('tp_echo', { 'name': 'optional criteria' })}}"><i class="fa fa-check-circle-o fa-fw"></i> Others</a>
+                        </li>
+                        <li>
+                            <a href="{{ url('tp_echo', { 'name': 'custom criteria' })}}"><i class="fa fa-adjust fa-fw"></i> Custom</a>
+                        </li>
+                    </ul>
+                </li>
+            {% endif %} {# is_granted("ROLE_ADMIN") #}
+
+            {% if is_granted("ROLE_SUPER_ADMIN") %}
+                <li class="sidebar-search">
+                    Super admin panel
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-wrench fa-fw"></i> UI Elements<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a href="panels-wells.html">Panels and Wells</a>
+                        </li>
+                        <li>
+                            <a href="buttons.html">Buttons</a>
+                        </li>
+                        <li>
+                            <a href="notifications.html">Notifications</a>
+                        </li>
+                        <li>
+                            <a href="typography.html">Typography</a>
+                        </li>
+                        <li>
+                            <a href="icons.html"> Icons</a>
+                        </li>
+                        <li>
+                            <a href="grid.html">Grid</a>
+                        </li>
+                    </ul>
+                    <!-- /.nav-second-level -->
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-sitemap fa-fw"></i> Multi-Level Dropdown<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a href="#">Second Level Item</a>
+                        </li>
+                        <li>
+                            <a href="#">Second Level Item</a>
+                        </li>
+                        <li>
+                            <a href="#">Third Level <span class="fa arrow"></span></a>
+                            <ul class="nav nav-third-level">
+                                <li>
+                                    <a href="#">Third Level Item</a>
+                                </li>
+                                <li>
+                                    <a href="#">Third Level Item</a>
+                                </li>
+                                <li>
+                                    <a href="#">Third Level Item</a>
+                                </li>
+                                <li>
+                                    <a href="#">Third Level Item</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-third-level -->
+                        </li>
+                    </ul>
+                    <!-- /.nav-second-level -->
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-files-o fa-fw"></i> Sample Pages<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a href="blank.html">Blank Page</a>
+                        </li>
+                        <li>
+                            <a href="login.html">Login Page</a>
+                        </li>
+                    </ul>
+                    <!-- /.nav-second-level -->
+                </li>
+            {% endif %} {# is_granted("ROLE_SUPER_ADMIN") #}
+        </ul>
+    </div>
+    <!-- /.sidebar-collapse -->
+</div>
+<!-- /.navbar-static-side -->

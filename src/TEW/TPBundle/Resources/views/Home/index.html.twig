@@ -1,0 +1,14 @@
+{% extends "TEWTPBundle::layout.html.twig" %}
+
+{% block title "Symfony - TPs" %}
+
+{% block content_header '' %}
+
+{% block content %}
+    <h1 class="title">Home</h1>
+    <ul id="tp-list">
+        <li><a href="{{ path('tp_echo', {'name': 'World'}) }}">Hello World</a></li>
+        {# <li><a href="{{ path('_tp_secured_hello', {'name': 'World'}) }}">Access the secured area</a> <a href="{{ path('_tp_login') }}">Go to the login page</a></li> #}
+        {# <li><a href="{{ path('_tp_contact') }}">Send a Message</a></li> #}
+    </ul>
+{% endblock %}

@@ -1,0 +1,30 @@
+tew_candidate:
+    path:     /
+    defaults: { _controller: "TEWTPBundle:Candidate:index" }
+
+tew_candidate_show:
+    path:     /{id}/show
+    defaults: { _controller: "TEWTPBundle:Candidate:show" }
+
+tew_candidate_new:
+    path:     /new
+    defaults: { _controller: "TEWTPBundle:Candidate:new" }
+
+tew_candidate_create:
+    path:     /create
+    defaults: { _controller: "TEWTPBundle:Candidate:create" }
+    requirements: { _method: post }
+
+tew_candidate_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "TEWTPBundle:Candidate:edit" }
+
+tew_candidate_update:
+    path:     /{id}/update
+    defaults: { _controller: "TEWTPBundle:Candidate:update" }
+    requirements: { _method: post|put }
+
+tew_candidate_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "TEWTPBundle:Candidate:delete" }
+    requirements: { _method: post|delete }

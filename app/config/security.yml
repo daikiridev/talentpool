@@ -1,0 +1,40 @@
+imports:
+    #- { resource: "@TEWUserBundle/Resources/config/security.yml" }
+    - { resource: "@ApplicationSonataUserBundle/Resources/config/security.yml" }
+    
+security:
+
+    role_hierarchy:
+        # a USER is at least a candidate with an account
+        # a client is a a TEW Client
+        ROLE_CLIENT:        ROLE_USER
+        # a TEW Executor is responsible/moderator of one or several talent pool(s)
+        ROLE_TEW_EXECUTOR:  [ROLE_USER, ROLE_CLIENT]
+        # the admin is the TEW CEO
+        ROLE_ADMIN:         [ROLE_USER, ROLE_CLIENT, ROLE_TEW_EXECUTOR]
+        # the super admin is the technical superuser
+        ROLE_SUPER_ADMIN:   [ROLE_USER, ROLE_CLIENT, ROLE_TEW_EXECUTOR, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+        # if you are using acl then this line must be commented
+        SONATA:
+            - ROLE_SONATA_PAGE_ADMIN_PAGE_EDIT
+
+    access_control:
+        # URL of FOSUserBundle which need to be available to anonymous users
+        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        
+        # Admin login page needs to be access without credential
+        - { path: ^/admin/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin/logout$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin/login_check$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        
+        # Secured part of the site
+        # This config requires being logged for the whole site and having the admin role for the admin part.
+        # Change these rules to adapt them to your needs
+        - { path: ^/admin/, role: [ROLE_ADMIN, ROLE_SONATA_ADMIN] }
+        - { path: ^/.*, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        #- { path: .*, role: ROLE_USER }
+        
+    acl:
+        connection: default

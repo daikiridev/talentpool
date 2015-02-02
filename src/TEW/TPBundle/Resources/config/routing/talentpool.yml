@@ -1,0 +1,30 @@
+tew_talentpool:
+    path:     /
+    defaults: { _controller: "TEWTPBundle:TalentPool:index" }
+
+tew_talentpool_show:
+    path:     /{id}/show
+    defaults: { _controller: "TEWTPBundle:TalentPool:show" }
+
+tew_talentpool_new:
+    path:     /new
+    defaults: { _controller: "TEWTPBundle:TalentPool:new" }
+
+tew_talentpool_create:
+    path:     /create
+    defaults: { _controller: "TEWTPBundle:TalentPool:create" }
+    requirements: { _method: post }
+
+tew_talentpool_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "TEWTPBundle:TalentPool:edit" }
+
+tew_talentpool_update:
+    path:     /{id}/update
+    defaults: { _controller: "TEWTPBundle:TalentPool:update" }
+    requirements: { _method: post|put }
+
+tew_talentpool_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "TEWTPBundle:TalentPool:delete" }
+    requirements: { _method: post|delete }

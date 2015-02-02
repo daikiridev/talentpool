@@ -1,0 +1,45 @@
+security:
+    encoders:
+        FOS\UserBundle\Model\UserInterface: sha512
+    
+    providers:
+        fos_userbundle:
+            #id: fos_user.user_provider.username
+            id: fos_user.user_manager # doc sonata
+            
+    firewalls:
+        dev:
+            pattern:  ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+            
+        admin:
+            pattern:            /admin(.*)
+            context:            user
+            form_login:
+                provider:       fos_userbundle
+                login_path:     /admin/login
+                use_forward:    false
+                check_path:     /admin/login_check
+                failure_path:   null
+            logout:
+                path:           /admin/logout
+            anonymous:          true
+
+        main:
+            pattern: .*
+            form_login:
+                provider:       fos_userbundle
+                csrf_provider:  form.csrf_provider
+                login_path:     /login
+                use_forward:    false
+                check_path:     /login_check
+                failure_path:   null
+                remember_me:    true
+            remember_me:
+                    key:        %secret%
+                    lifetime:   3600 # in seconds
+                    path:       /
+                    domain:     ~
+            logout:
+                invalidate_session: false # PHP 5.4.10 bug solved by setting this
+            anonymous:    true
