@@ -49,7 +49,7 @@ class CdtePosition
     /**
      * @var talentpools
      * 
-     * @ORM\ManyToMany(targetEntity="TEW\TPBundle\Entity\TalentPool", mappedBy="positions", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="TEW\TPBundle\Entity\TalentPool", mappedBy="positions")
      */
     private $talentpools;
 

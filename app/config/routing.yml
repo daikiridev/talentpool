@@ -5,6 +5,12 @@ _tew_user:
 # TEWTPBundle routes
 _tew_tp:
     resource: "@TEWTPBundle/Resources/config/routing.yml"
+    
+## Tags management
+#fogs_tag:
+#    resource: "@FogsTaggingBundle/Controller"
+#    type:     annotation
+#    prefix:   /
 
 # SonataAdminBundle routes
 admin:

@@ -2,15 +2,25 @@
 
 namespace TEW\TPBundle\Entity;
 
+//# Tag management
+//use Fogs\TaggingBundle\Interfaces\Taggable;
+//use Fogs\TaggingBundle\Traits\TaggableTrait;
+
+// ORM mapping
+use DoctrineExtensions\Taggable\Taggable;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Candidate
+ * 
  * @ORM\Table(name="tew_candidate")
  * @ORM\Entity(repositoryClass="TEW\TPBundle\Entity\CandidateRepository")
  */
-class Candidate
+class Candidate implements Taggable
 {
+    const TAGGABLE_TYPE = 'candidate';
+    
     /**
      * @var integer
      *
@@ -39,7 +49,7 @@ class Candidate
      *
      * @ORM\Column(name="middlename", type="string", length=127)
      */
-    private $middleName;
+    private $middleName = '';
 
     /**
      * @var string
@@ -76,19 +86,6 @@ class Candidate
      * @ORM\Column(name="phone2", type="string", length=31)
      */
     private $phone2;
-
-//    /**
-//     * @var function_id
-//     *
-//     * @ORM\Column(name="function_id", type="integer")
-//     */
-//    protected $function_id;
-//    /**
-//     * @var level_id
-//     *
-//     * @ORM\Column(name="function_id", type="integer")
-//     */
-//    protected $level_id;
     
     /**
      * @var position
@@ -114,7 +111,7 @@ class Candidate
     /**
      * @var languagesSkills
      * 
-     * @ORM\OneToMany(targetEntity="CdteLanguage", mappedBy="languagesSkills")
+     * @ORM\OneToMany(targetEntity="CdteLanguage", mappedBy="candidate")
      */
     private $languagesSkills; 
     
@@ -126,18 +123,39 @@ class Candidate
     private $talentpools;
     
     /**
+     * level: years of experience
      * @var integer
      *
      * @ORM\Column(name="level", type="smallint")
      */
     private $level;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="origin", type="string", length=127)
+     */
+    private $origin;
+    
+    /**
+     * @var comments
+     *
+     * @ORM\OneToMany(targetEntity="CdteComment", mappedBy="candidate")   
+     * 
+     */
+    private $comments;
+    
+    /**
+     * @var tags
+     * 
+     */
+    private $tags;
 
     /**
      * @var date
      * 
      * @ORM\Column(name="creationdate", type="datetime")
      */
-    
     private $creationDate;
   
     /**
@@ -148,13 +166,7 @@ class Candidate
      */
     private $creator;
     
-    /**
-     * @var comments
-     *
-     * @ORM\OneToMany(targetEntity="CdteComment", mappedBy="candidate")   
-     * 
-     */
-    private $comments;
+
 
     /**
      * Get id
@@ -372,7 +384,29 @@ class Candidate
     {
         return $this->level;
     }
+    
+    /**
+     * Set origin
+     *
+     * @param string $origin
+     * @return Candidate
+     */
+    public function setOrigin($origin = null)
+    {
+        $this->origin = $origin;
 
+        return $this;
+    }
+
+    /**
+     * Get origin
+     *
+     * @return string 
+     */
+    public function getOrigin()
+    {
+        return $this->origin;
+    }
     /**
      * Set creationDate
      *
@@ -509,6 +543,46 @@ class Candidate
     }
     
     /**
+     * @return Tag[]
+     */
+    public function getTags()
+    {
+        $this->tags = $this->tags ?: new ArrayCollection();
+
+        return $this->tags;
+    }
+
+    /**
+     * Used to save tags from a form
+     *  
+     * @param \TEW\TPBundle\Entity\CdteComment $comments
+     * @return Candidate
+     */
+    // We added this to be able to save tags from a form  
+    public function setTags($tags)
+    {
+        $this->tags = is_array($tags) ? new ArrayCollection($tags) : $tags;
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */    
+    public function getTaggableType()
+    {
+        return self::TAGGABLE_TYPE;
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getTaggableId()
+    {
+        return $this->getId();
+    }
+
+    
+    /**
      * Get score average
      *
      *  @return float
@@ -589,6 +663,8 @@ class Candidate
     {
         return $this->talentpools;
     }
+
+    
     
     /**
      * Constructor
@@ -612,4 +688,5 @@ class Candidate
         // return $this->getName().' (created by '.$this->getCreator()->getUsername().')';
         return $this->getLastName().' '.$this->getFirstName().' '.$this->getMiddleName().' ('.$this->getGender().')';
     }
+
 }

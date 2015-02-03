@@ -22,7 +22,7 @@ class CdteLanguage
      * @var candidate
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\ManyToOne(targetEntity="Candidate")
+     * @ORM\ManyToOne(targetEntity="Candidate", inversedBy="languagesSkills")
      * @ORM\JoinColumn(name="candidate_id", nullable=false)
      */
     private $candidate;

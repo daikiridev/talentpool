@@ -19,9 +19,7 @@ class CandidateType extends AbstractType
                     'choices' => array('m' => 'Male', 'f' => 'Female'),
                 ))
                 ->add('firstName')
-                ->add('middleName', 'text', array(
-                    'required' => false,
-                ))
+                ->add('middleName', 'text', array('required' => false))
                 ->add('lastName')
                 ->add('dateOfBirth', 'date', array(
                     'years' => range('1940', date('Y')-20),
@@ -30,12 +28,14 @@ class CandidateType extends AbstractType
                 ))
                 ->add('email', 'email')
                 ->add('phone1')
-                ->add('phone2')
+                ->add('phone2', 'text', array('required' => false))
                 ->add('position')
                 ->add('targetPositions')
                // ->add('languagesSkills')
                 ->add('talentpools')
                 ->add('level')
+                ->add('origin')
+                ->add('tags','tags', array('attr' => array('class' => 'tags-field input-block-level')))
         //->add('comments')
         //->add("creationDate", "date", array("mapped"=>false))
             ;

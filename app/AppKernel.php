@@ -16,6 +16,7 @@ class AppKernel extends Kernel
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(), // Test packs
+            new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new AppBundle\AppBundle(),
 //            new Braincrafted\Bundle\BootstrapBundle\BraincraftedBootstrapBundle(), // Twitter 3.0 Bootstrap Bundle
@@ -28,6 +29,10 @@ class AppKernel extends Kernel
             new Sonata\UserBundle\SonataUserBundle('FOSUserBundle'), // User managment via Sonata
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
             new Sonata\EasyExtendsBundle\SonataEasyExtendsBundle(), // In order to generate a valid bundle structure from a Vendor bundle
+            // Tags managment
+            new FPN\TagBundle\FPNTagBundle(),
+            //new Fogs\TaggingBundle\FogsTaggingBundle(),
+            
             // Own stuff
             new TEW\TPBundle\TEWTPBundle(),
             new Application\Sonata\UserBundle\ApplicationSonataUserBundle(),

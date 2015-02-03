@@ -17,12 +17,15 @@
         "doctrine/doctrine-bundle": "1.2.*",
         "doctrine/doctrine-fixtures-bundle": "dev-master",
         "doctrine/data-fixtures": "dev-master",
+        "doctrine/migrations": "dev-master",
+        "doctrine/doctrine-migrations-bundle": "dev-master",
         
         "twig/extensions": "1.0.*",
         
         "symfony/assetic-bundle": "2.3.*",
         
         "twbs/bootstrap": "3.0.*",
+        "twitter/typeahead.js": "dev-master",
         
         "jquery/jquery":  "1.11.*",
         
@@ -47,7 +50,11 @@
         "sonata-project/easy-extends-bundle": "dev-master",
         
         "knplabs/knp-menu": "dev-master",
-        "knplabs/knp-menu-bundle": "dev-master"
+        "knplabs/knp-menu-bundle": "dev-master",
+        
+        "fpn/doctrine-extensions-taggable": "v0.9.0",
+        "fpn/tag-bundle":"dev-master"
+
     },
     "repositories": [
         {

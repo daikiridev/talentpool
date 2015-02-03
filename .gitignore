@@ -6,7 +6,6 @@
 !app/logs/.gitkeep
 /build/
 /vendor/
-/bin/
 /composer.phar
 /web/havealook/
 /web/SonetINJSons/
@@ -20,3 +19,4 @@
 /src/TEW/TPBundle/Resources/public/js/sb-admin-2.js
 /_to_be_commited.txt
 /composer_bak.json
+/components/

@@ -43,6 +43,8 @@ class CandidateController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
+            
+            $this->get('fpn_tag.tag_manager')->saveTagging($entity);
 
             return $this->redirect($this->generateUrl('tew_candidate_show', array('id' => $entity->getId())));
         }
@@ -129,6 +131,8 @@ class CandidateController extends Controller
 
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
+        
+        $this->get('fpn_tag.tag_manager')->saveTagging($entity); // to be confirmed...
 
         return $this->render('TEWTPBundle:Candidate:edit.html.twig', array(
             'entity'      => $entity,
@@ -176,6 +180,8 @@ class CandidateController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
+            $this->get('fpn_tag.tag_manager')->saveTagging($entity);
+            
             return $this->redirect($this->generateUrl('tew_candidate_edit', array('id' => $id)));
         }
 

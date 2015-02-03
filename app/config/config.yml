@@ -5,6 +5,7 @@ imports:
     - { resource: security.yml }
     - { resource: sonata_core.yml }
 
+
 framework:
     #esi:             ~
     translator:      { fallback: "%locale%" }
@@ -81,7 +82,16 @@ doctrine:
                     ApplicationSonataUserBundle: ~
                     TEWTPBundle: ~
                     SonataUserBundle: ~
-                    FOSUserBundle: ~  
+                    FOSUserBundle: ~
+                    #FogsTaggingBundle: ~
+
+# migrating entities after they've been modified
+# (see app/console doctrine:migrations:diff)
+doctrine_migrations:
+    dir_name: %kernel.root_dir%/DoctrineMigrations
+    namespace: Application\Migrations
+    table_name: migration_versions
+    name: Application Migrations
 
 
 # Swiftmailer Configuration
@@ -131,6 +141,12 @@ sonata_user:
             class:          Sonata\UserBundle\Admin\Entity\GroupAdmin
             controller:     SonataAdminBundle:CRUD
             translation:    SonataUserBundle
+
+# Tag management
+fpn_tag:
+    model:
+        tag_class:     \TEW\TPBundle\Entity\Tag
+        tagging_class: \TEW\TPBundle\Entity\Tagging
 
 ## Sonata TP Bundle configuration
 #sonata_tp:
@@ -195,7 +211,7 @@ parameters:
 #    sonata.user.admin.user.entity: Application\Sonata\UserBundle\Entity\User
 
 # Services
-#services:
+services:
 #    tew.admin.user:
 #        class: TEW\UserBundle\Admin\UserAdmin
 #        tags:
@@ -205,3 +221,8 @@ parameters:
 #            - Acme\MediaBundle\Document\Media
 #            - '%sonata.media.admin.media.controller%'
 #            - @sonata.media.pool
+    tew.form.tags:
+        class: TEW\TPBundle\Form\TagsType
+        arguments: [ "@fpn_tag.tag_manager" ]
+        tags:
+            - { name: form.type, alias: tags }
