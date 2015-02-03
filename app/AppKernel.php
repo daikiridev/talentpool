@@ -33,6 +33,8 @@ class AppKernel extends Kernel
             new FPN\TagBundle\FPNTagBundle(),
             //new Fogs\TaggingBundle\FogsTaggingBundle(),
             
+            new CoreSphere\ConsoleBundle\CoreSphereConsoleBundle(),
+        
             // Own stuff
             new TEW\TPBundle\TEWTPBundle(),
             new Application\Sonata\UserBundle\ApplicationSonataUserBundle(),
@@ -42,6 +44,7 @@ class AppKernel extends Kernel
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
             $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
+            //$bundles[] = new CoreSphere\ConsoleBundle\CoreSphereConsoleBundle();
         }
 
         return $bundles;

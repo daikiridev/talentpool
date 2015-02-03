@@ -20,6 +20,8 @@
         "doctrine/migrations": "dev-master",
         "doctrine/doctrine-migrations-bundle": "dev-master",
         
+        "coresphere/console-bundle": "dev-master",
+        
         "twig/extensions": "1.0.*",
         
         "symfony/assetic-bundle": "2.3.*",

@@ -127,26 +127,26 @@ class TalentPool
     }
 
     /**
-     * Add candidates
+     * Add candidate
      *
-     * @param \TEW\TPBundle\Entity\Candidates $candidates
+     * @param \TEW\TPBundle\Entity\Candidate $candidate
      * @return TalentPool
      */
-    public function addCandidate(\TEW\TPBundle\Entity\Candidates $candidates)
+    public function addCandidate(\TEW\TPBundle\Entity\Candidate $candidate)
     {
-        $this->candidates[] = $candidates;
+        $this->candidates[] = $candidate;
 
         return $this;
     }
 
     /**
-     * Remove candidates
+     * Remove candidate
      *
-     * @param \TEW\TPBundle\Entity\Candidates $candidates
+     * @param \TEW\TPBundle\Entity\Candidate $candidate
      */
-    public function removeCandidate(\TEW\TPBundle\Entity\Candidates $candidates)
+    public function removeCandidate(\TEW\TPBundle\Entity\Candidate $candidate)
     {
-        $this->candidates->removeElement($candidates);
+        $this->candidates->removeElement($candidate);
     }
 
     /**

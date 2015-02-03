@@ -1,3 +1,8 @@
+# Web console
+_console:
+    resource: "@CoreSphereConsoleBundle/Resources/config/routing.yml"
+    prefix: /_console
+    
 # TEWUserBundle routes
 _tew_user:
     resource: "@ApplicationSonataUserBundle/Resources/config/routing/routing.yml"
