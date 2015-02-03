@@ -68,7 +68,6 @@ doctrine:
         user:     "%database_user%"
         password: "%database_password%"
         charset:  UTF8
-        unix_socket:    "/Applications/MAMP/tmp/mysql/mysql.sock" # on my Mac (otherwise, comment it)
 
         types:
             json: Sonata\Doctrine\Types\JsonType
