@@ -1,0 +1,11 @@
+{% extends "TEWTPBundle::layout.html.twig" %}
+{% block title %}Une erreur est survenue : {{ status_text }}{% endblock %}
+{% block topmenu %}{% endblock %}{# leave it empty #}
+{% block body %}
+    <h1>Something gets wrong...</h1>
+    <p>The server says: <code>{{ status_text }}</code> <em>- error #{{ status_code }}</em></p>
+    <p>Please report this error if relevant.</p>
+    <div style="text-align: center;">
+        <a class="btn btn-warning" href="javascript:history.go(-1);">Go back</a> to the previous page
+    </div>
+{% endblock %}
