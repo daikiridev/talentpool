@@ -2,12 +2,19 @@
 
 {% block body -%}
     <h1>Candidate</h1>
-
     <table class="record_properties">
         <tbody>
             <tr>
                 <th>Id</th>
                 <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Average score</th>
+                <td>{{ entity.scoreAverage }}</td>
+            </tr>
+            <tr>
+                <th>Picture</th>
+                <td><img src="{% path entity.picture, 'small' %}" alt="{{ entity.picture.name }}"></td>
             </tr>
             <tr>
                 <th>Gender</th>
@@ -42,8 +49,40 @@
                 <td>{{ entity.phone2 }}</td>
             </tr>
             <tr>
+                <th>Current position</th>
+                <td>{{ entity.position }}</td>
+            </tr>
+            <tr>
+                <th>Target positions</th>
+                <td>{{ entity.targetPositions|join(' / ') }}</td>
+            </tr> 
+            <tr>
+                <th>Languages</th>
+                <td>{{ entity.languagesSkills|join(' / ') }}</td>
+            </tr>
+            <tr>
+                <th>Talent Pools</th>
+                <td>{{ entity.talentpools|join(' / ') }}</td>
+            </tr>
+            <tr>
                 <th>Level</th>
                 <td>{{ entity.level }}</td>
+            </tr>
+            <tr>
+                <th>Origin</th>
+                <td>{{ entity.origin }}</td>
+            </tr>
+            <tr>
+                <th>Comments</th>
+                <td>{{ entity.comments|join(' / ') }}</td>
+            </tr>
+            <tr>
+                <th>Tags</th>
+                <td>{{ entity.tags|join(' / ') }}</td>
+            </tr>
+            <tr>
+                <th>Resume</th>
+                <td><a href="{% path entity.resume, 'reference' %}" target="_blank">{{ entity.resume }}</a></td>
             </tr>
             <tr>
                 <th>Creationdate</th>
@@ -56,17 +95,21 @@
         </tbody>
     </table>
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('tew_candidate') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('tew_candidate_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+{% block actions %}
+    <div class="btn-toolbar pull-right record_actions" role="group">
+        <div class="btn-group">
+            <a role="button"  class="btn btn-info" href="{{ path('tew_candidate') }}">
+                Back to the list
+            </a>
+        </div>
+        <div class="btn-group">
+            <a role="button" class="btn btn-warning" href="{{ path('tew_candidate_edit', { 'id': entity.id }) }}" >
+                Edit
+            </a>
+        </div>
+        <div class="btn-group">
+            {{ form(delete_form) }}
+        </div>
+    </div>
+{% endblock actions %}
 {% endblock %}

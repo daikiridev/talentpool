@@ -20,3 +20,7 @@
 /_to_be_commited.txt
 /composer_bak.json
 /components/
+/src/TEW/TPBundle/Entity/Document.php
+/web/uploads/media/default/
+/web/uploads/media/candidate/
+/src/TEW/TPBundle/Resources/views/sb2-admin/

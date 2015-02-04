@@ -88,6 +88,20 @@ class Candidate implements Taggable
     private $phone2;
     
     /**
+     * @var picture
+     *
+     * @ORM\OneToOne(targetEntity="Application\Sonata\MediaBundle\Entity\Media", cascade={"all"})
+     */
+    private $picture;
+    
+    /**
+     * @var resume
+     *
+     * @ORM\OneToOne(targetEntity="Application\Sonata\MediaBundle\Entity\Media", cascade={"all"})
+     */
+    private $resume;
+    
+    /**
      * @var position
      *
      * @ORM\ManyToOne(targetEntity="CdtePosition")
@@ -383,6 +397,52 @@ class Candidate implements Taggable
     public function getLevel()
     {
         return $this->level;
+    }
+ 
+    /**
+     * Set picture
+     *
+     * @param \Application\Sonata\MediaBundle\Entity\Media $picture
+     * @return Candidate
+     */
+    public function setPicture(\Application\Sonata\MediaBundle\Entity\Media $picture = null)
+    {
+        $this->picture = $picture;
+
+        return $this;
+    }
+
+    /**
+     * Get picture
+     *
+     * @return \Application\Sonata\MediaBundle\Entity\Media 
+     */
+    public function getPicture()
+    {
+        return $this->picture;
+    }
+    
+    /**
+     * Set resume
+     *
+     * @param \Application\Sonata\MediaBundle\Entity\Media $resume
+     * @return Candidate
+     */
+    public function setResume(\Application\Sonata\MediaBundle\Entity\Media $resume = null)
+    {
+        $this->resume = $resume;
+
+        return $this;
+    }
+
+    /**
+     * Get resume
+     *
+     * @return \Application\Sonata\MediaBundle\Entity\Media 
+     */
+    public function getResume()
+    {
+        return $this->resume;
     }
     
     /**

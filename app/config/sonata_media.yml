@@ -10,14 +10,46 @@ sonata_media:
     contexts:
         default:  # the default context is mandatory
             providers:
-                - sonata.media.provider.dailymotion
-                - sonata.media.provider.youtube
+#                - sonata.media.provider.dailymotion
+#                - sonata.media.provider.youtube
                 - sonata.media.provider.image
                 - sonata.media.provider.file
 
             formats:
+                adminthumb: { width: 40 , quality: 70}
+                thumbnail: { width: 20 , quality: 70}
                 small: { width: 100 , quality: 70}
                 big:   { width: 500 , quality: 70}
+                
+        candidate:  # the default context is mandatory
+            providers:
+#                - sonata.media.provider.dailymotion
+#                - sonata.media.provider.youtube
+                - sonata.media.provider.image
+                - sonata.media.provider.file
+
+            formats:
+                adminthumb: { width: 40 , quality: 70}
+                thumbnail: { width: 20 , quality: 70}
+                small: { width: 100 , quality: 70}
+                big:   { width: 500 , quality: 70}                
+                
+        # admin stuff
+        sonata_collection:
+            providers:
+              - sonata.media.provider.image
+
+            formats:
+                preview: { width: 100, quality: 100}
+                wide:    { width: 820, quality: 100}
+
+        sonata_category:
+            providers:
+              - sonata.media.provider.image
+
+            formats:
+                preview: { width: 100, quality: 100}
+                wide:    { width: 820, quality: 100}
 
     cdn:
         server:
@@ -26,4 +58,14 @@ sonata_media:
     filesystem:
         local:
             directory:  %kernel.root_dir%/../web/uploads/media
-            create:     false
+            create:     true
+
+    providers:
+        file:
+            resizer: false
+            filesystem: sonata.media.filesystem.local
+            cdn: sonata.media.cdn.server
+            generator: sonata.media.generator.default
+            thumbnail: sonata.media.thumbnail.format
+            allowed_extensions: ['pdf', 'doc', 'docx']
+            allowed_mime_types: ['application/pdf', 'application/x-pdf', 'application/msword']

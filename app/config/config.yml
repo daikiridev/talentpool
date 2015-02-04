@@ -34,6 +34,10 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    form:
+        resources:
+            # other files
+            - 'SonataMediaBundle:Form:media_widgets.html.twig'
 
 ## Twitter bootstrap configuration
 #braincrafted_bootstrap:

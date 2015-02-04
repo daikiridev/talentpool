@@ -10,7 +10,7 @@
                 <th>Name</th>
                 <th>Creationdate</th>
                 <th>Creator</th>
-                <th>Actions</th>
+                <th width="102">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -21,25 +21,26 @@
                 <td>{% if entity.creationDate %}{{ entity.creationDate|date('Y-m-d H:i:s') }}{% endif %}</td>
                 <td>{{ entity.creator }}</td>
                 <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('tew_talentpool_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('tew_talentpool_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
+                    <div class="btn-group btn-group-xs pull-right record_actions" role="group">
+                            <a role="button"  class="btn btn-info" href="{{ path('tew_talentpool_show', { 'id': entity.id }) }}">
+                                show
+                            </a>
+                            <a role="button"  class="btn btn-warning" href="{{ path('tew_talentpool_edit', { 'id': entity.id }) }}">
+                                edit
+                            </a>
+                    </div>
                 </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-
-        <ul>
-        <li>
-            <a href="{{ path('tew_talentpool_new') }}">
+{% block actions %}
+    <div class="btn-toolbar pull-right record_actions" role="group">
+        <div class="btn-group">
+            <a role="button"  class="btn btn-warning" href="{{ path('tew_talentpool_new') }}">
                 Create a new entry
             </a>
-        </li>
-    </ul>
+        </div>
+    </div>
+{% endblock actions %}
     {% endblock %}

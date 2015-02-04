@@ -5,12 +5,17 @@
 
     {{ form(edit_form) }}
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('tew_talentpool') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+{% block actions %}
+    <div class="btn-toolbar pull-right record_actions" role="group">
+        <div class="btn-group">
+            <a role="button"  class="btn btn-info" href="{{ path('tew_talentpool') }}">
+                Back to the list
+            </a>
+        </div>
+        <div class="btn-group">
+            {{ form(delete_form) }}
+        </div>
+    </div>
+{% endblock actions %}
+
 {% endblock %}

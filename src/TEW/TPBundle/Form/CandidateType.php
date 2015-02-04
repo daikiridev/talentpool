@@ -15,6 +15,13 @@ class CandidateType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+                ->add('picture', 'sonata_media_type', array(
+                    'label' => false, // 'label'    =>  'Image'
+                    'required' => false,
+                    'provider' => 'sonata.media.provider.image',
+                    'context'  => 'candidate',
+                    'attr' => array('class' => 'span16') // doesn't work
+                ))
                 ->add('gender', 'choice', array(
                     'choices' => array('m' => 'Male', 'f' => 'Female'),
                 ))
@@ -22,7 +29,7 @@ class CandidateType extends AbstractType
                 ->add('middleName', 'text', array('required' => false))
                 ->add('lastName')
                 ->add('dateOfBirth', 'date', array(
-                    'years' => range('1940', date('Y')-20),
+                    'years' => range(date('Y')-20, date('Y')-80),
                     'empty_value' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day'),
                     'attr' => array('class' => 'date'), // datepicker when available
                 ))
@@ -35,10 +42,26 @@ class CandidateType extends AbstractType
                 ->add('talentpools')
                 ->add('level')
                 ->add('origin')
-                ->add('tags','tags', array('attr' => array('class' => 'tags-field input-block-level')))
+                ->add('tags','tags', array('required' => false, 'attr' => array('class' => 'tags-field input-block-level')))
+                ->add('resume', 'sonata_media_type', array(
+                    'label' => false,
+                    'required' => false,
+                    'provider' => 'sonata.media.provider.file',
+                    'context'  => 'candidate',
+                    'attr' => array('class' => 'span16') // doesn't work
+                ))
         //->add('comments')
         //->add("creationDate", "date", array("mapped"=>false))
             ;
+        $builder->get('picture')->remove('unlink');
+        $builder->get('picture')->add('binaryContent', 'file', [
+            'label' => false,
+            ]);
+       $builder->get('picture')->remove('nimportequoi');
+//        $builder
+//                ->get('picture')->add('unlink', 'hidden', ['mapped' => false, 'data' => false])
+//                ->get('picture')->add('binaryContent', 'file', ['label' => false])
+//            ;
     }
     
     /**

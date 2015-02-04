@@ -21,7 +21,6 @@ class CandidateController extends Controller
     public function searchAction()
     {
         return $this->render('TEWTPBundle:Candidate:search.html.twig', array(
-                    
         ));
     }
 
@@ -79,7 +78,11 @@ class CandidateController extends Controller
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
+        $form->add('submit', 'submit', array('label' => 'Create', 
+                                            'attr' => array(
+                                                'class' => 'btn btn-warning',
+                                            )
+                    ));
 
         return $form;
     }
@@ -165,7 +168,11 @@ class CandidateController extends Controller
             'method' => 'PUT',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Update'));
+        $form->add('submit', 'submit', array('label' => 'Update', 
+                                            'attr' => array(
+                                                'class' => 'btn btn-warning',
+                                            )
+                    ));
 
         return $form;
     }
@@ -237,7 +244,12 @@ class CandidateController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('tew_candidate_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
+            ->add('submit', 'submit', array('label' => 'Delete', 
+                                        'attr' => array(
+                                            'class' => 'btn btn-danger',
+                                            'onclick' => "if(!confirm('Are you sure?')) { return false; }"
+                                            )
+                ))
             ->getForm()
         ;
     }

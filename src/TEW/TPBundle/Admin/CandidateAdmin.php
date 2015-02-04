@@ -74,6 +74,7 @@ class CandidateAdmin extends Admin
                 ->add('email')
                 ->add('phone1')
                 ->add('phone2')
+                ->add('picture', 'sonata_type_model_list', array(), array('link_parameters' => array('context' => 'candidate')))
                 ->add('level')
                 ->add('position')
                 ->add('targetPositions')

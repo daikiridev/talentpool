@@ -114,3 +114,13 @@ ul#demo-list a {
     border: 1px solid;
     padding: 10px;
 }
+
+.record_properties {
+    //text-align: center;
+/*    margin: 10px;
+    padding: 10px;*/
+}
+.record_properties td {
+    //border: 1px solid;
+    padding: 10px;
+}
