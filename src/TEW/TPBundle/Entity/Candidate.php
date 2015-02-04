@@ -557,8 +557,7 @@ class Candidate implements Taggable
      *  
      * @param \TEW\TPBundle\Entity\CdteComment $comments
      * @return Candidate
-     */
-    // We added this to be able to save tags from a form  
+     */ 
     public function setTags($tags)
     {
         $this->tags = is_array($tags) ? new ArrayCollection($tags) : $tags;
@@ -674,6 +673,7 @@ class Candidate implements Taggable
         $this->targetPositions = new \Doctrine\Common\Collections\ArrayCollection();
         $this->languagesSkills = new \Doctrine\Common\Collections\ArrayCollection();
         $this->talentpools = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->tags = new \Doctrine\Common\Collections\ArrayCollection();
         $this->creationDate = new \DateTime();
         $this->creator = $user;
     }

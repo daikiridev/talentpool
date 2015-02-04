@@ -14,6 +14,16 @@ use TEW\TPBundle\Form\CandidateType;
  */
 class CandidateController extends Controller
 {
+    /**
+     * Search 
+     *
+     */
+    public function searchAction()
+    {
+        return $this->render('TEWTPBundle:Candidate:search.html.twig', array(
+                    
+        ));
+    }
 
     /**
      * Lists all Candidate entities.

@@ -13,6 +13,7 @@
             <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css">
             <link rel="stylesheet" href="{{ asset('bundles/tewtp/css/talentpool.css') }}">
         {% endblock %}
+        {% block styles %}{% endblock %}
 
     </head>
 
@@ -35,10 +36,12 @@
                         <span class="icon-bar"></span>
                     </button>
                 </div>
+                {% block topmenu %}
                 <div id="navbar" class="collapse navbar-collapse">
                     {{ knp_menu_render('tp_topmenu_main', {'class': 'nav navbar-nav', 'currentClass': 'active', 'template': 'TEWTPBundle:Menu:knp_menu.html.twig'}) }}
                     {{ knp_menu_render('tp_topmenu_user', {'currentClass': 'active', 'template': 'TEWTPBundle:Menu:knp_menu.html.twig'}) }}
                 </div>
+                {% endblock %}
             </div>
         </nav>
         <div class="container" style="margin-top: 60px;">
@@ -51,5 +54,6 @@
             <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
             <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
         {% endblock %}
+        {% block scripts %}{% endblock %}
     </body>
 </html>

@@ -82,8 +82,16 @@ doctrine:
                     TEWTPBundle: ~
                     SonataUserBundle: ~
                     FOSUserBundle: ~
+                    SonataMediaBundle: ~
                     #FogsTaggingBundle: ~
 
+#doctrine_phpcr:
+#    odm:
+#        auto_mapping: true
+#        mappings:
+#            SonataMediaBundle:
+#                prefix: Sonata\MediaBundle\PHPCR
+                
 # migrating entities after they've been modified
 # (see app/console doctrine:migrations:diff)
 doctrine_migrations:
@@ -113,7 +121,7 @@ fos_user:
     service:
         user_manager: sonata.user.orm.user_manager
     
-# Sonata configuration
+# Sonata User configuration
 sonata_user:
     security_acl:           false
 
@@ -147,6 +155,37 @@ fpn_tag:
         tag_class:     \TEW\TPBundle\Entity\Tag
         tagging_class: \TEW\TPBundle\Entity\Tagging
 
+
+# Sonata Media management
+sonata_media:
+    # if you don't use default namespace configuration
+    # class:
+    #    media: MyVendor\MediaBundle\Entity\Media
+    #    gallery: MyVendor\MediaBundle\Entity\Gallery
+    #    gallery_has_media: MyVendor\MediaBundle\Entity\GalleryHasMedia
+    default_context: default
+    db_driver: doctrine_orm
+    contexts:
+        default:  # the default context is mandatory
+            providers:
+                - sonata.media.provider.dailymotion
+                - sonata.media.provider.youtube
+                - sonata.media.provider.image
+                - sonata.media.provider.file
+
+            formats:
+                small: { width: 100 , quality: 70}
+                big:   { width: 500 , quality: 70}
+
+    cdn:
+        server:
+            path: /uploads/media # http://media.sonata-project.org/
+
+    filesystem:
+        local:
+            directory:  %kernel.root_dir%/../web/uploads/media
+            create:     false
+            
 ## Sonata TP Bundle configuration
 #sonata_tp:
 #    security_acl:           false

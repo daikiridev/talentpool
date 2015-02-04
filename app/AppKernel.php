@@ -24,11 +24,17 @@ class AppKernel extends Kernel
             new Sonata\CoreBundle\SonataCoreBundle(), // In order to make the admin managment work
             new Sonata\AdminBundle\SonataAdminBundle(),
             new Sonata\BlockBundle\SonataBlockBundle(),
+            new Sonata\ClassificationBundle\SonataClassificationBundle(),
             new Sonata\CacheBundle\SonataCacheBundle(),
             new Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle(),
             new Sonata\UserBundle\SonataUserBundle('FOSUserBundle'), // User managment via Sonata
-            new Knp\Bundle\MenuBundle\KnpMenuBundle(),
+            new Sonata\IntlBundle\SonataIntlBundle(),
+            new Sonata\MediaBundle\SonataMediaBundle(),
             new Sonata\EasyExtendsBundle\SonataEasyExtendsBundle(), // In order to generate a valid bundle structure from a Vendor bundle
+            
+            new Knp\Bundle\MenuBundle\KnpMenuBundle(), // used by sonata-admin and front-office as well
+            
+            new JMS\SerializerBundle\JMSSerializerBundle(), // needed by Sonata Media
             // Tags managment
             new FPN\TagBundle\FPNTagBundle(),
             //new Fogs\TaggingBundle\FogsTaggingBundle(),
