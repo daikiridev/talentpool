@@ -4,6 +4,11 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: sonata_core.yml }
+    - { resource: sonata_admin.yml }
+    - { resource: sonata_block.yml }
+    - { resource: sonata_classification.yml }
+    - { resource: sonata_media.yml }
+    - { resource: sonata_user.yml }
 
 
 framework:
@@ -79,10 +84,12 @@ doctrine:
             default:
                 mappings: # to be declared for each entity in MySQL DB
                     ApplicationSonataUserBundle: ~
+                    ApplicationSonataMediaBundle: ~
                     TEWTPBundle: ~
                     SonataUserBundle: ~
                     FOSUserBundle: ~
                     SonataMediaBundle: ~
+                    SonataClassificationBundle: ~
                     #FogsTaggingBundle: ~
 
 #doctrine_phpcr:
@@ -120,34 +127,6 @@ fos_user:
 
     service:
         user_manager: sonata.user.orm.user_manager
-    
-# Sonata User configuration
-sonata_user:
-    security_acl:           false
-
-    manager_type: orm # Can be orm or mongodb
-
-#    table:
-#        user_group: "my_custom_user_group_association_table_name"
-#
-#    impersonating:
-#        route:                page_slug
-#        parameters:           { path: / }
-
-    class:                  # Entity Classes
-        user:               Application\Sonata\UserBundle\Entity\User
-        group:              Application\Sonata\UserBundle\Entity\Group
-
-    admin:                  # Admin Classes
-        user:
-            class:          Sonata\UserBundle\Admin\Entity\UserAdmin
-            controller:     SonataAdminBundle:CRUD
-            translation:    SonataUserBundle
-
-        group:
-            class:          Sonata\UserBundle\Admin\Entity\GroupAdmin
-            controller:     SonataAdminBundle:CRUD
-            translation:    SonataUserBundle
 
 # Tag management
 fpn_tag:
@@ -155,36 +134,6 @@ fpn_tag:
         tag_class:     \TEW\TPBundle\Entity\Tag
         tagging_class: \TEW\TPBundle\Entity\Tagging
 
-
-# Sonata Media management
-sonata_media:
-    # if you don't use default namespace configuration
-    # class:
-    #    media: MyVendor\MediaBundle\Entity\Media
-    #    gallery: MyVendor\MediaBundle\Entity\Gallery
-    #    gallery_has_media: MyVendor\MediaBundle\Entity\GalleryHasMedia
-    default_context: default
-    db_driver: doctrine_orm
-    contexts:
-        default:  # the default context is mandatory
-            providers:
-                - sonata.media.provider.dailymotion
-                - sonata.media.provider.youtube
-                - sonata.media.provider.image
-                - sonata.media.provider.file
-
-            formats:
-                small: { width: 100 , quality: 70}
-                big:   { width: 500 , quality: 70}
-
-    cdn:
-        server:
-            path: /uploads/media # http://media.sonata-project.org/
-
-    filesystem:
-        local:
-            directory:  %kernel.root_dir%/../web/uploads/media
-            create:     false
             
 ## Sonata TP Bundle configuration
 #sonata_tp:
@@ -200,41 +149,6 @@ sonata_media:
 #            class:          TEW\TPBundle\Admin\LanguageAdmin
 #            controller:     SonataAdminBundle:CRUD
 ##            translation:    SonataUserBundle
-
-# Sonata admin configuration
-sonata_admin:
-    title: backoffice
-    title_logo: /bundles/tewtp/images/icons/tew.png
-#    dashboard:
-#        blocks:
-#            # display a dashboard block
-#            - { position: left, type: sonata.admin.block.admin_list }
-#        groups:
-#            admin:
-#                label: Users
-#            tp:
-#                label: Languages
-                
-sonata_block:
-    default_contexts: [cms]
-    blocks:
-        sonata.admin.block.admin_list:  #default sonata admin block
-            contexts: [admin]
-        sonata.admin.block.search_result:
-            contexts: [admin]
-        sonata.admin_doctrine_orm.block.audit:
-            contexts:   [admin]
-        
-        # Sonata user blocks
-        sonata.user.block.menu:        # used to display the menu in profile pages
-        sonata.user.block.account:     # used to display menu option (login option)
-        
-#        # TP Blocks 
-#        tewtp.admin.language: # useless ?
-        
-        sonata.block.service.text:      # used to if you plan to use Sonata user routes
-        sonata.block.service.action:
-        sonata.block.service.rss:
             
 
 #templates:
