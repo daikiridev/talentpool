@@ -19,14 +19,50 @@ services:
         class: TEW\TPBundle\Admin\LanguageAdmin
         arguments: [~, TEW\TPBundle\Entity\Language, TEWTPBundle:LanguageAdmin]
         tags:
-            - {name: sonata.admin, manager_type: orm, group: admin, label: Language}
+            - {name: sonata.admin, manager_type: orm, group: admin, label: Languages}
             
-    tewtp.admin.cdteposition:
+    tew_tp.admin.cdteposition:
         class: TEW\TPBundle\Admin\CdtePositionAdmin
         arguments: [~, TEW\TPBundle\Entity\CdtePosition, TEWTPBundle:CdtePositionAdmin]
         tags:
-            - {name: sonata.admin, manager_type: orm, group: admin, label: Position}
+            - {name: sonata.admin, manager_type: orm, group: admin, label: Positions}
+
+    tew_tp.admin.candidate:
+        class: TEW\TPBundle\Admin\CandidateAdmin
+        arguments: [~, TEW\TPBundle\Entity\Candidate, TEWTPBundle:CandidateAdmin]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: admin, label: Candidates}
+            
+    tew_tp.admin.talentpool:
+        class: TEW\TPBundle\Admin\TalentPoolAdmin
+        arguments: [~, TEW\TPBundle\Entity\TalentPool, TEWTPBundle:TalentPoolAdmin]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: admin, label: TalentPools}
  
+#     tew_tp.admin.cdte_level:
+#        class: TEW\TPBundle\Admin\CdteLevelAdmin
+#        arguments: [~, TEW\TPBundle\Entity\CdteLevel, TEWTPBundle:CdteLevelAdmin]
+#        tags:
+#            - {name: sonata.admin, manager_type: orm, group: admin, label: CdteLevel}
+#
+#    tew_tp.admin.cdte_function:
+#        class: TEW\TPBundle\Admin\CdteFunctionAdmin
+#        arguments: [~, TEW\TPBundle\Entity\CdteFunction, TEWTPBundle:CdteFunctionAdmin]
+#        tags:
+#            - {name: sonata.admin, manager_type: orm, group: admin, label: CdteFunction}
+#
+#    tew_tp.admin.talentpool:
+#        class: TEW\TPBundle\Admin\TalentPoolAdmin
+#        arguments: [~, TEW\TPBundle\Entity\TalentPool, TEWTPBundle:TalentPoolAdmin]
+#        tags:
+#            - {name: sonata.admin, manager_type: orm, group: admin, label: TalentPool}
+#            
+#    tew_tp.admin.candidate:
+#        class: TEW\TPBundle\Admin\CandidateAdmin
+#        arguments: [~, TEW\TPBundle\Entity\Candidate, TEWTPBundle:CandidateAdmin]
+#        tags:
+#            - {name: sonata.admin, manager_type: orm, group: admin, label: Candidate}
+            
 # Frontoffice menu management
     # managing active links
     tew_tp.menu.voter.request:
@@ -58,27 +94,3 @@ services:
         scope: request # needed as we have the request as a dependency here
         tags:
             - { name: knp_menu.menu, alias: tp_topmenu_user } # alias is the name called in the twig view
-
-    tewtp.admin.talent_pool:
-        class: TEW\TPBundle\Admin\TalentPoolAdmin
-        arguments: [~, TEW\TPBundle\Entity\TalentPool, TEWTPBundle:TalentPoolAdmin]
-        tags:
-            - {name: sonata.admin, manager_type: orm, group: admin, label: TalentPool}
-
-    tewtp.admin.cdte_level:
-        class: TEW\TPBundle\Admin\CdteLevelAdmin
-        arguments: [~, TEW\TPBundle\Entity\CdteLevel, TEWTPBundle:CdteLevelAdmin]
-        tags:
-            - {name: sonata.admin, manager_type: orm, group: admin, label: CdteLevel}
-
-    tewtp.admin.cdte_function:
-        class: TEW\TPBundle\Admin\CdteFunctionAdmin
-        arguments: [~, TEW\TPBundle\Entity\CdteFunction, TEWTPBundle:CdteFunctionAdmin]
-        tags:
-            - {name: sonata.admin, manager_type: orm, group: admin, label: CdteFunction}
-
-    tewtp.admin.candidate:
-        class: TEW\TPBundle\Admin\CandidateAdmin
-        arguments: [~, TEW\TPBundle\Entity\Candidate, TEWTPBundle:CandidateAdmin]
-        tags:
-            - {name: sonata.admin, manager_type: orm, group: admin, label: Candidate}

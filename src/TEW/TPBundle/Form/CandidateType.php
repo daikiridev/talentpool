@@ -53,7 +53,7 @@ class CandidateType extends AbstractType
         //->add('comments')
         //->add("creationDate", "date", array("mapped"=>false))
             ;
-        $builder->get('picture')->remove('unlink');
+        //$builder->get('picture')->remove('unlink');
         $builder->get('picture')->add('binaryContent', 'file', [
             'label' => false,
             ]);

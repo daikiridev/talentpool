@@ -1,0 +1,67 @@
+# Sonata admin configuration
+sonata_admin:
+    title: backoffice
+    title_logo: /bundles/tewtp/images/icons/tew.png
+    dashboard:
+        blocks:
+            # display a dashboard block
+            -
+                position: top
+                class: col-md-6
+                type: sonata.block.service.text
+                settings:
+                    content: >
+                        <h2>Welcome to the TEW Backoffice</h2>
+#            -
+#                position: top
+#                class: col-md-6
+#                type: sonata.admin.block.search_result
+
+            -
+                position: left
+                type: sonata.admin.block.admin_list
+                settings:
+                    groups: [ Global parameters ]
+            -
+                position: left
+                type: sonata.admin.block.admin_list
+                settings:
+                    groups: [ Pools & Candidates ]
+            -
+                position: right
+                type: sonata.admin.block.admin_list
+                settings:
+                    groups: [ Users ]
+            -
+                position: right
+                type: sonata.admin.block.admin_list
+                settings:
+                    groups: [ Misc parameters ]
+        groups:
+            Global parameters:
+                items:
+                    - tew_tp.admin.language
+                    - tew_tp.admin.cdteposition
+            Pools & Candidates:
+                items:
+                    - tew_tp.admin.talentpool
+                    - tew_tp.admin.candidate
+            Users:
+                items:
+                    - sonata.user.admin.user
+            Misc parameters:
+                items:
+                    - sonata.classification.admin.context
+                    - sonata.classification.admin.category
+                    - sonata.classification.admin.collection
+                    - sonata.media.admin.media
+                
+#        groups:
+#            admin:
+#                label: Users
+#            tp:
+#                label: Languages
+    templates:
+        # other configuration options
+        search:              SonataAdminBundle:Core:search.html.twig
+        search_result_block: SonataAdminBundle:Block:block_search_result.html.twig

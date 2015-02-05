@@ -35,7 +35,6 @@ security:
         - { path: ^/_console, role: ROLE_SUPER_ADMIN }
         - { path: ^/admin/, role: [ROLE_ADMIN, ROLE_SONATA_ADMIN] }
         - { path: ^/.*, role: ROLE_USER }
-        #- { path: .*, role: ROLE_USER }
         
     acl:
         connection: default
