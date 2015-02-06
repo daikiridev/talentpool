@@ -38,11 +38,17 @@ class CandidateType extends AbstractType
                 ->add('phone2', 'text', array('required' => false))
                 ->add('position')
                 ->add('targetPositions')
-               // ->add('languagesSkills')
+                ->add('languagesSkills')
+//                ->add('languagesSkills', 'collection', array('type'=>new CdteLanguageType)) // we change the default form
                 ->add('talentpools')
-                ->add('level')
+                ->add('level', 'choice', array(
+                    'label' => 'Experience',
+                    'choices' => range(0,40),
+                    'empty_value'=> 'Yrs')
+                        )
                 ->add('origin')
-                ->add('tags','tags', array('required' => false, 'attr' => array('class' => 'tags-field input-block-level')))
+                ->add('tags')
+//                ->add('tags','tags', array('required' => false, 'attr' => array('class' => 'tags-field input-block-level')))
                 ->add('resume', 'sonata_media_type', array(
                     'label' => false,
                     'required' => false,

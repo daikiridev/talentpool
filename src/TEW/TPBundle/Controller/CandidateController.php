@@ -113,6 +113,7 @@ class CandidateController extends Controller
     public function showAction($id)
     {
         $em = $this->getDoctrine()->getManager();
+        $languageRep = $em->getRepository('TEWTPBundle:CdteLanguage');
 
         $entity = $em->getRepository('TEWTPBundle:Candidate')->find($id);
 
@@ -124,6 +125,8 @@ class CandidateController extends Controller
 
         return $this->render('TEWTPBundle:Candidate:show.html.twig', array(
             'entity'      => $entity,
+//            'languagesSkills' => $languageRep->findAllSkills(),
+//            'languages' => $languageRep->findAllLanguages(),
             'delete_form' => $deleteForm->createView(),
         ));
     }

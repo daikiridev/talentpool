@@ -3,6 +3,8 @@
 namespace TEW\TPBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+//use Doctrine\Common\Collections\ArrayCollection;
+//use Symfony\Component\Intl\Intl;
 
 /**
  * CdteLanguageRepository
@@ -12,4 +14,28 @@ use Doctrine\ORM\EntityRepository;
  */
 class CdteLanguageRepository extends EntityRepository
 {
+//    private $skills;
+//    private $languages;
+//    
+//    public function findAllSkills()
+//    {
+//        return $this->skills;
+//    }
+//    
+//    public function findSkillBy(integer $skill)
+//    {
+//        return $this->skills;
+//    }
+//    
+//    public function findAllLanguages()
+//    {
+//        return $this->languages;
+//        // countries Intl::getRegionBundle()-> getCountryNames()
+//    }
+//    
+//    public function __construct()
+//    {
+//        $this->skills = new ArrayCollection(array('none','novice','spoken','bilingual', 'mother tongue'));
+//        $this->languages = Intl::getLanguageBundle()->getLanguageNames();
+//    }
 }

@@ -10,7 +10,7 @@
             </tr>
             <tr>
                 <th>Average score</th>
-                <td>{{ entity.scoreAverage }}</td>
+                <td>{{ entity.scoreAverage|stars }}</td>
             </tr>
             <tr>
                 <th>Picture</th>
@@ -18,7 +18,7 @@
             </tr>
             <tr>
                 <th>Gender</th>
-                <td>{{ entity.gender }}</td>
+                <td>{{ entity.gender|gender }}</td>
             </tr>
             <tr>
                 <th>Firstname</th>
@@ -34,11 +34,11 @@
             </tr>
             <tr>
                 <th>Dateofbirth</th>
-                <td>{{ entity.dateOfBirth|date('Y-m-d') }}</td>
+                <td>{{ entity.dateOfBirth|date('d M Y') }}</td>
             </tr>
             <tr>
                 <th>Email</th>
-                <td>{{ entity.email }}</td>
+                <td>{{ entity.email|mail }}</td>
             </tr>
             <tr>
                 <th>Phone1</th>
@@ -58,15 +58,18 @@
             </tr> 
             <tr>
                 <th>Languages</th>
-                <td>{{ entity.languagesSkills|join(' / ') }}</td>
+                <td> {% for lskill in  entity.languagesSkills %}
+                    {{ lskill|languageSkill }} {# filter defined in src/.../Twig/Extension #}
+                    {% endfor %}
+                </td>
             </tr>
             <tr>
                 <th>Talent Pools</th>
                 <td>{{ entity.talentpools|join(' / ') }}</td>
             </tr>
             <tr>
-                <th>Level</th>
-                <td>{{ entity.level }}</td>
+                <th>Experience</th>
+                <td>{{ entity.level }} years</td>
             </tr>
             <tr>
                 <th>Origin</th>
@@ -86,7 +89,7 @@
             </tr>
             <tr>
                 <th>Creationdate</th>
-                <td>{{ entity.creationDate|date('Y-m-d H:i:s') }}</td>
+                <td>{{ entity.creationDate|date('D d M Y \\a\\t g:ia', "Europe/Paris") }}</td>
             </tr>
             <tr>
                 <th>Creator</th>

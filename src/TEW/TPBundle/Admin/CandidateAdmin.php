@@ -17,10 +17,12 @@ class CandidateAdmin extends Admin
     {
         $datagridMapper
             ->add('id')
+            //->add('scoreAverage') // computed field, cannot be added to the filters
             ->add('gender')
             ->add('firstName')
             ->add('middleName')
             ->add('lastName')
+            
             //->add('dateOfBirth')
             //->add('email')
             //->add('phone1')
@@ -42,6 +44,8 @@ class CandidateAdmin extends Admin
             ->add('firstName')
             ->add('middleName')
             ->add('lastName')
+            ->add('position')
+            ->add('scoreAverage')
             //->add('dateOfBirth')
             //->add('email')
             //->add('phone1')
@@ -65,7 +69,8 @@ class CandidateAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-                ->add('id')
+                //->add('id')
+                ->add('picture', 'sonata_type_model_list', array(), array('link_parameters' => array('context' => 'candidate')))
                 ->add('gender')
                 ->add('firstName')
                 ->add('middleName')
@@ -74,8 +79,8 @@ class CandidateAdmin extends Admin
                 ->add('email')
                 ->add('phone1')
                 ->add('phone2')
-                ->add('picture', 'sonata_type_model_list', array(), array('link_parameters' => array('context' => 'candidate')))
                 ->add('level')
+                //->add('languagesSkills')
                 ->add('position')
                 ->add('targetPositions')
                 ->add('talentpools')

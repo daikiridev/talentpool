@@ -20,10 +20,4 @@ TEWTPBundle_tew_candidate:
 TEWTPBundle_tew_talentpool:
     resource: "@TEWTPBundle/Resources/config/routing/talentpool.yml"
     prefix:   /tew_talentpool
-        
-# BackEnd routes
-# handled by SonataAdminBundle
-#tp_back:
-#    path:       /bck
-#    defaults:   { _controller: TEWTPBundle:BackEnd:index }
     

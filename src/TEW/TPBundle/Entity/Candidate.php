@@ -125,7 +125,11 @@ class Candidate implements Taggable
     /**
      * @var languagesSkills
      * 
-     * @ORM\OneToMany(targetEntity="CdteLanguage", mappedBy="candidate")
+     * @ORM\ManyToMany(targetEntity="CdteLanguage")
+     * @ORM\JoinTable(name="tew_cdte_languageskills",
+     *  joinColumns={@ORM\JoinColumn(name="languageskill_id", referencedColumnName="id")},
+     *  inverseJoinColumns={@ORM\JoinColumn(name="candidate_id", referencedColumnName="id")}
+     *  )
      */
     private $languagesSkills; 
     

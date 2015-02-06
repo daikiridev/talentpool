@@ -8,7 +8,7 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 
-class CdtePositionAdmin extends Admin
+class CdteLanguageAdmin extends Admin
 {
     /**
      * @param DatagridMapper $datagridMapper
@@ -17,7 +17,7 @@ class CdtePositionAdmin extends Admin
     {
         $datagridMapper
             ->add('id')
-            ->add('name')
+            ->add('language')
         ;
     }
 
@@ -28,7 +28,7 @@ class CdtePositionAdmin extends Admin
     {
         $listMapper
             ->add('id')
-            ->add('name')
+            ->add('language')
             ->add('_action', 'actions', array(
                 'actions' => array(
                     'show' => array(),
@@ -46,10 +46,8 @@ class CdtePositionAdmin extends Admin
     {
         $formMapper
             // ->add('id')
-            ->add('name')
-            ->add('level') // same as ->add('level', 'entity', array('class' => 'TEWTPBundle:CdteLevel'))
-            //->add('function') // same as ->add('function', 'entity', array('class'=>'TEWTPBundle:CdteFunction'))
-            ->add('function', 'entity', array('class'=>'TEWTPBundle:CdteFunction'))
+            ->add('language')
+            ->add('skill') // same as ->add('skill', 'entity', array('class' => 'TEWTPBundle:CdteLevel'))
         ;
     }
 
@@ -60,16 +58,9 @@ class CdtePositionAdmin extends Admin
     {
         $showMapper
             ->add('id')
-            ->add('name')
-            ->add('level') // same as ->add('level', 'entity', array('class' => 'TEWTPBundle:CdteLevel'))
+            ->add('language')
+            ->add('skill') // same as ->add('skill', 'entity', array('class' => 'TEWTPBundle:CdteLevel'))
             ->add('function') // same as ->add('function', 'entity', array('class'=>'TEWTPBundle:CdteFunction'))
-            ->add('talentpools', 'sonata_type_collection', array('label' => 'Talent pools'), array(
-                    'class' => 'TEWTPBundle:TalentPool',
-                    'target_entity' => '\TEW\TPBundle\Entity\TalentPool',
-                    'expanded' => false,
-                    //'admin_code' => 'sonata.admin.setting',
-                )
-            )
         ;
     }
 }

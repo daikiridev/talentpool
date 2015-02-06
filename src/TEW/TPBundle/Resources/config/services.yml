@@ -13,13 +13,18 @@ services:
 #            - {name: kernel.event_listener, event:kernel.controller, method:onKernelController}
 #        arguments:
 #            - {type=service, id:twig.extension.tew.tp}
- 
-# Backoffice parameters...
-    tew_tp.admin.language:
-        class: TEW\TPBundle\Admin\LanguageAdmin
-        arguments: [~, TEW\TPBundle\Entity\Language, TEWTPBundle:LanguageAdmin]
+
+# Twig filters
+    tew.twig.tew_extension:
+        class: TEW\TPBundle\Twig\Extension\TEWExtension
         tags:
-            - {name: sonata.admin, manager_type: orm, group: admin, label: Languages}
+            - { name: twig.extension } 
+# Backoffice parameters...
+#    tew_tp.admin.cdtelanguage:
+#        class: TEW\TPBundle\Admin\CdteLanguageAdmin
+#        arguments: [~, TEW\TPBundle\entity\CdteLanguage, TEWTPBundle:CdteLanguageAdmin]
+#        tags:
+#            - {name: sonata.admin, manager_type: orm, group: admin, label: CdteLanguage}
             
     tew_tp.admin.cdteposition:
         class: TEW\TPBundle\Admin\CdtePositionAdmin
@@ -94,3 +99,4 @@ services:
         scope: request # needed as we have the request as a dependency here
         tags:
             - { name: knp_menu.menu, alias: tp_topmenu_user } # alias is the name called in the twig view
+
