@@ -1,4 +1,8 @@
 {% extends '::base.html.twig' %}
+
+{# if not using Application/Sonata/MediaBundle/Resources/Form/media_widgets.html.twig, uncomment the following line #}
+{# {% form_theme edit_form 'TEWTPBundle:Form:media_widgets.html.twig' %} #}
+
 {% block styles %}
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/tewtp/css//jquery.tagsinput.css') }}" />
 {% endblock styles %}
@@ -8,8 +12,8 @@
         $('.tags-field').tagsInput({
             //'autocomplete_url': url_to_autocomplete_api,
             //'autocomplete': { option: value, option: value},
-            'height':'30px',
-            'width':'400px',
+            'height': '30px',
+            'width': '400px',
             //'interactive':true,
             //'defaultText':'add a tag',
             //'onAddTag':callback_function,
@@ -19,7 +23,53 @@
             //'minChars' : 0,
             //'maxChars' : 0 //if not provided there is no limit,
             //'placeholderColor' : '#666666'
-            
+
+        });
+    </script>
+        
+    <script>
+        {# « add » button #}    
+        var $addItemLink = $('<a href="#" class="add_item_link btn-xs btn-info">Add</a>');
+        var $addButton = $('<span></span>').append($addItemLink);
+
+        function addItemForm(collectionHolder) {
+            var prototype = collectionHolder.attr('data-prototype');
+            {# Replaces '__name__' in the prototype HTML by the index of the current item #}
+            var newForm = prototype.replace(/__name__/g, collectionHolder.children().length);
+            {# Displays the item form in a <li>, just before the "add" button #}
+            var $newFormLi = $('<li></li>').append(newForm);
+            collectionHolder.append($newFormLi);
+            {# add a "remove" link at the end of the new form #}
+            addItemFormDeleteLink($newFormLi);
+        }
+        function addItemFormDeleteLink($itemFormLi) {
+            var $removeFormA = $('<a href="#" class="btn-xs btn-danger">Remove</a>');
+            $itemFormLi.append($removeFormA);
+            $removeFormA.on('click', function (e) {
+                e.preventDefault();
+                if (confirm("Are you sure?")) {
+                   $itemFormLi.remove();
+                }
+            });
+        }
+        </script>
+        <script>
+        {# div containing the collection of addresses #}
+        var addressCollection = $('#addresses');
+        addressCollection.after($addButton);
+        </script>
+        <script>
+        $(document).ready(function () {
+            {# catches a click on an "add" button #}
+            $('.add_item_link').on('click', function(e){
+                e.preventDefault();
+                collection = $(this).parent().prev('.form-collection');
+                addItemForm(collection);
+            });
+            {# adds a remove button to each item of each form collection #}
+            $('.form-collection').find('li').each(function () {
+                addItemFormDeleteLink($(this));
+            });
         });
     </script>
 {% endblock scripts %}
@@ -27,18 +77,40 @@
 {% block body -%}
     <h1>Candidate edit</h1>
 
-    {{ form(edit_form) }}
+    {#{ form(edit_form) }#}
+    {{ form_start(edit_form) }}
 
-{% block actions %}
-    <div class="btn-toolbar pull-right record_actions" role="group">
-        <div class="btn-group">
-            <a role="button"  class="btn btn-info" href="{{ path('tew_candidate') }}">
-                Back to the list
-            </a>
-        </div>
-        <div class="btn-group">
-            {{ form(delete_form) }}
-        </div>
+    {{ form_widget(edit_form.picture) }}
+    {{ form_widget(edit_form.gender) }}{{ form_widget(edit_form.firstName) }} {{ form_widget(edit_form.middleName) }} {{ form_widget(edit_form.lastName) }}
+    {{ form_row(edit_form.dateOfBirth) }}
+    {{ form_row(edit_form.email) }}
+    {{ form_row(edit_form.phone1) }}
+    {{ form_row(edit_form.phone2) }}
+
+    {#
+     # We put in the "data-prototype" field the prototype widget
+     # the so-called prototype is the prototype form for the Address class
+     # see http://symfony.com/doc/2.3/cookbook/form/form_collections.html for more information
+     #}
+    <div>
+    {{ form_label(edit_form.addresses) }}
+    <ul id="addresses" class="form-collection" data-prototype="{{ form_widget(edit_form.addresses.vars.prototype)|e }}">
+        <!--{{ form_row(edit_form.addresses) }} {# in order to skip it in the form_end(edit_form) instruction #}-->
+    </ul>
     </div>
-{% endblock actions %}
+
+    {{ form_end(edit_form, {'render_rest': true}) }}
+
+    {% block actions %}
+        <div class="btn-toolbar pull-right record_actions" role="group">
+            <div class="btn-group">
+                <a role="button"  class="btn btn-info" href="{{ path('tew_candidate') }}">
+                    Back to the list
+                </a>
+            </div>
+            <div class="btn-group">
+                {{ form(delete_form) }}
+            </div>
+        </div>
+    {% endblock actions %}
 {% endblock body %}

@@ -1,5 +1,33 @@
 {% extends '::base.html.twig' %}
 
+{# if not using Application/Sonata/MediaBundle/Resources/Form/media_widgets.html.twig, uncomment the following line #}
+{# {% form_theme form 'TEWTPBundle:Form:media_widgets.html.twig' %} #}
+
+{% block styles %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/tewtp/css//jquery.tagsinput.css') }}" />
+{% endblock styles %}
+{% block scripts %}
+    <script src="{{ asset('bundles/tewtp/js/jquery.tagsinput.js') }}"></script>
+    <script>
+        $('.tags-field').tagsInput({
+            //'autocomplete_url': url_to_autocomplete_api,
+            //'autocomplete': { option: value, option: value},
+            'height':'30px',
+            'width':'400px',
+            //'interactive':true,
+            //'defaultText':'add a tag',
+            //'onAddTag':callback_function,
+            //'onRemoveTag':callback_function,
+            //'onChange' : callback_function,
+            //'removeWithBackspace' : true,
+            //'minChars' : 0,
+            //'maxChars' : 0 //if not provided there is no limit,
+            //'placeholderColor' : '#666666'
+            
+        });
+    </script>
+{% endblock scripts %}
+
 {% block body -%}
     <h1>Candidate creation</h1>
 

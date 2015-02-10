@@ -36,6 +36,14 @@ class CandidateType extends AbstractType
                 ->add('email', 'email')
                 ->add('phone1')
                 ->add('phone2', 'text', array('required' => false))
+                // ->add('addresses')
+                ->add('addresses', 'collection', array(
+                    'type' => new AddressType(),
+                    'required' => false,
+                    'allow_add' => true, // allows to add as many addresses as we want
+                    'allow_delete' => true,
+                    'by_reference' => false, // setAddresses() will be called
+                    ))
                 ->add('position')
                 ->add('targetPositions')
                 ->add('languagesSkills')
@@ -47,8 +55,8 @@ class CandidateType extends AbstractType
                     'empty_value'=> 'Yrs')
                         )
                 ->add('origin')
-                ->add('tags')
-//                ->add('tags','tags', array('required' => false, 'attr' => array('class' => 'tags-field input-block-level')))
+//                ->add('tags')
+                ->add('tags','tags', array('required' => false, 'attr' => array('class' => 'tags-field input-block-level')))
                 ->add('resume', 'sonata_media_type', array(
                     'label' => false,
                     'required' => false,
@@ -60,13 +68,16 @@ class CandidateType extends AbstractType
         //->add("creationDate", "date", array("mapped"=>false))
             ;
         //$builder->get('picture')->remove('unlink');
-        $builder->get('picture')->add('binaryContent', 'file', [
-            'label' => false,
-            ]);
-       $builder->get('picture')->remove('nimportequoi');
-//        $builder
-//                ->get('picture')->add('unlink', 'hidden', ['mapped' => false, 'data' => false])
-//                ->get('picture')->add('binaryContent', 'file', ['label' => false])
+        $builder->get('picture')->add('binaryContent', 'file', ['label' => false,]);
+        //$builder->get('resume')->remove('unlink');
+        $builder->get('resume')->add('binaryContent', 'file', ['label' => false,]);
+        
+//        
+
+//       $builder->get('picture')->remove('nimportequoi');
+////        $builder
+////                ->get('picture')->add('unlink', 'hidden', ['mapped' => false, 'data' => false])
+////                ->get('picture')->add('binaryContent', 'file', ['label' => false])
 //            ;
     }
     
@@ -85,6 +96,6 @@ class CandidateType extends AbstractType
      */
     public function getName()
     {
-        return 'tew_tpbundle_candidate';
+        return 'candidate';
     }
 }

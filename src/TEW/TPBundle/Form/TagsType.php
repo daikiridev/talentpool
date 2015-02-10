@@ -3,6 +3,7 @@ namespace TEW\TPBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+//use DoctrineExtensions\Taggable\TagManager;
 
 class TagsType extends AbstractType
 {

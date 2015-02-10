@@ -8,6 +8,7 @@ namespace TEW\TPBundle\Entity;
 
 // ORM mapping
 use DoctrineExtensions\Taggable\Taggable;
+use Application\Sonata\MediaBundle\Entity\Media;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -88,6 +89,14 @@ class Candidate implements Taggable
     private $phone2;
     
     /**
+     * @var addresses
+     *
+     * @ORM\OneToMany(targetEntity="Address", mappedBy="candidate", cascade={"persist"})   
+     * 
+     */
+    private $addresses;
+    
+    /**
      * @var picture
      *
      * @ORM\OneToOne(targetEntity="Application\Sonata\MediaBundle\Entity\Media", cascade={"all"})
@@ -164,7 +173,7 @@ class Candidate implements Taggable
     private $comments;
     
     /**
-     * @var tags
+     * @var \Doctrine\Common\Collections\Collection
      * 
      */
     private $tags;
@@ -409,7 +418,7 @@ class Candidate implements Taggable
      * @param \Application\Sonata\MediaBundle\Entity\Media $picture
      * @return Candidate
      */
-    public function setPicture(\Application\Sonata\MediaBundle\Entity\Media $picture = null)
+    public function setPicture(Media $picture = null)
     {
         $this->picture = $picture;
 
@@ -607,24 +616,29 @@ class Candidate implements Taggable
     }
     
     /**
-     * @return Tag[]
+     * Returns the collection of tags for this Taggable entity
+     *
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getTags()
     {
         $this->tags = $this->tags ?: new ArrayCollection();
-
         return $this->tags;
     }
 
     /**
      * Used to save tags from a form
      *  
-     * @param \TEW\TPBundle\Entity\CdteComment $comments
+     * @param ArrayCollection $tags
      * @return Candidate
      */ 
     public function setTags($tags)
     {
-        $this->tags = is_array($tags) ? new ArrayCollection($tags) : $tags;
+//        $this->tags = is_array($tags) ? new ArrayCollection($tags) : $tags;
+        $this->tags->clear();
+        foreach($tags as $tag) {
+            $this->tags->add($tag);
+        }
         return $this;
     }
 
@@ -753,4 +767,53 @@ class Candidate implements Taggable
         return $this->getLastName().' '.$this->getFirstName().' '.$this->getMiddleName().' ('.$this->getGender().')';
     }
 
+
+    /**
+     * Add addresses
+     *
+     * @param \TEW\TPBundle\Entity\Address $addresses
+     * @return Candidate
+     */
+    public function addAddress(\TEW\TPBundle\Entity\Address $addresses)
+    {
+        $this->addresses[] = $addresses;
+
+        return $this;
+    }
+
+    /**
+     * Remove addresses
+     *
+     * @param \TEW\TPBundle\Entity\Address $addresses
+     */
+    public function removeAddress(\TEW\TPBundle\Entity\Address $addresses)
+    {
+        $this->addresses->removeElement($addresses);
+    }
+
+    /**
+     * Get addresses
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getAddresses()
+    {
+        return $this->addresses;
+    }
+    
+    /**
+     * Set addresses
+     *
+     * @param \TEW\TPBundle\Entity\Address $addresses
+     * @return Candidate
+     */
+    public function setAddresses(ArrayCollection $addresses)
+    {
+        foreach ($addresses as $address) {
+            $address->setCandidate($this);
+        }
+
+        $this->address = $addresses;
+        return $this->addresses;
+    }
 }

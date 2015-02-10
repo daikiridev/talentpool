@@ -46,6 +46,16 @@ class CandidateController extends Controller
     {
         $entity = new Candidate($this->getUser());
         $form = $this->createCreateForm($entity);
+        
+        // Adding tagging stuff - see https://github.com/FabienPennequin/FPNTagBundle
+        $tagManager = $this->get('fpn_tag.tag_manager');
+        
+//        // ask the tag manager to create a Tag object
+//        $fooTag = $tagManager->loadOrCreateTag('foo');
+//
+//        // assign the foo tag to the post
+//        $tagManager->addTag($fooTag, $entity);
+        
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -53,7 +63,7 @@ class CandidateController extends Controller
             $em->persist($entity);
             $em->flush();
             
-            $this->get('fpn_tag.tag_manager')->saveTagging($entity);
+            $tagManager->saveTagging($entity);
 
             return $this->redirect($this->generateUrl('tew_candidate_show', array('id' => $entity->getId())));
         }
@@ -100,6 +110,14 @@ class CandidateController extends Controller
         $entity = new Candidate($currentUser);
         $form   = $this->createCreateForm($entity);
 
+        // analyses the form when we get a POST request
+        if ($request->isMethod('POST')) {
+            $form->handleRequest($request);
+            if ($form->isValid()) {
+                // here, we can save the candidate, its tags, addresses, etc.
+            }
+        }
+        
         return $this->render('TEWTPBundle:Candidate:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
@@ -196,11 +214,15 @@ class CandidateController extends Controller
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity);
         $editForm->handleRequest($request);
+        
+        // Adding tagging stuff - see https://github.com/FabienPennequin/FPNTagBundle
+        $tagManager = $this->get('fpn_tag.tag_manager');
 
         if ($editForm->isValid()) {
+            $em->persist($entity);
             $em->flush();
 
-            $this->get('fpn_tag.tag_manager')->saveTagging($entity);
+            $tagManager->saveTagging($entity);
             
             return $this->redirect($this->generateUrl('tew_candidate_edit', array('id' => $id)));
         }

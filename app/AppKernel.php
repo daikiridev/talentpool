@@ -50,6 +50,9 @@ class AppKernel extends Kernel
             new FPN\TagBundle\FPNTagBundle(),
             //new Fogs\TaggingBundle\FogsTaggingBundle(),
             
+            // MOBILITY MANAGEMENT
+            new DCS\Form\SelectCityFormFieldBundle\DCSFormSelectCityFormFieldBundle(),
+            
             // MISC
             //new AppBundle\AppBundle(),
             new CoreSphere\ConsoleBundle\CoreSphereConsoleBundle(),

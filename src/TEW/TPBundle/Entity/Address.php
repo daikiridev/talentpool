@@ -24,6 +24,13 @@ class Address
     /**
      * @var string
      *
+     * @ORM\Column(name="label", type="string", length=255)
+     */
+    private $label;
+    
+    /**
+     * @var string
+     *
      * @ORM\Column(name="street1", type="string", length=255)
      */
     private $street1;
@@ -31,7 +38,7 @@ class Address
     /**
      * @var string
      *
-     * @ORM\Column(name="street2", type="string", length=255)
+     * @ORM\Column(name="street2", type="string", length=255, nullable=true)
      */
     private $street2;
 
@@ -42,21 +49,68 @@ class Address
      */
     private $zip;
 
+
     /**
-     * @var string
-     *
-     * @ORM\Column(name="city", type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="TEW\TPBundle\Entity\CdteCity")
+     * @ORM\JoinColumn(name="city_id", referencedColumnName="id", nullable=true)
      */
     private $city;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="TEW\TPBundle\Entity\CdteRegion")
+     * @ORM\JoinColumn(name="region_id", referencedColumnName="id", nullable=true)
+     */
+    private $region;
 
     /**
-     * @var \stdClass
-     *
-     * @ORM\Column(name="country", type="object")
+     * @ORM\ManyToOne(targetEntity="TEW\TPBundle\Entity\CdteCountry")
+     * @ORM\JoinColumn(name="country_id", referencedColumnName="id", nullable=true)
      */
     private $country;
+    
+    /**
+     * @var \DCS\Form\SelectCityFormFieldBundle\Model\SelectData
+     */
+    protected $selectData;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="TEW\TPBundle\Entity\Candidate", inversedBy="addresses")
+     * @ORM\JoinColumn(name="candidate_id", referencedColumnName="id", nullable=true)
+     */
+    private $candidate;    
 
+    /**
+     * Set selectData
+     *
+     * @param \DCS\Form\SelectCityFormFieldBundle\Model\SelectData $selectData
+     * @return Address
+     */
+    public function setSelectData(\DCS\Form\SelectCityFormFieldBundle\Model\SelectData $selectData)
+    {
+        $this->setCountry($selectData->getCountry());
+        $this->setRegion($selectData->getRegion());
+        $this->setCity($selectData->getCity());
+
+        $this->selectData = $selectData;
+
+        return $this;
+    }
+
+    /**
+     * Get selectData
+     *
+     * @return \DCS\Form\SelectCityFormFieldBundle\Model\SelectData
+     */
+    public function getSelectData()
+    {
+        $selectData = new \DCS\Form\SelectCityFormFieldBundle\Model\SelectData();
+        $selectData->setCountry($this->getCountry());
+        $selectData->setRegion($this->getRegion());
+        $selectData->setCity($this->getCity());
+
+        return $selectData;
+    }
+    
     /**
      * Get id
      *
@@ -65,6 +119,29 @@ class Address
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set label
+     *
+     * @param string $label
+     * @return Address
+     */
+    public function setLabel($label)
+    {
+        $this->label = $label;
+
+        return $this;
+    }
+
+    /**
+     * Get label
+     *
+     * @return string 
+     */
+    public function getLabel()
+    {
+        return $this->label;
     }
 
     /**
@@ -180,5 +257,62 @@ class Address
     public function getCountry()
     {
         return $this->country;
+    }
+
+    /**
+     * Set region
+     *
+     * @param \TEW\TPBundle\Entity\CdteRegion $region
+     * @return Address
+     */
+    public function setRegion(\TEW\TPBundle\Entity\CdteRegion $region = null)
+    {
+        $this->region = $region;
+
+        return $this;
+    }
+
+    /**
+     * Get region
+     *
+     * @return \TEW\TPBundle\Entity\CdteRegion 
+     */
+    public function getRegion()
+    {
+        return $this->region;
+    }
+
+
+    /**
+     * Set candidate
+     *
+     * @param \TEW\TPBundle\Entity\Candidate $candidate
+     * @return Address
+     */
+    public function setCandidate(\TEW\TPBundle\Entity\Candidate $candidate = null)
+    {
+        $this->candidate = $candidate;
+
+        return $this;
+    }
+
+    /**
+     * Get candidate
+     *
+     * @return \TEW\TPBundle\Entity\Candidate 
+     */
+    public function getCandidate()
+    {
+        return $this->candidate;
+    }
+    
+    /**
+     * toString
+     * 
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getLabel();
     }
 }

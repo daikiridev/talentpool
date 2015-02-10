@@ -76,6 +76,10 @@ doctrine:
                     SonataMediaBundle: ~
                     SonataClassificationBundle: ~
                     #FogsTaggingBundle: ~
+                    taggable:
+                            type: annotation
+                            prefix: DoctrineExtensions\Taggable\Entity
+                            dir: "%kernel.root_dir%/../vendor/fpn/doctrine-extensions-taggable/metadata"
 
 #doctrine_phpcr:
 #    odm:
@@ -119,6 +123,14 @@ fpn_tag:
         tag_class:     \TEW\TPBundle\Entity\Tag
         tagging_class: \TEW\TPBundle\Entity\Tagging
 
+# Mobility management
+dcs_form_select_city_form_field:
+    db_driver: orm
+    api_security: IS_AUTHENTICATED_ANONYMOUSLY
+    model:
+        country: TEW\TPBundle\Entity\CdteCountry
+        region: TEW\TPBundle\Entity\CdteRegion
+        city: TEW\TPBundle\Entity\CdteCity
             
 ## Sonata TP Bundle configuration
 #sonata_tp:
