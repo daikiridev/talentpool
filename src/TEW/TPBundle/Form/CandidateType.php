@@ -38,11 +38,12 @@ class CandidateType extends AbstractType
                 ->add('phone2', 'text', array('required' => false))
                 // ->add('addresses')
                 ->add('addresses', 'collection', array(
+                    'attr' => array('class' => 'form-collection'), // in order to handle the jquery functions
                     'type' => new AddressType(),
                     'required' => false,
                     'allow_add' => true, // allows to add as many addresses as we want
                     'allow_delete' => true,
-                    'by_reference' => false, // setAddresses() will be called
+                    'by_reference' => false, // 'false' forces setAddresses() to be called
                     ))
                 ->add('position')
                 ->add('targetPositions')

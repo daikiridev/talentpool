@@ -289,10 +289,9 @@ class Address
      * @param \TEW\TPBundle\Entity\Candidate $candidate
      * @return Address
      */
-    public function setCandidate(\TEW\TPBundle\Entity\Candidate $candidate = null)
+    public function setCandidate(\TEW\TPBundle\Entity\Candidate $candidate)
     {
         $this->candidate = $candidate;
-
         return $this;
     }
 

@@ -29,18 +29,18 @@
         
     <script>
         {# « add » button #}    
-        var $addItemLink = $('<a href="#" class="add_item_link btn-xs btn-info">Add</a>');
+        var $addItemLink = $('<a href="#" class="add_item_link btn-xs btn-warning">Add</a>');
         var $addButton = $('<span></span>').append($addItemLink);
 
         function addItemForm(collectionHolder) {
             var prototype = collectionHolder.attr('data-prototype');
             {# Replaces '__name__' in the prototype HTML by the index of the current item #}
-            var newForm = prototype.replace(/__name__/g, collectionHolder.children().length);
-            {# Displays the item form in a <li>, just before the "add" button #}
-            var $newFormLi = $('<li></li>').append(newForm);
-            collectionHolder.append($newFormLi);
+            var newItemForm = prototype.replace(/__name__/g, collectionHolder.children().length);
+            {# Displays the item form in a <div>, just before the "add" button #}
+            var $newItemFormDiv = $('<div></div>').append(newItemForm);
+            collectionHolder.append($newItemFormDiv);
             {# add a "remove" link at the end of the new form #}
-            addItemFormDeleteLink($newFormLi);
+            addItemFormDeleteLink($newItemFormDiv);
         }
         function addItemFormDeleteLink($itemFormLi) {
             var $removeFormA = $('<a href="#" class="btn-xs btn-danger">Remove</a>');
@@ -55,7 +55,7 @@
         </script>
         <script>
         {# div containing the collection of addresses #}
-        var addressCollection = $('#addresses');
+        var addressCollection = $('#candidate_addresses');
         addressCollection.after($addButton);
         </script>
         <script>
@@ -67,7 +67,7 @@
                 addItemForm(collection);
             });
             {# adds a remove button to each item of each form collection #}
-            $('.form-collection').find('li').each(function () {
+            $('.form-collection').children('div').each(function () {
                 addItemFormDeleteLink($(this));
             });
         });
@@ -93,10 +93,11 @@
      # see http://symfony.com/doc/2.3/cookbook/form/form_collections.html for more information
      #}
     <div>
-    {{ form_label(edit_form.addresses) }}
+    {{ form_row(edit_form.addresses) }}
+    {#
     <ul id="addresses" class="form-collection" data-prototype="{{ form_widget(edit_form.addresses.vars.prototype)|e }}">
-        <!--{{ form_row(edit_form.addresses) }} {# in order to skip it in the form_end(edit_form) instruction #}-->
     </ul>
+    #}
     </div>
 
     {{ form_end(edit_form, {'render_rest': true}) }}

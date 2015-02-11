@@ -49,6 +49,10 @@
                 <td>{{ entity.phone2 }}</td>
             </tr>
             <tr>
+                <th>Addresses</th>
+                <td>{{ entity.addresses|join(' / ') }}</td>
+            </tr> 
+            <tr>
                 <th>Current position</th>
                 <td>{{ entity.position }}</td>
             </tr>

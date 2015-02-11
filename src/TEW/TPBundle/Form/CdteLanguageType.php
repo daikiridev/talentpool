@@ -35,6 +35,6 @@ class CdteLanguageType extends AbstractType
      */
     public function getName()
     {
-        return 'tew_tpbundle_talentpool';
+        return 'cdtelanguage';
     }
 }
