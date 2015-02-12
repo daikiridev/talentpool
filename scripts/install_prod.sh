@@ -17,7 +17,7 @@ app/console doctrine:migrations:migrate
 
 
 # cache cleaning
-app/console cache:clear # --env=prod --no-debug
+app/console cache:clear --env=prod
 
 # assets installaiton into web directory
 app/console assets:install --symlink

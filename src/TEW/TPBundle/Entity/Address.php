@@ -45,7 +45,7 @@ class Address
     /**
      * @var string
      *
-     * @ORM\Column(name="zip", type="string", length=7)
+     * @ORM\Column(name="zip", type="string", length=7, nullable=true)
      */
     private $zip;
 

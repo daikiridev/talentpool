@@ -60,10 +60,22 @@ class CandidateController extends Controller {
         if ($form->isValid()) {
             // here, we can save the candidate, its tags, addresses, etc.
             $em = $this->getDoctrine()->getManager();
-            
-            // Ajout de code pour la sauvegarde des addresses
-            
-            
+// Added by VP ->            
+            $formAddresses = $entity->getAddresses();
+            // adds new addresses
+            foreach ($formAddresses as $address) {
+                $address->setCandidate($entity);
+                $em->persist($address);
+            }
+            $formComments = $entity->getComments(); 
+            // adds new comments
+            if ($formComments !== NULL) {
+                foreach ($formComments as $comment) {
+                    $comment->setCandidate($entity);
+                    $comment->setAuthor($this->get('security.context')->getToken()->getUser());
+                    $em->persist($comment);
+                }
+            }
             
             $tagManager->saveTagging($entity);
             

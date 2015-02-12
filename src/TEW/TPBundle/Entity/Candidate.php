@@ -52,9 +52,9 @@ class Candidate implements Taggable
     /**
      * @var string
      *
-     * @ORM\Column(name="middlename", type="string", length=127)
+     * @ORM\Column(name="middlename", type="string", length=127, nullable=true)
      */
-    private $middleName = '';
+    private $middleName;
 
     /**
      * @var string
@@ -89,7 +89,7 @@ class Candidate implements Taggable
     /**
      * @var string
      *
-     * @ORM\Column(name="phone2", type="string", length=31)
+     * @ORM\Column(name="phone2", type="string", length=31, nullable=true)
      */
     private $phone2;
     

@@ -8,30 +8,43 @@
 {% endblock styles %}
 {% block scripts %}
     <script src="{{ asset('bundles/tewtp/js/jquery.tagsinput.js') }}"></script>
-    <script>
-        $('.tags-field').tagsInput({
-            //'autocomplete_url': url_to_autocomplete_api,
-            //'autocomplete': { option: value, option: value},
-            'height':'30px',
-            'width':'400px',
-            //'interactive':true,
-            //'defaultText':'add a tag',
-            //'onAddTag':callback_function,
-            //'onRemoveTag':callback_function,
-            //'onChange' : callback_function,
-            //'removeWithBackspace' : true,
-            //'minChars' : 0,
-            //'maxChars' : 0 //if not provided there is no limit,
-            //'placeholderColor' : '#666666'
-            
-        });
-    </script>
+    <script src="{{ asset('bundles/tewtp/js/tew.candidate.js') }}"></script>
 {% endblock scripts %}
 
 {% block body -%}
     <h1>Candidate creation</h1>
 
-    {{ form(form) }}
+
+    {#{ form(form) }#}
+    {{ form_start(form) }}
+
+    {{ form_widget(form.picture) }}
+    {{ form_widget(form.gender) }}{{ form_widget(form.firstName) }} {{ form_widget(form.middleName) }} {{ form_widget(form.lastName) }}
+    {{ form_row(form.dateOfBirth) }}
+    {{ form_row(form.email) }}
+    {{ form_row(form.phone1) }}
+    {{ form_row(form.phone2) }}
+
+    {#
+     # We put in the "data-prototype" field the prototype widget
+     # the so-called prototype is the prototype form for the Address class
+     # see http://symfony.com/doc/2.3/cookbook/form/form_collections.html for more information
+     #}
+    <br/>
+    <div>
+    {{ form_row(form.addresses) }}
+    </div>
+    <br/>
+    <div>
+        <div>
+            <label>{{ form_label(form.comments) }}</label>
+            <div id="candidate_comments_new" class="form-collection" data-prototype="{{ form_widget(form.comments.vars.prototype)|e }}"></div>
+        </div>
+    </div>
+    <div style="display: none">
+        {{ form_row(form.comments) }}
+    </div>
+    {{ form_end(form, {'render_rest': true}) }}
 
 {% block actions %}
     <div class="btn-toolbar pull-right record_actions" role="group">
