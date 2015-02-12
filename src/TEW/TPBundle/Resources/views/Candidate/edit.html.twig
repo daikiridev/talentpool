@@ -31,14 +31,17 @@
     </script>
         
     <script>
-        {# « add » button #}    
-        var $addItemLink = $('<a href="#" class="add_item_link btn-xs btn-warning">Add</a>');
-        var $addButton = $('<span></span>').append($addItemLink);
+        {# « add » button #}
+        var addButton = function (){
+            var $addItemLink = $('<a href="#" class="add_item_link btn-xs btn-warning">Add</a>');
+            return $('<span></span>').append($addItemLink);
+        };
 
-        function addItemForm(collectionHolder) {
+        {# adapted from http://symfony.com/doc/2.3/cookbook/form/form_collections.html #}
+        function addItemForm(collectionHolder, length) {
             var prototype = collectionHolder.attr('data-prototype');
             {# Replaces '__name__' in the prototype HTML by the index of the current item #}
-            var newItemForm = prototype.replace(/__name__/g, collectionHolder.children().length);
+            var newItemForm = prototype.replace(/__name__/g, length);
             {# Displays the item form in a <div>, just before the "add" button #}
             var $newItemFormDiv = $('<div></div>').append(newItemForm);
             collectionHolder.append($newItemFormDiv);
@@ -59,7 +62,11 @@
         <script>
         {# div containing the collection of addresses #}
         var addressCollection = $('#candidate_addresses');
-        addressCollection.after($addButton);
+        addressCollection.after(addButton());
+        {# div containing the collection of comments #}
+        var commentCollectionDB = $('#candidate_comments');
+        var commentCollection = $('#candidate_comments_new');
+        commentCollection.after(addButton());
         </script>
         <script>
         $(document).ready(function () {
@@ -67,7 +74,8 @@
             $('.add_item_link').on('click', function(e){
                 e.preventDefault();
                 collection = $(this).parent().prev('.form-collection');
-                addItemForm(collection);
+                length = collection.is("#candidate_comments_new")?commentCollectionDB.children().length:collectionHolder.children().length;
+                addItemForm(collection, length);
             });
             {# adds a remove button to each item of each form collection #}
             $('.form-collection').children('div').each(function () {
@@ -95,14 +103,20 @@
      # the so-called prototype is the prototype form for the Address class
      # see http://symfony.com/doc/2.3/cookbook/form/form_collections.html for more information
      #}
+    <br/>
     <div>
     {{ form_row(edit_form.addresses) }}
-    {#
-    <ul id="addresses" class="form-collection" data-prototype="{{ form_widget(edit_form.addresses.vars.prototype)|e }}">
-    </ul>
-    #}
     </div>
-
+    <br/>
+    <div>
+        <div>
+            <label>{{ form_label(edit_form.comments) }}</label>
+            <div id="candidate_comments_new" class="form-collection" data-prototype="{{ form_widget(edit_form.comments.vars.prototype)|e }}"></div>
+        </div>
+    </div>
+    <div style="display: none">
+        {{ form_row(edit_form.comments) }}
+    </div>
     {{ form_end(edit_form, {'render_rest': true}) }}
 
     {% block actions %}

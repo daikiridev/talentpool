@@ -6,10 +6,13 @@ namespace TEW\TPBundle\Entity;
 //use Fogs\TaggingBundle\Interfaces\Taggable;
 //use Fogs\TaggingBundle\Traits\TaggableTrait;
 
+use Application\Sonata\MediaBundle\Entity\Media;
+
 // ORM mapping
 use DoctrineExtensions\Taggable\Taggable;
-use Application\Sonata\MediaBundle\Entity\Media;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -17,6 +20,7 @@ use Doctrine\ORM\Mapping as ORM;
  * 
  * @ORM\Table(name="tew_candidate")
  * @ORM\Entity(repositoryClass="TEW\TPBundle\Entity\CandidateRepository")
+ * @UniqueEntity(fields="email", message="Email already taken")
  */
 class Candidate implements Taggable
 {
@@ -70,6 +74,7 @@ class Candidate implements Taggable
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=127)
+     * @Assert\Email()
      */
     
     private $email;
@@ -319,6 +324,18 @@ class Candidate implements Taggable
     {
         return $this->dateOfBirth;
     }
+
+    /**
+     * Get age
+     *
+     * @return smallint
+     */
+    public function getAge()
+    {
+        $now = new \DateTime();
+        return $now->diff($this->dateOfBirth)->y;
+    }
+    
 
     /**
      * Set email

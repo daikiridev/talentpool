@@ -3,6 +3,7 @@
 namespace TEW\TPBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * CdteComment
@@ -36,7 +37,12 @@ class CdteComment
 
     /**
      * @var integer
-     *
+     * @Assert\Range(
+     *      min = 0,
+     *      max = 5,
+     *      minMessage = "score must be positive",
+     *      maxMessage = "max score is 5"
+     * )
      * @ORM\Column(name="score", type="smallint")
      */
     private $score;
@@ -57,13 +63,13 @@ class CdteComment
     private $candidate;
     
     /**
-     * @var user
+     * @var author
      *
      * @ORM\ManyToOne(targetEntity="Application\Sonata\UserBundle\Entity\User")
      * @ORM\JoinColumn(name="user_id")
      */
-    private $user;
-
+    private $author;
+  
     /**
      * Get id
      *
@@ -172,9 +178,9 @@ class CdteComment
      * @param \Application\Sonata\UserBundle\Entity\User $user
      * @return CdteComment
      */
-    public function setUser(\Application\Sonata\UserBundle\Entity\User $user = null)
+    public function setAuthor(\Application\Sonata\UserBundle\Entity\User $user = null)
     {
-        $this->user = $user;
+        $this->author = $user;
 
         return $this;
     }
@@ -184,19 +190,30 @@ class CdteComment
      *
      * @return \Application\Sonata\UserBundle\Entity\User 
      */
-    public function getUser()
+    public function getAuthor()
     {
-        return $this->user;
+        return $this->author;
     }
     
     /**
      * Constructor
      */
-    public function __construct(\Application\Sonata\UserBundle\Entity\User $user)
+    public function __construct(\Application\Sonata\UserBundle\Entity\User $user=null)
     {
         $this->date = new \DateTime();
         $this->user = $user;
-    } 
+    }
+    
+    /**
+     * toString
+     * 
+     * @return string
+     */
+    public function __toString()
+    {
+        // return $this->getName().' (created by '.$this->getCreator()->getUsername().')';
+        return $this->getTitle();
+    }
 
     /**
      * Set title

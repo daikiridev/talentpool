@@ -1,3 +1,4 @@
+{# TEW/TPBundle/src/Resources/views/TalentPool/show.html.twig #}
 {% extends '::base.html.twig' %}
 
 {% block body -%}
@@ -19,7 +20,7 @@
             </tr>
             <tr>
                 <th>Creationdate</th>
-                <td>{{ entity.creationDate|date('Y-m-d H:i:s') }}</td>
+                <td>{{ entity.creationDate|date('d M Y H:i:s') }}</td>
             </tr>
             <tr>
                 <th>Positions</th>

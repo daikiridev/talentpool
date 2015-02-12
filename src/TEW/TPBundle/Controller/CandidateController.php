@@ -207,36 +207,55 @@ class CandidateController extends Controller {
         foreach ($entity->getAddresses() as $address) {
             $originalAddresses->add($address);
         }
+        // Getting candidate's comments stored in DB
+        $originalComments = new ArrayCollection();
+        foreach ($entity->getComments() as $comment) {
+            $originalComments->add($comment);
+        }
         
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity);
         $editForm->handleRequest($request);
 
-        // Adding tagging stuff - see https://github.com/FabienPennequin/FPNTagBundle
-        $tagManager = $this->get('fpn_tag.tag_manager');
-
         if ($editForm->isValid()) {
-            // Added by VP ->
+// Added by VP ->
             $formAddresses = $entity->getAddresses(); 
-                // removes the relation between addresses and the candidate
-                foreach ($originalAddresses as $address) {
-                    if ($formAddresses->contains($address) == false) {
-                        $em->remove($address);
-                    }
+            // removes the relation between addresses and the candidate
+            foreach ($originalAddresses as $address) {
+                if ($formAddresses->contains($address) == false) {
+                    $em->remove($address);
                 }
-                // adds new addresses
-                foreach ($formAddresses as $address) {
-                    if ($originalAddresses->contains($address) == false) {
-                        $address->setCandidate($entity);
-                        $em->persist($address);
-                    }
+            }
+            // adds new addresses
+            foreach ($formAddresses as $address) {
+                if ($originalAddresses->contains($address) == false) {
+                    $address->setCandidate($entity);
+                    $em->persist($address);
                 }
-            // <- Added by VP
-
-            $tagManager->saveTagging($entity);
+            }
+            $formComments = $entity->getComments(); 
+            // removes the relation between comments and the candidate
+//            foreach ($originalComments as $comment) {
+//                if ($formComments->contains($comment) == false) {
+//                    $em->remove($comment);
+//                }
+//            }
+            // adds new comments
+            foreach ($formComments as $comment) {
+                if ($originalComments->contains($comment) == false) {
+                    $comment->setCandidate($entity);
+                    $comment->setAuthor($this->get('security.context')->getToken()->getUser());
+                    $em->persist($comment);
+                }
+            }
+// <- Added by VP      
                         
             $em->persist($entity);
             $em->flush();
+            
+            // Adding tagging stuff - see https://github.com/FabienPennequin/FPNTagBundle
+            $tagManager = $this->get('fpn_tag.tag_manager');
+            $tagManager->saveTagging($entity);  
 
             return $this->redirect($this->generateUrl('tew_candidate_edit', array('id' => $id)));
         }

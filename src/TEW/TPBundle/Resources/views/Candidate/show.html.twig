@@ -7,6 +7,16 @@
             <tr>
                 <th>Id</th>
                 <td>{{ entity.id }}</td>
+                <td rowspan="100" style="vertical-align: top">
+                    <h4>Comments (to be displayed in a popup?)</h4>
+                    <ul>
+                    {% for comment in entity.comments %}
+                        <li><button type="button" class="btn btn-xs btn-info" data-toggle="tooltip" data-placement="left" title="{{ comment.comment }}">{{ comment }}</button>{{ comment.score|stars }}
+                            <em>- by {{ comment.author }}, on {{ comment.date|date('d M Y') }}</em>
+                        </li>
+                     {% endfor %} 
+                    </ul>
+                </td>
             </tr>
             <tr>
                 <th>Average score</th>
@@ -34,7 +44,7 @@
             </tr>
             <tr>
                 <th>Dateofbirth</th>
-                <td>{{ entity.dateOfBirth|date('d M Y') }}</td>
+                <td>{{ entity.dateOfBirth|date('d M Y') }} ({{ entity.age }} yrs old)</td>
             </tr>
             <tr>
                 <th>Email</th>
@@ -52,7 +62,7 @@
                 <th>Addresses</th>
                 <td>
                     {% for address in entity.addresses %}
-                        <div>{{ address }}: {{ address.street1 }} {{ address.street2 }} {{ address.zip }} {{ address.city }} {{ address.region }} {{ address.country }}</div>
+                        <div>{{ address }}: {{ address.street1 }} {{ address.street2 }} {{ address.zip }} {{ address.city }} {{ address.country }}</div>
                     {% endfor %}
                 </td>
             </tr> 
@@ -82,10 +92,6 @@
             <tr>
                 <th>Origin</th>
                 <td>{{ entity.origin }}</td>
-            </tr>
-            <tr>
-                <th>Comments</th>
-                <td>{{ entity.comments|join(' / ') }} Add a comment button</td>
             </tr>
             <tr>
                 <th>Tags</th>
