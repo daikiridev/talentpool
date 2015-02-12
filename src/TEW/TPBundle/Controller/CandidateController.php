@@ -221,11 +221,6 @@ class CandidateController extends Controller {
                 // removes the relation between addresses and the candidate
                 foreach ($originalAddresses as $address) {
                     if ($formAddresses->contains($address) == false) {
-                        // In case of ManyToMany relation:
-                        // $address->getCandidates()->removeElement($address);
-                        // $em->persist($address);
-
-                        // In case of ManyToOne relation:
                         $em->remove($address);
                     }
                 }

@@ -50,28 +50,38 @@ class Address
     private $zip;
 
 
+//    /**
+//     * @ORM\ManyToOne(targetEntity="TEW\TPBundle\Entity\CdteCity")
+//     * @ORM\JoinColumn(name="city_id", referencedColumnName="id", nullable=true)
+//     */
     /**
-     * @ORM\ManyToOne(targetEntity="TEW\TPBundle\Entity\CdteCity")
-     * @ORM\JoinColumn(name="city_id", referencedColumnName="id", nullable=true)
+     * @var string
+     *
+     * @ORM\Column(name="city", type="string", length=127)
      */
     private $city;
     
+//    /**
+//     * @ORM\ManyToOne(targetEntity="TEW\TPBundle\Entity\CdteRegion")
+//     * @ORM\JoinColumn(name="region_id", referencedColumnName="id", nullable=true)
+//     */
+//        private $region;
+ 
+//    /**
+//     * @ORM\ManyToOne(targetEntity="TEW\TPBundle\Entity\CdteCountry")
+//     * @ORM\JoinColumn(name="country_id", referencedColumnName="id", nullable=true)
+//     */
     /**
-     * @ORM\ManyToOne(targetEntity="TEW\TPBundle\Entity\CdteRegion")
-     * @ORM\JoinColumn(name="region_id", referencedColumnName="id", nullable=true)
-     */
-    private $region;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="TEW\TPBundle\Entity\CdteCountry")
-     * @ORM\JoinColumn(name="country_id", referencedColumnName="id", nullable=true)
+     * @var string
+     *
+     * @ORM\Column(name="country", type="string", length=128)
      */
     private $country;
     
-    /**
-     * @var \DCS\Form\SelectCityFormFieldBundle\Model\SelectData
-     */
-    protected $selectData;
+//    /**
+//     * @var \DCS\Form\SelectCityFormFieldBundle\Model\SelectData
+//     */
+//    protected $selectData;
 
     /**
      * @ORM\ManyToOne(targetEntity="TEW\TPBundle\Entity\Candidate", inversedBy="addresses")
@@ -79,37 +89,37 @@ class Address
      */
     private $candidate;    
 
-    /**
-     * Set selectData
-     *
-     * @param \DCS\Form\SelectCityFormFieldBundle\Model\SelectData $selectData
-     * @return Address
-     */
-    public function setSelectData(\DCS\Form\SelectCityFormFieldBundle\Model\SelectData $selectData)
-    {
-        $this->setCountry($selectData->getCountry());
-        $this->setRegion($selectData->getRegion());
-        $this->setCity($selectData->getCity());
-
-        $this->selectData = $selectData;
-
-        return $this;
-    }
-
-    /**
-     * Get selectData
-     *
-     * @return \DCS\Form\SelectCityFormFieldBundle\Model\SelectData
-     */
-    public function getSelectData()
-    {
-        $selectData = new \DCS\Form\SelectCityFormFieldBundle\Model\SelectData();
-        $selectData->setCountry($this->getCountry());
-        $selectData->setRegion($this->getRegion());
-        $selectData->setCity($this->getCity());
-
-        return $selectData;
-    }
+//    /**
+//     * Set selectData
+//     *
+//     * @param \DCS\Form\SelectCityFormFieldBundle\Model\SelectData $selectData
+//     * @return Address
+//     */
+//    public function setSelectData(\DCS\Form\SelectCityFormFieldBundle\Model\SelectData $selectData)
+//    {
+//        $this->setCountry($selectData->getCountry());
+//        $this->setRegion($selectData->getRegion());
+//        $this->setCity($selectData->getCity());
+//
+//        $this->selectData = $selectData;
+//
+//        return $this;
+//    }
+//
+//    /**
+//     * Get selectData
+//     *
+//     * @return \DCS\Form\SelectCityFormFieldBundle\Model\SelectData
+//     */
+//    public function getSelectData()
+//    {
+//        $selectData = new \DCS\Form\SelectCityFormFieldBundle\Model\SelectData();
+//        $selectData->setCountry($this->getCountry());
+//        $selectData->setRegion($this->getRegion());
+//        $selectData->setCity($this->getCity());
+//
+//        return $selectData;
+//    }
     
     /**
      * Get id
@@ -213,75 +223,6 @@ class Address
         return $this->zip;
     }
 
-    /**
-     * Set city
-     *
-     * @param string $city
-     * @return Address
-     */
-    public function setCity($city)
-    {
-        $this->city = $city;
-
-        return $this;
-    }
-
-    /**
-     * Get city
-     *
-     * @return string 
-     */
-    public function getCity()
-    {
-        return $this->city;
-    }
-
-    /**
-     * Set country
-     *
-     * @param \stdClass $country
-     * @return Address
-     */
-    public function setCountry($country)
-    {
-        $this->country = $country;
-
-        return $this;
-    }
-
-    /**
-     * Get country
-     *
-     * @return \stdClass 
-     */
-    public function getCountry()
-    {
-        return $this->country;
-    }
-
-    /**
-     * Set region
-     *
-     * @param \TEW\TPBundle\Entity\CdteRegion $region
-     * @return Address
-     */
-    public function setRegion(\TEW\TPBundle\Entity\CdteRegion $region = null)
-    {
-        $this->region = $region;
-
-        return $this;
-    }
-
-    /**
-     * Get region
-     *
-     * @return \TEW\TPBundle\Entity\CdteRegion 
-     */
-    public function getRegion()
-    {
-        return $this->region;
-    }
-
 
     /**
      * Set candidate
@@ -313,5 +254,51 @@ class Address
     public function __toString()
     {
         return $this->getLabel();
+    }
+
+    /**
+     * Set city
+     *
+     * @param string $city
+     * @return Address
+     */
+    public function setCity($city)
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    /**
+     * Get city
+     *
+     * @return string 
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    /**
+     * Set country
+     *
+     * @param string $country
+     * @return Address
+     */
+    public function setCountry($country)
+    {
+        $this->country = $country;
+
+        return $this;
+    }
+
+    /**
+     * Get country
+     *
+     * @return string 
+     */
+    public function getCountry()
+    {
+        return $this->country;
     }
 }

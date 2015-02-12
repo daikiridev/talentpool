@@ -50,7 +50,11 @@
             </tr>
             <tr>
                 <th>Addresses</th>
-                <td>{{ entity.addresses|join(' / ') }}</td>
+                <td>
+                    {% for address in entity.addresses %}
+                        <div>{{ address }}: {{ address.street1 }} {{ address.street2 }} {{ address.zip }} {{ address.city }} {{ address.region }} {{ address.country }}</div>
+                    {% endfor %}
+                </td>
             </tr> 
             <tr>
                 <th>Current position</th>

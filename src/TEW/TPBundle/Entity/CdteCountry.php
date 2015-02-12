@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * CdteCountry
  *
- * @ORM\Table(name="tew_cdtecountry")
+ * @ORM\Table(name="tew_country")
  * @ORM\Entity(repositoryClass="TEW\TPBundle\Entity\CdteCountryRepository")
  */
 class CdteCountry extends CountryBase

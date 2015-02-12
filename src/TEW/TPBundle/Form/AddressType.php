@@ -14,9 +14,11 @@ class AddressType extends AbstractType
     {
         $builder
             ->add('label')
-            ->add('street1')
+            ->add('street1', 'text', array('required' => false))
             ->add('street2', 'text', array('required' => false))
-            ->add('zip')
+            ->add('zip', 'text', array('required' => false))
+            ->add('city', 'text', array('required' => false))
+            ->add('country', 'text', array('required' => false))
 //            ->add('selectData', 'select_city', array(
 //                'country_required'  => $options['country_required'],
 //                //'state_required'    => $options['state_required'], // doesn't work...
@@ -29,15 +31,15 @@ class AddressType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class'                => 'TEW\TPBundle\Entity\Address',
-            'country_required'          => true,
-            'state_required'            => true,
-            'city_required'             => true,
+//            'country_required'          => true,
+//            'state_required'            => false,
+//            'city_required'             => true,
         ));
 
         $resolver->setAllowedTypes(array(
-            'country_required'          => 'bool',
-            'state_required'            => 'bool',
-            'city_required'             => 'bool',
+//            'country_required'          => 'bool',
+//            'state_required'            => 'bool',
+//            'city_required'             => 'bool',
         ));
     }
 
