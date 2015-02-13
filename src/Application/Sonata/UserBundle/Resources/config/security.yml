@@ -12,6 +12,10 @@ security:
             pattern:  ^/(_(profiler|wdt)|css|images|js)/
             security: false
             
+        login:
+            pattern:   ^/(login$|register|resetting)  # authorizing anonymous acces to theses pages
+            anonymous: true     
+            
         admin:
             pattern:            /admin(.*)
             context:            user
@@ -23,6 +27,7 @@ security:
                 failure_path:   null
             logout:
                 path:           /admin/logout
+                invalidate_session: false # PHP 5.4.10 bug solved by setting this
             anonymous:          true
 
         main:
@@ -42,4 +47,4 @@ security:
                     domain:     ~
             logout:
                 invalidate_session: false # PHP 5.4.10 bug solved by setting this
-            anonymous:    true
+            anonymous:    false

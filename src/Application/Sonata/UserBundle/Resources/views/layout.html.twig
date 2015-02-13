@@ -1,50 +1,42 @@
 {% extends "TEWTPBundle::layout.html.twig" %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{asset('bundles/sonataadmin/vendor/AdminLTE/css/AdminLTE.css')}}">
+    
+{% endblock styles %}
+
 {% block body %}
-        <div>
-            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
-                <a href="{{ path('sonata_user_security_logout') }}">
-                    {{ 'layout.logout'|trans({}, 'SonataUserBundle') }}
-                </a>
-            {% else %}
-                <a href="{{ path('sonata_user_security_login') }}">{{ 'layout.login'|trans({}, 'SonataUserBundle') }}</a>
-            {% endif %}
-        </div>
+    {% if error %}
+        <div>{{ error|trans({}, 'FOSUserBundle') }}</div>
+    {% endif %}
 
-        {% for type, messages in app.session.flashBag.all %}
-            {% for message in messages %}
-                <div class="{{ type }}">
-                    {{ message|trans({}, 'SonataUserBundle') }}
+    <div class="form-box" id="login-box">
+        <div class="header bg-blue-gradient">Authentication</div>
+        <form action="{{ path("fos_user_security_check") }}" method="post" role="form">
+            <div class="body bg-gray">
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+                
+                <div class="form-group control-group">
+                    <input type="text" class="form-control" id="username"  name="_username" value="{{ last_username }}" required="required" placeholder="{{ 'security.login.username'|trans({}, 'FOSUserBundle') }}"/>
                 </div>
-            {% endfor %}
-        {% endfor %}
 
-        <div>
-            {#% block sonata_user_content %#}
-            {#% endblock sonata_user_content %#}
-            {% block fos_user_content %}
-            {% endblock fos_user_content %}
-        </div>
+                <div class="form-group control-group">
+                    <input type="password" class="form-control" id="password" name="_password" required="required" placeholder="{{ 'security.login.password'|trans({}, 'FOSUserBundle') }}"/>
+                </div>
 
-        <div class="alert-warning">
-            Demo users:
-            <ul>
-                <li>Administrator
-                    <strong>user:</strong> <code>admin</code>
-                    <strong>password:</strong> <code>admin</code>
-                </li>
-                <li>TEW Executor
-                    <strong>user:</strong> <code>tew_exec</code>
-                    <strong>password:</strong> <code>tew_exec</code>
-                </li>
-                <li>Client
-                    <strong>user:</strong> <code>client</code>
-                    <strong>password:</strong> <code>client</code>
-                </li>
-                <li>Registered candidate
-                    <strong>user:</strong> <code>cdte</code>
-                    <strong>password:</strong> <code>cdte</code>
-                </li>
-            </ul>
-        </div>
-    {% endblock %}
+                <div class="form-group">
+                    <input type="checkbox" id="remember_me" name="_remember_me" value="on"/>
+                    {{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}
+                </div>
+
+            </div>
+
+            <div class="footer">
+                <button type="submit" id="_submit" name="_submit" class="btn bg-blue-gradient">{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}</button>
+                {#
+                <p><a href="/app_dev.php/resetting/request" class="text-center">Forgotten password?</a></p>
+                #}
+            </div>
+        </form>
+    </div>
+{% endblock body %}
