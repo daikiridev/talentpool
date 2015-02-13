@@ -294,6 +294,16 @@ class CandidateController extends Controller {
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find Candidate entity.');
             }
+            
+            // Delete addresses, comments and media attached to the candidate
+            $addresses = $em->getRepository('TEWTPBundle:Address')->findByCandidate($entity->getId());
+            foreach ($addresses as $address) {
+                $em->remove($address);
+            }
+            $comments = $em->getRepository('TEWTPBundle:CdteComment')->findByCandidate($entity->getId());
+            foreach ($comments as $comment) {
+                $em->remove($comment);
+            }
 
             $em->remove($entity);
             $em->flush();
