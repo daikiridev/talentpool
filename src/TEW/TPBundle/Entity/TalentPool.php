@@ -38,9 +38,8 @@ class TalentPool
 
     /**
      * @var candidates
-     * 
-     * @ORM\ManyToMany(targetEntity="Candidate", inversedBy="talentpools")
-     * @ORM\JoinTable(name="tew_talentpool_candidates")
+
+     * @ORM\ManyToMany(targetEntity="Candidate", mappedBy="talentpools")
      */
     private $candidates;
 

@@ -96,7 +96,7 @@ class Candidate implements Taggable
     /**
      * @var addresses
      *
-     * @ORM\OneToMany(targetEntity="Address", mappedBy="candidate", cascade={"persist"})   
+     * @ORM\OneToMany(targetEntity="Address", mappedBy="candidate", cascade={"persist", "remove"})   
      * 
      */
     private $addresses;
@@ -150,7 +150,9 @@ class Candidate implements Taggable
     /**
      * @var talentpools
      * 
-     * @ORM\ManyToMany(targetEntity="TalentPool", mappedBy="candidates")
+     * @ORM\ManyToMany(targetEntity="TalentPool", inversedBy="candidates")
+     * @ORM\JoinTable(name="tew_talentpool_candidates")
+     * 
      */
     private $talentpools;
     
@@ -172,7 +174,7 @@ class Candidate implements Taggable
     /**
      * @var comments
      *
-     * @ORM\OneToMany(targetEntity="CdteComment", mappedBy="candidate")   
+     * @ORM\OneToMany(targetEntity="CdteComment", mappedBy="candidate", cascade={"persist", "remove"})   
      * 
      */
     private $comments;

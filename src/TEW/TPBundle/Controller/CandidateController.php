@@ -77,10 +77,10 @@ class CandidateController extends Controller {
                 }
             }
             
-            $tagManager->saveTagging($entity);
-            
             $em->persist($entity);
             $em->flush();
+            $tags = $tagManager->loadOrCreateTags($form->get('tags')->getData());
+            $tagManager->saveTagging($entity);
 
             return $this->redirect($this->generateUrl('tew_candidate_show', array('id' => $entity->getId())));
         }
@@ -145,6 +145,10 @@ class CandidateController extends Controller {
             throw $this->createNotFoundException('Unable to find Candidate entity.');
         }
 
+        // Adding tagging stuff - see https://github.com/FabienPennequin/FPNTagBundle
+        $tagManager = $this->get('fpn_tag.tag_manager');
+        $tagManager->loadTagging($entity);
+        
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('TEWTPBundle:Candidate:show.html.twig', array(
@@ -167,11 +171,12 @@ class CandidateController extends Controller {
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Candidate entity.');
         }
-
+        // Adding tagging stuff - see https://github.com/FabienPennequin/FPNTagBundle
+        $tagManager = $this->get('fpn_tag.tag_manager');
+        $tagManager->loadTagging($entity);
+        
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
-
-        $this->get('fpn_tag.tag_manager')->saveTagging($entity); // to be confirmed...
 
         return $this->render('TEWTPBundle:Candidate:edit.html.twig', array(
                     'entity' => $entity,
@@ -214,6 +219,8 @@ class CandidateController extends Controller {
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Candidate entity.');
         }
+        
+        
         // Getting candidate's addresses stored in DB
         $originalAddresses = new ArrayCollection();
         foreach ($entity->getAddresses() as $address) {
@@ -228,6 +235,10 @@ class CandidateController extends Controller {
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity);
         $editForm->handleRequest($request);
+        
+        // Adding tagging stuff - see https://github.com/FabienPennequin/FPNTagBundle
+        $tagManager = $this->get('fpn_tag.tag_manager');
+        $tags = $tagManager->loadOrCreateTags($editForm->get('tags')->getData());
 
         if ($editForm->isValid()) {
 // Added by VP ->
@@ -260,15 +271,13 @@ class CandidateController extends Controller {
                     $em->persist($comment);
                 }
             }
+            
 // <- Added by VP      
-                        
+ 
             $em->persist($entity);
             $em->flush();
-            
-            // Adding tagging stuff - see https://github.com/FabienPennequin/FPNTagBundle
-            $tagManager = $this->get('fpn_tag.tag_manager');
-            $tagManager->saveTagging($entity);  
-
+            // after flushing the post, tell the tag manager to actually save the tags
+            $tagManager->saveTagging($entity);
             return $this->redirect($this->generateUrl('tew_candidate_edit', array('id' => $id)));
         }
 
@@ -296,14 +305,18 @@ class CandidateController extends Controller {
             }
             
             // Delete addresses, comments and media attached to the candidate
-            $addresses = $em->getRepository('TEWTPBundle:Address')->findByCandidate($entity->getId());
-            foreach ($addresses as $address) {
-                $em->remove($address);
-            }
-            $comments = $em->getRepository('TEWTPBundle:CdteComment')->findByCandidate($entity->getId());
-            foreach ($comments as $comment) {
-                $em->remove($comment);
-            }
+            // Ok, not necessary anymore: this is handled by the ORM OneToMany cascade={"persist", "remove"}
+//            $addresses = $em->getRepository('TEWTPBundle:Address')->findByCandidate($entity->getId());
+//            foreach ($addresses as $address) {
+//                $em->remove($address);
+//            }
+//            $comments = $em->getRepository('TEWTPBundle:CdteComment')->findByCandidate($entity->getId());
+//            foreach ($comments as $comment) {
+//                $em->remove($comment);
+//            }
+            // Adding tagging stuff - see https://github.com/FabienPennequin/FPNTagBundle
+            $tagManager = $this->get('fpn_tag.tag_manager');
+            $tagManager->deleteTagging($entity);
 
             $em->remove($entity);
             $em->flush();

@@ -14,11 +14,11 @@ class AddressType extends AbstractType
     {
         $builder
             ->add('label')
-            ->add('street1', 'text', array('required' => false))
-            ->add('street2', 'text', array('required' => false))
-            ->add('zip', 'text', array('required' => false))
-            ->add('city', 'text', array('required' => false))
-            ->add('country', 'text', array('required' => false))
+            ->add('street1', 'text')
+            ->add('street2', 'text')
+            ->add('zip', 'text')
+            ->add('city', 'text')
+            ->add('country', 'text')
 //            ->add('selectData', 'select_city', array(
 //                'country_required'  => $options['country_required'],
 //                //'state_required'    => $options['state_required'], // doesn't work...

@@ -68,12 +68,12 @@
             </tr> 
             <tr>
                 <th>Current position</th>
-                <td>{{ entity.position }}</td>
+                <td>{{ entity.position }} {{ entity.level }} years</td>
             </tr>
             <tr>
                 <th>Target positions</th>
                 <td>{{ entity.targetPositions|join(' / ') }}</td>
-            </tr> 
+            </tr>
             <tr>
                 <th>Languages</th>
                 <td> {% for lskill in  entity.languagesSkills %}
@@ -84,10 +84,6 @@
             <tr>
                 <th>Talent Pools</th>
                 <td>{{ entity.talentpools|join(' / ') }}</td>
-            </tr>
-            <tr>
-                <th>Experience</th>
-                <td>{{ entity.level }} years</td>
             </tr>
             <tr>
                 <th>Origin</th>

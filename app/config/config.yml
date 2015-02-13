@@ -159,7 +159,7 @@ parameters:
 #    sonata.user.admin.user.class: Application\Sonata\UserBundle\Admin\UserAdmin
 #    sonata.user.admin.user.entity: Application\Sonata\UserBundle\Entity\User
 
-# Services
+# Services (see src/TEW/TPBundle/Ressources/config/services.yml)
 services:
 #    tew.admin.user:
 #        class: TEW\UserBundle\Admin\UserAdmin
@@ -170,8 +170,3 @@ services:
 #            - Acme\MediaBundle\Document\Media
 #            - '%sonata.media.admin.media.controller%'
 #            - @sonata.media.pool
-    tew.form.tags:
-        class: TEW\TPBundle\Form\TagsType
-        arguments: [ "@fpn_tag.tag_manager" ]
-        tags:
-            - { name: form.type, alias: tags }

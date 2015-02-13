@@ -51,15 +51,15 @@ class CandidateType extends AbstractType
                     'label' => 'Current position',
                     'empty_value' => 'Select'
                     ))
-                ->add('targetPositions')
-                ->add('languagesSkills')
-//                ->add('languagesSkills', 'collection', array('type'=>new CdteLanguageType)) // we change the default form
-                ->add('talentpools')
                 ->add('level', 'choice', array(
                     'label' => 'Experience',
                     'choices' => range(0,40),
                     'empty_value'=> 'Yrs')
-                        )
+                    )
+                ->add('targetPositions')
+                ->add('languagesSkills')
+//                ->add('languagesSkills', 'collection', array('type'=>new CdteLanguageType)) // we change the default form
+                ->add('talentpools')
                 ->add('origin')
 //                ->add('tags')
                 ->add('tags','tags', array('required' => false, 'attr' => array('class' => 'tags-field input-block-level')))
@@ -75,9 +75,9 @@ class CandidateType extends AbstractType
                     'attr' => array('class' => 'form-collection'), // in order to handle the jquery functions
                     'type' => new CdteCommentType(),
                     'required' => false,
-                    'allow_add' => true, // allows to add as many addresses as we want
+                    'allow_add' => true, // allows to add as many comments as we want
                     'allow_delete' => false,
-                    'by_reference' => false, // 'false' forces setAddresses() to be called
+                    'by_reference' => false, // 'false' forces setComments() to be called
                     ))
             ;
         //$builder->get('picture')->remove('unlink');

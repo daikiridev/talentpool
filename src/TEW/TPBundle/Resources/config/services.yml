@@ -19,6 +19,19 @@ services:
         class: TEW\TPBundle\Twig\Extension\TEWExtension
         tags:
             - { name: twig.extension } 
+
+# Tags in buildForm            
+    tew.form.tags:
+        class: TEW\TPBundle\Form\TagsType
+        arguments: [ "@fpn_tag.tag_manager" ]
+        tags:
+            - { name: form.type, alias: tags }
+#    tew.listener.tag:
+#        class: TEW\TPBundle\EventListener\TagListener
+#        tags:
+#            - { name: doctrine.event_subscriber, connection: default }
+#        calls:
+#        - [ setTagManager, [ @fpn_tag.tag_manager ] ]
 # Backoffice parameters...
 #    tew_tp.admin.cdtelanguage:
 #        class: TEW\TPBundle\Admin\CdteLanguageAdmin
