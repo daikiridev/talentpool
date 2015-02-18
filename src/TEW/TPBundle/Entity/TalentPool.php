@@ -29,12 +29,12 @@ class TalentPool
     private $name;
     
     /**
-     * @var positions
+     * @var profiles
      * 
-     * @ORM\ManyToMany(targetEntity="CdtePosition", inversedBy="talentpools", cascade={"persist"})
-     * @ORM\JoinTable(name="tew_talentpool_positions")
+     * @ORM\OneToMany(targetEntity="CdteProfile", mappedBy="talentpool", cascade={"all"})
+     *
      */
-    private $positions;
+    private $profiles;
 
     /**
      * @var candidates
@@ -209,7 +209,7 @@ class TalentPool
      */
     public function __construct(\Application\Sonata\UserBundle\Entity\User $user)
     {
-        $this->positions = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->profiles = new \Doctrine\Common\Collections\ArrayCollection();
         $this->candidates = new \Doctrine\Common\Collections\ArrayCollection();
         $this->creationDate = new \DateTime();
         $this->creator = $user;
@@ -224,5 +224,38 @@ class TalentPool
     {
         // return $this->getName().' (created by '.$this->getCreator()->getUsername().')';
         return $this->getName();
+    }
+
+    /**
+     * Add profiles
+     *
+     * @param \TEW\TPBundle\Entity\CdteProfile $profiles
+     * @return TalentPool
+     */
+    public function addProfile(\TEW\TPBundle\Entity\CdteProfile $profiles)
+    {
+        $this->profiles[] = $profiles;
+
+        return $this;
+    }
+
+    /**
+     * Remove profiles
+     *
+     * @param \TEW\TPBundle\Entity\CdteProfile $profiles
+     */
+    public function removeProfile(\TEW\TPBundle\Entity\CdteProfile $profiles)
+    {
+        $this->profiles->removeElement($profiles);
+    }
+
+    /**
+     * Get profiles
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getProfiles()
+    {
+        return $this->profiles;
     }
 }

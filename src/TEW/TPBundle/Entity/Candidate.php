@@ -124,17 +124,66 @@ class Candidate implements Taggable
      *  })
      */
     private $position;
-
+    
     /**
-     * @var targetPositions
-     * 
-     * @ORM\ManyToMany(targetEntity="CdtePosition")
-     * @ORM\JoinTable(name="tew_cdte_targetpositions",
-     *  joinColumns={@ORM\JoinColumn(name="position_id", referencedColumnName="id")},
-     *  inverseJoinColumns={@ORM\JoinColumn(name="candidate_id", referencedColumnName="id")}
-     *  )
+     * level: years of experience
+     * @var level
+     *
+     * @ORM\Column(name="level", type="smallint")
      */
-    private $targetPositions;
+    private $level;
+    
+    /**
+     * @var annualIncome (USD)
+     *
+     * @ORM\Column(name="annualincome", type="integer")
+     * @Assert\Range(
+     *      min = 0,
+     *      minMessage = "Annual income must be positive"
+     * )
+     */
+    private $annualIncome;
+    
+    /**
+     * @var targetPosition1
+     *
+     * @ORM\ManyToOne(targetEntity="CdtePosition")
+     * @ORM\JoinColumns={
+     *      @ORM\JoinColumn(name="targetposition1_id", referencedColumnName="id")
+     *  })
+     */
+    private $targetPosition1;
+    
+    /**
+     * @var targetPosition2
+     *
+     * @ORM\ManyToOne(targetEntity="CdtePosition")
+     * @ORM\JoinColumns={
+     *      @ORM\JoinColumn(name="targetposition2_id", referencedColumnName="id", nullable=true)
+     *  })
+     */
+    private $targetPosition2;
+    
+    /**
+     * @var targetPosition3
+     *
+     * @ORM\ManyToOne(targetEntity="CdtePosition")
+     * @ORM\JoinColumns={
+     *      @ORM\JoinColumn(name="targetposition3_id", referencedColumnName="id", nullable=true)
+     *  })
+     */
+    private $targetPosition3; 
+    
+//    /**
+//     * @var targetPositions
+//     * 
+//     * @ORM\ManyToMany(targetEntity="CdtePosition")
+//     * @ORM\JoinTable(name="tew_cdte_targetpositions",
+//     *  joinColumns={@ORM\JoinColumn(name="position_id", referencedColumnName="id")},
+//     *  inverseJoinColumns={@ORM\JoinColumn(name="candidate_id", referencedColumnName="id")}
+//     *  )
+//     */
+//    private $targetPositions;
     
     /**
      * @var languagesSkills
@@ -155,14 +204,6 @@ class Candidate implements Taggable
      * 
      */
     private $talentpools;
-    
-    /**
-     * level: years of experience
-     * @var integer
-     *
-     * @ORM\Column(name="level", type="smallint")
-     */
-    private $level;
     
     /**
      * @var string
@@ -188,9 +229,9 @@ class Candidate implements Taggable
     /**
      * @var date
      * 
-     * @ORM\Column(name="creationdate", type="datetime")
+     * @ORM\Column(name="createdat", type="datetime")
      */
-    private $creationDate;
+    private $createdAt;
   
     /**
      * @var creator
@@ -201,6 +242,28 @@ class Candidate implements Taggable
     private $creator;
     
 
+    /**
+     * Constructor
+     */
+    public function __construct(\Application\Sonata\UserBundle\Entity\User $user=null)
+    {
+        $this->languagesSkills = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->talentpools = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->tags = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->createdAt = new \DateTime();
+        $this->creator = $user;
+    }
+    
+    /**
+     * toString
+     * 
+     * @return string
+     */
+    public function __toString()
+    {
+        // return $this->getName().' (created by '.$this->getCreator()->getUsername().')';
+        return $this->getLastName().' '.$this->getFirstName().' '.$this->getMiddleName().' ('.$this->getGender().')';
+    }    
 
     /**
      * Get id
@@ -500,26 +563,26 @@ class Candidate implements Taggable
         return $this->origin;
     }
     /**
-     * Set creationDate
+     * Set createdAt
      *
      * @param \DateTime $creationDate
      * @return Candidate
      */
-    public function setCreationDate($creationDate)
+    public function setcreatedAt($creationDate)
     {
-        $this->creationDate = $creationDate;
+        $this->createdAt = $creationDate;
 
         return $this;
     }
 
     /**
-     * Get creationDate
+     * Get createdAt
      *
      * @return \DateTime 
      */
-    public function getCreationDate()
+    public function getcreatedAt()
     {
-        return $this->creationDate;
+        return $this->createdAt;
     }
 
     /**
@@ -760,32 +823,6 @@ class Candidate implements Taggable
         return $this->talentpools;
     }
 
-    
-    
-    /**
-     * Constructor
-     */
-    public function __construct(\Application\Sonata\UserBundle\Entity\User $user=null)
-    {
-        $this->targetPositions = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->languagesSkills = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->talentpools = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->tags = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->creationDate = new \DateTime();
-        $this->creator = $user;
-    }
-    
-    /**
-     * toString
-     * 
-     * @return string
-     */
-    public function __toString()
-    {
-        // return $this->getName().' (created by '.$this->getCreator()->getUsername().')';
-        return $this->getLastName().' '.$this->getFirstName().' '.$this->getMiddleName().' ('.$this->getGender().')';
-    }
-
 
     /**
      * Add addresses
@@ -835,4 +872,97 @@ class Candidate implements Taggable
         $this->address = $addresses;
         return $this->addresses;
     }
+
+    /**
+     * Set annualIncome
+     *
+     * @param integer $annualIncome
+     * @return Candidate
+     */
+    public function setAnnualIncome($annualIncome)
+    {
+        $this->annualIncome = $annualIncome;
+
+        return $this;
+    }
+
+    /**
+     * Get annualIncome
+     *
+     * @return integer 
+     */
+    public function getAnnualIncome()
+    {
+        return $this->annualIncome;
+    }
+
+    /**
+     * Set targetPosition1
+     *
+     * @param \TEW\TPBundle\Entity\CdtePosition $targetPosition1
+     * @return Candidate
+     */
+    public function setTargetPosition1(\TEW\TPBundle\Entity\CdtePosition $targetPosition1 = null)
+    {
+        $this->targetPosition1 = $targetPosition1;
+
+        return $this;
+    }
+
+    /**
+     * Get targetPosition1
+     *
+     * @return \TEW\TPBundle\Entity\CdtePosition 
+     */
+    public function getTargetPosition1()
+    {
+        return $this->targetPosition1;
+    }
+
+    /**
+     * Set targetPosition2
+     *
+     * @param \TEW\TPBundle\Entity\CdtePosition $targetPosition2
+     * @return Candidate
+     */
+    public function setTargetPosition2(\TEW\TPBundle\Entity\CdtePosition $targetPosition2 = null)
+    {
+        $this->targetPosition2 = $targetPosition2;
+
+        return $this;
+    }
+
+    /**
+     * Get targetPosition2
+     *
+     * @return \TEW\TPBundle\Entity\CdtePosition 
+     */
+    public function getTargetPosition2()
+    {
+        return $this->targetPosition2;
+    }
+
+    /**
+     * Set targetPosition3
+     *
+     * @param \TEW\TPBundle\Entity\CdtePosition $targetPosition3
+     * @return Candidate
+     */
+    public function setTargetPosition3(\TEW\TPBundle\Entity\CdtePosition $targetPosition3 = null)
+    {
+        $this->targetPosition3 = $targetPosition3;
+
+        return $this;
+    }
+
+    /**
+     * Get targetPosition3
+     *
+     * @return \TEW\TPBundle\Entity\CdtePosition 
+     */
+    public function getTargetPosition3()
+    {
+        return $this->targetPosition3;
+    }
+
 }

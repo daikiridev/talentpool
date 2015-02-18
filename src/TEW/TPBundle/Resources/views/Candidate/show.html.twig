@@ -68,11 +68,17 @@
             </tr> 
             <tr>
                 <th>Current position</th>
-                <td>{{ entity.position }} {{ entity.level }} years</td>
+                <td>{{ entity.position }}
+                    {{ entity.level is not null and entity.level != 0? entity.level ~ ' years' }}
+                    {{ entity.annualIncome is not null and entity.annualIncome != 0?' - annual income USD' ~ entity.annualIncome }}</td>
             </tr>
             <tr>
                 <th>Target positions</th>
-                <td>{{ entity.targetPositions|join(' / ') }}</td>
+                <td>
+                    {{ entity.targetPosition1 }}
+                    {{ entity.targetPosition2 is not null?' / ' ~ entity.targetPosition2 }}
+                    {{ entity.targetPosition3 is not null?' / ' ~ entity.targetPosition3 }}
+                </td>
             </tr>
             <tr>
                 <th>Languages</th>
@@ -98,8 +104,8 @@
                 <td><a href="{% path entity.resume, 'reference' %}" target="_blank">{{ entity.resume }}</a></td>
             </tr>
             <tr>
-                <th>Creationdate</th>
-                <td>{{ entity.creationDate|date('D d M Y \\a\\t g:ia', "Europe/Paris") }}</td>
+                <th>Creation date</th>
+                <td>{{ entity.createdAt|date('D d M Y \\a\\t g:ia', "Europe/Paris") }}</td>
             </tr>
             <tr>
                 <th>Creator</th>

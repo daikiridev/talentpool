@@ -61,6 +61,13 @@ class Address
      */
     private $city;
     
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="province", type="string", length=127)
+     */
+    private $province;
+    
 //    /**
 //     * @ORM\ManyToOne(targetEntity="TEW\TPBundle\Entity\CdteRegion")
 //     * @ORM\JoinColumn(name="region_id", referencedColumnName="id", nullable=true)
@@ -300,5 +307,28 @@ class Address
     public function getCountry()
     {
         return $this->country;
+    }
+
+    /**
+     * Set province
+     *
+     * @param string $province
+     * @return Address
+     */
+    public function setProvince($province)
+    {
+        $this->province = $province;
+
+        return $this;
+    }
+
+    /**
+     * Get province
+     *
+     * @return string 
+     */
+    public function getProvince()
+    {
+        return $this->province;
     }
 }

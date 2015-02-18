@@ -45,13 +45,6 @@ class CdtePosition
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
-    
-    /**
-     * @var talentpools
-     * 
-     * @ORM\ManyToMany(targetEntity="TEW\TPBundle\Entity\TalentPool", mappedBy="positions")
-     */
-    private $talentpools;
 
     /**
      * Set name
@@ -136,53 +129,20 @@ class CdtePosition
     {
         return $this->getName();
     }
-
-    /**
-     * Add talentpools
-     *
-     * @param \TEW\TPBundle\Entity\TalentPool $talentpools
-     * @return CdtePosition
-     */
-    public function addTalentpool(\TEW\TPBundle\Entity\TalentPool $talentpools)
-    {
-        $this->talentpools[] = $talentpools;
-
-        return $this;
-    }
-
-    /**
-     * Remove talentpools
-     *
-     * @param \TEW\TPBundle\Entity\TalentPool $talentpools
-     */
-    public function removeTalentpool(\TEW\TPBundle\Entity\TalentPool $talentpools)
-    {
-        $this->talentpools->removeElement($talentpools);
-    }
-
-    /**
-     * Get talentpools
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getTalentpools()
-    {
-        return $this->talentpools;
-    }
     
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->talentpools = new \Doctrine\Common\Collections\ArrayCollection();
+        // $this->talentpools = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
-    /**
-     * toString for talentpools
-     */
-    public static function stringOfTalentPools(\Doctrine\Common\Collections\ArrayCollection $tps)
-    {
-        return implode(' / ', $tps->map(TalentPool::__toString())->toArray());
-    }
+
+//    /**
+//     * toString for talentpools
+//     */
+//    public static function stringOfTalentPools(\Doctrine\Common\Collections\ArrayCollection $tps)
+//    {
+//        return implode(' / ', $tps->map(TalentPool::__toString())->toArray());
+//    }
 }

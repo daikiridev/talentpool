@@ -30,7 +30,13 @@ function addItemForm(collectionHolder, length) {
     collectionHolder.append($newItemFormDiv);
     // add a "remove" link at the end of the new form
     addItemFormDeleteLink($newItemFormDiv);
+    // if this is an address form, initialise google place API
+    if (collectionHolder.is('#candidate_addresses')) {
+        addressGoogleInit('candidate_addresses_' + length + '_', 'street1'); // location search is done in the 'street1' field
+    }
+
 }
+
 function addItemFormDeleteLink($itemFormLi) {
     var $removeFormA = $('<a href="#" class="btn-xs btn-danger">Remove</a>');
     $itemFormLi.append($removeFormA);
@@ -51,12 +57,72 @@ var commentCollection = $('#candidate_comments_new');
 commentCollection.after(addButton());
 
 
+
+// Google places API
+var placeSearch, autocomplete;
+var componentForm = {
+    street_number: 'short_name',
+    route: 'long_name',
+    locality: 'long_name',
+    administrative_area_level_1: 'long_name', // province
+    //administrative_area_level_2:  'short_name', // department
+    country: 'long_name',
+    postal_code: 'short_name'
+};
+var convertForm = {
+    street_number: [{field: 'street1', action: 'replace'}],
+    route: [{field: 'street1', action: 'add'}],
+    locality: [{field: 'city', action: 'replace'}],
+    administrative_area_level_1: [{field: 'province', action: 'replace'}],
+    country: [{field: 'country', action: 'replace'}],
+    postal_code: [{field: 'zip', action: 'replace'}]
+};
+
+function addressGoogleInit(addressPrefix, field) {
+    // Create the autocomplete object, restricting the search
+    // to geographical location types.
+    autocomplete = new google.maps.places.Autocomplete(
+            /** @type {HTMLInputElement} */(document.getElementById(addressPrefix + field)),
+            {types: ['geocode']});
+    // When the user selects an address from the dropdown,
+    // populate the address fields in the form.
+    google.maps.event.addListener(autocomplete, 'place_changed', function () {
+        fillInAddress(addressPrefix);
+    });
+}
+
+function fillInAddress(addressPrefix) {
+    // Get the place details from the autocomplete object.
+    var place = autocomplete.getPlace();
+
+    for (var component in convertForm) {
+        document.getElementById(addressPrefix + convertForm[component][0]['field']).value = '';
+        document.getElementById(addressPrefix + convertForm[component][0]['field']).disabled = false;
+    }
+
+    // Get each component of the address from the place details
+    // and fill the corresponding field on the form.
+    for (var i = 0; i < place.address_components.length; i++) {
+        var addressType = place.address_components[i].types[0];
+        //alert(addressType+': '+place.address_components[i]['long_name']);
+        if (componentForm[addressType]) {
+            var val = place.address_components[i][componentForm[addressType]];
+            if (convertForm[addressType][0]['action'] == 'add') {
+                document.getElementById(addressPrefix + convertForm[addressType][0]['field']).value += ' ' + val;
+            } else {
+                document.getElementById(addressPrefix + convertForm[addressType][0]['field']).value = val;
+            }
+        }
+    }
+}
+
 $(document).ready(function () {
     // catches a click on an "add" button #}
     $('.add_item_link').on('click', function (e) {
         e.preventDefault();
         collection = $(this).parent().prev('.form-collection');
         //alert(collection.attr('id'));
+        // if this is the comments collection, start numbering at the end index stored in DB
         length = collection.is("#candidate_comments_new") ? commentCollectionDB.children().length : collection.children().length;
         addItemForm(collection, length);
     });
@@ -64,4 +130,8 @@ $(document).ready(function () {
     $('.form-collection').children('div').each(function () {
         addItemFormDeleteLink($(this));
     });
+    // adds a google field for each address
+    for (i = 0; i < addressCollection.children().length; i++) {
+        addressGoogleInit('candidate_addresses_' + i + '_', 'street1'); // location search is done in the 'street1' field
+    }
 });

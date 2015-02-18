@@ -28,7 +28,7 @@
                 <td>{{ entity.age }}</td>
                 <td>{{ entity.position }}</td>
                 <td>{{ entity.level }} yrs</td>
-                <td>{% if entity.creationDate %}{{ entity.creationDate|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if entity.createdAt %}{{ entity.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
                 <td>
                     <div class="btn-group btn-group-xs pull-right record_actions" role="group">
                             <a role="button"  class="btn btn-info" href="{{ path('tew_candidate_show', { 'id': entity.id }) }}">

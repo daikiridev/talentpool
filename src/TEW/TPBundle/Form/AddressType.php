@@ -18,6 +18,7 @@ class AddressType extends AbstractType
             ->add('street2', 'text')
             ->add('zip', 'text')
             ->add('city', 'text')
+            ->add('province', 'text')
             ->add('country', 'text')
 //            ->add('selectData', 'select_city', array(
 //                'country_required'  => $options['country_required'],

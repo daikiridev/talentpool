@@ -56,7 +56,11 @@ class CandidateType extends AbstractType
                     'choices' => range(0,40),
                     'empty_value'=> 'Yrs')
                     )
-                ->add('targetPositions')
+                ->add('annualIncome')
+                ->add('targetPosition1')
+                ->add('targetPosition2')
+                ->add('targetPosition3')
+                //->add('targetPositions')
                 ->add('languagesSkills')
 //                ->add('languagesSkills', 'collection', array('type'=>new CdteLanguageType)) // we change the default form
                 ->add('talentpools')
