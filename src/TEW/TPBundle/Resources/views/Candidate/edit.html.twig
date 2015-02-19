@@ -11,8 +11,15 @@
     {#
     <script type="text/javascript" src="{{ asset('bundles/dcsformselectcityformfield/js/select_city.js') }}"></script>
     #}
+    {# inputs are disabled until the Google API is available
+    <script>
+        $('input').each(function(){
+            $(this).attr('disable',true);
+        });
+    </script>
+    #}
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places&language=en"></script>
-    <script src="{{ asset('bundles/tewtp/js/tew.candidate.js') }}"></script>
+    <script src="{{ asset('bundles/tewtp/js/tew.candidate.edit.js') }}"></script>
 
 {% endblock scripts %}
 

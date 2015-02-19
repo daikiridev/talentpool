@@ -75,6 +75,27 @@ class CdteComment
      *
      * @return integer 
      */
+    
+    /**
+     * Constructor
+     */
+    public function __construct(\Application\Sonata\UserBundle\Entity\User $user=null)
+    {
+        $this->date = new \DateTime();
+        $this->author = $user;
+    }
+    
+    /**
+     * toString
+     * 
+     * @return string
+     */
+    public function __toString()
+    {
+        // return $this->getName().' (created by '.$this->getCreator()->getUsername().')';
+        return $this->getTitle();
+    }
+    
     public function getId()
     {
         return $this->id;
@@ -195,25 +216,6 @@ class CdteComment
         return $this->author;
     }
     
-    /**
-     * Constructor
-     */
-    public function __construct(\Application\Sonata\UserBundle\Entity\User $user=null)
-    {
-        $this->date = new \DateTime();
-        $this->user = $user;
-    }
-    
-    /**
-     * toString
-     * 
-     * @return string
-     */
-    public function __toString()
-    {
-        // return $this->getName().' (created by '.$this->getCreator()->getUsername().')';
-        return $this->getTitle();
-    }
 
     /**
      * Set title

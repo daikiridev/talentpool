@@ -15,10 +15,10 @@ class AddressType extends AbstractType
         $builder
             ->add('label')
             ->add('street1', 'text')
-            ->add('street2', 'text')
-            ->add('zip', 'text')
+            ->add('street2', 'text', array('required' => false))
+            ->add('zip', 'text', array('required' => false))
             ->add('city', 'text')
-            ->add('province', 'text')
+            ->add('province', 'text', array('required' => false))
             ->add('country', 'text')
 //            ->add('selectData', 'select_city', array(
 //                'country_required'  => $options['country_required'],

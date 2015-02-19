@@ -184,6 +184,14 @@ class Candidate implements Taggable
 //     *  )
 //     */
 //    private $targetPositions;
+
+    /**
+     * @var mobilities
+     *
+     * @ORM\OneToMany(targetEntity="CdteMobility", mappedBy="candidate", cascade={"persist", "remove"})   
+     * 
+     */
+    private $mobilities;
     
     /**
      * @var languagesSkills
@@ -247,6 +255,7 @@ class Candidate implements Taggable
      */
     public function __construct(\Application\Sonata\UserBundle\Entity\User $user=null)
     {
+        $this->mobilities = new \Doctrine\Common\Collections\ArrayCollection();
         $this->languagesSkills = new \Doctrine\Common\Collections\ArrayCollection();
         $this->talentpools = new \Doctrine\Common\Collections\ArrayCollection();
         $this->tags = new \Doctrine\Common\Collections\ArrayCollection();
@@ -561,28 +570,6 @@ class Candidate implements Taggable
     public function getOrigin()
     {
         return $this->origin;
-    }
-    /**
-     * Set createdAt
-     *
-     * @param \DateTime $creationDate
-     * @return Candidate
-     */
-    public function setcreatedAt($creationDate)
-    {
-        $this->createdAt = $creationDate;
-
-        return $this;
-    }
-
-    /**
-     * Get createdAt
-     *
-     * @return \DateTime 
-     */
-    public function getcreatedAt()
-    {
-        return $this->createdAt;
     }
 
     /**
@@ -965,4 +952,59 @@ class Candidate implements Taggable
         return $this->targetPosition3;
     }
 
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     * @return Candidate
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime 
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Add mobilities
+     *
+     * @param \TEW\TPBundle\Entity\CdteMobility $mobilities
+     * @return Candidate
+     */
+    public function addMobility(\TEW\TPBundle\Entity\CdteMobility $mobilities)
+    {
+        $this->mobilities[] = $mobilities;
+
+        return $this;
+    }
+
+    /**
+     * Remove mobilities
+     *
+     * @param \TEW\TPBundle\Entity\CdteMobility $mobilities
+     */
+    public function removeMobility(\TEW\TPBundle\Entity\CdteMobility $mobilities)
+    {
+        $this->mobilities->removeElement($mobilities);
+    }
+
+    /**
+     * Get mobilities
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getMobilities()
+    {
+        return $this->mobilities;
+    }
 }

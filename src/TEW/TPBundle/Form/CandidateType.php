@@ -61,6 +61,14 @@ class CandidateType extends AbstractType
                 ->add('targetPosition2')
                 ->add('targetPosition3')
                 //->add('targetPositions')
+                ->add('mobilities', 'collection', array(
+                    'attr' => array('class' => 'form-collection'), // in order to handle the jquery functions
+                    'type' => new CdteMobilityType(),
+                    'required' => false,
+                    'allow_add' => true, // allows to add as many comments as we want
+                    'allow_delete' => false,
+                    'by_reference' => false, // 'false' forces setComments() to be called
+                    ))
                 ->add('languagesSkills')
 //                ->add('languagesSkills', 'collection', array('type'=>new CdteLanguageType)) // we change the default form
                 ->add('talentpools')
