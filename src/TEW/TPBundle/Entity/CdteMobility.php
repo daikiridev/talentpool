@@ -83,7 +83,7 @@ class CdteMobility
      */
     public function __toString()
     {
-        return $this->getLabel();
+        return $this->getLocation();
     }
     
     /**

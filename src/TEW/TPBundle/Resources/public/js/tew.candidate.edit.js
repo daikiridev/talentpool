@@ -1,3 +1,4 @@
+// tags management
 $('.tags-field').tagsInput({
     //'autocomplete_url': url_to_autocomplete_api,
     //'autocomplete': { option: value, option: value},
@@ -15,7 +16,7 @@ $('.tags-field').tagsInput({
 
 });
 
-
+// collections management
 // « add » button
 function addButton() {
     var $addItemLink = $('<a href="#" class="add_item_link btn-xs btn-warning">Add</a>');
@@ -146,6 +147,7 @@ function fillInAddress(addressPrefix, field) {
     }
 }
 
+// initialize things
 $(document).ready(function () {
     // catches a click on an "add" button #}
     $('.add_item_link').on('click', function (e) {
