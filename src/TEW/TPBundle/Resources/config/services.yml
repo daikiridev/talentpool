@@ -32,6 +32,7 @@ services:
 #            - { name: doctrine.event_subscriber, connection: default }
 #        calls:
 #        - [ setTagManager, [ @fpn_tag.tag_manager ] ]
+
 # Backoffice parameters...
 #    tew_tp.admin.cdtelanguage:
 #        class: TEW\TPBundle\Admin\CdteLanguageAdmin

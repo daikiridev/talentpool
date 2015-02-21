@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * CdteMobility
  *
- * @ORM\Table(name="tew_cdtemobility")
+ * @ORM\Table(name="tew_cdte_mobility")
  * @ORM\Entity(repositoryClass="TEW\TPBundle\Entity\CdteMobilityRepository")
  */
 class CdteMobility

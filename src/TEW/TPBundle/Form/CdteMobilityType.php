@@ -16,8 +16,8 @@ class CdteMobilityType extends AbstractType
     {
         $builder
             ->add('location', 'text')
-            ->add('zone', 'hidden', array('required' => false))
-            ->add('country', 'hidden', array('required' => false))
+            ->add('zone', 'hidden', array('required' => false, 'attr' => array('class'=>'mobility_zone')))
+            ->add('country', 'hidden', array('required' => false, 'attr' => array('class'=>'mobility_country')))
             ->add('region', 'hidden', array('required' => false))
             ->add('city', 'hidden', array('required' => false))  
         ;

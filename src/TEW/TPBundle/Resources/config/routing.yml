@@ -20,4 +20,8 @@ TEWTPBundle_tew_candidate:
 TEWTPBundle_tew_talentpool:
     resource: "@TEWTPBundle/Resources/config/routing/talentpool.yml"
     prefix:   /tew_talentpool
-    
+
+# Ajax routes
+TEWTPBundle_tew_ajaxrequests:
+    resource: "@TEWTPBundle/Resources/config/routing/ajaxrequests.yml"
+    prefix:   /tew_ajax

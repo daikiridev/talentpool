@@ -60,9 +60,7 @@
         "knplabs/knp-menu-bundle": "dev-master",
         
         "fpn/doctrine-extensions-taggable": "v0.9.0",
-        "fpn/tag-bundle":"dev-master",
-        
-        "damianociarla/select-city-form-field-bundle": "dev-master"
+        "fpn/tag-bundle":"dev-master"
 
     },
     "repositories": [

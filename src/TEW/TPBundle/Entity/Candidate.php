@@ -594,40 +594,98 @@ class Candidate implements Taggable
     {
         return $this->position;
     }
-
     /**
-     * Add targetPositions
+     * Set annualIncome
      *
-     * @param \TEW\TPBundle\Entity\CdtePosition $targetPositions
+     * @param integer $annualIncome
      * @return Candidate
      */
-    public function addTargetPosition(\TEW\TPBundle\Entity\CdtePosition $targetPositions)
+    public function setAnnualIncome($annualIncome)
     {
-        $this->targetPositions[] = $targetPositions;
+        $this->annualIncome = $annualIncome;
 
         return $this;
     }
 
     /**
-     * Remove targetPositions
+     * Get annualIncome
      *
-     * @param \TEW\TPBundle\Entity\CdtePosition $targetPositions
+     * @return integer 
      */
-    public function removeTargetPosition(\TEW\TPBundle\Entity\CdtePosition $targetPositions)
+    public function getAnnualIncome()
     {
-        $this->targetPositions->removeElement($targetPositions);
+        return $this->annualIncome;
     }
 
     /**
-     * Get targetPositions
+     * Set targetPosition1
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @param \TEW\TPBundle\Entity\CdtePosition $targetPosition1
+     * @return Candidate
      */
-    public function getTargetPositions()
+    public function setTargetPosition1(\TEW\TPBundle\Entity\CdtePosition $targetPosition1 = null)
     {
-        return $this->targetPositions;
+        $this->targetPosition1 = $targetPosition1;
+
+        return $this;
     }
 
+    /**
+     * Get targetPosition1
+     *
+     * @return \TEW\TPBundle\Entity\CdtePosition 
+     */
+    public function getTargetPosition1()
+    {
+        return $this->targetPosition1;
+    }
+
+    /**
+     * Set targetPosition2
+     *
+     * @param \TEW\TPBundle\Entity\CdtePosition $targetPosition2
+     * @return Candidate
+     */
+    public function setTargetPosition2(\TEW\TPBundle\Entity\CdtePosition $targetPosition2 = null)
+    {
+        $this->targetPosition2 = $targetPosition2;
+
+        return $this;
+    }
+
+    /**
+     * Get targetPosition2
+     *
+     * @return \TEW\TPBundle\Entity\CdtePosition 
+     */
+    public function getTargetPosition2()
+    {
+        return $this->targetPosition2;
+    }
+
+    /**
+     * Set targetPosition3
+     *
+     * @param \TEW\TPBundle\Entity\CdtePosition $targetPosition3
+     * @return Candidate
+     */
+    public function setTargetPosition3(\TEW\TPBundle\Entity\CdtePosition $targetPosition3 = null)
+    {
+        $this->targetPosition3 = $targetPosition3;
+
+        return $this;
+    }
+
+    /**
+     * Get targetPosition3
+     *
+     * @return \TEW\TPBundle\Entity\CdtePosition 
+     */
+    public function getTargetPosition3()
+    {
+        return $this->targetPosition3;
+    }
+    
     /**
      * Set creator
      *
@@ -860,97 +918,6 @@ class Candidate implements Taggable
         return $this->addresses;
     }
 
-    /**
-     * Set annualIncome
-     *
-     * @param integer $annualIncome
-     * @return Candidate
-     */
-    public function setAnnualIncome($annualIncome)
-    {
-        $this->annualIncome = $annualIncome;
-
-        return $this;
-    }
-
-    /**
-     * Get annualIncome
-     *
-     * @return integer 
-     */
-    public function getAnnualIncome()
-    {
-        return $this->annualIncome;
-    }
-
-    /**
-     * Set targetPosition1
-     *
-     * @param \TEW\TPBundle\Entity\CdtePosition $targetPosition1
-     * @return Candidate
-     */
-    public function setTargetPosition1(\TEW\TPBundle\Entity\CdtePosition $targetPosition1 = null)
-    {
-        $this->targetPosition1 = $targetPosition1;
-
-        return $this;
-    }
-
-    /**
-     * Get targetPosition1
-     *
-     * @return \TEW\TPBundle\Entity\CdtePosition 
-     */
-    public function getTargetPosition1()
-    {
-        return $this->targetPosition1;
-    }
-
-    /**
-     * Set targetPosition2
-     *
-     * @param \TEW\TPBundle\Entity\CdtePosition $targetPosition2
-     * @return Candidate
-     */
-    public function setTargetPosition2(\TEW\TPBundle\Entity\CdtePosition $targetPosition2 = null)
-    {
-        $this->targetPosition2 = $targetPosition2;
-
-        return $this;
-    }
-
-    /**
-     * Get targetPosition2
-     *
-     * @return \TEW\TPBundle\Entity\CdtePosition 
-     */
-    public function getTargetPosition2()
-    {
-        return $this->targetPosition2;
-    }
-
-    /**
-     * Set targetPosition3
-     *
-     * @param \TEW\TPBundle\Entity\CdtePosition $targetPosition3
-     * @return Candidate
-     */
-    public function setTargetPosition3(\TEW\TPBundle\Entity\CdtePosition $targetPosition3 = null)
-    {
-        $this->targetPosition3 = $targetPosition3;
-
-        return $this;
-    }
-
-    /**
-     * Get targetPosition3
-     *
-     * @return \TEW\TPBundle\Entity\CdtePosition 
-     */
-    public function getTargetPosition3()
-    {
-        return $this->targetPosition3;
-    }
 
     /**
      * Set createdAt

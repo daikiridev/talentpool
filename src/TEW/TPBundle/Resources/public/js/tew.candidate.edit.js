@@ -127,8 +127,9 @@ function fillInAddress(addressPrefix, field) {
     // Reset all inputs
     for (var component in convForm) {
         //alert('comp: '+component); // addressPrefix.replace((/candidate_([^_]*)_.*/), "$1")
-        document.getElementById(addressPrefix + convForm[component][0]['field']).value = '';
-        document.getElementById(addressPrefix + convForm[component][0]['field']).disabled = false;
+        var id = '#' + addressPrefix + convForm[component][0]['field'];
+        $(id).val('');
+        $(id).prop('disabled', false);
     }
 
     // Get each component of the address from the place details
@@ -138,11 +139,13 @@ function fillInAddress(addressPrefix, field) {
         //alert(addressType+': '+place.address_components[i]['long_name']);
         if (convForm[addressType]) {
             var val = place.address_components[i][convForm[addressType][0]['format']]; // short_name or long_name
+            var id = '#' + addressPrefix + convForm[addressType][0]['field'];
             if (convForm[addressType][0]['action'] === 'add') { // append the value to the field
-                document.getElementById(addressPrefix + convForm[addressType][0]['field']).value += ' ' + val;
+                $(id).val($(id).val() + ' ' + val);
             } else { // put the value into the field
-                document.getElementById(addressPrefix + convForm[addressType][0]['field']).value = val;
+                $(id).val(val);
             }
+            $(id).trigger('change'); // since some of the fields are hidden fields (which don't natively throw a change event)
         }
     }
 }

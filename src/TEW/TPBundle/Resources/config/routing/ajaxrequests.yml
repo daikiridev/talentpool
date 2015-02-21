@@ -1,0 +1,4 @@
+tew_json_findzone:
+  pattern: /zone/bycountry
+  defaults: { _controller: TEWTPBundle:CountryZone:jsonFindZoneByCountry }
+  requirements: { _method: post }

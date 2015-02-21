@@ -67,7 +67,7 @@ class CandidateType extends AbstractType
                     'required' => false,
                     'allow_add' => true, // allows to add as many comments as we want
                     'allow_delete' => false,
-                    'by_reference' => false, // 'false' forces setComments() to be called
+                    'by_reference' => false, // 'false' forces setMobilities() to be called
                     ))
                 ->add('languagesSkills')
 //                ->add('languagesSkills', 'collection', array('type'=>new CdteLanguageType)) // we change the default form

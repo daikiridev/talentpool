@@ -17,10 +17,6 @@ _tew_tp:
 #    type:     annotation
 #    prefix:   /
 
-# Mobility management
-dcs_form_select_city_form_field:
-    resource: "@DCSFormSelectCityFormFieldBundle/Resources/config/routing.xml"
-    prefix:   /
     
 # Media management
 gallery:

@@ -32,7 +32,7 @@ class CountryZone
      * @var zone
      *
      * @ORM\ManyToOne(targetEntity="Zone")
-     * @ORM\JoinColumn(name="zone_id", nullable=false, referencedColumnName="id")
+     * @ORM\JoinColumn(name="zone", nullable=false, referencedColumnName="id")
      */
     private $zone;
 

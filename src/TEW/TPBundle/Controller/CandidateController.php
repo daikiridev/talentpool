@@ -63,9 +63,11 @@ class CandidateController extends Controller {
 // Added by VP ->            
             $formAddresses = $entity->getAddresses();
             // adds new addresses
-            foreach ($formAddresses as $address) {
+            if ($formAddresses !== NULL) {
+                foreach ($formAddresses as $address) {
                 $address->setCandidate($entity);
                 $em->persist($address);
+                }
             }
             $formComments = $entity->getComments(); 
             // adds new comments
@@ -73,6 +75,14 @@ class CandidateController extends Controller {
                 foreach ($formComments as $comment) {
                     $comment->setCandidate($entity);
                     $comment->setAuthor($this->get('security.context')->getToken()->getUser());
+                    $em->persist($comment);
+                }
+            }
+            $formMobilities = $entity->getMobilities();
+            // adds new mobility locations
+            if ($formMobilities !== NULL) {
+                foreach ($formMobilities as $mobility) {
+                    $mobility->setCandidate($entity);
                     $em->persist($comment);
                 }
             }
@@ -231,6 +241,11 @@ class CandidateController extends Controller {
         foreach ($entity->getComments() as $comment) {
             $originalComments->add($comment);
         }
+        // Getting candidate's mobilities stored in DB
+        $originalMobilities = new ArrayCollection();
+        foreach ($entity->getMobilities() as $mobility) {
+            $originalMobilities->add($mobility);
+        }        
         
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity);
@@ -271,7 +286,14 @@ class CandidateController extends Controller {
                     $em->persist($comment);
                 }
             }
-            
+            $formMobilities = $entity->getMobilities();
+            // adds new comments
+            foreach ($formMobilities as $mobility) {
+                if ($originalMobilities->contains($mobility) == false) {
+                    $mobility->setCandidate($entity);
+                    $em->persist($mobility);
+                }
+            }            
 // <- Added by VP      
  
             $em->persist($entity);

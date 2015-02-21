@@ -11,7 +11,10 @@ use Symfony\Component\Form\FormBuilderInterface;
 // class CdteCommentFormType extends AbstractType
 class CdteCommentType extends AbstractType
 {
-    
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */    
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -24,6 +27,9 @@ class CdteCommentType extends AbstractType
         ;
     }
 
+    /**
+     * @param OptionsResolverInterface $resolver
+     */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
@@ -34,6 +40,9 @@ class CdteCommentType extends AbstractType
         ));
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return 'cdtecomment';
