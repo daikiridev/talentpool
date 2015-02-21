@@ -7,7 +7,16 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/tewtp/css/jquery.tagsinput.css') }}" />
 {% endblock styles %}
 {% block scripts %}
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
     <script src="{{ asset('bundles/tewtp/js/jquery.tagsinput.js') }}"></script>
+    <script>
+        $('.tags-field').tagsInput({
+        'autocomplete_url': '{{ path('tew_json_allcandidatetags') }}',
+        //'autocomplete':{},
+                'height': '30px',
+                'width': '400px'
+                });
+    </script>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places&language=en"></script>
     <script src="{{ asset('bundles/tewtp/js/tew.candidate.edit.js') }}"></script>
     <script>

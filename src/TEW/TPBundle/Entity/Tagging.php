@@ -1,8 +1,8 @@
 <?php
 
 //
-// WARNING: do not generate this entity via doctrine:generate:entites
-// as it produces an ContextErrorException: Runtime Notice: Declaration of TEW\TPBundle\Entity\Tagging::setTag()
+// WARNING: do not generate this entity via doctrine:generate:entities
+// since it produces an ContextErrorException: Runtime Notice: Declaration of TEW\TPBundle\Entity\Tagging::setTag()
 // should be compatible with DoctrineExtensions\Taggable\Entity\Tagging::setTag(DoctrineExtensions\Taggable\Entity\Tag $tag)
 
 namespace TEW\TPBundle\Entity;
@@ -15,7 +15,7 @@ use Doctrine\ORM\Mapping\UniqueConstraint;
  * TEW\TPBundle\Entity\Tagging
  *
  * @ORM\Table(name="tew_tagging", uniqueConstraints={@UniqueConstraint(name="tagging_idx", columns={"tag_id", "resource_type", "resource_id"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="TEW\TPBundle\Entity\TaggingRepository")
  */
 class Tagging extends BaseTagging {
 

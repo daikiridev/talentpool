@@ -1,21 +1,3 @@
-// tags management
-$('.tags-field').tagsInput({
-    //'autocomplete_url': url_to_autocomplete_api,
-    //'autocomplete': { option: value, option: value},
-    'height': '30px',
-    'width': '400px',
-    //'interactive':true,
-    //'defaultText':'add a tag',
-    //'onAddTag':callback_function,
-    //'onRemoveTag':callback_function,
-    //'onChange' : callback_function,
-    //'removeWithBackspace' : true,
-    //'minChars' : 0,
-    //'maxChars' : 0 //if not provided there is no limit,
-    //'placeholderColor' : '#666666'
-
-});
-
 // collections management
 // « add » button
 function addButton() {
@@ -80,7 +62,7 @@ function convertForm(addressPrefix, field) {
                 locality: [{field: 'city', action: 'replace', format: 'short_name'}],
                 administrative_area_level_1: [{field: 'region', action: 'replace', format: 'short_name'}],
                 country: [{field: 'country', action: 'replace', format: 'short_name'}],
-                continent: [{field: 'zone', action: 'replace', format: 'short_name'}],
+                continent: [{field: 'zone', action: 'replace', format: 'short_name'}]
             };
         default: // case 'addresses':
             return {
@@ -89,7 +71,7 @@ function convertForm(addressPrefix, field) {
                 locality: [{field: 'city', action: 'replace', format: 'long_name'}],
                 postal_code: [{field: 'zip', action: 'replace', format: 'long_name'}],
                 administrative_area_level_1: [{field: 'province', action: 'replace', format: 'long_name'}],
-                country: [{field: 'country', action: 'replace', format: 'long_name'}],
+                country: [{field: 'country', action: 'replace', format: 'long_name'}]
             };
             
     }
