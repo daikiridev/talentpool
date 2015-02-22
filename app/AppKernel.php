@@ -50,6 +50,9 @@ class AppKernel extends Kernel
             new FPN\TagBundle\FPNTagBundle(),
             //new Fogs\TaggingBundle\FogsTaggingBundle(),
             
+            // CK EDITOR
+            new Ivory\CKEditorBundle\IvoryCKEditorBundle(),
+            
             // MISC
             //new AppBundle\AppBundle(),
             new CoreSphere\ConsoleBundle\CoreSphereConsoleBundle(),

@@ -15,20 +15,20 @@
                 <td>{{ entity.name }}</td>
             </tr>
             <tr>
-                <th>Creator</th>
-                <td>{{ entity.creator }}</td>
+                <th>Description</th>
+                <td>{{ entity.description|raw }}</td>
             </tr>
             <tr>
-                <th>Creationdate</th>
-                <td>{{ entity.creationDate|date('d M Y H:i:s') }}</td>
-            </tr>
-            <tr>
-                <th>Positions</th>
-                <td>{{ entity.positions|join(' / ') }}</td>
+                <th>Profiles</th>
+                <td>{{ entity.profiles|join(' / ') }}</td>
             </tr>
             <tr>
                 <th>Candidates</th>
                 <td>{{ entity.candidates|join(' / ') }}</td>
+            </tr>
+            <tr>
+                <th>Creationdate</th>
+                <td>{{ entity.createdAt|date('d M Y H:i:s') }} by {{ entity.creator }}</td>
             </tr>
         </tbody>
     </table>

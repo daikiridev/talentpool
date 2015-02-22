@@ -27,6 +27,13 @@ class TalentPool
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="text")
+     */
+    private $description;
     
     /**
      * @var profiles
@@ -46,9 +53,9 @@ class TalentPool
     /**
      * @var date
      * 
-     * @ORM\Column(name="creationDate", type="datetime")
+     * @ORM\Column(name="createdat", type="datetime")
      */
-    private $creationDate;
+    private $createdAt;
   
     /**
      * @var creator
@@ -58,7 +65,28 @@ class TalentPool
      */
     private $creator;
     
-
+    /**
+     * Constructor
+     */
+    public function __construct(\Application\Sonata\UserBundle\Entity\User $user)
+    {
+        $this->profiles = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->candidates = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->createdAt = new \DateTime();
+        $this->creator = $user;
+    }
+    
+    /**
+     * toString
+     * 
+     * @return string
+     */
+    public function __toString()
+    {
+        // return $this->getName().' (created by '.$this->getCreator()->getUsername().')';
+        return $this->getName();
+    }
+    
     /**
      * Get id
      *
@@ -90,39 +118,6 @@ class TalentPool
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * Add positions
-     *
-     * @param \TEW\TPBundle\Entity\CdtePosition $positions
-     * @return TalentPool
-     */
-    public function addPosition(\TEW\TPBundle\Entity\CdtePosition $positions)
-    {
-        $this->positions[] = $positions;
-
-        return $this;
-    }
-
-    /**
-     * Remove positions
-     *
-     * @param \TEW\TPBundle\Entity\CdtePosition $positions
-     */
-    public function removePosition(\TEW\TPBundle\Entity\CdtePosition $positions)
-    {
-        $this->positions->removeElement($positions);
-    }
-
-    /**
-     * Get positions
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getPositions()
-    {
-        return $this->positions;
     }
 
     /**
@@ -159,26 +154,26 @@ class TalentPool
     }
     
     /**
-     * Set creationDate
+     * Set createdAt
      *
-     * @param \DateTime $creationDate
+     * @param \DateTime $createdAt
      * @return TalentPool
      */
-    public function setCreationDate($creationDate)
+    public function setCreatedAt($createdAt)
     {
-        $this->creationDate = $creationDate;
+        $this->createdAt = $createdAt;
 
         return $this;
     }
 
     /**
-     * Get creationDate
+     * Get createdAt
      *
      * @return \DateTime 
      */
-    public function getCreationDate()
+    public function getCreatedAt()
     {
-        return $this->creationDate;
+        return $this->createdAt;
     }
 
     /**
@@ -204,27 +199,6 @@ class TalentPool
         return $this->creator;
     }
     
-    /**
-     * Constructor
-     */
-    public function __construct(\Application\Sonata\UserBundle\Entity\User $user)
-    {
-        $this->profiles = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->candidates = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->creationDate = new \DateTime();
-        $this->creator = $user;
-    }
-    
-    /**
-     * toString
-     * 
-     * @return string
-     */
-    public function __toString()
-    {
-        // return $this->getName().' (created by '.$this->getCreator()->getUsername().')';
-        return $this->getName();
-    }
 
     /**
      * Add profiles
@@ -257,5 +231,28 @@ class TalentPool
     public function getProfiles()
     {
         return $this->profiles;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return TalentPool
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 }

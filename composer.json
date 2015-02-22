@@ -60,7 +60,9 @@
         "knplabs/knp-menu-bundle": "dev-master",
         
         "fpn/doctrine-extensions-taggable": "v0.9.0",
-        "fpn/tag-bundle":"dev-master"
+        "fpn/tag-bundle":"dev-master",
+        
+        "egeloen/ckeditor-bundle": "~2.0"
 
     },
     "repositories": [

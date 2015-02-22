@@ -8,17 +8,17 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/tewtp/css/jquery.tagsinput.css') }}" />
 {% endblock styles %}
 {% block scripts %}
-    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>{# needed for the tagsinput 'autocomplete_url' feature #}
     <script src="{{ asset('bundles/tewtp/js/jquery.tagsinput.js') }}"></script>
     <script>
-    $('.tags-field').tagsInput({
-        'autocomplete_url': '{{ path('tew_json_allcandidatetags') }}',
-        'autocomplete': { selectFirst:true, width:'100px', autoFill:true },
-        'height': '30px',
-        'width': '400px',
-        'interactive':true,
-        'defaultText':'add a tag',
-    });
+        $('.tags-field').tagsInput({
+            'autocomplete_url': '{{ path('tew_json_allcandidatetags') }}',
+            'autocomplete': {selectFirst: true, width: '4px', autoFill: true},
+            'height': '30px',
+            'width': '400px',
+            'interactive': true,
+            'defaultText': 'add a tag',
+        });
     </script>
     {#
     <script type="text/javascript" src="{{ asset('bundles/dcsformselectcityformfield/js/select_city.js') }}"></script>
