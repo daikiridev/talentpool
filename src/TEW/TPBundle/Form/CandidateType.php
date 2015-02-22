@@ -15,6 +15,7 @@ class CandidateType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+                ->add('active')
                 ->add('picture', 'sonata_media_type', array(
                     'label' => false, // 'label'    =>  'Image'
                     'required' => false,
@@ -46,21 +47,82 @@ class CandidateType extends AbstractType
                     'by_reference' => false, // 'false' forces setAddresses() to be called
                     ))
                 // changing position's label
-                ->add('position', 'entity', array(
-                    'class' => 'TEWTPBundle:CdtePosition',
-                    'label' => 'Current position',
-                    'empty_value' => 'Select'
+                ->add('function', 'entity', array(
+                    'class' => 'TEWTPBundle:CdteFunction',
+                    'label' => 'Current function',
+                    'empty_value' => 'Select',
+                    'attr' => array(
+                        'class' => 'js-example-basic-single'
+                        ),
                     ))
-                ->add('level', 'choice', array(
+                ->add('level', 'entity', array(
+                    'class' => 'TEWTPBundle:CdteLevel',
+                    'label' => 'Current level',
+                    'empty_value' => 'Select',
+                    'attr' => array(
+                        'class' => 'js-example-basic-single'
+                        ),                    
+                    ))
+                ->add('experience', 'choice', array(
                     'label' => 'Experience',
                     'choices' => range(0,40),
                     'empty_value'=> 'Yrs')
                     )
                 ->add('annualIncome')
-                ->add('targetPosition1')
-                ->add('targetPosition2')
-                ->add('targetPosition3')
-                //->add('targetPositions')
+                ->add('targetFunction1', 'entity', array(
+                    'class' => 'TEWTPBundle:CdteFunction',
+                    'required' => false,
+                    'label' => 'Target function #1',
+                    'empty_value' => 'Select',
+                    'attr' => array(
+                        'class' => 'js-example-basic-single'
+                        ),
+                    ))
+                ->add('targetLevel1', 'entity', array(
+                    'class' => 'TEWTPBundle:CdteLevel',
+                    'required' => false,
+                    'label' => 'Target level #1',
+                    'empty_value' => 'Select',
+                    'attr' => array(
+                        'class' => 'js-example-basic-single'
+                        ),                    
+                    ))
+                ->add('targetFunction2', 'entity', array(
+                    'class' => 'TEWTPBundle:CdteFunction',
+                    'required' => false,
+                    'label' => 'Target function #2',
+                    'empty_value' => 'Select',
+                    'attr' => array(
+                        'class' => 'js-example-basic-single'
+                        ),
+                    ))
+                ->add('targetLevel2', 'entity', array(
+                    'class' => 'TEWTPBundle:CdteLevel',
+                    'required' => false,
+                    'label' => 'Target level #2',
+                    'empty_value' => 'Select',
+                    'attr' => array(
+                        'class' => 'js-example-basic-single'
+                        ),                    
+                    ))   
+                ->add('targetFunction3', 'entity', array(
+                    'class' => 'TEWTPBundle:CdteFunction',
+                    'required' => false,
+                    'label' => 'Target function #3',
+                    'empty_value' => 'Select',
+                    'attr' => array(
+                        'class' => 'js-example-basic-single'
+                        ),
+                    ))
+                ->add('targetLevel3', 'entity', array(
+                    'class' => 'TEWTPBundle:CdteLevel',
+                    'required' => false,
+                    'label' => 'Target level #3',
+                    'empty_value' => 'Select',
+                    'attr' => array(
+                        'class' => 'js-example-basic-single'
+                        ),                    
+                    ))
                 ->add('mobilities', 'collection', array(
                     'attr' => array('class' => 'form-collection'), // in order to handle the jquery functions
                     'type' => new CdteMobilityType(),

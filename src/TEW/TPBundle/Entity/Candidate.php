@@ -115,23 +115,43 @@ class Candidate implements Taggable
      */
     private $resume;
     
+//    /**
+//     * @var position
+//     *
+//     * @ORM\ManyToOne(targetEntity="CdtePosition")
+//     * @ORM\JoinColumns={
+//     *      @ORM\JoinColumn(name="position_id", referencedColumnName="id")
+//     *  })
+//     */
+//    private $position;
+
     /**
-     * @var position
+     * @var function
      *
-     * @ORM\ManyToOne(targetEntity="CdtePosition")
+     * @ORM\ManyToOne(targetEntity="CdteFunction")
      * @ORM\JoinColumns={
-     *      @ORM\JoinColumn(name="position_id", referencedColumnName="id")
+     *      @ORM\JoinColumn(name="function_id", referencedColumnName="id")
      *  })
      */
-    private $position;
+    private $function;   
+
+    /**
+     * @var level
+     *
+     * @ORM\ManyToOne(targetEntity="CdteLevel")
+     * @ORM\JoinColumns={
+     *      @ORM\JoinColumn(name="level_id", referencedColumnName="id")
+     *  })
+     */
+    private $level;
     
     /**
      * level: years of experience
-     * @var level
+     * @var experience
      *
-     * @ORM\Column(name="level", type="smallint")
+     * @ORM\Column(name="experience", type="smallint")
      */
-    private $level;
+    private $experience;
     
     /**
      * @var annualIncome (USD)
@@ -143,48 +163,74 @@ class Candidate implements Taggable
      * )
      */
     private $annualIncome;
-    
-    /**
-     * @var targetPosition1
-     *
-     * @ORM\ManyToOne(targetEntity="CdtePosition")
-     * @ORM\JoinColumns={
-     *      @ORM\JoinColumn(name="targetposition1_id", referencedColumnName="id")
-     *  })
-     */
-    private $targetPosition1;
-    
-    /**
-     * @var targetPosition2
-     *
-     * @ORM\ManyToOne(targetEntity="CdtePosition")
-     * @ORM\JoinColumns={
-     *      @ORM\JoinColumn(name="targetposition2_id", referencedColumnName="id", nullable=true)
-     *  })
-     */
-    private $targetPosition2;
-    
-    /**
-     * @var targetPosition3
-     *
-     * @ORM\ManyToOne(targetEntity="CdtePosition")
-     * @ORM\JoinColumns={
-     *      @ORM\JoinColumn(name="targetposition3_id", referencedColumnName="id", nullable=true)
-     *  })
-     */
-    private $targetPosition3; 
-    
-//    /**
-//     * @var targetPositions
-//     * 
-//     * @ORM\ManyToMany(targetEntity="CdtePosition")
-//     * @ORM\JoinTable(name="tew_cdte_targetpositions",
-//     *  joinColumns={@ORM\JoinColumn(name="position_id", referencedColumnName="id")},
-//     *  inverseJoinColumns={@ORM\JoinColumn(name="candidate_id", referencedColumnName="id")}
-//     *  )
-//     */
-//    private $targetPositions;
 
+    /**
+     * @var bool $active
+     *
+     * @ORM\Column(name="active", type="boolean")
+     */
+    private $active;
+    
+    /**
+     * @var targetFunction1
+     *
+     * @ORM\ManyToOne(targetEntity="CdteFunction")
+     * @ORM\JoinColumns={
+     *      @ORM\JoinColumn(name="targetfunction1_id", referencedColumnName="id", nullable=true)
+     *  })
+     */
+    private $targetFunction1;   
+
+    /**
+     * @var targetLevel1
+     *
+     * @ORM\ManyToOne(targetEntity="CdteLevel")
+     * @ORM\JoinColumns={
+     *      @ORM\JoinColumn(name="targetlevel1_id", referencedColumnName="id", nullable=true)
+     *  })
+     */
+    private $targetLevel1;
+    
+    /**
+     * @var targetFunction2
+     *
+     * @ORM\ManyToOne(targetEntity="CdteFunction")
+     * @ORM\JoinColumns={
+     *      @ORM\JoinColumn(name="targetfunction2_id", referencedColumnName="id", nullable=true)
+     *  })
+     */
+    private $targetFunction2;   
+
+    /**
+     * @var targetLevel2
+     *
+     * @ORM\ManyToOne(targetEntity="CdteLevel")
+     * @ORM\JoinColumns={
+     *      @ORM\JoinColumn(name="targetlevel2_id", referencedColumnName="id", nullable=true)
+     *  })
+     */
+    private $targetLevel2;
+    
+    /**
+     * @var targetFunction3
+     *
+     * @ORM\ManyToOne(targetEntity="CdteFunction")
+     * @ORM\JoinColumns={
+     *      @ORM\JoinColumn(name="targetfunction3_id", referencedColumnName="id", nullable=true)
+     *  })
+     */
+    private $targetFunction3;   
+
+    /**
+     * @var targetLevel3
+     *
+     * @ORM\ManyToOne(targetEntity="CdteLevel")
+     * @ORM\JoinColumns={
+     *      @ORM\JoinColumn(name="targetlevel3_id", referencedColumnName="id", nullable=true)
+     *  })
+     */
+    private $targetLevel3;
+    
     /**
      * @var mobilities
      *
@@ -255,6 +301,7 @@ class Candidate implements Taggable
      */
     public function __construct(\Application\Sonata\UserBundle\Entity\User $user=null)
     {
+        $this->active = true;
         $this->mobilities = new \Doctrine\Common\Collections\ArrayCollection();
         $this->languagesSkills = new \Doctrine\Common\Collections\ArrayCollection();
         $this->talentpools = new \Doctrine\Common\Collections\ArrayCollection();
@@ -480,28 +527,6 @@ class Candidate implements Taggable
         return $this->phone2;
     }
 
-    /**
-     * Set level
-     *
-     * @param integer $level
-     * @return Candidate
-     */
-    public function setLevel($level)
-    {
-        $this->level = $level;
-
-        return $this;
-    }
-
-    /**
-     * Get level
-     *
-     * @return integer 
-     */
-    public function getLevel()
-    {
-        return $this->level;
-    }
  
     /**
      * Set picture
@@ -573,28 +598,6 @@ class Candidate implements Taggable
     }
 
     /**
-     * Set position
-     *
-     * @param \TEW\TPBundle\Entity\CdtePosition $position
-     * @return Candidate
-     */
-    public function setPosition(\TEW\TPBundle\Entity\CdtePosition $position = null)
-    {
-        $this->position = $position;
-
-        return $this;
-    }
-
-    /**
-     * Get position
-     *
-     * @return \TEW\TPBundle\Entity\CdtePosition 
-     */
-    public function getPosition()
-    {
-        return $this->position;
-    }
-    /**
      * Set annualIncome
      *
      * @param integer $annualIncome
@@ -615,75 +618,6 @@ class Candidate implements Taggable
     public function getAnnualIncome()
     {
         return $this->annualIncome;
-    }
-
-    /**
-     * Set targetPosition1
-     *
-     * @param \TEW\TPBundle\Entity\CdtePosition $targetPosition1
-     * @return Candidate
-     */
-    public function setTargetPosition1(\TEW\TPBundle\Entity\CdtePosition $targetPosition1 = null)
-    {
-        $this->targetPosition1 = $targetPosition1;
-
-        return $this;
-    }
-
-    /**
-     * Get targetPosition1
-     *
-     * @return \TEW\TPBundle\Entity\CdtePosition 
-     */
-    public function getTargetPosition1()
-    {
-        return $this->targetPosition1;
-    }
-
-    /**
-     * Set targetPosition2
-     *
-     * @param \TEW\TPBundle\Entity\CdtePosition $targetPosition2
-     * @return Candidate
-     */
-    public function setTargetPosition2(\TEW\TPBundle\Entity\CdtePosition $targetPosition2 = null)
-    {
-        $this->targetPosition2 = $targetPosition2;
-
-        return $this;
-    }
-
-    /**
-     * Get targetPosition2
-     *
-     * @return \TEW\TPBundle\Entity\CdtePosition 
-     */
-    public function getTargetPosition2()
-    {
-        return $this->targetPosition2;
-    }
-
-    /**
-     * Set targetPosition3
-     *
-     * @param \TEW\TPBundle\Entity\CdtePosition $targetPosition3
-     * @return Candidate
-     */
-    public function setTargetPosition3(\TEW\TPBundle\Entity\CdtePosition $targetPosition3 = null)
-    {
-        $this->targetPosition3 = $targetPosition3;
-
-        return $this;
-    }
-
-    /**
-     * Get targetPosition3
-     *
-     * @return \TEW\TPBundle\Entity\CdtePosition 
-     */
-    public function getTargetPosition3()
-    {
-        return $this->targetPosition3;
     }
     
     /**
@@ -973,5 +907,235 @@ class Candidate implements Taggable
     public function getMobilities()
     {
         return $this->mobilities;
+    }
+
+    /**
+     * Set experience
+     *
+     * @param integer $experience
+     * @return Candidate
+     */
+    public function setExperience($experience)
+    {
+        $this->experience = $experience;
+
+        return $this;
+    }
+
+    /**
+     * Get experience
+     *
+     * @return integer 
+     */
+    public function getExperience()
+    {
+        return $this->experience;
+    }
+
+    /**
+     * Set function
+     *
+     * @param \TEW\TPBundle\Entity\CdteFunction $function
+     * @return Candidate
+     */
+    public function setFunction(\TEW\TPBundle\Entity\CdteFunction $function = null)
+    {
+        $this->function = $function;
+
+        return $this;
+    }
+
+    /**
+     * Get function
+     *
+     * @return \TEW\TPBundle\Entity\CdteFunction 
+     */
+    public function getFunction()
+    {
+        return $this->function;
+    }
+
+    /**
+     * Set level
+     *
+     * @param \TEW\TPBundle\Entity\CdteLevel $level
+     * @return Candidate
+     */
+    public function setLevel(\TEW\TPBundle\Entity\CdteLevel $level = null)
+    {
+        $this->level = $level;
+
+        return $this;
+    }
+
+    /**
+     * Get level
+     *
+     * @return \TEW\TPBundle\Entity\CdteLevel 
+     */
+    public function getLevel()
+    {
+        return $this->level;
+    }
+
+    /**
+     * Set targetFunction1
+     *
+     * @param \TEW\TPBundle\Entity\CdteFunction $targetFunction1
+     * @return Candidate
+     */
+    public function setTargetFunction1(\TEW\TPBundle\Entity\CdteFunction $targetFunction1 = null)
+    {
+        $this->targetFunction1 = $targetFunction1;
+
+        return $this;
+    }
+
+    /**
+     * Get targetFunction1
+     *
+     * @return \TEW\TPBundle\Entity\CdteFunction 
+     */
+    public function getTargetFunction1()
+    {
+        return $this->targetFunction1;
+    }
+
+    /**
+     * Set targetLevel1
+     *
+     * @param \TEW\TPBundle\Entity\CdteLevel $targetLevel1
+     * @return Candidate
+     */
+    public function setTargetLevel1(\TEW\TPBundle\Entity\CdteLevel $targetLevel1 = null)
+    {
+        $this->targetLevel1 = $targetLevel1;
+
+        return $this;
+    }
+
+    /**
+     * Get targetLevel1
+     *
+     * @return \TEW\TPBundle\Entity\CdteLevel 
+     */
+    public function getTargetLevel1()
+    {
+        return $this->targetLevel1;
+    }
+
+    /**
+     * Set targetFunction2
+     *
+     * @param \TEW\TPBundle\Entity\CdteFunction $targetFunction2
+     * @return Candidate
+     */
+    public function setTargetFunction2(\TEW\TPBundle\Entity\CdteFunction $targetFunction2 = null)
+    {
+        $this->targetFunction2 = $targetFunction2;
+
+        return $this;
+    }
+
+    /**
+     * Get targetFunction2
+     *
+     * @return \TEW\TPBundle\Entity\CdteFunction 
+     */
+    public function getTargetFunction2()
+    {
+        return $this->targetFunction2;
+    }
+
+    /**
+     * Set targetLevel2
+     *
+     * @param \TEW\TPBundle\Entity\CdteLevel $targetLevel2
+     * @return Candidate
+     */
+    public function setTargetLevel2(\TEW\TPBundle\Entity\CdteLevel $targetLevel2 = null)
+    {
+        $this->targetLevel2 = $targetLevel2;
+
+        return $this;
+    }
+
+    /**
+     * Get targetLevel2
+     *
+     * @return \TEW\TPBundle\Entity\CdteLevel 
+     */
+    public function getTargetLevel2()
+    {
+        return $this->targetLevel2;
+    }
+
+    /**
+     * Set targetFunction3
+     *
+     * @param \TEW\TPBundle\Entity\CdteFunction $targetFunction3
+     * @return Candidate
+     */
+    public function setTargetFunction3(\TEW\TPBundle\Entity\CdteFunction $targetFunction3 = null)
+    {
+        $this->targetFunction3 = $targetFunction3;
+
+        return $this;
+    }
+
+    /**
+     * Get targetFunction3
+     *
+     * @return \TEW\TPBundle\Entity\CdteFunction 
+     */
+    public function getTargetFunction3()
+    {
+        return $this->targetFunction3;
+    }
+
+    /**
+     * Set targetLevel3
+     *
+     * @param \TEW\TPBundle\Entity\CdteLevel $targetLevel3
+     * @return Candidate
+     */
+    public function setTargetLevel3(\TEW\TPBundle\Entity\CdteLevel $targetLevel3 = null)
+    {
+        $this->targetLevel3 = $targetLevel3;
+
+        return $this;
+    }
+
+    /**
+     * Get targetLevel3
+     *
+     * @return \TEW\TPBundle\Entity\CdteLevel 
+     */
+    public function getTargetLevel3()
+    {
+        return $this->targetLevel3;
+    }
+
+    /**
+     * Set active
+     *
+     * @param boolean $active
+     * @return Candidate
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
+
+        return $this;
+    }
+
+    /**
+     * Get active
+     *
+     * @return boolean 
+     */
+    public function getActive()
+    {
+        return $this->active;
     }
 }

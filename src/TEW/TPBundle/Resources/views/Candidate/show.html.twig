@@ -68,16 +68,16 @@
             </tr> 
             <tr>
                 <th>Current position</th>
-                <td>{{ entity.position }}
-                    {{ entity.level is not null and entity.level != 0? entity.level ~ ' years' }}
+                <td>{{ entity.function }} {{ entity.level }}
+                    {{ entity.experience is not null and entity.experience != 0? entity.experience ~ ' years' }}
                     {{ entity.annualIncome is not null and entity.annualIncome != 0?' - annual income USD' ~ entity.annualIncome }}</td>
             </tr>
             <tr>
                 <th>Target positions</th>
                 <td>
-                    {{ entity.targetPosition1 }}
-                    {{ entity.targetPosition2 is not null?' / ' ~ entity.targetPosition2 }}
-                    {{ entity.targetPosition3 is not null?' / ' ~ entity.targetPosition3 }}
+                    {{ entity.targetFunction1 is not null? entity.targetFunction1 }} {{ entity.targetLevel1 is not null? entity.targetLevel1 }}
+                    {{ entity.targetFunction2 is not null?' / ' ~ entity.targetFunction2 }} {{ entity.targetLevel2 is not null? entity.targetLevel2 }}
+                    {{ entity.targetFunction3 is not null?' / ' ~ entity.targetFunction3 }} {{ entity.targetLevel3 is not null? entity.targetLevel3 }}
                 </td>
             </tr>
             <tr>

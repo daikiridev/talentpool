@@ -8,7 +8,7 @@ cd /srv/123vpc/www/tew-test.123vpc.com
 # git update from repository
 git pull
 
-# composer dependencies...
+# composer dependencies... (composer update only for the dev plateform)
 composer install
 
 # DB updating

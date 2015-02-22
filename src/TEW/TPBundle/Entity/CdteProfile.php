@@ -37,17 +37,22 @@ class CdteProfile
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="TEW\TPBundle\Entity\CdtePosition")
-     * @ORM\JoinColumn(name="position_id", referencedColumnName="id", nullable=false)
+     * @ORM\ManyToOne(targetEntity="TEW\TPBundle\Entity\CdteFunction")
+     * @ORM\JoinColumn(name="function_id", referencedColumnName="id", nullable=false)
      */
+    private $function;
 
-    private $position;
+    /**
+     * @ORM\ManyToOne(targetEntity="TEW\TPBundle\Entity\CdteLevel")
+     * @ORM\JoinColumn(name="level_id", referencedColumnName="id", nullable=true)
+     */
+    private $level;    
     
     /**
      * @var talentpool
      * 
      * @ORM\ManyToOne(targetEntity="TEW\TPBundle\Entity\TalentPool", inversedBy="profiles")
-     *  @ORM\JoinTable(name="tew_talentpool_profiles")
+     * @ORM\JoinTable(name="tew_talentpool_profiles")
      */
     private $talentpool;
     
@@ -108,28 +113,6 @@ class CdteProfile
         return $this->description;
     }
 
-    /**
-     * Set position
-     *
-     * @param \TEW\TPBundle\Entity\CdtePosition $position
-     * @return CdteProfile
-     */
-    public function setPosition(\TEW\TPBundle\Entity\CdtePosition $position)
-    {
-        $this->position = $position;
-
-        return $this;
-    }
-
-    /**
-     * Get position
-     *
-     * @return \TEW\TPBundle\Entity\CdtePosition 
-     */
-    public function getPosition()
-    {
-        return $this->position;
-    }
 
     /**
      * Set talentpool
@@ -152,5 +135,51 @@ class CdteProfile
     public function getTalentpool()
     {
         return $this->talentpool;
+    }
+
+    /**
+     * Set function
+     *
+     * @param \TEW\TPBundle\Entity\CdteFunction $function
+     * @return CdteProfile
+     */
+    public function setFunction(\TEW\TPBundle\Entity\CdteFunction $function)
+    {
+        $this->function = $function;
+
+        return $this;
+    }
+
+    /**
+     * Get function
+     *
+     * @return \TEW\TPBundle\Entity\CdteFunction 
+     */
+    public function getFunction()
+    {
+        return $this->function;
+    }
+
+    /**
+     * Set level
+     *
+     * @param \TEW\TPBundle\Entity\CdteLevel $level
+     * @return CdteProfile
+     */
+    public function setLevel(\TEW\TPBundle\Entity\CdteLevel $level)
+    {
+        $this->level = $level;
+
+        return $this;
+    }
+
+    /**
+     * Get level
+     *
+     * @return \TEW\TPBundle\Entity\CdteLevel 
+     */
+    public function getLevel()
+    {
+        return $this->level;
     }
 }

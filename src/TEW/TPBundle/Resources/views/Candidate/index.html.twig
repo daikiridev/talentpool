@@ -26,8 +26,8 @@
                 <td>{% if entity.dateOfBirth %}{{ entity.dateOfBirth|date('Y-m-d H:i:s') }}{% endif %}</td>
                 #}
                 <td>{{ entity.age }}</td>
-                <td>{{ entity.position }}</td>
-                <td>{{ entity.level }} yrs</td>
+                <td>{{ entity.function }} {{ entity.level }}</td>
+                <td>{{ entity.experience }} yrs</td>
                 <td>{% if entity.createdAt %}{{ entity.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
                 <td>
                     <div class="btn-group btn-group-xs pull-right record_actions" role="group">

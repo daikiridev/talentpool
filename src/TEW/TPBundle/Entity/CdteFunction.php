@@ -38,7 +38,23 @@ class CdteFunction {
      * @ORM\JoinColumn(name="parent_id")
      * */
     private $parent;
+    
+    /**
+     * To be used by Sonata admin
+     *
+     * @return string 
+     */
+    public function __toString() {
+        return $this?$this->getName():'';
+    }
 
+    /**
+     * Constructor
+     */
+    public function __construct() {
+        $this->children = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
     /**
      * Get id
      *
@@ -121,20 +137,5 @@ class CdteFunction {
         return $this->children;
     }
 
-    /**
-     * To be used by Sonata admin
-     *
-     * @return string 
-     */
-    public function __toString() {
-        return $this?$this->getName():'';
-    }
-
-    /**
-     * Constructor
-     */
-    public function __construct() {
-        $this->children = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
 }
