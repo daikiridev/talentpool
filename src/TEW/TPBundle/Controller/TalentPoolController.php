@@ -4,6 +4,7 @@ namespace TEW\TPBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Doctrine\Common\Collections\ArrayCollection;
 
 use TEW\TPBundle\Entity\TalentPool;
 use TEW\TPBundle\Form\TalentPoolType;
@@ -41,6 +42,16 @@ class TalentPoolController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+// Added by VP ->            
+            $formProfiles = $entity->getProfiles();
+            // adds new profiles
+            if ($formProfiles !== NULL) {
+                foreach ($formProfiles as $profile) {
+                $profile->setTalentpool($entity);
+                $em->persist($profile);
+                }
+            }
+//  <- Added by VP
             $em->persist($entity);
             $em->flush();
 
@@ -176,12 +187,34 @@ class TalentPoolController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find TalentPool entity.');
         }
-
+// Added by VP ->        
+        // Getting talentpool's profiles stored in DB
+        $originalProfiles = new ArrayCollection();
+        foreach ($entity->getProfiles() as $profile) {
+            $originalProfiles->add($profile);
+        }
+//  <- Added by VP
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity);
         $editForm->handleRequest($request);
-
+        
         if ($editForm->isValid()) {
+// Added by VP ->          
+            $formProfiles = $entity->getProfiles();
+            // removes the relation between profiles and the candidate
+            foreach ($originalProfiles as $profile) {
+                if ($formProfiles->contains($profile) == false) {
+                    $em->remove($profile);
+                }
+            }
+            // adds new profiles
+            foreach ($formProfiles as $profile) {
+                if ($originalProfiles->contains($profile) == false) {
+                    $profile->setTalentpool($entity);
+                    $em->persist($profile);
+                }
+            }
+//  <- Added by VP
             $em->flush();
 
             return $this->redirect($this->generateUrl('tew_talentpool_edit', array('id' => $id)));

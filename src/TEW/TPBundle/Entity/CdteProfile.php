@@ -56,6 +56,15 @@ class CdteProfile
      */
     private $talentpool;
     
+    /**
+     * toString
+     * 
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getTitle();
+    }
 
     /**
      * Get id
@@ -166,7 +175,7 @@ class CdteProfile
      * @param \TEW\TPBundle\Entity\CdteLevel $level
      * @return CdteProfile
      */
-    public function setLevel(\TEW\TPBundle\Entity\CdteLevel $level)
+    public function setLevel(\TEW\TPBundle\Entity\CdteLevel $level=null)
     {
         $this->level = $level;
 

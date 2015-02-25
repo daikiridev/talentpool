@@ -39,7 +39,7 @@ class CandidateType extends AbstractType
                 ->add('phone2', 'text', array('required' => false))
                 // ->add('addresses')
                 ->add('addresses', 'collection', array(
-                    'attr' => array('class' => 'form-collection'), // in order to handle the jquery functions
+                    'attr' => array('class' => 'form-collection'), // in order to handle jquery functions of tew.candidate.edit.js
                     'type' => new AddressType(),
                     'required' => false,
                     'allow_add' => true, // allows to add as many addresses as we want
@@ -124,10 +124,10 @@ class CandidateType extends AbstractType
                         ),                    
                     ))
                 ->add('mobilities', 'collection', array(
-                    'attr' => array('class' => 'form-collection'), // in order to handle the jquery functions
+                    'attr' => array('class' => 'form-collection'), // in order to handle jquery functions of tew.candidate.edit.js
                     'type' => new CdteMobilityType(),
                     'required' => false,
-                    'allow_add' => true, // allows to add as many comments as we want
+                    'allow_add' => true, // allows to add as many locations as we want
                     'allow_delete' => false,
                     'by_reference' => false, // 'false' forces setMobilities() to be called
                     ))
@@ -144,9 +144,8 @@ class CandidateType extends AbstractType
                     'context'  => 'candidate',
                     'attr' => array('class' => 'span16') // doesn't work
                 ))
-                //->add('comments')
                 ->add('comments', 'collection', array(
-                    'attr' => array('class' => 'form-collection'), // in order to handle the jquery functions
+                    'attr' => array('class' => 'form-collection'), // in order to handle jquery functions of tew.candidate.edit.js
                     'type' => new CdteCommentType(),
                     'required' => false,
                     'allow_add' => true, // allows to add as many comments as we want

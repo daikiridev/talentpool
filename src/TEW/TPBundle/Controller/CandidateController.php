@@ -47,14 +47,7 @@ class CandidateController extends Controller {
 
         // Adding tagging stuff - see https://github.com/FabienPennequin/FPNTagBundle
         $tagManager = $this->get('fpn_tag.tag_manager');
-
-//        // ask the tag manager to create a Tag object
-//        $fooTag = $tagManager->loadOrCreateTag('foo');
-//
-//        // assign the foo tag to the post
-//        $tagManager->addTag($fooTag, $entity);
         
-
         $form->handleRequest($request);
 
         if ($form->isValid()) {
