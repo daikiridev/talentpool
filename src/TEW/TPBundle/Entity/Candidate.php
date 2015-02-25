@@ -114,16 +114,6 @@ class Candidate implements Taggable
      * @ORM\OneToOne(targetEntity="Application\Sonata\MediaBundle\Entity\Media", cascade={"all"})
      */
     private $resume;
-    
-//    /**
-//     * @var position
-//     *
-//     * @ORM\ManyToOne(targetEntity="CdtePosition")
-//     * @ORM\JoinColumns={
-//     *      @ORM\JoinColumn(name="position_id", referencedColumnName="id")
-//     *  })
-//     */
-//    private $position;
 
     /**
      * @var function

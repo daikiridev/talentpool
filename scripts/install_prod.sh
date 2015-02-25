@@ -19,7 +19,7 @@ app/console doctrine:migrations:migrate
 # cache cleaning
 app/console cache:clear --env=prod
 
-# assets installaiton into web directory
+# assets installation into the web directory
 app/console assets:install --symlink
 
 # checking rights

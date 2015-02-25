@@ -293,7 +293,7 @@ class CandidateController extends Controller {
             $em->flush();
             // after flushing the post, tell the tag manager to actually save the tags
             $tagManager->saveTagging($entity);
-            return $this->redirect($this->generateUrl('tew_candidate_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('tew_candidate_show', array('id' => $id)));
         }
 
         return $this->render('TEWTPBundle:Candidate:edit.html.twig', array(

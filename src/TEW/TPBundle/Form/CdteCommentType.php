@@ -64,6 +64,7 @@ class CdteCommentType extends AbstractType
                     'uiColor' => '#ffffff',
                 ),
             ))
+            ->add('talentpool')
         ;
     }
 

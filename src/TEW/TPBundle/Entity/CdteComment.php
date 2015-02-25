@@ -63,6 +63,14 @@ class CdteComment
     private $candidate;
     
     /**
+     * @var talentpool
+     *
+     * @ORM\ManyToOne(targetEntity="TalentPool")
+     * @ORM\JoinColumn(name="talentpool_id", nullable=true, referencedColumnName="id")
+     */
+    private $talentpool;
+    
+    /**
      * @var author
      *
      * @ORM\ManyToOne(targetEntity="Application\Sonata\UserBundle\Entity\User")
@@ -238,5 +246,28 @@ class CdteComment
     public function getTitle()
     {
         return $this->title;
+    }
+
+    /**
+     * Set talentpool
+     *
+     * @param \TEW\TPBundle\Entity\TalentPool $talentpool
+     * @return CdteComment
+     */
+    public function setTalentpool(\TEW\TPBundle\Entity\TalentPool $talentpool = null)
+    {
+        $this->talentpool = $talentpool;
+
+        return $this;
+    }
+
+    /**
+     * Get talentpool
+     *
+     * @return \TEW\TPBundle\Entity\TalentPool 
+     */
+    public function getTalentpool()
+    {
+        return $this->talentpool;
     }
 }

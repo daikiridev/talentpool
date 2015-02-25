@@ -217,7 +217,7 @@ class TalentPoolController extends Controller
 //  <- Added by VP
             $em->flush();
 
-            return $this->redirect($this->generateUrl('tew_talentpool_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('tew_talentpool_show', array('id' => $id)));
         }
 
         return $this->render('TEWTPBundle:TalentPool:edit.html.twig', array(
