@@ -23,7 +23,9 @@ class TEWExtension extends \Twig_Extension
             new \Twig_SimpleFilter('stars', array($this, 'starsFilter'), array('is_safe' => array('html'))),
             new \Twig_SimpleFilter('gender', array($this, 'genderFilter')),
             new \Twig_SimpleFilter('mail', array($this, 'mailFilter'), array('is_safe' => array('html'))),
-            new \Twig_SimpleFilter('languageSkill', array($this, 'languageSkillFilter'))   
+            new \Twig_SimpleFilter('languageSkill', array($this, 'languageSkillFilter')),
+            new \Twig_SimpleFilter('commentsByTalentpool', array($this, 'commentsByTalentpoolFilter')),
+            new \Twig_SimpleFilter('commentAverageScore', array($this, 'commentAverageScoreFilter')),
         );
     }
 
@@ -48,13 +50,36 @@ class TEWExtension extends \Twig_Extension
         return "<a href=\"mailto:$email\">$email</a>";
     }
     
-    public function languageSkillFilter(\TEW\TPBundle\Entity\CdteLanguage $languageSkill)
+    public function languageSkillFilter(\TEW\TPBundle\Entity\CdteLanguage $languageSkill = null)
     {
-        $result = $this->languages[$languageSkill->getLanguage()].' ('.$this->skills[$languageSkill->getSkill()].')';
+        //echo '@'.$languageSkill->getLanguage().'@';
+
+        $result = ($this->languages!=null && $languageSkill->getLanguage())?$this->languages[$languageSkill->getLanguage()].' ('.$this->skills[$languageSkill->getSkill()].')':'';
 
         return $result;
     }
 
+    public function commentsByTalentpoolFilter(\Doctrine\ORM\PersistentCollection $comments, \TEW\TPBundle\Entity\talentpool $tp = null)
+    {
+        $result = new ArrayCollection();
+        foreach ($comments as $comment) {
+            if ($comment->getTalentpool() == $tp){
+                $result->add($comment);
+            }
+        }
+        return $result; 
+    }
+    
+    public function commentAverageScoreFilter(ArrayCollection $comments)
+    {
+        $result = 0; $i=0;
+        foreach ($comments as $comment) {
+            $i++;
+            $result += $comment->getScore();
+        }
+        return $result/($i==0?1:$i);
+    }
+    
     public function getName()
     {
         return 'tew_extension';

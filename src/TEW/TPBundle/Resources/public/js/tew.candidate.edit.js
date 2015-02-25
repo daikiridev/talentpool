@@ -6,6 +6,10 @@ addressCollection.after(addButton());
 var mobilityCollection = $('#candidate_mobilities');
 mobilityCollection.after(addButton());
 
+// div containing the collection of mobilities
+var languagesSkillsCollection = $('#candidate_languagesSkills');
+languagesSkillsCollection.after(addButton());
+
 // div containing the collection of comments
 var commentCollectionDB = $('#candidate_comments');
 var commentCollection = $('#candidate_comments_new');

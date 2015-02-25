@@ -1,5 +1,13 @@
 {% extends '::base.html.twig' %}
 
+{% block scripts %}
+    <script>
+    $(function () {
+      $('[data-toggle="popover"]').popover()
+    })
+    </script>
+{% endblock %}
+
 {% block body -%}
     <h1>Candidate</h1>
     <table class="record_properties">
@@ -8,19 +16,31 @@
                 <th>Id</th>
                 <td>{{ entity.id }}</td>
                 <td rowspan="100" style="vertical-align: top">
-                    <h4>Comments (to be displayed in a popup?)</h4>
-                    <ul>
-                    {% for comment in entity.comments %}
-                        <li><button type="button" class="btn btn-xs btn-info" data-toggle="tooltip" data-placement="left" title="{{ comment.comment }}">{{ comment }}</button>{{ comment.score|stars }}
-                            <em>- by {{ comment.author }}, on {{ comment.date|date('d M Y') }}</em>
-                        </li>
-                     {% endfor %} 
-                    </ul>
+                    <h4>Talent pools</h4>
+                    {% for tp in entity.talentpools %}
+                        {% set tpcomments = entity.comments|commentsByTalentpool(tp) %}
+                        <ul>
+                            <li>
+                                {{ tp }} {{ tpcomments|commentAverageScore|stars }}
+                                <ul>
+                                {% for comment in tpcomments %}
+                                    <li data-toggle="popover" data-delay='{ "show": 500, "hide": 200 }' data-html="true" style="cursor:pointer" data-trigger='hover'
+                                        data-content="{{ comment.comment }}" data-title="{{ comment }}<br><em>- by {{ comment.author }}, on {{ comment.date|date('d M Y') }}</em>">
+                                        {{ comment.score|stars }} {{ comment }} - <em>{{ comment.date|date('d M Y') }}</em>
+                                    </li>
+                                 {% endfor %}
+                                 </ul>
+                             </li>
+                        </ul>
+                    {% endfor %}
+                    
                 </td>
             </tr>
             <tr>
-                <th>Average score</th>
-                <td>{{ entity.scoreAverage|stars }}</td>
+                <th>Global score</th>
+                <td data-toggle="popover" data-content="{{ entity.globalComment }}" data-delay='{ "show": 500, "hide": 200 }' data-html="true" style="cursor:pointer" data-trigger='hover'>
+                    {{ entity.globalScore|stars }}
+                </td>
             </tr>
             <tr>
                 <th>Picture</th>
@@ -34,10 +54,12 @@
                 <th>Firstname</th>
                 <td>{{ entity.firstName }}</td>
             </tr>
+            {% if entity.middleName %}
             <tr>
                 <th>Middlename</th>
                 <td>{{ entity.middleName }}</td>
             </tr>
+            {% endif %}
             <tr>
                 <th>Lastname</th>
                 <td>{{ entity.lastName }}</td>
@@ -54,10 +76,12 @@
                 <th>Phone1</th>
                 <td>{{ entity.phone1 }}</td>
             </tr>
+            {% if entity.phone2 %}
             <tr>
                 <th>Phone2</th>
                 <td>{{ entity.phone2 }}</td>
             </tr>
+            {% endif %}
             <tr>
                 <th>Addresses</th>
                 <td>
@@ -72,6 +96,7 @@
                     {{ entity.experience is not null and entity.experience != 0? entity.experience ~ ' years' }}
                     {{ entity.annualIncome is not null and entity.annualIncome != 0?' - annual income USD' ~ entity.annualIncome }}</td>
             </tr>
+            {% if entity.targetFunction1 and entity.targetFunction3 and entity.targetFunction3 %}
             <tr>
                 <th>Target positions</th>
                 <td>
@@ -80,21 +105,24 @@
                     {{ entity.targetFunction3 is not null?' / ' ~ entity.targetFunction3 }} {{ entity.targetLevel3 is not null? entity.targetLevel3 }}
                 </td>
             </tr>
+            {% endif %}
+            {% if entity.languagesSkills %}
             <tr>
                 <th>Languages</th>
-                <td> {% for lskill in  entity.languagesSkills %}
-                    {{ lskill|languageSkill }} {# filter defined in src/.../Twig/Extension #}
+                <td>
+                    {% for lskill in  entity.languagesSkills %}
+                        {{ loop.index>1?' / '}}
+                        {{ lskill|languageSkill }} {# filter defined in src/.../Twig/Extension #}
                     {% endfor %}
                 </td>
             </tr>
+            {% endif %}
+            {% if entity.mobilities %}
             <tr>
                 <th>Mobility</th>
                 <td>{{ entity.mobilities|join(' / ') }}</td>
             </tr>
-            <tr>
-                <th>Talent Pools</th>
-                <td>{{ entity.talentpools|join(' / ') }}</td>
-            </tr>
+            {% endif %}
             <tr>
                 <th>Tags</th>
                 <td>{{ entity.tags|join(' / ') }}</td>

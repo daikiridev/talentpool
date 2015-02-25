@@ -238,7 +238,12 @@ class CandidateController extends Controller {
         $originalMobilities = new ArrayCollection();
         foreach ($entity->getMobilities() as $mobility) {
             $originalMobilities->add($mobility);
-        }        
+        }
+        // Getting candidate's languagesSkills stored in DB
+        $originalLanguagesSkills = new ArrayCollection();
+        foreach ($entity->getLanguagesSkills() as $ls) {
+            $originalLanguagesSkills->add($ls);
+        }
         
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity);
@@ -251,7 +256,7 @@ class CandidateController extends Controller {
         if ($editForm->isValid()) {
 // Added by VP ->
             $formAddresses = $entity->getAddresses(); 
-            // removes the relation between addresses and the candidate
+            // removes deleted addresses
             foreach ($originalAddresses as $address) {
                 if ($formAddresses->contains($address) == false) {
                     $em->remove($address);
@@ -264,6 +269,7 @@ class CandidateController extends Controller {
                     $em->persist($address);
                 }
             }
+            
             $formComments = $entity->getComments(); 
             // removes the relation between comments and the candidate
 //            foreach ($originalComments as $comment) {
@@ -279,13 +285,23 @@ class CandidateController extends Controller {
                     $em->persist($comment);
                 }
             }
+            
             $formMobilities = $entity->getMobilities();
-            // adds new comments
+            // adds new mobility locations
             foreach ($formMobilities as $mobility) {
                 if ($originalMobilities->contains($mobility) == false) {
                     $mobility->setCandidate($entity);
                     $em->persist($mobility);
                 }
+            }  
+            
+            $formLanguagesSkills = $entity->getLanguagesSkills();
+            // adds new mobility locations
+            foreach ($formLanguagesSkills as $ls) {
+                if ($originalLanguagesSkills->contains($ls) == false) {
+                    $ls->setCandidate($entity);
+                    $em->persist($ls);
+                }                
             }            
 // <- Added by VP      
  

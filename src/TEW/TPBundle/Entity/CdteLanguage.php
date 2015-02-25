@@ -27,14 +27,14 @@ class CdteLanguage
     /**
      *
      * @var string
-     * @ORM\Column(name="language", type="string", length=15)
+     * @ORM\Column(name="language", type="string", length=15, nullable=false)
      */
     private $language;
     
     /**
      * @var integer
      *
-     * @ORM\Column(name="skill", type="smallint")
+     * @ORM\Column(name="skill", type="smallint", nullable=false)
      */
     private $skill;
 

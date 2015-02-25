@@ -232,10 +232,10 @@ class Candidate implements Taggable
     /**
      * @var languagesSkills
      * 
-     * @ORM\ManyToMany(targetEntity="CdteLanguage")
+     * @ORM\ManyToMany(targetEntity="CdteLanguage", cascade={"persist"})
      * @ORM\JoinTable(name="tew_cdte_languageskills",
-     *  joinColumns={@ORM\JoinColumn(name="languageskill_id", referencedColumnName="id")},
-     *  inverseJoinColumns={@ORM\JoinColumn(name="candidate_id", referencedColumnName="id")}
+     *  joinColumns={@ORM\JoinColumn(name="candidate_id", referencedColumnName="id", nullable=true)},
+     *  inverseJoinColumns={@ORM\JoinColumn(name="languageskill_id", referencedColumnName="id")}
      *  )
      */
     private $languagesSkills; 
@@ -269,6 +269,25 @@ class Candidate implements Taggable
      * 
      */
     private $tags;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="globalcomment", type="text", length=null)
+     */    
+    private $globalComment;
+
+    /**
+     * @var integer
+     * @Assert\Range(
+     *      min = 0,
+     *      max = 5,
+     *      minMessage = "score must be positive",
+     *      maxMessage = "max score is 5"
+     * )
+     * @ORM\Column(name="globalscore", type="smallint")
+     */    
+    private $globalScore;
 
     /**
      * @var date
@@ -1127,5 +1146,51 @@ class Candidate implements Taggable
     public function getActive()
     {
         return $this->active;
+    }
+
+    /**
+     * Set globalComment
+     *
+     * @param string $globalComment
+     * @return Candidate
+     */
+    public function setGlobalComment($globalComment)
+    {
+        $this->globalComment = $globalComment;
+
+        return $this;
+    }
+
+    /**
+     * Get globalComment
+     *
+     * @return string 
+     */
+    public function getGlobalComment()
+    {
+        return $this->globalComment;
+    }
+
+    /**
+     * Set globalScore
+     *
+     * @param integer $globalScore
+     * @return Candidate
+     */
+    public function setGlobalScore($globalScore)
+    {
+        $this->globalScore = $globalScore;
+
+        return $this;
+    }
+
+    /**
+     * Get globalScore
+     *
+     * @return integer 
+     */
+    public function getGlobalScore()
+    {
+        return $this->globalScore;
     }
 }

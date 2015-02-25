@@ -32,4 +32,4 @@ assetic:
 
 doctrine:
     dbal:
-        unix_socket:    "/Applications/MAMP/tmp/mysql/mysql.sock" # on my Mac (otherwise, comment it)
+        unix_socket:    "/Applications/MAMP/tmp/mysql/mysql.sock" # on my Mac OS (otherwise, comment it)
