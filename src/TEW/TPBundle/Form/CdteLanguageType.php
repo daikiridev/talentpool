@@ -15,8 +15,13 @@ class CdteLanguageType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('language', 'language')
-            ->add('skill', 'choice', array('choices' => array('none','novice','spoken','bilingual', 'mother tongue')))
+            ->add('language', 'language', array(
+                'attr' => array('class' => 'select2')
+            ))
+            ->add('skill', 'choice', array(
+                'choices' => array('none','novice','spoken','bilingual', 'mother tongue'),
+                'attr' => array('class' => 'select2')
+            ))
         ;
     }
     

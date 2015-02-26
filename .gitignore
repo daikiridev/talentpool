@@ -27,3 +27,6 @@
 /src/TEW/TPBundle/Controller/TEWController.php
 /src/TEW/TPBundle/Resources/sql/
 /src/TEW/TPBundle/Resources/public/js/jquery.tagsinput_ori.js
+/src/TEW/TPBundle/Resources/public/css/bootstrap.darkly.min.css
+/src/TEW/TPBundle/Resources/public/css/bootstrap.flatly.min.css
+/src/TEW/TPBundle/Resources/public/css/bootstrap.lumen.min.css

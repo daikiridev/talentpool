@@ -14,7 +14,7 @@ class AddressType extends AbstractType
     {
         $builder
             ->add('label')
-            ->add('street1', 'text')
+            ->add('street1', 'text', array('attr' => array('size' => '50')))
             ->add('street2', 'text', array('required' => false))
             ->add('zip', 'text', array('required' => false))
             ->add('city', 'text')

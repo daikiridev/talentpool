@@ -15,7 +15,7 @@ class CdteMobilityType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('location', 'text')
+            ->add('location', 'text', array('attr' => array('size' => '50')))
             ->add('zone', 'hidden', array('required' => false, 'attr' => array('class'=>'mobility_zone')))
             ->add('country', 'hidden', array('required' => false, 'attr' => array('class'=>'mobility_country')))
             ->add('region', 'hidden', array('required' => false))

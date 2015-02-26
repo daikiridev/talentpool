@@ -11,7 +11,7 @@
     {% endif %}
 
     <div class="form-box" id="login-box">
-        <div class="header bg-blue-gradient">Authentication</div>
+        <div class="header bg-aqua">Authentication</div>
         <form action="{{ path("fos_user_security_check") }}" method="post" role="form">
             <div class="body bg-gray">
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
@@ -32,7 +32,7 @@
             </div>
 
             <div class="footer">
-                <button type="submit" id="_submit" name="_submit" class="btn bg-blue-gradient">{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}</button>
+                <button type="submit" id="_submit" name="_submit" class="btn bg-orange">{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}</button>
                 {#
                 <p><a href="/app_dev.php/resetting/request" class="text-center">Forgotten password?</a></p>
                 #}

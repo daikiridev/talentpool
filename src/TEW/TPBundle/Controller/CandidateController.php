@@ -148,6 +148,8 @@ class CandidateController extends Controller {
             throw $this->createNotFoundException('Unable to find Candidate entity.');
         }
 
+        // Adding Intl
+        //$this->get('twig')->addExtension(new Twig_Extensions_Extension_Intl());
         // Adding tagging stuff - see https://github.com/FabienPennequin/FPNTagBundle
         $tagManager = $this->get('fpn_tag.tag_manager');
         $tagManager->loadTagging($entity);

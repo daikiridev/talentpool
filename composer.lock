@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "e12256bdcf1b24aaab40663f5fea5d19",
+    "hash": "37d071e80e3fb54940db5dfa7eced661",
     "packages": [
         {
             "name": "cocur/slugify",
@@ -2494,12 +2494,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataAdminBundle.git",
-                "reference": "8ac0191016b41965d771be504756210e5e497c59"
+                "reference": "c95da3745edf48ccf9fbe05cd0089bd6ad3ba905"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataAdminBundle/zipball/8ac0191016b41965d771be504756210e5e497c59",
-                "reference": "8ac0191016b41965d771be504756210e5e497c59",
+                "url": "https://api.github.com/repos/sonata-project/SonataAdminBundle/zipball/c95da3745edf48ccf9fbe05cd0089bd6ad3ba905",
+                "reference": "c95da3745edf48ccf9fbe05cd0089bd6ad3ba905",
                 "shasum": ""
             },
             "require": {
@@ -2567,7 +2567,7 @@
                 "bootstrap",
                 "sonata"
             ],
-            "time": "2015-02-21 12:47:03"
+            "time": "2015-02-25 09:28:13"
         },
         {
             "name": "sonata-project/block-bundle",
@@ -2832,12 +2832,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataCoreBundle.git",
-                "reference": "9a488952c92c890e72def71c2a00651f9e545e34"
+                "reference": "680aee93dc40ddd6b004afd8c21c3024413be21c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataCoreBundle/zipball/9a488952c92c890e72def71c2a00651f9e545e34",
-                "reference": "9a488952c92c890e72def71c2a00651f9e545e34",
+                "url": "https://api.github.com/repos/sonata-project/SonataCoreBundle/zipball/680aee93dc40ddd6b004afd8c21c3024413be21c",
+                "reference": "680aee93dc40ddd6b004afd8c21c3024413be21c",
                 "shasum": ""
             },
             "require": {
@@ -2889,7 +2889,7 @@
             "keywords": [
                 "sonata"
             ],
-            "time": "2015-02-21 12:48:12"
+            "time": "2015-02-25 09:30:16"
         },
         {
             "name": "sonata-project/datagrid-bundle",
@@ -3297,12 +3297,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataMediaBundle.git",
-                "reference": "8276215011b98462aa121b763d489fcc3df2509c"
+                "reference": "4bc02a87accee7856d6fde9ba67a0e8ae467aac4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataMediaBundle/zipball/8276215011b98462aa121b763d489fcc3df2509c",
-                "reference": "8276215011b98462aa121b763d489fcc3df2509c",
+                "url": "https://api.github.com/repos/sonata-project/SonataMediaBundle/zipball/4bc02a87accee7856d6fde9ba67a0e8ae467aac4",
+                "reference": "4bc02a87accee7856d6fde9ba67a0e8ae467aac4",
                 "shasum": ""
             },
             "require": {
@@ -3376,7 +3376,7 @@
                 "vimeo",
                 "youtube"
             ],
-            "time": "2015-02-21 12:48:21"
+            "time": "2015-02-24 21:00:31"
         },
         {
             "name": "sonata-project/notification-bundle",
@@ -3455,12 +3455,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataUserBundle.git",
-                "reference": "698584e82d428bc1bb73528d41f0e2a65cdc3617"
+                "reference": "0c566644c3b16e96979410b0c06aa6ea262b143b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataUserBundle/zipball/698584e82d428bc1bb73528d41f0e2a65cdc3617",
-                "reference": "698584e82d428bc1bb73528d41f0e2a65cdc3617",
+                "url": "https://api.github.com/repos/sonata-project/SonataUserBundle/zipball/0c566644c3b16e96979410b0c06aa6ea262b143b",
+                "reference": "0c566644c3b16e96979410b0c06aa6ea262b143b",
                 "shasum": ""
             },
             "require": {
@@ -3520,7 +3520,7 @@
                 "sonata",
                 "user"
             ],
-            "time": "2015-02-21 12:47:21"
+            "time": "2015-02-23 14:52:29"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -3905,25 +3905,31 @@
         },
         {
             "name": "twig/extensions",
-            "version": "v1.0.1",
+            "version": "v1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig-extensions.git",
-                "reference": "f91a82ec225e5bb108e01a0f93c9be04f84dcfa0"
+                "reference": "8cf4b9fe04077bd54fc73f4fde83347040c3b8cd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig-extensions/zipball/f91a82ec225e5bb108e01a0f93c9be04f84dcfa0",
-                "reference": "f91a82ec225e5bb108e01a0f93c9be04f84dcfa0",
+                "url": "https://api.github.com/repos/twigphp/Twig-extensions/zipball/8cf4b9fe04077bd54fc73f4fde83347040c3b8cd",
+                "reference": "8cf4b9fe04077bd54fc73f4fde83347040c3b8cd",
                 "shasum": ""
             },
             "require": {
-                "twig/twig": "~1.0"
+                "twig/twig": "~1.12"
+            },
+            "require-dev": {
+                "symfony/translation": "~2.3"
+            },
+            "suggest": {
+                "symfony/translation": "Allow the time_diff output to be translated"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0.x-dev"
+                    "dev-master": "1.2.x-dev"
                 }
             },
             "autoload": {
@@ -3942,13 +3948,12 @@
                 }
             ],
             "description": "Common additional features for Twig that do not directly belong in core",
-            "homepage": "https://github.com/fabpot/Twig-extensions",
+            "homepage": "http://twig.sensiolabs.org/doc/extensions/index.html",
             "keywords": [
-                "debug",
                 "i18n",
                 "text"
             ],
-            "time": "2013-10-18 19:37:15"
+            "time": "2014-10-30 14:30:03"
         },
         {
             "name": "twig/twig",

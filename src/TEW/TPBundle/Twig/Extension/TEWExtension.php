@@ -25,7 +25,7 @@ class TEWExtension extends \Twig_Extension
             new \Twig_SimpleFilter('mail', array($this, 'mailFilter'), array('is_safe' => array('html'))),
             new \Twig_SimpleFilter('languageSkill', array($this, 'languageSkillFilter')),
             new \Twig_SimpleFilter('commentsByTalentpool', array($this, 'commentsByTalentpoolFilter')),
-            new \Twig_SimpleFilter('commentAverageScore', array($this, 'commentAverageScoreFilter')),
+            new \Twig_SimpleFilter('commentsAverageScore', array($this, 'commentsAverageScoreFilter')),
         );
     }
 
@@ -70,7 +70,7 @@ class TEWExtension extends \Twig_Extension
         return $result; 
     }
     
-    public function commentAverageScoreFilter(ArrayCollection $comments)
+    public function commentsAverageScoreFilter(ArrayCollection $comments)
     {
         $result = 0; $i=0;
         foreach ($comments as $comment) {

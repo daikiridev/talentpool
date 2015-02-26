@@ -58,9 +58,10 @@ class CandidateType extends AbstractType
             ))
             ->add('globalScore', 'choice', array(
                 'choices' => range(0,5),
-                'empty_value'=> ''
+                'empty_value'=> '',
+                'attr' => array('class' => 'select2'),
             ))
-            ->add('active')
+            ->add('active', 'checkbox', array('required' => false))
             ->add('picture', 'sonata_media_type', array(
                 'label' => false, // 'label'    =>  'Image'
                 'required' => false,
@@ -70,6 +71,7 @@ class CandidateType extends AbstractType
             ))
             ->add('gender', 'choice', array(
                 'choices' => array('m' => 'Male', 'f' => 'Female'),
+                'attr' => array('class' => 'select2'),
             ))
             ->add('firstName')
             ->add('middleName', 'text', array('required' => false))
@@ -77,7 +79,7 @@ class CandidateType extends AbstractType
             ->add('dateOfBirth', 'date', array(
                 'years' => range(date('Y')-20, date('Y')-80),
                 'empty_value' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day'),
-                'attr' => array('class' => 'date'), // datepicker when available
+                'attr' => array('class' => 'date select2'), // datepicker when available
             ))
             ->add('email', 'email')
             ->add('phone1')
@@ -96,40 +98,35 @@ class CandidateType extends AbstractType
                 'class' => 'TEWTPBundle:CdteFunction',
                 'label' => 'Current function',
                 'empty_value' => 'Select',
-                'attr' => array(
-                    'class' => 'js-example-basic-single'
-                    ),
+                'attr' => array('class' => 'select2'),
                 ))
             ->add('level', 'entity', array(
                 'class' => 'TEWTPBundle:CdteLevel',
                 'label' => 'Current level',
                 'empty_value' => 'Select',
-                'attr' => array(
-                    'class' => 'js-example-basic-single'
-                    ),                    
+                'attr' => array('class' => 'select2'),                   
                 ))
             ->add('experience', 'choice', array(
                 'label' => 'Experience',
                 'choices' => range(0,40),
-                'empty_value'=> 'Yrs')
-                )
+                'empty_value'=> 'Yrs',
+                'attr' => array('class' => 'select2'),
+            ))
             ->add('annualIncome')
             ->add('targetFunction1', 'entity', array(
                 'class' => 'TEWTPBundle:CdteFunction',
                 'required' => false,
                 'label' => 'Target function #1',
                 'empty_value' => 'Select',
-                'attr' => array(
-                    'class' => 'js-example-basic-single'
-                    ),
-                ))
+                'attr' => array('class' => 'select2'),
+            ))
             ->add('targetLevel1', 'entity', array(
                 'class' => 'TEWTPBundle:CdteLevel',
                 'required' => false,
                 'label' => 'Target level #1',
                 'empty_value' => 'Select',
                 'attr' => array(
-                    'class' => 'js-example-basic-single'
+                    'class' => 'select2'
                     ),                    
                 ))
             ->add('targetFunction2', 'entity', array(
@@ -138,7 +135,7 @@ class CandidateType extends AbstractType
                 'label' => 'Target function #2',
                 'empty_value' => 'Select',
                 'attr' => array(
-                    'class' => 'js-example-basic-single'
+                    'class' => 'select2'
                     ),
                 ))
             ->add('targetLevel2', 'entity', array(
@@ -147,7 +144,7 @@ class CandidateType extends AbstractType
                 'label' => 'Target level #2',
                 'empty_value' => 'Select',
                 'attr' => array(
-                    'class' => 'js-example-basic-single'
+                    'class' => 'select2'
                     ),                    
                 ))   
             ->add('targetFunction3', 'entity', array(
@@ -156,7 +153,7 @@ class CandidateType extends AbstractType
                 'label' => 'Target function #3',
                 'empty_value' => 'Select',
                 'attr' => array(
-                    'class' => 'js-example-basic-single'
+                    'class' => 'select2'
                     ),
                 ))
             ->add('targetLevel3', 'entity', array(
@@ -165,7 +162,7 @@ class CandidateType extends AbstractType
                 'label' => 'Target level #3',
                 'empty_value' => 'Select',
                 'attr' => array(
-                    'class' => 'js-example-basic-single'
+                    'class' => 'select2'
                     ),                    
                 ))
             ->add('mobilities', 'collection', array(
@@ -176,7 +173,6 @@ class CandidateType extends AbstractType
                 'allow_delete' => false,
                 'by_reference' => false, // 'false' forces setMobilities() to be called
                 ))
-//            ->add('languagesSkills')
             ->add('languagesSkills', 'collection', array(
                 'attr' => array('class' => 'form-collection'), // in order to handle jquery functions of tew.candidate.edit.js
                 'type' => new CdteLanguageType(),
@@ -185,13 +181,18 @@ class CandidateType extends AbstractType
                 'allow_delete' => false,
                 'by_reference' => true, // 'false' forces setComments() to be called
                 ))
-            ->add('talentpools')
-//            ->add('talentpools', 'choice',
-//                    array('type'=>new TalentPoolType)
-//            )
+            ->add('talentpools', 'entity', array( 
+                'required'  => false,
+                'class'    => 'TEWTPBundle:TalentPool',
+                'multiple' => true,
+                'expanded' => false, // checkboxes?
+                'attr' => array('class' => 'select2', 'style' => 'width:300px'),
+            ))
             ->add('origin')
-//                ->add('tags')
-            ->add('tags','tags', array('required' => false, 'attr' => array('class' => 'tags-field input-block-level')))
+            ->add('tags','tags', array(
+                'required' => false,
+                'attr' => array('class' => 'tags-field input-block-level', 'multiple' => 'multiple', 'style' => 'width:300px')
+            ))
             ->add('resume', 'sonata_media_type', array(
                 'label' => false,
                 'required' => false,
@@ -208,18 +209,10 @@ class CandidateType extends AbstractType
                 'by_reference' => false, // 'false' forces setComments() to be called
                 ))
             ;
-        //$builder->get('picture')->remove('unlink');
-        $builder->get('picture')->add('binaryContent', 'file', ['label' => false,]);
-        //$builder->get('resume')->remove('unlink');
-        $builder->get('resume')->add('binaryContent', 'file', ['label' => false,]);
-        
-//        
-
-//       $builder->get('picture')->remove('nimportequoi');
-////        $builder
-////                ->get('picture')->add('unlink', 'hidden', ['mapped' => false, 'data' => false])
-////                ->get('picture')->add('binaryContent', 'file', ['label' => false])
-//            ;
+        $builder->get('picture')->add('binaryContent', 'file', ['label' => false,])
+                ->add('unlink', 'hidden', ['mapped' => false, 'data' => false]); // removing the 'unlink' checkbox
+        $builder->get('resume')->add('binaryContent', 'file', ['label' => false,])
+                ->add('unlink', 'hidden', ['mapped' => false, 'data' => false]); // removing the 'unlink' checkbox
     }
     
     /**

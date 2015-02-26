@@ -101,7 +101,7 @@
                         $('<a>', {
                             href  : '#',
                             title : 'Removing tag',
-                            text  : 'x'
+                            text  : '×'
                         }).click(function () {
                             return $('#' + id).removeTag(escape(value));
                         })
@@ -311,7 +311,7 @@
 						 event.preventDefault();
 						 var last_tag = $(this).closest('.tagsinput').find('.tag:last').text();
 						 var id = $(this).attr('id').replace(/_tag$/, '');
-						 last_tag = last_tag.replace(/[\s]+x$/, '');
+						 last_tag = last_tag.replace(/[\s]+×$/, '');
 						 $('#' + id).removeTag(escape(last_tag));
 						 $(this).trigger('focus');
 					}

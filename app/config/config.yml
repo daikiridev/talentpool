@@ -153,6 +153,10 @@ parameters:
 
 # Services (see src/TEW/TPBundle/Ressources/config/services.yml)
 services:
+    twig.extension.intl:
+        class: Twig_Extensions_Extension_Intl
+        tags:
+            - { name: twig.extension }
 #    tew.admin.user:
 #        class: TEW\UserBundle\Admin\UserAdmin
 #        tags:

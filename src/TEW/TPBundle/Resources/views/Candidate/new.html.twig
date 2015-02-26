@@ -4,39 +4,47 @@
 {# {% form_theme form 'TEWTPBundle:Form:media_widgets.html.twig' %} #}
 
 {% block styles %}
+    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/start/jquery-ui.css">
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/tewtp/css/jquery.tagsinput.css') }}" />
+    <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0-beta.3/css/select2.min.css" rel="stylesheet" />
 {% endblock styles %}
 {% block scripts %}
-    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>{# needed for the tagsinput 'autocomplete_url' feature #}
     <script src="{{ asset('bundles/tewtp/js/jquery.tagsinput.js') }}"></script>
     <script>
-        $('.tags-field').tagsInput({
+    $('.tags-field').tagsInput({
         'autocomplete_url': '{{ path('tew_json_allcandidatetags') }}',
-        //'autocomplete':{},
-                'height': '30px',
-                'width': '400px'
-                });
+        'autocomplete': {selectFirst: true, width: '4px', autoFill: true},
+        'height': '30px',
+        'width': '400px',
+        'interactive': true,
+        'defaultText': 'add a tag',
+    });
+    </script>    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0-beta.3/js/select2.min.js"></script>
+    <script>
+        $('select').select2();
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places&language=en"></script>
     <script src="{{ asset('bundles/tewtp/js/tew.collections.edit.js') }}"></script>
     <script src="{{ asset('bundles/tewtp/js/tew.candidate.edit.js') }}"></script>
     <script>
-    {# if there is a new country in a mobility form, add the corresponding zone by an ajax request on tew_json_findzone #}
-    $('.mobility_country').change(function(){
-        alert('change country '+$(this).val());
-        var zoneid = $(this).attr('id').replace((/country/), "zone");
-        $.post( "{{ path('tew_json_findzone') }}", { country: $(this).val()} )
-        .done(function( data ) {
-            $('#'+zoneid).val(data.zone[0].id); // setting the right zone
-            console.log(zoneid+': '+($('#'+zoneid).val()));
-        })
-         .fail(function() {
-            alert( "The zone was not found, please reload the location" );
-        })
-        .always(function() {
-            console( zoneid+" finished" );
-        });
-    });
+        {# if there is a new country in a mobility form, add the corresponding zone by an ajax request on tew_json_findzone #}
+            $('.mobility_country').change(function () {
+                alert('change country ' + $(this).val());
+                var zoneid = $(this).attr('id').replace((/country/), "zone");
+                $.post("{{ path('tew_json_findzone') }}", {country: $(this).val()})
+                        .done(function (data) {
+                            $('#' + zoneid).val(data.zone[0].id); // setting the right zone
+                            console.log(zoneid + ': ' + ($('#' + zoneid).val()));
+                        })
+                        .fail(function () {
+                            alert("The zone was not found, please reload the location");
+                        })
+                        .always(function () {
+                            console.log(zoneid + " finished");
+                        });
+            });
     </script>
 {% endblock scripts %}
 

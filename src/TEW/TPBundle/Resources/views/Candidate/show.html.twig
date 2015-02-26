@@ -21,7 +21,7 @@
                         {% set tpcomments = entity.comments|commentsByTalentpool(tp) %}
                         <ul>
                             <li>
-                                {{ tp }} {{ tpcomments|commentAverageScore|stars }}
+                                {{ tp }} {{ tpcomments|commentsAverageScore|stars }}
                                 <ul>
                                 {% for comment in tpcomments %}
                                     <li data-toggle="popover" data-delay='{ "show": 500, "hide": 200 }' data-html="true" style="cursor:pointer" data-trigger='hover'
@@ -94,7 +94,7 @@
                 <th>Current position</th>
                 <td>{{ entity.function }} {{ entity.level }}
                     {{ entity.experience is not null and entity.experience != 0? entity.experience ~ ' years' }}
-                    {{ entity.annualIncome is not null and entity.annualIncome != 0?' - annual income USD' ~ entity.annualIncome }}</td>
+                    {{ entity.annualIncome is not null and entity.annualIncome != 0?' - annual income ' ~ entity.annualIncome|localizedcurrency('USD') }}</td>
             </tr>
             {% if entity.targetFunction1 and entity.targetFunction3 and entity.targetFunction3 %}
             <tr>
