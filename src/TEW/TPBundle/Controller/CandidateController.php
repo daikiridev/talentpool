@@ -76,7 +76,7 @@ class CandidateController extends Controller {
             if ($formMobilities !== NULL) {
                 foreach ($formMobilities as $mobility) {
                     $mobility->setCandidate($entity);
-                    $em->persist($comment);
+                    $em->persist($mobility);
                 }
             }
             

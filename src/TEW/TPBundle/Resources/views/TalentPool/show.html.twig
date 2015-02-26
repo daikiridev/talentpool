@@ -1,14 +1,21 @@
 {# TEW/TPBundle/src/Resources/views/TalentPool/show.html.twig #}
 {% extends '::base.html.twig' %}
 
+{% block scripts %}
+    <script>
+    $(function () {
+      $('[data-toggle="popover"]').popover()
+    })
+    </script>
+{% endblock %}
 {% block body -%}
     <h1>TalentPool</h1>
 
     <table class="record_properties">
         <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ entity.id }}</td>
+                <th>Owner</th>
+                <td>{{ entity.creator }}</td>
             </tr>
             <tr>
                 <th>Name</th>
@@ -20,15 +27,22 @@
             </tr>
             <tr>
                 <th>Profiles</th>
-                <td>{{ entity.profiles|join(' / ') }}</td>
+                <td>
+                    {% for profile in entity.profiles %}
+                        <div data-toggle="popover" data-delay='{ "show": 500, "hide": 200 }' data-html="true" style="cursor:pointer" data-trigger='hover'
+                             data-content="{{ profile.description|raw }}" data-title="{{ profile }}">
+                            {{ profile }} (view link to be added)
+                        </div>
+                    {% endfor %}
+                </td>
             </tr>
             <tr>
-                <th>Candidates</th>
+                <th>Candidates (to be removed)</th>
                 <td>{{ entity.candidates|join(' / ') }}</td>
             </tr>
             <tr>
                 <th>Creationdate</th>
-                <td>{{ entity.createdAt|date('d M Y H:i:s') }} by {{ entity.creator }}</td>
+                <td>{{ entity.createdAt|date('d M Y H:i:s') }}</td>
             </tr>
         </tbody>
     </table>
