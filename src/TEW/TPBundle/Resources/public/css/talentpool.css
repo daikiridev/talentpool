@@ -1,4 +1,4 @@
-body {
+/*body {
     font-size: 14px;
     font-family: "Lucida Sans Unicode", "Lucida Grande", Verdana, Arial, Helvetica, sans-serif;
 }
@@ -9,7 +9,7 @@ h1.title {
 .sf-reset h2 {
     font-weight:   bold;
     color:         #FFFFFF;
-    /* Font is duplicated of body (sans-serif) */
+     Font is duplicated of body (sans-serif) 
     font-family:      "Lucida Sans Unicode", "Lucida Grande", Verdana, Arial, Helvetica, sans-serif;
 
     margin-bottom:    10px;
@@ -98,6 +98,46 @@ ul#demo-list a {
 .sf-reset .symfony-content pre {
     white-space: pre;
     font-family: monospace;
+}*/
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 40px;
+  background-color: #f5f5f5;
+}
+
+
+/* Custom page CSS
+-------------------------------------------------- */
+/* Not required for template or sticky footer method. */
+
+body > .container {
+  padding: 60px 15px 0;
+}
+.container .text-muted {
+  margin: 10px 0;
+}
+
+.footer > .container {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+code {
+  font-size: 80%;
 }
 
 // Others
@@ -106,6 +146,13 @@ ul#demo-list a {
     background-color: navy;
     border-color: yellow;
 }
+
+// Popover
+.popover{
+    max-width: 100%; // Max Width of the popover (depending on the container!)
+}
+
+// Records
 
 .records_list {
     border: 1px solid white;

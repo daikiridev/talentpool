@@ -4,8 +4,10 @@
 {% block scripts %}
     <script>
     $(function () {
-      $('[data-toggle="popover"]').popover()
-    })
+        $('[data-toggle="popover"]').popover({ // Contain the popover within the body NOT the element it was called in.
+            container: 'body'
+        });
+    });
     </script>
 {% endblock %}
 {% block body -%}
@@ -30,7 +32,7 @@
                 <td>
                     {% for profile in entity.profiles %}
                         <div data-toggle="popover" data-delay='{ "show": 500, "hide": 200 }' data-html="true" style="cursor:pointer" data-trigger='hover'
-                             data-content="{{ profile.description|escape('html') }}" data-title="{{ profile }}">
+                             data-content="{{ profile.description }}" data-title="{{ profile }}">
                             {{ profile }} (view link to be added)
                         </div>
                     {% endfor %}

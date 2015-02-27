@@ -19,8 +19,8 @@ app/console doctrine:migrations:migrate
 # cache cleaning
 app/console cache:clear --env=prod
 
-# assets installation into the web directory
-app/console assets:install --symlink
+# assets installation into the web directory (allready made by composer install)
+# app/console assets:install --symlink
 
 # checking rights
 chown -R www-data:www-data /srv/123vpc/www/tew-test.123vpc.com
