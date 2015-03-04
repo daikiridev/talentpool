@@ -13,8 +13,28 @@ class CdteProfileType extends AbstractType
     {
         $builder
             ->add('title')
-            ->add('function')
-            ->add('level')
+            ->add('function', 'entity', array(
+                'required' => false,
+                'class' => 'TEWTPBundle:CdteFunction',
+                'attr' => array('class' => 'select2 form-control'),
+                'empty_value' => 'Select',
+                'property' => 'indentedName',
+                'multiple' => false,
+                'expanded' => false ,
+                'query_builder' => function (\Gedmo\Tree\Entity\Repository\NestedTreeRepository $r)
+                    {
+                        return $r->getChildrenQueryBuilder(null, null, 'root', 'asc', false);
+                    }
+            ))
+            ->add('level', 'entity', array(
+                'required' => false,
+                'class' => 'TEWTPBundle:CdteLevel',
+                'attr' => array('class' => 'select2 form-control'),
+                'empty_value' => 'Select',
+                'property' => 'name',
+                'multiple' => false,
+                'expanded' => false ,
+            ))
             ->add('description', 'ckeditor', array('config_name' => 'user_config'))
             ->add('mobilities', 'modalcollection', array(
                 'attr' => array('class' => 'form-collection'), // in order to handle jquery functions of tew.candidate.edit.js

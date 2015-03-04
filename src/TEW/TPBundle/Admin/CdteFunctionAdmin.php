@@ -18,6 +18,7 @@ class CdteFunctionAdmin extends Admin
         $datagridMapper
             ->add('id')
             ->add('name')
+            ->add('parent')
         ;
     }
 

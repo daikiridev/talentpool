@@ -19,6 +19,7 @@
         "doctrine/data-fixtures": "dev-master",
         "doctrine/migrations": "dev-master",
         "doctrine/doctrine-migrations-bundle": "dev-master",
+        "gedmo/doctrine-extensions": "dev-master",
         
         "coresphere/console-bundle": "dev-master",
         

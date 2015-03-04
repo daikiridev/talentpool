@@ -1,8 +1,15 @@
 {% extends '::base.html.twig' %}
+{% form_theme edit_form 'TEWTPBundle:Form:modalcollection_widget.html.twig' %}
+{% form_theme edit_form 'TEWTPBundle:Form:media_widgets.html.twig' %}
 
 {% block scripts %}
     <script src="{{ asset('bundles/tewtp/js/tew.collections.edit.js') }}"></script>
     <script src="{{ asset('bundles/tewtp/js/tew.talentpool.edit.js') }}"></script>
+    <script>
+        $(function () {
+            $('[data-toggle="popover"]').popover();
+        });
+    </script>
 {% endblock %}
 {% block body -%}
     <h1>TalentPool edit</h1>

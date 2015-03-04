@@ -4,8 +4,48 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ada6592ad2d29fb5951e01cae1468794",
+    "hash": "6370785b28f470eb45de01808e8f4d51",
     "packages": [
+        {
+            "name": "behat/transliterator",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Behat/Transliterator.git",
+                "reference": "c93521d3462a554332d1ef5bb0e9b5b8ca4106c4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Behat/Transliterator/zipball/c93521d3462a554332d1ef5bb0e9b5b8ca4106c4",
+                "reference": "c93521d3462a554332d1ef5bb0e9b5b8ca4106c4",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Behat\\Transliterator": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Artistic-1.0"
+            ],
+            "description": "String transliterator",
+            "keywords": [
+                "i18n",
+                "slug",
+                "transliterator"
+            ],
+            "time": "2014-05-15 22:08:22"
+        },
         {
             "name": "cocur/slugify",
             "version": "v1.0",
@@ -1295,6 +1335,84 @@
             "time": "2014-09-04 12:28:43"
         },
         {
+            "name": "gedmo/doctrine-extensions",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Atlantic18/DoctrineExtensions.git",
+                "reference": "941f3ba41754205827bcd80db6b0141ce9c7c8cb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Atlantic18/DoctrineExtensions/zipball/941f3ba41754205827bcd80db6b0141ce9c7c8cb",
+                "reference": "941f3ba41754205827bcd80db6b0141ce9c7c8cb",
+                "shasum": ""
+            },
+            "require": {
+                "behat/transliterator": "~1.0",
+                "doctrine/common": "~2.4",
+                "php": ">=5.3.2"
+            },
+            "require-dev": {
+                "doctrine/mongodb-odm": ">=1.0.0-BETA11",
+                "doctrine/orm": "~2.4",
+                "phpunit/phpunit": "~4.4",
+                "phpunit/phpunit-mock-objects": "~2.3",
+                "symfony/yaml": "~2.3"
+            },
+            "suggest": {
+                "doctrine/mongodb-odm": "to use the extensions with the MongoDB ODM",
+                "doctrine/orm": "to use the extensions with the ORM"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.3.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Gedmo\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "David Buchmann",
+                    "email": "david@liip.ch"
+                },
+                {
+                    "name": "Gediminas Morkevicius",
+                    "email": "gediminas.morkevicius@gmail.com"
+                },
+                {
+                    "name": "Gustavo Falco",
+                    "email": "comfortablynumb84@gmail.com"
+                }
+            ],
+            "description": "Doctrine2 behavioral extensions",
+            "homepage": "http://gediminasm.org/",
+            "keywords": [
+                "Blameable",
+                "behaviors",
+                "doctrine2",
+                "extensions",
+                "gedmo",
+                "loggable",
+                "nestedset",
+                "sluggable",
+                "sortable",
+                "timestampable",
+                "translatable",
+                "tree",
+                "uploadable"
+            ],
+            "time": "2015-03-03 19:39:11"
+        },
+        {
             "name": "imagine/imagine",
             "version": "0.6.2",
             "source": {
@@ -1841,12 +1959,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/KnpLabs/KnpMenuBundle.git",
-                "reference": "dc2c5b9702369f952fd7268a9a8a24473705b3a7"
+                "reference": "f9b9fe1995d2aecaaab408420664d4b9235deaeb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/KnpLabs/KnpMenuBundle/zipball/dc2c5b9702369f952fd7268a9a8a24473705b3a7",
-                "reference": "dc2c5b9702369f952fd7268a9a8a24473705b3a7",
+                "url": "https://api.github.com/repos/KnpLabs/KnpMenuBundle/zipball/f9b9fe1995d2aecaaab408420664d4b9235deaeb",
+                "reference": "f9b9fe1995d2aecaaab408420664d4b9235deaeb",
                 "shasum": ""
             },
             "require": {
@@ -1889,7 +2007,7 @@
             "keywords": [
                 "menu"
             ],
-            "time": "2015-01-28 10:37:00"
+            "time": "2015-03-04 10:53:50"
         },
         {
             "name": "kriswallsmith/assetic",
@@ -4145,6 +4263,7 @@
         "doctrine/data-fixtures": 20,
         "doctrine/migrations": 20,
         "doctrine/doctrine-migrations-bundle": 20,
+        "gedmo/doctrine-extensions": 20,
         "coresphere/console-bundle": 20,
         "twitter/typeahead.js": 20,
         "sonata-project/core-bundle": 20,

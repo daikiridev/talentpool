@@ -74,3 +74,20 @@ code {
 .pac-container {
     z-index: 9999 !important;
 }
+
+// customizing form layout
+h1, .h1 {
+    color: darkblue;
+    font-size: 36px;
+}
+fieldset {
+    padding-bottom: 5px;
+    padding-top: 4px;
+}
+fieldset:hover {
+    background-color: #fbfbfb;
+//    box-shadow: 2px 2px 5px #555555;
+}
+legend {
+   color: darkblue;
+}

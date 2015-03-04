@@ -76,12 +76,26 @@ class CandidateType extends AbstractType
                 'by_reference' => false, // 'false' forces setAddresses() to be called
                 ))
             // changing position's label
-            ->add('function', 'entity', array(
-                'class' => 'TEWTPBundle:CdteFunction',
+//            ->add('function', 'entity', array(
+//                'class' => 'TEWTPBundle:CdteFunction',
+//                'label' => 'Current function',
+//                'empty_value' => 'Select',
+//                'attr' => array('class' => 'select2 form-control'),
+//                //'label_attr' => array('class' => 'col-md-2')
+//                ))
+                ->add('function', 'entity', array(
+                'required' => false,
                 'label' => 'Current function',
-                'empty_value' => 'Select',
+                'class' => 'TEWTPBundle:CdteFunction',
                 'attr' => array('class' => 'select2 form-control'),
-                //'label_attr' => array('class' => 'col-md-2')
+                'empty_value' => 'Select',
+                'property' => 'indentedName',
+                'multiple' => false,
+                'expanded' => false ,
+                'query_builder' => function (\Gedmo\Tree\Entity\Repository\NestedTreeRepository $r)
+                    {
+                        return $r->getChildrenQueryBuilder(null, null, 'root', 'asc', false);
+                    }
                 ))
             ->add('level', 'entity', array(
                 'class' => 'TEWTPBundle:CdteLevel',

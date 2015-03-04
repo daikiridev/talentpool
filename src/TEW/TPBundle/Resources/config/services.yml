@@ -52,11 +52,11 @@ services:
 #        tags:
 #            - {name: sonata.admin, manager_type: orm, group: admin, label: CdteLanguage}
             
-    tew_tp.admin.cdteposition:
-        class: TEW\TPBundle\Admin\CdtePositionAdmin
-        arguments: [~, TEW\TPBundle\Entity\CdtePosition, TEWTPBundle:CdtePositionAdmin]
+    tew_tp.admin.cdtefunction:
+        class: TEW\TPBundle\Admin\CdteFunctionAdmin
+        arguments: [~, TEW\TPBundle\Entity\CdteFunction, TEWTPBundle:CdteFunctionAdmin]
         tags:
-            - {name: sonata.admin, manager_type: orm, group: admin, label: Positions}
+            - {name: sonata.admin, manager_type: orm, group: admin, label: Functions}
 
     tew_tp.admin.candidate:
         class: TEW\TPBundle\Admin\CandidateAdmin
