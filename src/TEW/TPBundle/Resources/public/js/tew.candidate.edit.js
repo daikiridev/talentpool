@@ -1,19 +1,23 @@
 // div containing the collection of addresses
 var addressCollection = $('#candidate_addresses');
-addressCollection.after(addButton());
+//addressCollection.after(addButton());
+//modalCollection('candidate_addresses', addressCollection);
 
 // div containing the collection of mobilities
 var mobilityCollection = $('#candidate_mobilities');
-mobilityCollection.after(addButton());
+//modalCollection('candidate_mobilities', mobilityCollection);
+
 
 // div containing the collection of mobilities
 var languagesSkillsCollection = $('#candidate_languagesSkills');
-languagesSkillsCollection.after(addButton());
+//languagesSkillsCollection.after(addButton());
+//modalCollection('candidate_languagesSkills', languagesSkillsCollection);
 
 // div containing the collection of comments
 var commentCollectionDB = $('#candidate_comments');
 var commentCollection = $('#candidate_comments_new');
 commentCollection.after(addButton());
+//modalCollection('candidate_comments_new', commentCollection);
 
 
 
@@ -53,6 +57,7 @@ function googleInit(addressPrefix, field) {
             break;
         case 'mobilities':
             searchType = 'geocode';
+            //alert('mobilities');
             break;
         default:
             searchType = 'geocode';
@@ -103,10 +108,12 @@ $(document).ready(function () {
     // catches a click on an "add" button #}
     $('.add_item_link').on('click', function (e) {
         e.preventDefault();
-        collection = $(this).parent().prev('.form-collection');
+        collection = $(this).parents().children('.form-collection');
         //alert(collection.attr('id'));
         // if this is the comments collection, start numbering at the end index stored in DB
-        length = collection.is("#candidate_comments_new") ? commentCollectionDB.children().length : collection.children().length;
+        length = collection.is("#candidate_comments_new") ? commentCollectionDB.children().length : 
+                collection.find('.modal-body').length>0?collection.find('.modal-body').children().length-1:collection.children().length;
+        //alert('addItemForm - length: '+length);
         addItemForm(collection, length);
         // if this is an address form, initialise google place API
         if (collection.is('#candidate_addresses')) {
@@ -117,8 +124,11 @@ $(document).ready(function () {
         }
     });
     // adds a remove button to each item of each form collection
-    $('.form-collection').children('div').each(function () {
-        addItemFormDeleteLink($(this));
+    $('.form-collection').each(function() {
+        var children = $(this).find('.modal-body').length>0?$(this).find('.modal-body').children('div'):$(this).children('div');
+        children.each(function () {
+            addItemFormDeleteLink($(this));
+        });
     });
     // adds a google field for each address
     for (i = 0; i < addressCollection.children().length; i++) {

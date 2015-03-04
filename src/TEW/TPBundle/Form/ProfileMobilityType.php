@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class CdteLanguageType extends AbstractType
+class ProfileMobilityType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -15,13 +15,11 @@ class CdteLanguageType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('language', 'language', array(
-                'attr' => array('class' => 'select2')
-            ))
-            ->add('skill', 'choice', array(
-                'choices' => array('none','novice','spoken','bilingual', 'mother tongue'),
-                //'attr' => array('class' => 'select2')
-            ))
+            ->add('location', 'text', array('attr' => array('size' => '50')))
+            ->add('zone', 'hidden', array('required' => false, 'attr' => array('class'=>'mobility_zone')))
+            ->add('country', 'hidden', array('required' => false, 'attr' => array('class'=>'mobility_country')))
+            ->add('region', 'hidden', array('required' => false))
+            ->add('city', 'hidden', array('required' => false))  
         ;
     }
     
@@ -31,7 +29,7 @@ class CdteLanguageType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'TEW\TPBundle\Entity\CdteLanguage'
+            'data_class' => 'TEW\TPBundle\Entity\ProfileMobility'
         ));
     }
 
@@ -40,6 +38,6 @@ class CdteLanguageType extends AbstractType
      */
     public function getName()
     {
-        return 'cdtelanguage';
+        return 'profilemobility';
     }
 }

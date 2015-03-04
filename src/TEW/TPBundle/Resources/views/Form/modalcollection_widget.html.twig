@@ -1,0 +1,95 @@
+{% block modalcollection_widget %}
+{% spaceless %}
+    {% if prototype is defined %}
+        {% set attr = attr|merge({'data-prototype': form_row(prototype) }) %}
+    {% endif %}
+    {% set modal_id = name %}
+    {% set items = '<ul class="list-group">' %}
+    {% for rows in form %}
+        {% set items = items ~ '<li class="list-group-item">' %}
+            {% for item in rows %}
+                {% set items = items ~ ' ' ~ item.vars.value %}
+            {% endfor %}
+        {% set items = items ~ '</li>' %}
+    {% endfor %}
+    {% set items = items ~ '</ul>' %}
+<div class="modal fade" role="dialog" id="{{ modal_id }}">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">{{ block('form_label') }}</h4>
+      </div>
+      <div class="modal-body">
+      {{ block('form_widget') }}
+        <a href="#" class="add_item_link btn-xs btn-warning">Add</a>
+      </div>
+      <div class="modal-footer">
+        <button type="button" data-dismiss="modal" class="btn btn-primary">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<button type="button" class="btn btn-primary btn-xs" data-toggle="popover" data-delay='{ "show": 500, "hide": 200 }'
+        style="cursor:pointer" data-trigger='hover' data-html="true"
+        data-title="{{ name|capitalize }}" data-content="{{ items }}">View</button>
+<button type="button" class="btn btn-warning btn-xs" data-toggle="modal" data-target="{{ '#'~modal_id }}">Edit</button>
+{% endspaceless %}
+{% endblock modalcollection_widget %}
+
+{% block modal2collection_widget %}
+{% spaceless %}
+    <div class="collection">
+        {% if prototype is defined %}
+            {% set attr = attr|merge({'data-prototype': block('collection_item_widget') }) %}
+        {% endif %}
+        <div {{ block('widget_container_attributes') }}>
+            {{ form_errors(form) }}
+            <ul>
+            {% for rows in form %}
+                <li>
+                {% set fieldNum = 1 %}
+                {% for row in rows %}
+                    <div class="field{{ fieldNum }}">
+                    {{ form_label(row) }}
+                    {{ form_widget(row, { 'attr': { 'class': 'test' }}) }}
+                    </div>
+                    {% set fieldNum = fieldNum + 1 %}
+                {% endfor %}
+                    <a class="remove" title="Remove" href="javascript:void()">
+                        <span>Delete</span>
+                    </a>
+                    <div class="clear"></div>
+                </li>
+            {% endfor %}
+            </ul>
+            {{ form_rest(form) }}
+        </div>
+        <div class="clear"></div>
+        <a class="add" title="Add" href="javascript:void()">
+            <div style="display: none;"></div>
+            <span>Add</span>
+        </a>
+    </div>
+    <div class="clear"></div>
+{% endspaceless %}
+{% endblock modal2collection_widget %}
+
+{% block modalcollection_item_widget %}
+{% spaceless %}
+    <li>
+    {% set fieldNum = 1 %}
+    {% for row in prototype %}
+        <div class="field{{ fieldNum }}">
+        {{ form_label(row) }}
+        {{ form_widget(row, { 'attr': { 'class': 'test' }}) }}
+        </div>
+        {% set fieldNum = fieldNum + 1 %}
+    {% endfor %}
+        <a class="remove" title="Remove" href="javascript:void()">
+            <span>Delete</span>
+        </a>
+        <div class="clear"></div>
+    </li>
+{% endspaceless %}
+{% endblock modalcollection_item_widget %}

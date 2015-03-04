@@ -57,6 +57,22 @@ class CdteProfile
     private $talentpool;
     
     /**
+     * @var mobilities
+     *
+     * @ORM\OneToMany(targetEntity="ProfileMobility", mappedBy="profile", cascade={"persist", "remove"})   
+     * 
+     */
+    private $mobilities;
+    
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->mobilities = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
      * toString
      * 
      * @return string
@@ -190,5 +206,38 @@ class CdteProfile
     public function getLevel()
     {
         return $this->level;
+    }
+
+    /**
+     * Add mobilities
+     *
+     * @param \TEW\TPBundle\Entity\CdteMobility $mobilities
+     * @return CdteProfile
+     */
+    public function addMobility(\TEW\TPBundle\Entity\CdteMobility $mobilities)
+    {
+        $this->mobilities[] = $mobilities;
+
+        return $this;
+    }
+
+    /**
+     * Remove mobilities
+     *
+     * @param \TEW\TPBundle\Entity\CdteMobility $mobilities
+     */
+    public function removeMobility(\TEW\TPBundle\Entity\CdteMobility $mobilities)
+    {
+        $this->mobilities->removeElement($mobilities);
+    }
+
+    /**
+     * Get mobilities
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getMobilities()
+    {
+        return $this->mobilities;
     }
 }

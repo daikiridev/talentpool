@@ -46,6 +46,7 @@ twig:
         resources:
             # other files
             - 'SonataMediaBundle:Form:media_widgets.html.twig'
+            - 'TEWTPBundle:Form:modalcollection_widget.html.twig'
    
 
 # Doctrine Configuration
@@ -123,7 +124,31 @@ fpn_tag:
         tag_class:     \TEW\TPBundle\Entity\Tag
         tagging_class: \TEW\TPBundle\Entity\Tagging
 
-            
+
+# CK Editor
+ivory_ck_editor:
+    autoload: true # don't load the CK library in each 'ckeditor' field
+    enable: true # switch to false in order to only keep textareas
+    inline: false # if true, show only the editor when clicking the text (very slow rendering...)
+    configs:
+        user_config:
+            toolbar: "tew_user"
+            uiColor: "#ffffff"
+    toolbars:
+        configs:
+            tew_user: [ "@clipboard", "@bascistyles", "@paragraph", "@links"]
+        items:
+            clipboard: [ 'Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo' ]
+            bascistyles: [ 'Bold', 'Italic', 'Underline', 'Strike', '-', 'RemoveFormat' ]
+            paragraph: [ 'NumberedList','BulletedList','-','Outdent','Indent','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock' ]
+            links: [ 'Link','Unlink' ]
+            editing: [ 'Find','Replace','-','SelectAll','-','SpellChecker', 'Scayt' ]
+            forms: [ 'Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button', 'ImageButton', 'HiddenField' ]
+            insert: [ 'Image','Flash','Table','HorizontalRule','Smiley','SpecialChar','PageBreak' ]
+            styles: [ 'Styles','Format','Font','FontSize' ]
+            colors: [ 'TextColor','BGColor' ]
+            tools: [ 'Maximize', 'ShowBlocks','-','About' ]
+
 ## Sonata TP Bundle configuration
 #sonata_tp:
 #    security_acl:           false

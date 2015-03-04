@@ -241,11 +241,11 @@ class CandidateController extends Controller {
         foreach ($entity->getMobilities() as $mobility) {
             $originalMobilities->add($mobility);
         }
-        // Getting candidate's languagesSkills stored in DB
-        $originalLanguagesSkills = new ArrayCollection();
-        foreach ($entity->getLanguagesSkills() as $ls) {
-            $originalLanguagesSkills->add($ls);
-        }
+//        // Getting candidate's languagesSkills stored in DB
+//        $originalLanguagesSkills = new ArrayCollection();
+//        foreach ($entity->getLanguagesSkills() as $ls) {
+//            $originalLanguagesSkills->add($ls);
+//        }
         
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity);
@@ -297,14 +297,14 @@ class CandidateController extends Controller {
                 }
             }  
             
-            $formLanguagesSkills = $entity->getLanguagesSkills();
-            // adds new mobility locations
-            foreach ($formLanguagesSkills as $ls) {
-                if ($originalLanguagesSkills->contains($ls) == false) {
-                    $ls->setCandidate($entity);
-                    $em->persist($ls);
-                }                
-            }            
+//            $formLanguagesSkills = $entity->getLanguagesSkills();
+//            // adds new mobility locations
+//            foreach ($formLanguagesSkills as $ls) {
+//                if ($originalLanguagesSkills->contains($ls) == false) {
+//                    //$ls->setCandidate($entity);
+//                    $em->persist($ls);
+//                }                
+//            }            
 // <- Added by VP      
  
             $em->persist($entity);

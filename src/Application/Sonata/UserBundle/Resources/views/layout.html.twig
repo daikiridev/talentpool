@@ -2,12 +2,15 @@
 
 {% block styles %}
     <link rel="stylesheet" href="{{asset('bundles/sonataadmin/vendor/AdminLTE/css/AdminLTE.css')}}">
-    
+
 {% endblock styles %}
 
 {% block body %}
     {% if error %}
-        <div>{{ error|trans({}, 'FOSUserBundle') }}</div>
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            {{ error|trans({}, 'FOSUserBundle') }}
+        </div>
     {% endif %}
 
     <div class="form-box" id="login-box">
@@ -15,7 +18,7 @@
         <form action="{{ path("fos_user_security_check") }}" method="post" role="form">
             <div class="body bg-gray">
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
-                
+
                 <div class="form-group control-group">
                     <input type="text" class="form-control" id="username"  name="_username" value="{{ last_username }}" required="required" placeholder="{{ 'security.login.username'|trans({}, 'FOSUserBundle') }}"/>
                 </div>
@@ -30,13 +33,10 @@
                 </div>
 
             </div>
-
-            <div class="footer">
-                <button type="submit" id="_submit" name="_submit" class="btn bg-orange">{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}</button>
-                {#
-                <p><a href="/app_dev.php/resetting/request" class="text-center">Forgotten password?</a></p>
-                #}
-            </div>
+            <button type="submit" id="_submit" name="_submit" class="btn bg-orange pull-right">{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}</button>
+            {#
+            <p><a href="/app_dev.php/resetting/request" class="text-center">Forgotten password?</a></p>
+            #}
         </form>
     </div>
 {% endblock body %}

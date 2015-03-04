@@ -27,21 +27,25 @@
         {{ block('form_widget') }}
     </div>
     #}
-    <div>
+    <div class="form-group">
         {% if value is not empty and value.providerReference %}
-            <div>
+            {% if (value.contentType == 'application/pdf') or (value.contentType == 'application/x-pdf') %}
+                <a target='_blank' href="{{ url('sonata_media_download', {id: value.id, format: 'reference'}) }}">
+                    <img width="32" src="{{ asset('bundles/tewtp/images/icons/pdf.png') }}" title="{{ value.name }}">{{ value.name }}
+                </a>
+            {% elseif (value.contentType == 'application/msword') %}
+                <a target='_blank' href="{{ url('sonata_media_download', {id: value.id, format: 'reference'}) }}">
+                    <img width="32" src="{{ asset('bundles/tewtp/images/icons/word.png') }}" title="{{ value.name }}">{{ value.name }}
+                </a>
+            {% else %}
                 {% thumbnail value, 'admin' with {'class': 'img-polaroid media-object'} %}
-            </div>
+            {% endif %}
             {% if sonata_admin_enabled is defined and sonata_admin_enabled %}
                 <a href="{{ url('admin_sonata_media_media_edit', {id: value.id}) }}"><strong>{{ value.name }}</strong></a>
             {% endif %}
         {% else %}
-            <div>
-                <img src="{{ asset('bundles/sonatamedia/grey.png') }}" class="img-polaroid media-object" style="width: 85px; height: 85px"/>
-            </div>
+                <img src="{{ asset('bundles/sonatamedia/grey.png') }}" class="img-polaroid media-object"/>
         {% endif %}
-    </div>
-    <div>
         {{ block('form_widget') }}
     </div>       
 {% endblock sonata_media_type_widget %}

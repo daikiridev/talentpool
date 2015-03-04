@@ -5,12 +5,12 @@ namespace TEW\TPBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * CdteMobility
+ * ProfileMobility
  *
- * @ORM\Table(name="tew_cdte_mobility")
- * @ORM\Entity(repositoryClass="TEW\TPBundle\Entity\CdteMobilityRepository")
+ * @ORM\Table(name="tew_profile_mobility")
+ * @ORM\Entity(repositoryClass="TEW\TPBundle\Entity\ProfileMobilityRepository")
  */
-class CdteMobility
+class ProfileMobility
 {
     /**
      * @var id
@@ -29,12 +29,12 @@ class CdteMobility
     private $location;
     
     /**
-     * @var candidate
+     * @var profile
      *
-     * @ORM\ManyToOne(targetEntity="Candidate", inversedBy="mobilities")
-     * @ORM\JoinColumn(name="candidate_id", nullable=false, referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="CdteProfile", inversedBy="mobilities")
+     * @ORM\JoinColumn(name="profile_id", nullable=false, referencedColumnName="id")
      */
-    private $candidate;
+    private $profile;
 
     /**
      * @var zone
@@ -101,7 +101,7 @@ class CdteMobility
      * Set zone
      *
      * @param string $zone
-     * @return CdteMobility
+     * @return ProfileMobility
      */
     public function setZone($zone)
     {
@@ -124,7 +124,7 @@ class CdteMobility
      * Set country
      *
      * @param string $country
-     * @return CdteMobility
+     * @return ProfileMobility
      */
     public function setCountry($country)
     {
@@ -147,7 +147,7 @@ class CdteMobility
      * Set region
      *
      * @param string $region
-     * @return CdteMobility
+     * @return ProfileMobility
      */
     public function setRegion($region)
     {
@@ -170,7 +170,7 @@ class CdteMobility
      * Set city
      *
      * @param string $city
-     * @return CdteMobility
+     * @return ProfileMobility
      */
     public function setCity($city)
     {
@@ -190,33 +190,33 @@ class CdteMobility
     }
 
     /**
-     * Set candidate
+     * Set profile
      *
-     * @param \TEW\TPBundle\Entity\Candidate $candidate
-     * @return CdteMobility
+     * @param \TEW\TPBundle\Entity\CdteProfile $profile
+     * @return ProfileMobility
      */
-    public function setCandidate(\TEW\TPBundle\Entity\Candidate $candidate)
+    public function setCdteProfile(\TEW\TPBundle\Entity\CdteProfile $profile)
     {
-        $this->candidate = $candidate;
+        $this->profile = $profile;
 
         return $this;
     }
 
     /**
-     * Get candidate
+     * Get profile
      *
-     * @return \TEW\TPBundle\Entity\Candidate 
+     * @return \TEW\TPBundle\Entity\CdteProfile 
      */
-    public function getCandidate()
+    public function getCdteProfile()
     {
-        return $this->candidate;
+        return $this->profile;
     }
 
     /**
      * Set location
      *
      * @param string $location
-     * @return CdteMobility
+     * @return ProfileMobility
      */
     public function setLocation($location)
     {
@@ -233,5 +233,28 @@ class CdteMobility
     public function getLocation()
     {
         return $this->location;
+    }
+
+    /**
+     * Set profile
+     *
+     * @param \TEW\TPBundle\Entity\CdteProfile $profile
+     * @return ProfileMobility
+     */
+    public function setProfile(\TEW\TPBundle\Entity\CdteProfile $profile)
+    {
+        $this->profile = $profile;
+
+        return $this;
+    }
+
+    /**
+     * Get profile
+     *
+     * @return \TEW\TPBundle\Entity\CdteProfile 
+     */
+    public function getProfile()
+    {
+        return $this->profile;
     }
 }

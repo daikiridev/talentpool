@@ -38,6 +38,13 @@ services:
 #        calls:
 #        - [ setTagManager, [ @fpn_tag.tag_manager ] ]
 
+# Modal collections in buildform
+    tew.form.modalcollection:
+        class: TEW\TPBundle\Form\ModalCollectionType
+        arguments:
+        tags:
+            - { name: form.type, alias: modalcollection }
+            
 # Backoffice parameters...
 #    tew_tp.admin.cdtelanguage:
 #        class: TEW\TPBundle\Admin\CdteLanguageAdmin
