@@ -1,6 +1,6 @@
 {% extends '::base.html.twig' %}
-{% form_theme form 'TEWTPBundle:Form:modalcollection_widget.html.twig' %}
-{% form_theme form 'TEWTPBundle:Form:media_widgets.html.twig' %}
+{% form_theme this_form 'TEWTPBundle:Form:modalcollection_widget.html.twig' %}
+{% form_theme this_form 'TEWTPBundle:Form:media_widgets.html.twig' %}
 
 {% block styles %}
     <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/start/jquery-ui.css">
@@ -25,44 +25,9 @@
         //$('select').select2(); // trouble with modal popups
         $('.select2').select2(); // trouble with modal popups
         $('.modal .select2').select2({dropdownParent: $('.modal')});
-/*
-        $('.tags-field').select2({
-            tags: true,
-            ajax: {
-                dataType: 'json',
-                multiple: true,
-                delay: 250,
-                data: function (term) {
-                    return {
-                        q: term // search term
-                    };
-                },
-                url: function(term) {
-                    url="{{ path('tew_json_allcandidatetags') }}";
-                    return url;
-                },
-                processResults: function(data) {
-                    return {
-                        results: $.map([data], function (item) {
-                            return {
-                                text: item.name,
-                                id: item.id,
-                                data: item
-                            }
-                        })
-                    };
-                },
-                cache: true
-            },
-            escapeMarkup: function (markup) {
-                return markup;
-            }, // let our custom formatter work
-            minimumInputLength: 1,
+        $(function () {
+          $('[data-toggle="popover"]').popover();
         });
-*/
-    $(function () {
-      $('[data-toggle="popover"]').popover();
-    });
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places&language=en"></script>
     <script src="{{ asset('bundles/tewtp/js/tew.collections.edit.js') }}"></script>
@@ -84,61 +49,61 @@
                             console.log(zoneid + " finished");
                         });
             });
-    </script>
+    </script>    
 {% endblock scripts %}
 
 {% block body -%}
-    <h1>Candidate edit</h1>
+    <h1>Candidate {{ operation }}</h1>
 
-    {{ form_start(form, { 'attr' : { 'class': 'form-inline' } }) }}
+    {{ form_start(this_form, { 'attr' : { 'class': 'form-inline' } }) }}
 
     <div class="row">
         <fieldset class="col-lg-8">
             <legend>Main</legend>
             <div class='row'>
-                <div class="col-lg-2">{{ form_label(form.active) }} {{ form_widget(form.active) }}</div>
+                <div class="col-lg-2">{{ form_label(this_form.active) }} {{ form_widget(this_form.active) }}</div>
             </div>
             <div class="row">
-                <div class="col-lg-3">{{ form_label(form.function) }}</div>
-                <div class="col-lg-3">{{ form_label(form.level) }}</div>
-                <div class="col-lg-3">{{ form_label(form.experience) }}</div>
-                <div class="col-lg-3">{{ form_label(form.annualIncome) }}</div>
+                <div class="col-lg-3">{{ form_label(this_form.function) }}</div>
+                <div class="col-lg-3">{{ form_label(this_form.level) }}</div>
+                <div class="col-lg-3">{{ form_label(this_form.experience) }}</div>
+                <div class="col-lg-3">{{ form_label(this_form.annualIncome) }}</div>
             </div>
             <div class="row">
-                <div class="col-lg-3">{{ form_widget(form.function) }}</div>
-                <div class="col-lg-3">{{ form_widget(form.level) }}</div>
-                <div class="col-lg-3">{{ form_widget(form.experience) }}</div>
-                <div class="col-lg-3">{{ form_widget(form.annualIncome) }}</div>
+                <div class="col-lg-3">{{ form_widget(this_form.function) }}</div>
+                <div class="col-lg-3">{{ form_widget(this_form.level) }}</div>
+                <div class="col-lg-3">{{ form_widget(this_form.experience) }}</div>
+                <div class="col-lg-3">{{ form_widget(this_form.annualIncome) }}</div>
             </div>
             <div class="row"><br></div>
             <div class="row">
-                <div class="col-lg-3">{{ form_label(form.gender) }}</div>
-                <div class="col-lg-3">{{ form_label(form.firstName) }}</div>
-                <div class="col-lg-3">{{ form_label(form.middleName) }}</div>
-                <div class="col-lg-3">{{ form_label(form.lastName) }}</div>
+                <div class="col-lg-3">{{ form_label(this_form.gender) }}</div>
+                <div class="col-lg-3">{{ form_label(this_form.firstName) }}</div>
+                <div class="col-lg-3">{{ form_label(this_form.middleName) }}</div>
+                <div class="col-lg-3">{{ form_label(this_form.lastName) }}</div>
             </div>
             <div class="row">
-                <div class="col-lg-3">{{ form_widget(form.gender) }}</div>
-                <div class="col-lg-3">{{ form_widget(form.firstName) }}</div>
-                <div class="col-lg-3">{{ form_widget(form.middleName) }}</div>
-                <div class="col-lg-3">{{ form_widget(form.lastName) }}</div>
+                <div class="col-lg-3">{{ form_widget(this_form.gender) }}</div>
+                <div class="col-lg-3">{{ form_widget(this_form.firstName) }}</div>
+                <div class="col-lg-3">{{ form_widget(this_form.middleName) }}</div>
+                <div class="col-lg-3">{{ form_widget(this_form.lastName) }}</div>
             </div>
             <div class="row"><br></div>
             <div class="row">
                 <div class="col-lg-12">
-                     {{ form_row(form.dateOfBirth) }}
+                     {{ form_row(this_form.dateOfBirth) }}
                 </div>
             </div>
             <div class="row"><br></div>
             <div class="row">
                 <div class="col-lg-12">
-                     {{ form_row(form.languagesSkills) }}
+                     {{ form_row(this_form.languagesSkills) }}
                 </div>
             </div>
             <div class="row"><br></div>
             <div class="row">
                 <div class="col-lg-12">
-                     {{ form_row(form.mobilities) }}
+                     {{ form_row(this_form.mobilities) }}
                 </div>
             </div>
         </fieldset>
@@ -146,12 +111,12 @@
             <legend>Attached</legend>
             <div class="row">
                 <div class="col-lg-12">
-                     Picture {{ form_row(form.picture) }}
+                     Picture {{ form_row(this_form.picture) }}
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-12">
-                     Resume {{ form_row(form.resume) }}
+                     Resume {{ form_row(this_form.resume) }}
                 </div>
             </div>
         </fieldset>
@@ -164,13 +129,13 @@
                     <legend>Details</legend>
                     <div class="row">
                         <div class="col-lg-12">
-                            {{ form_widget(form.email) }} {{ form_widget(form.phone1) }} {{ form_widget(form.phone2) }}
+                            {{ form_widget(this_form.email) }} {{ form_widget(this_form.phone1) }} {{ form_widget(this_form.phone2) }}
                         </div>
                     </div>
                     <div class="row"><br></div>
                     <div class="row">
                         <div class="col-lg-12">
-                            {{ form_row(form.addresses) }}
+                            {{ form_row(this_form.addresses) }}
                         </div>
                     </div>
                 </fieldset>
@@ -181,35 +146,35 @@
                     <legend>Talent Pools</legend>
                     <div class="row">
                         <div class="col-lg-12">
-                            {{ form_row(form.talentpools) }}
+                            {{ form_row(this_form.talentpools) }}
                         </div>
                     </div>
                     <div class="row"><br></div>
                     <div class="row">
                         <div class="col-lg-12">
                             <label>Target position #1</label>
-                            {{ form_widget(form.targetFunction1) }}{{ form_widget(form.targetLevel1) }}
+                            {{ form_widget(this_form.targetFunction1) }}{{ form_widget(this_form.targetLevel1) }}
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-lg-12">
                             <label>Target position #2</label>
-                            {{ form_widget(form.targetFunction2) }}{{ form_widget(form.targetLevel2) }}
+                            {{ form_widget(this_form.targetFunction2) }}{{ form_widget(this_form.targetLevel2) }}
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-lg-12">
                             <label>Target position #3</label>
-                            {{ form_widget(form.targetFunction3) }}{{ form_widget(form.targetLevel3) }}
+                            {{ form_widget(this_form.targetFunction3) }}{{ form_widget(this_form.targetLevel3) }}
                         </div>
                     </div>
                     <div class="row"><br></div>
                     <div class="row">
                         <div class="col-lg-12">
-                            <label>{{ form_label(form.comments) }}</label>
-                            <div id="candidate_comments_new" class="form-collection" data-prototype="{{ form_widget(form.comments.vars.prototype)|e }}"></div>
+                            <label>{{ form_label(this_form.comments) }}</label>
+                            <div id="candidate_comments_new" class="form-collection" data-prototype="{{ form_widget(this_form.comments.vars.prototype)|e }}"></div>
                             <div style="display: none"> {# older comments are hidden #}
-                                {{ form_row(form.comments) }}
+                                {{ form_row(this_form.comments) }}
                             </div>
                         </div>
                     </div>
@@ -219,36 +184,41 @@
         <fieldset class="col-lg-6">
             <legend>Opinion</legend>
             <div class="row">
-                <div class="col-lg-6">{{ form_label(form.globalScore) }} {{ form_widget(form.globalScore) }}</div>
-                <div class="col-lg-6">{{ form_label(form.origin) }} {{ form_widget(form.origin) }}</div>
+                <div class="col-lg-6">{{ form_label(this_form.globalScore) }} {{ form_widget(this_form.globalScore) }}</div>
+                <div class="col-lg-6">{{ form_label(this_form.origin) }} {{ form_widget(this_form.origin) }}</div>
             </div>
             <div class="row"><br></div>
             <div class="row">
                 <div class="col-lg-12">
-                    {{ form_row(form.globalComment) }}
+                    {{ form_row(this_form.globalComment, { 'attr': {'cols': '80', 'rows': '10'} }) }}
                 </div>
             </div>
             <div class="row"><br></div>
             <div class="row">
                 <div class="col-lg-12">
-                    {{ form_row(form.tags) }}
+                    {{ form_row(this_form.tags) }}
                 </div>
             </div>
         </fieldset>
     </div>
 
     <br>
-    {% block actions %}
-        <div class="btn-toolbar pull-right record_actions" role="group">
-            <div class="btn-group">
-                {{ form_row(form.submit) }}
-            </div>
-            {{ form_end(form, {'render_rest': true}) }} {# this should be put before the form(delete_form) button #}
-            <div class="btn-group">
-                <a role="button"  class="btn btn-info" href="{{ path('tew_candidate') }}">
-                    Back to the list
-                </a>
-            </div>
+{% block actions %}
+    <div class="btn-toolbar pull-right record_actions" role="group">
+        <div class="btn-group">
+            {{ form_row(this_form.submit) }}
         </div>
-    {% endblock actions %}
+        {{ form_end(this_form, {'render_rest': true}) }} {# this should be put before the form(delete_form) button #}
+        <div class="btn-group">
+            <a role="button"  class="btn btn-info" href="{{ path('tew_candidate') }}">
+                Back to the list
+            </a>
+        </div>
+        {% if operation == 'edit' %}
+        <div class="btn-group">
+            {{ form(delete_form) }}
+        </div>
+        {% endif %}
+    </div>
+{% endblock actions %}
 {% endblock body %}

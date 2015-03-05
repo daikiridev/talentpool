@@ -16,7 +16,8 @@ class TalentPoolType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('description', 'ckeditor', array('config_name' => 'user_config'))
+            //->add('description', 'ckeditor', array('config_name' => 'user_config'))
+            ->add('description')
             ->add('profiles', 'collection', array(
                 'attr' => array('class' => 'form-collection'), // in order to handle jquery functions of tew.candidate.edit.js
                 'type' => new CdteProfileType(),

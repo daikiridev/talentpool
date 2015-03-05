@@ -18,7 +18,7 @@ class TalentPoolAdmin extends Admin
         $datagridMapper
             ->add('id')
             ->add('name')
-            ->add('creationDate')
+            ->add('createdAt')
             ->add('creator')
         ;
     }
@@ -51,20 +51,18 @@ class TalentPoolAdmin extends Admin
             //->add('id')
             //->add('creationDate')
             ->add('name')
-            ->add('positions', 'sonata_type_collection', array('label' => 'Positions'), array(
-                    'class' => 'TEWTPBundle:CdtePosition',
-                    'target_entity' => '\TEW\TPBundle\Entity\CdtePosition',
+            ->add('profiles', 'sonata_type_collection', array('label' => 'Profiles'), array(
+                    'class' => 'TEWTPBundle:CdteProfile',
+                    'target_entity' => '\TEW\TPBundle\Entity\CdteProfile',
                     'expanded' => false,
                     //'admin_code' => 'sonata.admin.setting',
-                )
-            )
+            ))
             ->add('candidates', 'sonata_type_collection', array('label' => 'Candidates'), array(
                     'class' => 'TEWTPBundle:Candidate',
                     'target_entity' => '\TEW\TPBundle\Entity\Candidate',
                     'expanded' => false,
                     //'admin_code' => 'sonata.admin.setting',
-                )
-            )
+            ))
         ;
     }
 
@@ -76,22 +74,20 @@ class TalentPoolAdmin extends Admin
         $showMapper
             ->add('id')
             ->add('name')
-            ->add('creationDate')
+            ->add('createdAt')
             ->add('creator')
-            ->add('positions', 'sonata_type_collection', array('label' => 'Positions'), array(
-                    'class' => 'TEWTPBundle:CdtePosition',
-                    'target_entity' => '\TEW\TPBundle\Entity\CdtePosition',
+            ->add('profiles', 'sonata_type_collection', array('label' => 'Profiles'), array(
+                    'class' => 'TEWTPBundle:CdteProfile',
+                    'target_entity' => '\TEW\TPBundle\Entity\CdteProfile',
                     'expanded' => false,
                     //'admin_code' => 'sonata.admin.setting',
-                )
-            )
+            ))
             ->add('candidates', 'sonata_type_collection', array('label' => 'Candidates'), array(
                     'class' => 'TEWTPBundle:Candidate',
                     'target_entity' => '\TEW\TPBundle\Entity\Candidate',
                     'expanded' => false,
                     //'admin_code' => 'sonata.admin.setting',
-                )
-            )
+            ))
         ;
     }
 }

@@ -35,9 +35,12 @@ class CdteProfileType extends AbstractType
                 'multiple' => false,
                 'expanded' => false ,
             ))
-            ->add('description', 'ckeditor', array('config_name' => 'user_config'))
+            //->add('description', 'ckeditor', array('config_name' => 'user_config'))
+            ->add('description', 'textarea', array(
+                'attr' => array('cols' => '80', 'rows' => '10')
+            ))
             ->add('mobilities', 'modalcollection', array(
-                'attr' => array('class' => 'form-collection'), // in order to handle jquery functions of tew.candidate.edit.js
+                'attr' => array('class' => 'form-collection modal-collection'), // in order to handle jquery functions of tew.candidate.edit.js
                 'type' => new ProfileMobilityType(),
                 'required' => false,
                 'allow_add' => true, // allows to add as many locations as we want

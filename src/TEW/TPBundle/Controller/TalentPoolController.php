@@ -58,9 +58,10 @@ class TalentPoolController extends Controller
             return $this->redirect($this->generateUrl('tew_talentpool_show', array('id' => $entity->getId())));
         }
 
-        return $this->render('TEWTPBundle:TalentPool:new.html.twig', array(
+        return $this->render('TEWTPBundle:TalentPool:edit_form.html.twig', array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'this_form'   => $form->createView(),
+            'operation' => 'creation',
         ));
     }
 
@@ -100,9 +101,10 @@ class TalentPoolController extends Controller
         $entity = new TalentPool($currentUser);
         $form   = $this->createCreateForm($entity);
 
-        return $this->render('TEWTPBundle:TalentPool:new.html.twig', array(
+        return $this->render('TEWTPBundle:TalentPool:edit_form.html.twig', array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'this_form'   => $form->createView(),
+            'operation' => 'creation'
         ));
     }
 
@@ -145,9 +147,10 @@ class TalentPoolController extends Controller
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('TEWTPBundle:TalentPool:edit.html.twig', array(
+        return $this->render('TEWTPBundle:TalentPool:edit_form.html.twig', array(
             'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'this_form'   => $editForm->createView(),
+            'operation'   => 'edit',
             'delete_form' => $deleteForm->createView(),
         ));
     }
@@ -220,9 +223,10 @@ class TalentPoolController extends Controller
             return $this->redirect($this->generateUrl('tew_talentpool_show', array('id' => $id)));
         }
 
-        return $this->render('TEWTPBundle:TalentPool:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+        return $this->render('TEWTPBundle:TalentPool:edit_form.html.twig', array(
+            'entity' => $entity,
+            'this_form' => $editForm->createView(),
+            'operation' => 'edit',
             'delete_form' => $deleteForm->createView(),
         ));
     }

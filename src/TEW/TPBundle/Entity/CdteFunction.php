@@ -78,12 +78,12 @@ class CdteFunction {
         return $this?$this->getName():'';
     }
 
-    /**
-     * Constructor
-     */
-    public function __construct() {
-        $this->children = new \Doctrine\Common\Collections\ArrayCollection();
-    }
+//    /**
+//     * Constructor
+//     */
+//    public function __construct() {
+//        $this->children = new \Doctrine\Common\Collections\ArrayCollection();
+//    }
     
     /**
      * Get id
@@ -127,7 +127,8 @@ class CdteFunction {
      */
     public function setParent(\TEW\TPBundle\Entity\CdteFunction $parent = null) {
         $this->parent = $parent;
-        $parent->addChild($this);
+        //$parent->addChild($this);
+        $this->lvl = $parent->lvl+1;
         return $this;
     }
 
@@ -140,128 +141,128 @@ class CdteFunction {
         return $this->parent;
     }
 
-    /**
-     * Add children
-     *
-     * @param \TEW\TPBundle\Entity\CdteFunction $children
-     * @return CdteFunction
-     */
-    public function addChild(\TEW\TPBundle\Entity\CdteFunction $children) {
-        $this->children[] = $children;
-        $children->setParent($this);
-        return $this;
-    }
-
-    /**
-     * Remove children
-     *
-     * @param \TEW\TPBundle\Entity\CdteFunction $children
-     */
-    public function removeChild(\TEW\TPBundle\Entity\CdteFunction $children) {
-        $this->children->removeElement($children);
-        $children->setParent(null);
-    }
-
-    /**
-     * Get children
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getChildren() {
-        return $this->children;
-    }
-
-
-
-    /**
-     * Set lft
-     *
-     * @param integer $lft
-     * @return CdteFunction
-     */
-    public function setLft($lft)
-    {
-        $this->lft = $lft;
-
-        return $this;
-    }
-
-    /**
-     * Get lft
-     *
-     * @return integer 
-     */
-    public function getLft()
-    {
-        return $this->lft;
-    }
-
-    /**
-     * Set lvl
-     *
-     * @param integer $lvl
-     * @return CdteFunction
-     */
-    public function setLvl($lvl)
-    {
-        $this->lvl = $lvl;
-
-        return $this;
-    }
-
-    /**
-     * Get lvl
-     *
-     * @return integer 
-     */
-    public function getLvl()
-    {
-        return $this->lvl;
-    }
-
-    /**
-     * Set rgt
-     *
-     * @param integer $rgt
-     * @return CdteFunction
-     */
-    public function setRgt($rgt)
-    {
-        $this->rgt = $rgt;
-
-        return $this;
-    }
-
-    /**
-     * Get rgt
-     *
-     * @return integer 
-     */
-    public function getRgt()
-    {
-        return $this->rgt;
-    }
-
-    /**
-     * Set root
-     *
-     * @param integer $root
-     * @return CdteFunction
-     */
-    public function setRoot($root)
-    {
-        $this->root = $root;
-
-        return $this;
-    }
-
-    /**
-     * Get root
-     *
-     * @return integer 
-     */
-    public function getRoot()
-    {
-        return $this->root;
-    }
+//    /**
+//     * Add children
+//     *
+//     * @param \TEW\TPBundle\Entity\CdteFunction $children
+//     * @return CdteFunction
+//     */
+//    public function addChild(\TEW\TPBundle\Entity\CdteFunction $children) {
+//        $this->children[] = $children;
+//        $children->setParent($this);
+//        return $this;
+//    }
+//
+//    /**
+//     * Remove children
+//     *
+//     * @param \TEW\TPBundle\Entity\CdteFunction $children
+//     */
+//    public function removeChild(\TEW\TPBundle\Entity\CdteFunction $children) {
+//        $this->children->removeElement($children);
+//        $children->setParent(null);
+//    }
+//
+//    /**
+//     * Get children
+//     *
+//     * @return \Doctrine\Common\Collections\Collection 
+//     */
+//    public function getChildren() {
+//        return $this->children;
+//    }
+//
+//
+//
+//    /**
+//     * Set lft
+//     *
+//     * @param integer $lft
+//     * @return CdteFunction
+//     */
+//    public function setLft($lft)
+//    {
+//        $this->lft = $lft;
+//
+//        return $this;
+//    }
+//
+//    /**
+//     * Get lft
+//     *
+//     * @return integer 
+//     */
+//    public function getLft()
+//    {
+//        return $this->lft;
+//    }
+//
+//    /**
+//     * Set lvl
+//     *
+//     * @param integer $lvl
+//     * @return CdteFunction
+//     */
+//    public function setLvl($lvl)
+//    {
+//        $this->lvl = $lvl;
+//
+//        return $this;
+//    }
+//
+//    /**
+//     * Get lvl
+//     *
+//     * @return integer 
+//     */
+//    public function getLvl()
+//    {
+//        return $this->lvl;
+//    }
+//
+//    /**
+//     * Set rgt
+//     *
+//     * @param integer $rgt
+//     * @return CdteFunction
+//     */
+//    public function setRgt($rgt)
+//    {
+//        $this->rgt = $rgt;
+//
+//        return $this;
+//    }
+//
+//    /**
+//     * Get rgt
+//     *
+//     * @return integer 
+//     */
+//    public function getRgt()
+//    {
+//        return $this->rgt;
+//    }
+//
+//    /**
+//     * Set root
+//     *
+//     * @param integer $root
+//     * @return CdteFunction
+//     */
+//    public function setRoot($root)
+//    {
+//        $this->root = $root;
+//
+//        return $this;
+//    }
+//
+//    /**
+//     * Get root
+//     *
+//     * @return integer 
+//     */
+//    public function getRoot()
+//    {
+//        return $this->root;
+//    }
 }

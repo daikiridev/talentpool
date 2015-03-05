@@ -1,10 +1,10 @@
 {% block modalcollection_widget %}
 {% spaceless %}
     {% if prototype is defined %}
-        {% set attr = attr|merge({'data-prototype': form_row(prototype) }) %}
+        {% set attr = attr|merge({'data-prototype': form_row(prototype)}) %}
     {% endif %}
-    {% set modal_id = name %}
-    {% set items = '<ul class="list-group">' %}
+    {% set modal_id = name ~ random() %}
+    {% set items = '<ul class="list-group">' %} {# popover items for the "view" button #}
     {% for rows in form %}
         {% set items = items ~ '<li class="list-group-item">' %}
             {% for item in rows %}
@@ -13,7 +13,7 @@
         {% set items = items ~ '</li>' %}
     {% endfor %}
     {% set items = items ~ '</ul>' %}
-<div class="modal fade" role="dialog" id="{{ modal_id }}">
+<div class="modal fade child-count" role="dialog" id="{{ modal_id }}"> {# child-count is used in tew.collections.edit.js: DO NOT REMOVE #}
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -30,7 +30,7 @@
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<button type="button" class="btn btn-primary btn-xs" data-toggle="popover" data-delay='{ "show": 500, "hide": 200 }'
+<button type="button" class="btn btn-info btn-xs" data-toggle="popover" data-delay='{ "show": 500, "hide": 200 }'
         style="cursor:pointer" data-trigger='hover' data-html="true"
         data-title="{{ name|capitalize }}" data-content="{{ items }}">View</button>
 <button type="button" class="btn btn-warning btn-xs" data-toggle="modal" data-target="{{ '#'~modal_id }}">Edit</button>

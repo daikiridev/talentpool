@@ -26,7 +26,8 @@ class CdteCommentType extends AbstractType
                     //'expanded' => true, 'multiple' => false, // radio button : memory error!!!
                     'attr' => array('class' => 'form-control'),
             ))
-            ->add('comment', 'ckeditor', array('config_name' => 'user_config'))
+            //->add('comment', 'ckeditor', array('config_name' => 'user_config'))
+            ->add('comment')
         ;
     }
 

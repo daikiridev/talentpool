@@ -88,9 +88,10 @@ class CandidateController extends Controller {
             return $this->redirect($this->generateUrl('tew_candidate_show', array('id' => $entity->getId())));
         }
 
-        return $this->render('TEWTPBundle:Candidate:new.html.twig', array(
+        return $this->render('TEWTPBundle:Candidate:edit_form.html.twig', array(
                     'entity' => $entity,
-                    'form' => $form->createView(),
+                    'this_form' => $form->createView(),
+                    'operation' => 'creation',
         ));
     }
 
@@ -128,9 +129,10 @@ class CandidateController extends Controller {
         $entity = new Candidate($currentUser);
         $form = $this->createCreateForm($entity);
 
-        return $this->render('TEWTPBundle:Candidate:new.html.twig', array(
+        return $this->render('TEWTPBundle:Candidate:edit_form.html.twig', array(
                     'entity' => $entity,
-                    'form' => $form->createView(),
+                    'this_form' => $form->createView(),
+                    'operation' => 'creation'
         ));
     }
 
@@ -183,9 +185,10 @@ class CandidateController extends Controller {
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('TEWTPBundle:Candidate:edit.html.twig', array(
+        return $this->render('TEWTPBundle:Candidate:edit_form.html.twig', array(
                     'entity' => $entity,
-                    'edit_form' => $editForm->createView(),
+                    'this_form' => $editForm->createView(),
+                    'operation' => 'edit',
                     'delete_form' => $deleteForm->createView(),
         ));
     }
@@ -314,10 +317,11 @@ class CandidateController extends Controller {
             return $this->redirect($this->generateUrl('tew_candidate_show', array('id' => $id)));
         }
 
-        return $this->render('TEWTPBundle:Candidate:edit.html.twig', array(
-                    'entity' => $entity,
-                    'edit_form' => $editForm->createView(),
-                    'delete_form' => $deleteForm->createView(),
+        return $this->render('TEWTPBundle:Candidate:edit_form.html.twig', array(
+            'entity' => $entity,
+            'this_form' => $editForm->createView(),
+            'operation' => 'edit',
+            'delete_form' => $deleteForm->createView(),
         ));
     }
 

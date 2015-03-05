@@ -15,7 +15,8 @@ class CandidateType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('globalComment', 'ckeditor', array('config_name' => 'user_config'))
+            //->add('globalComment', 'ckeditor', array('config_name' => 'user_config'))
+            ->add('globalComment')
             ->add('globalScore', 'choice', array(
                 'choices' => range(0,5),
                 //'empty_value'=> '',
@@ -96,14 +97,14 @@ class CandidateType extends AbstractType
                     {
                         return $r->getChildrenQueryBuilder(null, null, 'root', 'asc', false);
                     }
-                ))
+            ))
             ->add('level', 'entity', array(
                 'class' => 'TEWTPBundle:CdteLevel',
                 'label' => 'Current level',
                 'empty_value' => 'Select',
                 'attr' => array('class' => 'select2  form-control'),
                 //'label_attr' => array('class' => 'col-md-2')
-                ))
+            ))
             ->add('experience', 'choice', array(
                 'label' => 'Experience',
                 'choices' => range(0,40),
@@ -117,11 +118,18 @@ class CandidateType extends AbstractType
                 //'label_attr' => array('class' => 'col-md-2')
             ))
             ->add('targetFunction1', 'entity', array(
-                'class' => 'TEWTPBundle:CdteFunction',
                 'required' => false,
                 'label' => 'Target function #1',
+                'class' => 'TEWTPBundle:CdteFunction',
+                'attr' => array('class' => 'select2 form-control'),
                 'empty_value' => 'Select',
-                'attr' => array('class' => 'select2'),
+                'property' => 'indentedName',
+                'multiple' => false,
+                'expanded' => false ,
+                'query_builder' => function (\Gedmo\Tree\Entity\Repository\NestedTreeRepository $r)
+                    {
+                        return $r->getChildrenQueryBuilder(null, null, 'root', 'asc', false);
+                    }
             ))
             ->add('targetLevel1', 'entity', array(
                 'class' => 'TEWTPBundle:CdteLevel',
@@ -131,11 +139,18 @@ class CandidateType extends AbstractType
                 'attr' => array('class' => 'select2'),           
             ))
             ->add('targetFunction2', 'entity', array(
-                'class' => 'TEWTPBundle:CdteFunction',
                 'required' => false,
                 'label' => 'Target function #2',
+                'class' => 'TEWTPBundle:CdteFunction',
+                'attr' => array('class' => 'select2 form-control'),
                 'empty_value' => 'Select',
-                'attr' => array('class' => 'select2'), 
+                'property' => 'indentedName',
+                'multiple' => false,
+                'expanded' => false ,
+                'query_builder' => function (\Gedmo\Tree\Entity\Repository\NestedTreeRepository $r)
+                    {
+                        return $r->getChildrenQueryBuilder(null, null, 'root', 'asc', false);
+                    }
             ))
             ->add('targetLevel2', 'entity', array(
                 'class' => 'TEWTPBundle:CdteLevel',
@@ -145,11 +160,18 @@ class CandidateType extends AbstractType
                 'attr' => array('class' => 'select2'),                   
             ))   
             ->add('targetFunction3', 'entity', array(
-                'class' => 'TEWTPBundle:CdteFunction',
                 'required' => false,
                 'label' => 'Target function #3',
+                'class' => 'TEWTPBundle:CdteFunction',
+                'attr' => array('class' => 'select2 form-control'),
                 'empty_value' => 'Select',
-                'attr' => array('class' => 'select2'), 
+                'property' => 'indentedName',
+                'multiple' => false,
+                'expanded' => false ,
+                'query_builder' => function (\Gedmo\Tree\Entity\Repository\NestedTreeRepository $r)
+                    {
+                        return $r->getChildrenQueryBuilder(null, null, 'root', 'asc', false);
+                    }
             ))
             ->add('targetLevel3', 'entity', array(
                 'class' => 'TEWTPBundle:CdteLevel',

@@ -32,8 +32,8 @@
                 <td>
                     {% for profile in entity.profiles %}
                         <div data-toggle="popover" data-delay='{ "show": 500, "hide": 200 }' data-html="true" style="cursor:pointer" data-trigger='hover'
-                             data-content="{{ profile.description }}" data-title="{{ profile }}">
-                            {{ profile }} (view link to be added)
+                             data-content="{{ profile.function.indentedName }} {{ profile.level }}<br>{{ profile.mobilities|join(' / ')}}<br>{{ profile.description }}" data-title="{{ profile }}">
+                            {{ profile }}
                         </div>
                     {% endfor %}
                 </td>

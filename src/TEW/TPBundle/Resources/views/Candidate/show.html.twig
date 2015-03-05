@@ -92,9 +92,9 @@
             </tr> 
             <tr>
                 <th>Current position</th>
-                <td>{{ entity.function }} {{ entity.level }}
-                    {{ entity.experience is not null and entity.experience != 0? entity.experience ~ ' years' }}
-                    {{ entity.annualIncome is not null and entity.annualIncome != 0?' - annual income ' ~ entity.annualIncome|localizedcurrency('USD') }}</td>
+                <td>{{ entity.function.indentedName }} - {{ entity.level }}
+                    {{ entity.experience is not null and entity.experience != 0? ': ' ~ entity.experience ~ ' years' }}
+                    {{ entity.annualIncome is not null and entity.annualIncome != 0?(' - <em>annual income ' ~ entity.annualIncome|localizedcurrency('USD') ~ '</em>')|raw }}</td>
             </tr>
             {% if entity.targetFunction1 and entity.targetFunction3 and entity.targetFunction3 %}
             <tr>
