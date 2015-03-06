@@ -1,26 +1,38 @@
 // collections management
 // « add » button
 function addButton(name) {
-    var $addItemLink = $('<a href="#" class="add_item_link btn-xs btn-warning">Add '+name+'</a>');
-    return $('<span></span>').append($addItemLink);
+    return $('<a href="#" class="add_item_link btn-xs btn-warning">Add '+name+'</a>');
+    //return $('<span></span>').append($addItemLink);
+    //return $($addItemLink);
 }
 ;
 
 // adapted from http://symfony.com/doc/2.3/cookbook/form/form_collections.html
 function addItemForm(collectionHolder, length) {
     var prototype = collectionHolder.attr('data-prototype');
-    //console.log('prototype: ' + prototype);
+    console.log('prototype: ' + prototype);
+    var $newItemFormDiv;
+//////////    
+// TODO //
+//////////
+//when adding a new collection of collections: only the first '__name__' of each field should be replaced
+    var embeddedPrototypes = prototype.match(/data-prototype="[^"]*"/g);
+    if (embeddedPrototypes) { 
+        console.log('embeddedProtypes '+embeddedPrototypes);
+        for (var i=0; i<embeddedPrototypes.length; i++) {
+            var supprQuote = embeddedPrototypes[i].replace(/&quot;/g, 'π');
+            var embeddedCollectionName = supprQuote.match(/π[^π]*__name__[^π]*__name__[^π]*π/);
+            var embeddedName = embeddedCollectionName[0].replace(/π[^π]*__name___([^π]*)___name__[^π]*π/g,'$1');
+            alert('WARNING: collection ' + collectionHolder.attr('id') + ' includes a collection of '+ embeddedName +
+                    '. Please update your ' + collectionHolder.attr('id')+ ' before adding ' + embeddedName );
+        }
+    }
     // Replaces '__name__' in each field of the prototype by the index of the current item
-    var $newItemFormDiv = $(prototype.replace(/__name__label__/,length + ' (new)').replace(/__name__/g, length));
+    $newItemFormDiv = $(prototype.replace(/__name__label__/,length + ' (new)').replace(/__name__/g, length));    
     $newItemFormDiv.find('textarea').each(function(){
         $(this).wysihtml5();
     });
-    var coll = collectionHolder.find('.child-count');
-    if (coll.length === 0) { // normal case
-        collectionHolder.append($newItemFormDiv);
-    } else { // within a (non imbricated) modal popup
-        coll.find('.add_item_link:last').before($newItemFormDiv);
-    }
+    collectionHolder.append($newItemFormDiv);
     // add a "remove" link at the end of the new form
     addItemFormDeleteLink($newItemFormDiv, collectionHolder.attr('id').replace(/.*_(\w+)e?s/, "$1"));
 }
@@ -149,7 +161,7 @@ $(document).ready(function () {
     // catches a click on an "add" button #}
     $('.add_item_link').on('click', function (e) {
         e.preventDefault();
-        var collection = $(this).parent().children('.form-collection');
+        var collection = $(this).parent('div').children('.form-collection');
         // if this is the comments collection, start numbering at the end index stored in DB
 //        var length = collection.is("#candidate_comments_new") ? commentCollectionDB.children().length :
 //                collection.children('.child-count').length > 0 ? collection.children('.child-count').children().length : collection.children().length;
@@ -161,6 +173,7 @@ $(document).ready(function () {
             length = collection.children('div').length;
         }
         console.log('"add" clicked for '+collection.attr('id') + ' (length: ' + length + ')');
+        //console.log($(this).parent().html());
         addItemForm(collection, length);
         // if this is an address form, initialise google place API
         var id = collection.attr('id');

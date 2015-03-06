@@ -31,8 +31,13 @@
                 <th>Profiles</th>
                 <td>
                     {% for profile in entity.profiles %}
+                        {% set datacontent = '<h5>Position</h5>' ~ profile.function.indentedName ~ ' ' ~ profile.level %}
+                        {% if profile.mobilities|length >0 %}
+                            {% set datacontent = datacontent ~ '<h5>Mobility</h5>' ~ profile.mobilities|join(' / ') %}
+                        {% endif %}
+                        {% set datacontent = datacontent ~ '<h5>Description</h5>' ~ profile.description %}
                         <div data-toggle="popover" data-delay='{ "show": 500, "hide": 200 }' data-html="true" style="cursor:pointer" data-trigger='hover'
-                             data-content="{{ profile.function.indentedName }} {{ profile.level }}<br>{{ profile.mobilities|join(' / ')}}<br>{{ profile.description }}" data-title="{{ profile }}">
+                             data-content="{{ datacontent }}" data-title="{{ profile }}">
                             {{ profile }}
                         </div>
                     {% endfor %}

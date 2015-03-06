@@ -3,7 +3,7 @@
     {% if prototype is defined %}
         {% set attr = attr|merge({'data-prototype': form_row(prototype)}) %}
     {% endif %}
-    {% set modal_id = name ~ random() %}
+    {% set modal_id = name ~ random() %} {# we set a different id for each modal popup #}
     {% set items = '<ul class="list-group">' %} {# popover items for the "view" button #}
     {% for rows in form %}
         {% set items = items ~ '<li class="list-group-item">' %}
@@ -21,7 +21,11 @@
         <h4 class="modal-title">{{ block('form_label') }}</h4>
       </div>
       <div class="modal-body">
-      {{ block('form_widget') }}
+          <div class="alert alert-info" role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <strong>Notice:</strong> do not close this popup until all fields are filled in
+          </div>
+       {{ block('form_widget') }}
         <a href="#" class="add_item_link btn-xs btn-warning">Add</a>
       </div>
       <div class="modal-footer">

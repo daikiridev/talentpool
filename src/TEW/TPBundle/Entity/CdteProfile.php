@@ -211,12 +211,13 @@ class CdteProfile
     /**
      * Add mobilities
      *
-     * @param \TEW\TPBundle\Entity\CdteMobility $mobilities
+     * @param \TEW\TPBundle\Entity\ProfileMobility $mobilities
      * @return CdteProfile
      */
-    public function addMobility(\TEW\TPBundle\Entity\CdteMobility $mobilities)
+    public function addMobility(\TEW\TPBundle\Entity\ProfileMobility $mobilities)
     {
         $this->mobilities[] = $mobilities;
+        $mobilities->setProfile($this);
 
         return $this;
     }
@@ -224,9 +225,9 @@ class CdteProfile
     /**
      * Remove mobilities
      *
-     * @param \TEW\TPBundle\Entity\CdteMobility $mobilities
+     * @param \TEW\TPBundle\Entity\ProfileMobility $mobilities
      */
-    public function removeMobility(\TEW\TPBundle\Entity\CdteMobility $mobilities)
+    public function removeMobility(\TEW\TPBundle\Entity\ProfileMobility $mobilities)
     {
         $this->mobilities->removeElement($mobilities);
     }

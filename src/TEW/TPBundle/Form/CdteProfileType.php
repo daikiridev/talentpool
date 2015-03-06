@@ -21,8 +21,7 @@ class CdteProfileType extends AbstractType
                 'property' => 'indentedName',
                 'multiple' => false,
                 'expanded' => false ,
-                'query_builder' => function (\Gedmo\Tree\Entity\Repository\NestedTreeRepository $r)
-                    {
+                'query_builder' => function (\Gedmo\Tree\Entity\Repository\NestedTreeRepository $r){
                         return $r->getChildrenQueryBuilder(null, null, 'root', 'asc', false);
                     }
             ))
