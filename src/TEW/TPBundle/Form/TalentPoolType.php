@@ -26,6 +26,13 @@ class TalentPoolType extends AbstractType
                 'allow_delete' => false,
                 'by_reference' => false, // 'false' forces setMobilities() to be called
                 ))
+                ->add('picture', 'sonata_media_type', array(
+                'label' => false, // 'label'    =>  'Image'
+                'required' => false,
+                'provider' => 'sonata.media.provider.image',
+                'context'  => 'talentpool',
+                'attr' => array('class' => 'span16') // doesn't work
+            ))
             //->add('languagesSkills')
             //->add('createdAt') // see __construct()
             //->add('creator') // see __construct()

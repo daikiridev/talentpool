@@ -64,6 +64,13 @@ class TalentPool
      * @ORM\JoinColumn(name="creator_id", nullable=false)
      */
     private $creator;
+
+    /**
+     * @var picture
+     *
+     * @ORM\OneToOne(targetEntity="Application\Sonata\MediaBundle\Entity\Media", cascade={"all"})
+     */
+    private $picture;
     
     /**
      * Constructor
@@ -254,5 +261,28 @@ class TalentPool
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * Set picture
+     *
+     * @param \Application\Sonata\MediaBundle\Entity\Media $picture
+     * @return TalentPool
+     */
+    public function setPicture(\Application\Sonata\MediaBundle\Entity\Media $picture = null)
+    {
+        $this->picture = $picture;
+
+        return $this;
+    }
+
+    /**
+     * Get picture
+     *
+     * @return \Application\Sonata\MediaBundle\Entity\Media 
+     */
+    public function getPicture()
+    {
+        return $this->picture;
     }
 }

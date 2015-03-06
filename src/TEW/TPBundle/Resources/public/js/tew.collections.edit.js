@@ -11,6 +11,7 @@ function addButton(name) {
 function addItemForm(collectionHolder, length) {
     var prototype = collectionHolder.attr('data-prototype');
     console.log('prototype: ' + prototype);
+    var collId = collectionHolder.attr('id');
     var $newItemFormDiv;
 //////////    
 // TODO //
@@ -23,8 +24,8 @@ function addItemForm(collectionHolder, length) {
             var supprQuote = embeddedPrototypes[i].replace(/&quot;/g, 'π');
             var embeddedCollectionName = supprQuote.match(/π[^π]*__name__[^π]*__name__[^π]*π/);
             var embeddedName = embeddedCollectionName[0].replace(/π[^π]*__name___([^π]*)___name__[^π]*π/g,'$1');
-            alert('WARNING: collection ' + collectionHolder.attr('id') + ' includes a collection of '+ embeddedName +
-                    '. Please update your ' + collectionHolder.attr('id')+ ' before adding ' + embeddedName );
+            alert('WARNING: collection ' + collId + ' includes a collection of '+ embeddedName +
+                    '. Please save your new ' + collId+ ' before adding ' + embeddedName );
         }
     }
     // Replaces '__name__' in each field of the prototype by the index of the current item
@@ -34,7 +35,7 @@ function addItemForm(collectionHolder, length) {
     });
     collectionHolder.append($newItemFormDiv);
     // add a "remove" link at the end of the new form
-    addItemFormDeleteLink($newItemFormDiv, collectionHolder.attr('id').replace(/.*_(\w+)e?s/, "$1"));
+    addItemFormDeleteLink($newItemFormDiv, collId.replace(/.*_(\w+)ies$/,"$1y").replace(/.*_(\w+)e?s/, "$1"));
 }
 
 function addItemFormDeleteLink($itemFormLi, name) {
@@ -74,7 +75,7 @@ function modalCollection(name, content) {
 // Google places API
 var autocomplete = new Array();
 
-// Handle the way form inputs are filled in
+// Handle the way form inputs are filled in by google values
 // eg addressPrefix: 'talentpool_profiles_0_mobilities_3_'
 function convertForm(addressPrefix, field) {
     //console.log("convertForm('"+addressPrefix+"'): "+addressPrefix.replace((/.*_([^_]+)(_\d+_)?[^_]*$/), "$1"));

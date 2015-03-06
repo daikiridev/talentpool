@@ -47,7 +47,8 @@
         <fieldset class="col-lg-6">
             <legend>Main</legend>
             <div class='row'>
-                <div class="col-lg-12">{{ form_label(this_form.name) }} {{ form_widget(this_form.name) }}</div>
+                <div class="col-lg-6">{{ form_label(this_form.name) }} {{ form_widget(this_form.name) }}</div>
+                <div class="col-lg-6">Logo {{ form_row(this_form.picture) }}</div>
             </div>
             <div class="row">
                 <div class="col-lg-12">{{ form_label(this_form.description) }}</div>

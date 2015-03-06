@@ -16,6 +16,9 @@
     <table class="record_properties">
         <tbody>
             <tr>
+                <td colspan='2'><img src="{% path entity.picture, 'admin' %}" alt="{{ entity.picture is null?'':entity.picture.name }}"></td>
+            </tr>
+            <tr>
                 <th>Owner</th>
                 <td>{{ entity.creator }}</td>
             </tr>

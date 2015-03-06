@@ -269,7 +269,7 @@ class TalentPoolController extends Controller
             ->add('submit', 'submit', array('label' => 'Delete', 
                                         'attr' => array(
                                             'class' => 'btn btn-danger',
-                                            'onclick' => "if(!confirm('Are you sure?')) { return false; }"
+                                            'onclick' => "if(!confirm('Are you sure? This will definetly erase the talent pool from the DB!')) { return false; }"
                                             )
                 ))
             ->getForm()
