@@ -33,20 +33,49 @@ class MenuBuilder
         
         $menu = $this->factory->createItem('root');
         $menu->setChildrenAttribute('class', 'nav navbar-nav');
-
-//        $menu->addChild('Home', array('route' => 'tp_home'))
-//            ->setAttribute('icon', 'icon-home');
         
         // add authorized items for the current user
         if ($is_client) {
+            $session = $request->getSession();
+            $workingtp = $session->get('workingtp');
             // Talent Pools
-            $menu->addChild('Talent pools')
-                    ->setAttribute('icon', 'icon-sitemap')
-                    ->setAttribute('dropdown', true);
-            $menu['Talent pools']->addChild('List', array('route' => 'tew_talentpool'))
-                    ->setAttribute('icon', 'icon-list');
-            $menu['Talent pools']->addChild('New', array('route' => 'tew_talentpool_new'))
-                    ->setAttribute('icon', 'icon-plus-sign-alt');
+            if ($workingtp == null) {
+                $menu->addChild('Talent pools')
+                        ->setAttribute('icon', 'icon-sitemap')
+                        ->setAttribute('dropdown', true);
+                $menu['Talent pools']->addChild('List', array('route' => 'tew_talentpool'))
+                        ->setAttribute('icon', 'icon-list');
+                $menu['Talent pools']->addChild('New', array('route' => 'tew_talentpool_new'))
+                        ->setAttribute('icon', 'icon-plus-sign-alt');
+            } else { // working talentpool exists
+                if ($workingtp->getPicture() != null) {
+                    // to be finished
+//                    $mediaservice = $this->getService('sonata.media.pool');
+//                    $provider = $$mediaservice->getProvider($media->getProviderName());
+//                    $format = $provider->getFormatName($workingtp->getPicture(), 'admin');
+//                    
+//                    $file = $provider->generatePublicUrl($workingtp->getPicture(), $format);
+//                    //$path = getExtension();
+//                    $menu->addchild('logo')
+//                            ->setAttribute('background', '<img src="'.$file.'">');
+                }
+                $menu->addChild($workingtp->getName())
+                        ->setAttribute('icon', 'icon-sitemap')
+                        ->setAttribute('dropdown', true);
+                $menu[$workingtp->getName()]->addChild('View '.$workingtp->getName(), array(
+                            'route' => 'tew_talentpool_show',
+                            'routeParameters' => array( 'id' => $workingtp->getId() )
+                        ))
+                        ->setAttribute('icon', 'icon-bookmark');
+                $menu[$workingtp->getName()]->addChild('Edit '.$workingtp->getName(), array(
+                            'route' => 'tew_talentpool_edit',
+                            'routeParameters' => array( 'id' => $workingtp->getId() )
+                        ))
+                        ->setAttribute('icon', 'icon-edit');
+                $menu[$workingtp->getName()]->addChild('Back to the list of talent pools', array('route' => 'tew_talentpool'))
+                        ->setAttribute('icon', 'icon-list');
+                }
+            
             
             // Candidates
             $menu->addChild('Candidates')

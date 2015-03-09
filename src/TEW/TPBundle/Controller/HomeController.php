@@ -19,37 +19,33 @@ class HomeController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $talentpools = $em->getRepository('TEWTPBundle:TalentPool')->findAll();
-//        $request = $this->get('request');
-//        $session = $request->getSession();
-//        $session->set('talentpool', null);
-        return array('talentpools' => $talentpools);
-        //return $this->redirect($this->generateUrl('tp_home', array('talentpools' => $talentpools)));
+        $request = $this->getRequest();
+        //$talentpools = $em->getRepository('TEWTPBundle:TalentPool')->findAll();
+        // We build the form for the talentpool selector
+        $formBuilder = $this->createFormBuilder();
+        $formBuilder->add('talentpool', 'entity', array(
+            'required' => true,
+            'label' => false,
+            'class' => 'TEWTPBundle:TalentPool',
+            'empty_value' => "Choose your working Talent Pool",
+            'multiple' => false,
+            'expanded' => false
+        ));
+        $form = $formBuilder->getForm();
+        if ($request->isMethod('POST')) {
+            $tpid = $request->request->get('form')['talentpool'];
+            $form->handleRequest($request);
+            if ($form->isValid()) {
+                $session = $request->getSession();
+                $talentpool = $em->getRepository('TEWTPBundle:TalentPool')->find($tpid);
+                $session->set('workingtp', $talentpool);
+            }        
+        }
+        return $this->render('TEWTPBundle:Home:index.html.twig', array(
+            'form' => $form->createView(),
+        ));
     }
     
-    /**
-     * @Route("/updatetp", name="tp_homeupdatetp")
-     * @Template()
-     */
-    public function updateAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-        $request = $this->get('request');
-//
-        $form = $this->get('form.factory')->create();
-        //$form->bind($request);
-        if ($request->isMethod('POST')) { 
-            $form->submit($request);
-//            var_dump($form); exit;
-//            echo "id: ".$form->get('id'); exit;
-            if ($form->isValid()) { 
-                $session = $request->getSession();
-                $session->set('talentpool', $em->getRepository('TEWTPBundle:TalentPool')->findById($request->get('id'))); 
-            }
-        }
-        $talentpools = $em->getRepository('TEWTPBundle:TalentPool')->findAll();
-        return $this->redirect($this->generateUrl('tp_home', array('talentpools' => $talentpools)));
-    }
 
     /**
      * @Route("/hello/{name}", name="tp_hello")

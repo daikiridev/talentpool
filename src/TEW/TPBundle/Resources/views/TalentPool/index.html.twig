@@ -1,4 +1,15 @@
+{# TEW/src/TEW/TPBundle/Resources/views/TalentPool/index.html.twig #}
 {% extends '::base.html.twig' %}
+
+{% block scripts %}
+    <script>
+        $('.icon-unchecked').click(function(){
+           if (confirm('Change working talentpool to '+$(this).attr('name')+'? (to be implemented)')) {
+               // do a submit on the homecontroller and forward to the list
+           }
+        });
+    </script>
+{% endblock scripts %}
 
 {% block body -%}
     <h1>TalentPool list</h1>
@@ -6,7 +17,7 @@
     <table class="records_list">
         <thead>
             <tr>
-                <th>Id</th>
+                <th>Def.</th>
                 <th>Name</th>
                 <th>Logo</th>
                 <th>Profiles</th>
@@ -18,7 +29,14 @@
         <tbody>
         {% for entity in entities %}
             <tr>
-                <td><a href="{{ path('tew_talentpool_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>
+                    {% if (workingtp is not null) and workingtp.id == entity.id %}
+                        <i class="icon icon-check" id="{{ entity.id }}" name="{{ entity.name }}"></i>
+                    {% else %}
+                        <i class="icon icon-unchecked" id="{{ entity.id }}" name="{{ entity.name }}"></i>
+                    {% endif %}
+                    
+                </td>
                 <td>
                     {% if entity.picture is not null%}
                         <img src="{% path entity.picture, 'admin' %}" alt="{{ entity.picture.name }}" width="80px">
