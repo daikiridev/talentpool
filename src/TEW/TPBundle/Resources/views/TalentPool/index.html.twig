@@ -8,6 +8,7 @@
             <tr>
                 <th>Id</th>
                 <th>Name</th>
+                <th>Logo</th>
                 <th>Profiles</th>
                 <th>Creation date</th>
                 <th>Creator</th>
@@ -18,6 +19,11 @@
         {% for entity in entities %}
             <tr>
                 <td><a href="{{ path('tew_talentpool_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>
+                    {% if entity.picture is not null%}
+                        <img src="{% path entity.picture, 'admin' %}" alt="{{ entity.picture.name }}" width="80px">
+                    {% endif %}
+                </td>
                 <td>{{ entity.name }}</td>
                 <td>{{ entity.profiles|join(' / ') }}</td>
                 <td>{% if entity.createdAt %}{{ entity.createdAt|date('Y-m-d') }}{% endif %}</td>

@@ -18,6 +18,7 @@ app/console doctrine:migrations:migrate
 
 # cache cleaning
 app/console cache:clear --env=prod
+app/console cache:warmup --env=prod
 
 # assets installation into the web directory (allready made by composer install)
 # app/console assets:install --symlink

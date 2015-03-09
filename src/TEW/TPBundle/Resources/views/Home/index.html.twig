@@ -1,17 +1,110 @@
 {% extends "TEWTPBundle::layout.html.twig" %}
 
-{% block title "Symfony - TPs" %}
+{% if app.session.get('talentpool') is defined %}
+    {% set talentpool = app.session.get('talentpool') %}
+{% endif %}
 
-    {% block body %}
-        <div class="jumbotron">
-            <h1>Home</h1>
-            <ul>
-                <li>
-                    Choose your working Talent Pool: <em>(select one of owner's TPs)</em>
-                </li>
-                <li>
-                    <a href="{{ path('tew_talentpool_new') }}">Add</a> a new Talent Pool 
-                </li>
-            </ul>
+{% block scripts %}
+    <script>
+    $('#id').change(function(){
+        //alert($(this).val());
+        if ($(this).val()>0) {
+            $(this).parents('form').submit();
+        }
+    });
+    </script>
+{% endblock scripts %}
+
+{% block body %}
+    <div class="jumbotron">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="row">
+                    <fieldset class="col-lg-12">
+                        <legend><i class="icon icon-sitemap"></i> Talent Pools</legend>
+                        <ul style="list-style-type: none;">
+                            <li><i class="icon icon-sitemap"></i>
+                                <form action='{{ path('tp_homeupdatetp') }}' method='POST'>
+                                <select id="id">
+                                    <option>Choose your working Talent Pool</option>
+                                {% for tp in talentpools %}
+                                    <option value="{{ tp.id }}"
+                                            {{ (talentpool is not null and (tp.id == talentpool.id))?'selected' }}>{{ tp }}</option>
+                                {% endfor %}
+                                </select>
+                                </form>
+                            </li>
+                            {% if talentpool is not null %}
+                            <li><i class="icon icon-bookmark"></i>
+                                <a href="{{ path('tew_talentpool_show', { 'id': talentpool.id }) }}">View talentpool {{ talentpool }}</a>
+                            </li>
+                            {% endif %}
+                            <li><i class="icon icon-plus-sign-alt"></i>
+                                <a href="{{ path('tew_talentpool_new') }}">Add</a> a new Talent Pool 
+                            </li>
+                            <li><i class="icon icon-list"></i>
+                                <a href="{{ path('tew_talentpool') }}">Talent pools</a>
+                            </li>
+                        </ul>
+                    </fieldset>
+                </div>
+                <div class="row">
+                    <fieldset class="col-lg-12">
+                        <legend><i class="icon icon-male"></i> Candidates</legend>
+                        <ul style="list-style-type: none;">
+                            <li><i class="icon icon-plus-sign-alt"></i>
+                                <a href="{{ path('tew_candidate_new') }}">Add</a> a new Candidate 
+                            </li>
+                            <li><i class="icon icon-eye-open"></i>
+                                <a href="{{ path('tew_candidate_search') }}">Candidate search</a>
+                            </li>
+                        </ul>
+                    </fieldset>
+                </div>
+                <div class="row">
+                    <fieldset class="col-lg-12">
+                        <legend><i class="icon icon-bar-chart"></i> Statistics</legend>
+                        <em>Forthcoming</em>
+                    </fieldset>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="row">
+                    <fieldset class="col-lg-12">
+                        <legend><i class="icon icon-user"></i> Profile</legend>
+                        <ul style="list-style-type: none;">
+                            <li><i class="icon icon-user"></i>
+                                <a href="{{ path('sonata_user_profile_show') }}">View my profile</a>
+                            </li>
+                            <li><i class="icon icon-random"></i>
+                                <a href="{{ path('sonata_user_change_password') }}">Change my password</a>
+                            </li>
+                            <li><i class="icon icon-edit"></i>
+                                <a href="{{ path('sonata_user_profile_edit') }}">Edit my profile</a>
+                            </li>
+                            <li><i class="icon icon-off"></i>
+                                <a href="{{ path('sonata_user_profile_edit') }}">Logout</a>
+                            </li>
+                        </ul>
+                    </fieldset>
+                </div>
+                <div class="row">
+                    <fieldset class="col-lg-12">
+                        <legend><i class="icon icon-group"></i> Community</legend>
+                        <em>Forthcoming</em>
+                    </fieldset>
+                </div>
+                <div class="row">
+                    <fieldset class="col-lg-12">
+                        <legend><i class="icon icon-dashboard lazyIcon"></i> Backoffice</legend>
+                        <ul style="list-style-type: none;">
+                            <li><i class="icon icon-hand-right"></i>
+                                <a target="_bank" href="{{ path('sonata_admin_dashboard') }}">Launch backoffice</a>
+                            </li>
+                        </ul>
+                    </fieldset>
+                </div>
+            </div>
         </div>
-    {% endblock %}
+    </div>
+{% endblock %}

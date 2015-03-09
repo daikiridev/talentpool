@@ -37,6 +37,10 @@ class TalentPoolType extends AbstractType
             //->add('createdAt') // see __construct()
             //->add('creator') // see __construct()
         ;
+            $builder->get('picture')
+                ->add('binaryContent', 'file', ['label' => false,])
+                ->add('unlink', 'hidden', ['mapped' => false, 'data' => false])// removing the 'unlink' checkbox
+                ; 
         
     }
     

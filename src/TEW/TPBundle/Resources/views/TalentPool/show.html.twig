@@ -15,9 +15,11 @@
 
     <table class="record_properties">
         <tbody>
+            {% if entity.picture is not null%}
             <tr>
-                <td colspan='2'><img src="{% path entity.picture, 'admin' %}" alt="{{ entity.picture is null?'':entity.picture.name }}"></td>
+                <td colspan='2'><img src="{% path entity.picture, 'admin' %}" alt="{{ entity.picture.name }}"></td>
             </tr>
+            {% endif %}
             <tr>
                 <th>Owner</th>
                 <td>{{ entity.creator }}</td>

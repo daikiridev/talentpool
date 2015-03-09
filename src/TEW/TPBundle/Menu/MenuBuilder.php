@@ -79,11 +79,15 @@ class MenuBuilder
             $menu->addChild('User', array('label' => $username))
                 ->setAttribute('dropdown', true)
                 ->setAttribute('icon', 'icon-user');
-                    
-            $menu['User']->addChild('Edit profile', array('route' => 'sonata_user_profile_show'))
+            
+            $menu['User']->addChild('View my profile', array('route' => 'sonata_user_profile_show'))
+                ->setAttribute('icon', 'icon-user');
+            $menu['User']->addChild('Change my password', array('route' => 'sonata_user_change_password'))
+                ->setAttribute('icon', 'icon-random');        
+            $menu['User']->addChild('Edit profile', array('route' => 'sonata_user_profile_edit'))
                 ->setAttribute('icon', 'icon-edit');
             $menu['User']->addChild('Logout', array('route' => 'sonata_user_security_logout'))
-                ->setAttribute('icon', 'icon-signout');
+                ->setAttribute('icon', 'icon-off');
             
             // Backoffice
             if ($is_admin){
