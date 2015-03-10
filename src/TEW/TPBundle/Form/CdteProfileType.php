@@ -38,7 +38,8 @@ class CdteProfileType extends AbstractType
             ->add('description', 'textarea', array(
                 'attr' => array('cols' => '80', 'rows' => '10')
             ))
-            ->add('mobilities', 'modalcollection', array(
+            ->add('locations', 'modalcollection', array(
+                'label' => 'Locations',
                 'attr' => array('class' => 'form-collection modal-collection'), // in order to handle jquery functions of tew.candidate.edit.js
                 'type' => new ProfileMobilityType(),
                 'required' => false,

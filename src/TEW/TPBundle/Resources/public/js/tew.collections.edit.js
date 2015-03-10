@@ -81,6 +81,7 @@ function convertForm(addressPrefix, field) {
     //console.log("convertForm('"+addressPrefix+"'): "+addressPrefix.replace((/.*_([^_]+)(_\d+_)?[^_]*$/), "$1"));
     switch (addressPrefix.replace((/.*_([^_]+)(_\d+_)?[^_]*$/), "$1")) {
         case 'mobilities':
+        case 'locations':
             return {
                 locality: [{field: 'city', action: 'replace', format: 'short_name'}],
                 administrative_area_level_1: [{field: 'region', action: 'replace', format: 'short_name'}],
@@ -109,6 +110,7 @@ function googleInit(addressPrefix, field) {
             searchType = 'address';
             break;
         case 'mobilities':
+        case 'locations':
             searchType = 'geocode';
             //alert('mobilities');
             break;
@@ -181,7 +183,7 @@ $(document).ready(function () {
         if (id.match(/_addresses$/)) {
             googleInit(id + '_' + length + '_', 'street1'); // location google search is done in the 'street1' field
         }
-        else if (id.match(/_mobilities$/)) {
+        else if (id.match(/_mobilities$/) || id.match(/_locations$/)) {
             googleInit(id + '_' + +length + '_', 'location'); // location google search is done in the 'location' field
         }
     });
@@ -200,7 +202,7 @@ $(document).ready(function () {
             for (i = 0; i < children.length; i++) {
                 googleInit(id + '_' + i + '_', 'street1'); // location search is done in the 'street1' field
             }
-        } else if (id.match(/_mobilities$/) && children.length >0) {
+        } else if ((id.match(/_mobilities$/) || id.match(/_locations$/)) && children.length >0) {
             console.log('computing google fields for ' + id);
             for (i = 0; i < children.length; i++) {
                 googleInit(id + '_' + i + '_', 'location'); // location search is done in the 'location' field

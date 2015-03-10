@@ -3,18 +3,9 @@ tp_home:
     path:       /
     defaults:   { _controller: TEWTPBundle:Home:index }
     
-tp_homeupdatetp:
-    path:       /updatetp
-    defaults:   { _controller: TEWTPBundle:Home:update }
-    requirements: { _method: post|put }
-    
 tp_contact:
     path:       /contact
     defaults:   { _controller: TEWTPBundle:Home:contact }
-
-tp_echo:
-    path:       /echo/{name}
-    defaults:   { _controller: TEWTPBundle:Home:echo }
 
 # Candidates routes
 TEWTPBundle_tew_candidate:

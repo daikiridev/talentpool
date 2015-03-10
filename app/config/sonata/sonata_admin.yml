@@ -1,3 +1,4 @@
+# TEW/app/config/sonata/sonata_admin.yml
 # Sonata admin configuration
 sonata_admin:
     title: backoffice
@@ -44,6 +45,7 @@ sonata_admin:
                 items:
 #                    - tew_tp.admin.language
                     - tew_tp.admin.cdtefunction
+                    - tew_tp.admin.cdtelevel
 #                    - tew_tp.admin.cdtelanguage
             tew.admin.group.data:
                 label: Pools & Candidates

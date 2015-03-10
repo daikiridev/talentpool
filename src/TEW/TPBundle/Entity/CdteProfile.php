@@ -57,19 +57,19 @@ class CdteProfile
     private $talentpool;
     
     /**
-     * @var mobilities
+     * @var locations
      *
      * @ORM\OneToMany(targetEntity="ProfileMobility", mappedBy="profile", cascade={"persist", "remove"})   
      * 
      */
-    private $mobilities;
+    private $locations;
     
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->mobilities = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->locations = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     /**
@@ -209,36 +209,36 @@ class CdteProfile
     }
 
     /**
-     * Add mobilities
+     * Add locations
      *
-     * @param \TEW\TPBundle\Entity\ProfileMobility $mobilities
+     * @param \TEW\TPBundle\Entity\ProfileMobility $locations
      * @return CdteProfile
      */
-    public function addMobility(\TEW\TPBundle\Entity\ProfileMobility $mobilities)
+    public function addLocation(\TEW\TPBundle\Entity\ProfileMobility $locations)
     {
-        $this->mobilities[] = $mobilities;
-        $mobilities->setProfile($this);
+        $this->locations[] = $locations;
+        $locations->setProfile($this);
 
         return $this;
     }
 
     /**
-     * Remove mobilities
+     * Remove locations
      *
-     * @param \TEW\TPBundle\Entity\ProfileMobility $mobilities
+     * @param \TEW\TPBundle\Entity\ProfileMobility $locations
      */
-    public function removeMobility(\TEW\TPBundle\Entity\ProfileMobility $mobilities)
+    public function removeLocation(\TEW\TPBundle\Entity\ProfileMobility $locations)
     {
-        $this->mobilities->removeElement($mobilities);
+        $this->locations->removeElement($locations);
     }
 
     /**
-     * Get mobilities
+     * Get locations
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getMobilities()
+    public function getLocations()
     {
-        return $this->mobilities;
+        return $this->locations;
     }
 }

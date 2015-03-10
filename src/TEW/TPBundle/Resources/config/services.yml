@@ -57,6 +57,12 @@ services:
         arguments: [~, TEW\TPBundle\Entity\CdteFunction, TEWTPBundle:CdteFunctionAdmin]
         tags:
             - {name: sonata.admin, manager_type: orm, group: admin, label: Functions}
+            
+    tew_tp.admin.cdtelevel:
+        class: TEW\TPBundle\Admin\CdteLevelAdmin
+        arguments: [~, TEW\TPBundle\Entity\CdteLevel, TEWTPBundle:CdteLevelAdmin]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: admin, label: Levels}
 
     tew_tp.admin.candidate:
         class: TEW\TPBundle\Admin\CandidateAdmin
