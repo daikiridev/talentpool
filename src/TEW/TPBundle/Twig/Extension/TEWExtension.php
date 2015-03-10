@@ -9,12 +9,30 @@ class TEWExtension extends \Twig_Extension
 {
     private $skills;
     private $languages;
+    private $currencies;
     
     
     public function __construct()
     {
         $this->skills = new ArrayCollection(array('none','novice','spoken','bilingual', 'mother tongue'));
         $this->languages = Intl::getLanguageBundle()->getLanguageNames();
+        // $this->currencies = Intl::getCurrencyBundle()->getCurrencyNames(); // exhaustive list -> very long...
+        // var_dump($this->currencies); exit;
+        $this->currencies = array(
+            'AUD' => 'Australian Dollar',
+            'CAD' => 'Canadian Dollar',
+            'CHF' => 'Swiss franc',
+            'CNX' => 'Chinese People\'s Bank Dollar',
+            'CNY' => 'Chinese Yuan',
+            'EUR' => 'Euro',
+            'INR' => 'Indian Rupee',
+            'HKD' => 'Hong Kong Dollar',
+            'NZD' => 'New Zealand Dollar',
+            'SGD' => 'Singapore Dollar',
+            'TWD' => 'New Taiwan Dollar',
+            'USD' => 'US Dollar',
+        );
+        
     }
     
     public function getFilters()
@@ -24,6 +42,7 @@ class TEWExtension extends \Twig_Extension
             new \Twig_SimpleFilter('gender', array($this, 'genderFilter')),
             new \Twig_SimpleFilter('mail', array($this, 'mailFilter'), array('is_safe' => array('html'))),
             new \Twig_SimpleFilter('languageSkill', array($this, 'languageSkillFilter')),
+            new \Twig_SimpleFilter('currency', array($this, 'currencyFilter')),
             new \Twig_SimpleFilter('commentsByTalentpool', array($this, 'commentsByTalentpoolFilter')),
             new \Twig_SimpleFilter('commentsAverageScore', array($this, 'commentsAverageScoreFilter')),
         );
@@ -52,13 +71,18 @@ class TEWExtension extends \Twig_Extension
     
     public function languageSkillFilter(\TEW\TPBundle\Entity\CdteLanguage $languageSkill = null)
     {
-        //echo '@'.$languageSkill->getLanguage().'@';
-
-        $result = ($this->languages!=null && $languageSkill->getLanguage())?$this->languages[$languageSkill->getLanguage()].' ('.$this->skills[$languageSkill->getSkill()].')':'';
-
+        $result = ($this->languages!=null && $languageSkill->getLanguage())?
+                $this->languages[$languageSkill->getLanguage()].' ('.$this->skills[$languageSkill->getSkill()].')'
+                :'';
         return $result;
     }
-
+    
+    public function currencyFilter($currency = null)
+    {
+        $result = ($this->currencies!=null && $currency)?$this->currencies[$currency]:'';
+        return $result;
+    }
+    
     public function commentsByTalentpoolFilter(\Doctrine\ORM\PersistentCollection $comments, \TEW\TPBundle\Entity\talentpool $tp = null)
     {
         $result = new ArrayCollection();

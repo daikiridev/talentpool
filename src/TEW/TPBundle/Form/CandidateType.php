@@ -16,8 +16,11 @@ class CandidateType extends AbstractType
     {
         $builder
             //->add('globalComment', 'ckeditor', array('config_name' => 'user_config'))
-            ->add('globalComment')
+            ->add('globalComment', 'textarea', array(
+                'label' => 'General comment'
+            ))
             ->add('globalScore', 'choice', array(
+                'label' => 'Score',
                 'choices' => range(0,5),
                 //'empty_value'=> '',
                 'expanded' => true, 'multiple' => false, // radio button
@@ -116,6 +119,13 @@ class CandidateType extends AbstractType
                 //'currency' => 'USD', // if type = 'money'
                 'attr' => array('class' => 'form-control'),
                 //'label_attr' => array('class' => 'col-md-2')
+            ))
+            ->add('bonusbenefits', 'text', array(
+                'attr' => array('class' => 'form-control')
+            ))
+            ->add('currency', 'currency', array(
+                'attr' => array('class' => 'select2'),
+                'empty_value' => 'Select',
             ))
             ->add('targetFunction1', 'entity', array(
                 'required' => false,
@@ -218,6 +228,7 @@ class CandidateType extends AbstractType
                 'attr' => array('class' => 'span16') // doesn't work
             ))
             ->add('comments', 'modalcollection', array(
+                'label' => 'User comments',
                 'attr' => array('class' => 'form-collection'), // in order to handle jquery functions of tew.candidate.edit.js
                 'type' => new CdteCommentType(),
                 'required' => false,

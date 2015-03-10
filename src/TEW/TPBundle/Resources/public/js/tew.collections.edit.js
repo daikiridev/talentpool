@@ -25,14 +25,23 @@ function addItemForm(collectionHolder, length) {
             var embeddedCollectionName = supprQuote.match(/π[^π]*__name__[^π]*__name__[^π]*π/);
             var embeddedName = embeddedCollectionName[0].replace(/π[^π]*__name___([^π]*)___name__[^π]*π/g,'$1');
             alert('WARNING: collection ' + collId + ' includes a collection of '+ embeddedName +
-                    '. Please save your new ' + collId+ ' before adding ' + embeddedName );
+                    '. Please save your ' + collId.replace(/(.*)_\w+$/,'$1') + ' before adding ' + embeddedName + '.');
         }
     }
-    // Replaces '__name__' in each field of the prototype by the index of the current item
-    $newItemFormDiv = $(prototype.replace(/__name__label__/,length + ' (new)').replace(/__name__/g, length));    
+    // Replace '__name__' in each field of the prototype by the index of the current item
+    $newItemFormDiv = $(prototype.replace(/__name__label__/,'#' + length + ' (new)').replace(/__name__/g, length));    
+    
+    // Initialise fields 
     $newItemFormDiv.find('textarea').each(function(){
         $(this).wysihtml5();
     });
+    $newItemFormDiv.find('.select2').each(function(){
+        $(this).select2();
+    });
+    $newItemFormDiv.find('[data-toggle="popover"]').each(function(){
+        $(this).popover();
+    });
+    
     collectionHolder.append($newItemFormDiv);
     // add a "remove" link at the end of the new form
     addItemFormDeleteLink($newItemFormDiv, collId.replace(/.*_(\w+)ies$/,"$1y").replace(/.*_(\w+)e?s/, "$1"));

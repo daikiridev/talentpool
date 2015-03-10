@@ -31,7 +31,7 @@ class ProfileMobility
     /**
      * @var profile
      *
-     * @ORM\ManyToOne(targetEntity="CdteProfile", inversedBy="mobilities")
+     * @ORM\ManyToOne(targetEntity="CdteProfile", inversedBy="locations")
      * @ORM\JoinColumn(name="profile_id", nullable=false, referencedColumnName="id")
      */
     private $profile;

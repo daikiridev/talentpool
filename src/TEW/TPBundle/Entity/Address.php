@@ -1,4 +1,5 @@
 <?php
+// TEW/src/TEW/TPBundle/Entity/Address.php
 
 namespace TEW\TPBundle\Entity;
 
@@ -50,10 +51,6 @@ class Address
     private $zip;
 
 
-//    /**
-//     * @ORM\ManyToOne(targetEntity="TEW\TPBundle\Entity\CdteCity")
-//     * @ORM\JoinColumn(name="city_id", referencedColumnName="id", nullable=true)
-//     */
     /**
      * @var string
      *
@@ -68,16 +65,7 @@ class Address
      */
     private $province;
     
-//    /**
-//     * @ORM\ManyToOne(targetEntity="TEW\TPBundle\Entity\CdteRegion")
-//     * @ORM\JoinColumn(name="region_id", referencedColumnName="id", nullable=true)
-//     */
-//        private $region;
- 
-//    /**
-//     * @ORM\ManyToOne(targetEntity="TEW\TPBundle\Entity\CdteCountry")
-//     * @ORM\JoinColumn(name="country_id", referencedColumnName="id", nullable=true)
-//     */
+
     /**
      * @var string
      *
@@ -85,10 +73,6 @@ class Address
      */
     private $country;
     
-//    /**
-//     * @var \DCS\Form\SelectCityFormFieldBundle\Model\SelectData
-//     */
-//    protected $selectData;
 
     /**
      * @ORM\ManyToOne(targetEntity="TEW\TPBundle\Entity\Candidate", inversedBy="addresses")
@@ -96,37 +80,6 @@ class Address
      */
     private $candidate;    
 
-//    /**
-//     * Set selectData
-//     *
-//     * @param \DCS\Form\SelectCityFormFieldBundle\Model\SelectData $selectData
-//     * @return Address
-//     */
-//    public function setSelectData(\DCS\Form\SelectCityFormFieldBundle\Model\SelectData $selectData)
-//    {
-//        $this->setCountry($selectData->getCountry());
-//        $this->setRegion($selectData->getRegion());
-//        $this->setCity($selectData->getCity());
-//
-//        $this->selectData = $selectData;
-//
-//        return $this;
-//    }
-//
-//    /**
-//     * Get selectData
-//     *
-//     * @return \DCS\Form\SelectCityFormFieldBundle\Model\SelectData
-//     */
-//    public function getSelectData()
-//    {
-//        $selectData = new \DCS\Form\SelectCityFormFieldBundle\Model\SelectData();
-//        $selectData->setCountry($this->getCountry());
-//        $selectData->setRegion($this->getRegion());
-//        $selectData->setCity($this->getCity());
-//
-//        return $selectData;
-//    }
     
     /**
      * Get id

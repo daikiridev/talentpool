@@ -153,7 +153,21 @@ class Candidate implements Taggable
      * )
      */
     private $annualIncome;
-
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="currency", type="string", length=7, nullable=false)
+     */
+    private $currency;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="bonusbenefits", type="string", length=127, nullable=true)
+     */
+    private $bonusbenefits;
+    
     /**
      * @var bool $active
      *
@@ -1192,5 +1206,51 @@ class Candidate implements Taggable
     public function getGlobalScore()
     {
         return $this->globalScore;
+    }
+
+    /**
+     * Set currency
+     *
+     * @param string $currency
+     * @return Candidate
+     */
+    public function setCurrency($currency)
+    {
+        $this->currency = $currency;
+
+        return $this;
+    }
+
+    /**
+     * Get currency
+     *
+     * @return string 
+     */
+    public function getCurrency()
+    {
+        return $this->currency;
+    }
+
+    /**
+     * Set bonusbenefits
+     *
+     * @param string $bonusbenefits
+     * @return Candidate
+     */
+    public function setBonusbenefits($bonusbenefits)
+    {
+        $this->bonusbenefits = $bonusbenefits;
+
+        return $this;
+    }
+
+    /**
+     * Get bonusbenefits
+     *
+     * @return string 
+     */
+    public function getBonusbenefits()
+    {
+        return $this->bonusbenefits;
     }
 }
