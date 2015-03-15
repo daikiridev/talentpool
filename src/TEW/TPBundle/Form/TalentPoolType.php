@@ -18,6 +18,13 @@ class TalentPoolType extends AbstractType
             ->add('name')
             //->add('description', 'ckeditor', array('config_name' => 'user_config'))
             ->add('description')
+            ->add('companies', 'entity', array( 
+                'required'  => false,
+                'class'    => 'TEWTPBundle:Company',
+                'multiple' => true,
+                'expanded' => false, // checkboxes?
+                'attr' => array('class' => 'select2', 'style' => 'width:300px'),
+            ))
             ->add('profiles', 'collection', array(
                 'attr' => array('class' => 'form-collection'), // in order to handle jquery functions of tew.candidate.edit.js
                 'type' => new CdteProfileType(),

@@ -44,19 +44,33 @@
     {{ form_start(this_form, { 'attr' : { 'class': 'form-inline' } }) }}
 
     <div class="row">
-        <fieldset class="col-lg-6">
-            <legend>Main</legend>
-            <div class='row'>
-                <div class="col-lg-6">{{ form_label(this_form.name) }} {{ form_widget(this_form.name) }}</div>
-                <div class="col-lg-6">Logo {{ form_row(this_form.picture) }}</div>
+        <div  class="col-lg-6">
+            <div class="row">
+                <fieldset class="col-lg-12">
+                    <legend>Main</legend>
+                    <div class='row'>
+                        <div class="col-lg-6">{{ form_label(this_form.name) }} {{ form_widget(this_form.name) }}</div>
+                        <div class="col-lg-6">Logo {{ form_row(this_form.picture) }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">{{ form_label(this_form.description) }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">{{ form_widget(this_form.description, { 'attr': {'cols': '80', 'rows': '10'} }) }}</div>
+                    </div>
+                </fieldset>
             </div>
             <div class="row">
-                <div class="col-lg-12">{{ form_label(this_form.description) }}</div>
-            </div>
-            <div class="row">
-                <div class="col-lg-12">{{ form_widget(this_form.description, { 'attr': {'cols': '80', 'rows': '10'} }) }}</div>
-            </div>
-        </fieldset>
+                <fieldset class="col-lg-12">
+                    <legend>Clients</legend>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            {{ form_row(this_form.companies) }}
+                        </div>
+                    </div>
+                </fieldset>
+            </div>          
+        </div>
         <fieldset class="col-lg-6">
             <legend>Profiles</legend>
             <div class="row">

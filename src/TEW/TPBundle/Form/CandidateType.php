@@ -28,7 +28,7 @@ class CandidateType extends AbstractType
             ))
             ->add('active', 'checkbox', array(
                 'required' => false,
-                'attr' => array('class' => 'form-control'),
+                //'attr' => array('class' => 'form-control'),
             ))
             ->add('picture', 'sonata_media_type', array(
                 'label' => false, // 'label'    =>  'Image'
@@ -117,11 +117,14 @@ class CandidateType extends AbstractType
             ))
             ->add('annualIncome', 'integer', array(
                 //'currency' => 'USD', // if type = 'money'
+                'label' => 'Base salary',
                 'attr' => array('class' => 'form-control'),
                 //'label_attr' => array('class' => 'col-md-2')
             ))
             ->add('bonusbenefits', 'text', array(
-                'attr' => array('class' => 'form-control')
+                'label' => 'Bonus & benefits',
+                'attr' => array('class' => 'form-control'),
+                'required' => false,
             ))
             ->add('currency', 'currency', array(
                 'attr' => array('class' => 'select2'),
@@ -157,8 +160,7 @@ class CandidateType extends AbstractType
                 'property' => 'indentedName',
                 'multiple' => false,
                 'expanded' => false ,
-                'query_builder' => function (\Gedmo\Tree\Entity\Repository\NestedTreeRepository $r)
-                    {
+                'query_builder' => function (\Gedmo\Tree\Entity\Repository\NestedTreeRepository $r){
                         return $r->getChildrenQueryBuilder(null, null, 'root', 'asc', false);
                     }
             ))

@@ -21,17 +21,38 @@ use Sonata\UserBundle\Entity\BaseUser as BaseUser;
  *
  * @author <yourname> <youremail>
  */
-class User extends BaseUser
+
+/**
+ * User
+ *
+ * @ORM\Table(name="fos_user_user")
+ * @ORM\Entity(repositoryClass="Application\Sonata\UserBundle\Entity\Repository\UserRepository")
+ */
+class User extends BaseUser 
 {
     /**
-     * @var integer $id
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
 
     /**
+     * @var company
+     *
+     * @ORM\ManyToOne(targetEntity="TEW\TPBundle\Company")
+     * @ORM\JoinColumns={
+     *      @ORM\JoinColumn(name="company_id", referencedColumnName="id", nullable=true)
+     *  })
+     */
+    private $company;   
+
+    /**
      * Get id
      *
-     * @return integer $id
+     * @return integer 
      */
     public function getId()
     {

@@ -1,0 +1,64 @@
+{# TEW/src/TEW/TPBundle/Resources/views/Company/show.html.twig #}
+{% extends '::base.html.twig' %}
+
+{% block scripts %}
+    <script>
+    $(function () {
+        $('[data-toggle="popover"]').popover({ // Contain the popover within the body NOT the element it was called in.
+            container: 'body'
+        });
+    });
+    </script>
+{% endblock %}
+{% block body -%}
+    <h1>Company</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+            {% if entity.picture is not null%}
+            <tr>
+                <td colspan='2'><img src="{% path entity.picture, 'admin' %}" alt="{{ entity.picture.name }}"></td>
+            </tr>
+            {% endif %}
+            <tr>
+                <th>Name</th>
+                <td>{{ entity.name }}</td>
+            </tr>
+            <tr>
+                <th>Active</th>
+                <td>{{ entity.active }}</td>
+            </tr>
+            <tr>
+                <th>Talentpools</th>
+                <td>
+                    {% for tp in entity.talentpools %}
+                        {{ loop.index>1?' / '}}
+                        <a href='{{ path('tew_talentpool_show', { 'id': tp.id }) }}' >{{ tp }}</a>
+                    {% endfor %}
+                </td>
+    </tr>
+            <tr>
+                <th>Createdat</th>
+                <td>{{ entity.createdAt|date('Y-m-d H:i:s') }}</td>
+            </tr>
+        </tbody>
+    </table>
+{% block actions %}
+    <div class="btn-toolbar pull-right record_actions" role="group">
+        <div class="btn-group">
+            <a role="button"  class="btn btn-info" href="{{ path('tew_company') }}">
+                Back to the list
+            </a>
+        </div>
+        <div class="btn-group">
+            <a role="button" class="btn btn-warning" href="{{ path('tew_company_edit', { 'id': entity.id }) }}" >
+                Edit
+            </a>
+        </div>
+        <div class="btn-group">
+            {{ form(delete_form) }}
+        </div>
+    </div>
+{% endblock actions %}
+{% endblock %}

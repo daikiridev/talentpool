@@ -1,0 +1,30 @@
+tew_company:
+    path:     /
+    defaults: { _controller: "TEWTPBundle:Company:index" }
+
+tew_company_show:
+    path:     /{id}/show
+    defaults: { _controller: "TEWTPBundle:Company:show" }
+
+tew_company_new:
+    path:     /new
+    defaults: { _controller: "TEWTPBundle:Company:new" }
+
+tew_company_create:
+    path:     /create
+    defaults: { _controller: "TEWTPBundle:Company:create" }
+    requirements: { _method: post }
+
+tew_company_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "TEWTPBundle:Company:edit" }
+
+tew_company_update:
+    path:     /{id}/update
+    defaults: { _controller: "TEWTPBundle:Company:update" }
+    requirements: { _method: post|put }
+
+tew_company_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "TEWTPBundle:Company:delete" }
+    requirements: { _method: post|delete }

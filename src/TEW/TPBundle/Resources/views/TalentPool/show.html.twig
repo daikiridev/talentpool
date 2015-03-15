@@ -20,10 +20,12 @@
                 <td colspan='2'><img src="{% path entity.picture, 'admin' %}" alt="{{ entity.picture.name }}"></td>
             </tr>
             {% endif %}
+            {% if is_granted("ROLE_TEW_EXECUTOR") %}
             <tr>
                 <th>Owner</th>
                 <td>{{ entity.creator }}</td>
             </tr>
+            {% endif %}
             <tr>
                 <th>Name</th>
                 <td>{{ entity.name }}</td>
@@ -32,6 +34,12 @@
                 <th>Description</th>
                 <td>{{ entity.description|raw }}</td>
             </tr>
+            {% if is_granted("ROLE_TEW_EXECUTOR") %}
+            <tr>
+                <th>Clients</th>
+                <td>{{ entity.companies|join(' / ') }}</td>
+            </tr>
+            {% endif %}
             <tr>
                 <th>Profiles</th>
                 <td>
@@ -52,10 +60,12 @@
                 <th>Candidates (to be removed)</th>
                 <td>{{ entity.candidates|join(' / ') }}</td>
             </tr>
+            {% if is_granted("ROLE_TEW_EXECUTOR") %}
             <tr>
                 <th>Creationdate</th>
                 <td>{{ entity.createdAt|date('d M Y H:i:s') }}</td>
             </tr>
+            {% endif %}
         </tbody>
     </table>
 {% block actions %}
@@ -65,6 +75,7 @@
                 Back to the list
             </a>
         </div>
+        {% if is_granted("ROLE_TEW_EXECUTOR") %}
         <div class="btn-group">
             <a role="button" class="btn btn-warning" href="{{ path('tew_talentpool_edit', { 'id': entity.id }) }}" >
                 Edit
@@ -73,6 +84,7 @@
         <div class="btn-group">
             {{ form(delete_form) }}
         </div>
+        {% endif %}
     </div>
 {% endblock actions %}
 {% endblock %}

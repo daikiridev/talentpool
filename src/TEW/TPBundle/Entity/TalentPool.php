@@ -49,6 +49,16 @@ class TalentPool
      * @ORM\ManyToMany(targetEntity="Candidate", mappedBy="talentpools")
      */
     private $candidates;
+    
+    /**
+     * @var companies
+
+     * @ORM\ManyToMany(targetEntity="Company", mappedBy="talentpools")
+     */
+    private $companies;
+    
+    /**
+    
 
     /**
      * @var date
@@ -79,6 +89,7 @@ class TalentPool
     {
         $this->profiles = new \Doctrine\Common\Collections\ArrayCollection();
         $this->candidates = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->companies = new \Doctrine\Common\Collections\ArrayCollection();
         $this->createdAt = new \DateTime();
         $this->creator = $user;
     }
@@ -284,5 +295,38 @@ class TalentPool
     public function getPicture()
     {
         return $this->picture;
+    }
+
+    /**
+     * Add companies
+     *
+     * @param \TEW\TPBundle\Entity\Company $companies
+     * @return TalentPool
+     */
+    public function addCompany(\TEW\TPBundle\Entity\Company $companies)
+    {
+        $this->companies[] = $companies;
+
+        return $this;
+    }
+
+    /**
+     * Remove companies
+     *
+     * @param \TEW\TPBundle\Entity\Company $companies
+     */
+    public function removeCompany(\TEW\TPBundle\Entity\Company $companies)
+    {
+        $this->companies->removeElement($companies);
+    }
+
+    /**
+     * Get companies
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCompanies()
+    {
+        return $this->companies;
     }
 }

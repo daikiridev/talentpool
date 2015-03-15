@@ -30,10 +30,23 @@ class MenuBuilder
     public function createMainMenu(Request $request)    
     {
         $is_client = $this->securityContext->isGranted(array('ROLE_CLIENT'));
+        $is_executor = $this->securityContext->isGranted(array('ROLE_TEW_EXECUTOR'));
+        $is_admin = $this->securityContext->isGranted(array('ROLE_ADMIN'));
         
         $menu = $this->factory->createItem('root');
         $menu->setChildrenAttribute('class', 'nav navbar-nav');
-        
+        if ($is_executor) {
+            $menu->addChild('Companies')
+                    ->setAttribute('icon', 'icon-folder-open')
+                    ->setAttribute('dropdown', true);
+            $menu['Companies']->addChild('List', array('route' => 'tew_company'))
+                    ->setAttribute('icon', 'icon-list');
+            if ($is_admin) {
+                $menu['Companies']->addChild('Add', array('route' => 'tew_company_new'))
+                        ->setAttribute('icon', 'icon-plus-sign-alt');
+            }
+        }
+            
         // add authorized items for the current user
         if ($is_client) {
             $session = $request->getSession();
@@ -45,8 +58,10 @@ class MenuBuilder
                         ->setAttribute('dropdown', true);
                 $menu['Talent pools']->addChild('List', array('route' => 'tew_talentpool'))
                         ->setAttribute('icon', 'icon-list');
-                $menu['Talent pools']->addChild('New', array('route' => 'tew_talentpool_new'))
-                        ->setAttribute('icon', 'icon-plus-sign-alt');
+                if ($is_executor) { // only executors can add talentpools
+                    $menu['Talent pools']->addChild('New', array('route' => 'tew_talentpool_new'))
+                            ->setAttribute('icon', 'icon-plus-sign-alt');   
+                }
             } else { // working talentpool exists
                 if ($workingtp->getPicture() != null) {
                     // to be finished
@@ -67,13 +82,15 @@ class MenuBuilder
                             'routeParameters' => array( 'id' => $workingtp->getId() )
                         ))
                         ->setAttribute('icon', 'icon-bookmark');
-                $menu[$workingtp->getName()]->addChild('Edit '.$workingtp->getName(), array(
-                            'route' => 'tew_talentpool_edit',
-                            'routeParameters' => array( 'id' => $workingtp->getId() )
-                        ))
-                        ->setAttribute('icon', 'icon-edit');
-                $menu[$workingtp->getName()]->addChild('Back to the list of talent pools', array('route' => 'tew_talentpool'))
-                        ->setAttribute('icon', 'icon-list');
+                if ($is_executor) { // only executors can edit talentpools
+                    $menu[$workingtp->getName()]->addChild('Edit '.$workingtp->getName(), array(
+                                'route' => 'tew_talentpool_edit',
+                                'routeParameters' => array( 'id' => $workingtp->getId() )
+                            ))
+                            ->setAttribute('icon', 'icon-edit');
+                }
+                $menu[$workingtp->getName()]->addChild('Change working talent pool', array('route' => 'tew_talentpool'))
+                        ->setAttribute('icon', 'icon-random');
                 }
             
             
@@ -108,13 +125,14 @@ class MenuBuilder
             $menu->addChild('User', array('label' => $username))
                 ->setAttribute('dropdown', true)
                 ->setAttribute('icon', 'icon-user');
-            
-            $menu['User']->addChild('View my profile', array('route' => 'sonata_user_profile_show'))
-                ->setAttribute('icon', 'icon-user');
-            $menu['User']->addChild('Change my password', array('route' => 'sonata_user_change_password'))
-                ->setAttribute('icon', 'icon-random');        
-            $menu['User']->addChild('Edit profile', array('route' => 'sonata_user_profile_edit'))
-                ->setAttribute('icon', 'icon-edit');
+            if ($is_admin) {
+                $menu['User']->addChild('View my profile', array('route' => 'sonata_user_profile_show'))
+                    ->setAttribute('icon', 'icon-user');
+                $menu['User']->addChild('Change my password', array('route' => 'sonata_user_change_password'))
+                    ->setAttribute('icon', 'icon-random');        
+                $menu['User']->addChild('Edit profile', array('route' => 'sonata_user_profile_edit'))
+                    ->setAttribute('icon', 'icon-edit');
+            }
             $menu['User']->addChild('Logout', array('route' => 'sonata_user_security_logout'))
                 ->setAttribute('icon', 'icon-off');
             

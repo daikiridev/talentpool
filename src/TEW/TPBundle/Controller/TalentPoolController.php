@@ -51,6 +51,14 @@ class TalentPoolController extends Controller
                 $em->persist($profile);
                 }
             }
+            $formCompanies = $entity->getCompanies();
+            // adds new companies
+            if ($formCompanies !== NULL) {
+                foreach ($formCompanies as $company) {
+                    $company->addTalentpool($entity);
+                    $em->persist($company);
+                }
+            }
 //  <- Added by VP
             $em->persist($entity);
             $em->flush();
@@ -196,6 +204,11 @@ class TalentPoolController extends Controller
         foreach ($entity->getProfiles() as $profile) {
             $originalProfiles->add($profile);
         }
+        // Getting talentpool's companies stored in DB
+        $originalCompanies = new ArrayCollection();
+        foreach ($entity->getCompanies() as $company) {
+            $originalCompanies->add($company);
+        }
 //  <- Added by VP
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity);
@@ -217,6 +230,23 @@ class TalentPoolController extends Controller
                     $em->persist($profile);
                 }
             }
+            
+            $formCompanies = $entity->getCompanies();
+            // removes the relation between company and talentpool
+            foreach ($originalCompanies as $company) {
+                if ($formCompanies->contains($company) == false) {
+                    $company->removeTalentPool($entity);
+                    $em->persist($company);
+                }
+            }
+            // adds new companies
+            foreach ($formCompanies as $company) {
+                if ($originalCompanies->contains($company) == false) {
+                    $company->addTalentPool($entity);
+                    $em->persist($company);
+                }
+            }
+
 //  <- Added by VP
             $em->flush();
 

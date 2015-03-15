@@ -7,6 +7,11 @@ tp_contact:
     path:       /contact
     defaults:   { _controller: TEWTPBundle:Home:contact }
 
+# Company routes
+TEWTPBundle_tew_company:
+        resource: "@TEWTPBundle/Resources/config/routing/company.yml"
+        prefix:   /tew_company
+        
 # Candidates routes
 TEWTPBundle_tew_candidate:
     resource: "@TEWTPBundle/Resources/config/routing/candidate.yml"
