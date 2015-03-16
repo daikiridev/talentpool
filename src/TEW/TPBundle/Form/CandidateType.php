@@ -17,10 +17,12 @@ class CandidateType extends AbstractType
         $builder
             //->add('globalComment', 'ckeditor', array('config_name' => 'user_config'))
             ->add('globalComment', 'textarea', array(
-                'label' => 'General comment'
+                'label' => 'General comment',
+                'required' => false,
             ))
             ->add('globalScore', 'choice', array(
                 'label' => 'Score',
+                'required' => false,
                 'choices' => range(0,5),
                 //'empty_value'=> '',
                 'expanded' => true, 'multiple' => false, // radio button
@@ -59,6 +61,7 @@ class CandidateType extends AbstractType
                 'years' => range(date('Y')-20, date('Y')-80),
                 'empty_value' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day'),
                 'attr' => array('class' => 'date form-control'), // datepicker when available
+                'required' => false,
             ))
             ->add('email', 'email',  array(
                 'attr' => array('placeholder'=>'Email', 'class' => 'form-control')
@@ -109,15 +112,16 @@ class CandidateType extends AbstractType
                 //'label_attr' => array('class' => 'col-md-2')
             ))
             ->add('experience', 'choice', array(
-                'label' => 'Experience',
-                'choices' => range(0,40),
-                'empty_value'=> 'Yrs',
+                'label' => 'Start workg yr',
+                'choices' => range(date('Y')-50, date('Y')),
+                'empty_value'=> 'Year',
                 'attr' => array('class' => 'form-control'),
                 //'label_attr' => array('class' => 'col-md-2')
             ))
             ->add('annualIncome', 'integer', array(
                 //'currency' => 'USD', // if type = 'money'
                 'label' => 'Base salary',
+                'required' => false,
                 'attr' => array('class' => 'form-control'),
                 //'label_attr' => array('class' => 'col-md-2')
             ))
@@ -129,6 +133,7 @@ class CandidateType extends AbstractType
             ->add('currency', 'currency', array(
                 'attr' => array('class' => 'select2'),
                 'empty_value' => 'Select',
+                'required' => false,
             ))
             ->add('targetFunction1', 'entity', array(
                 'required' => false,

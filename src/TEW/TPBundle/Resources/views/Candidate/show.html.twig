@@ -36,16 +36,20 @@
                     
                 </td>
             </tr>
+            {% if entity.globalScore %}
             <tr>
                 <th>Global score</th>
                 <td data-toggle="popover" data-content="{{ entity.globalComment }}" data-delay='{ "show": 500, "hide": 200 }' data-html="true" style="cursor:pointer" data-trigger='hover'>
                     {{ entity.globalScore|stars }}
                 </td>
             </tr>
+            {% endif %}
+            {% if entity.picture %}
             <tr>
                 <th>Picture</th>
                 <td><img src="{% path entity.picture, 'small' %}" alt="{{ entity.picture is null?'':entity.picture.name }}"></td>
             </tr>
+            {% endif %}
             <tr>
                 <th>Gender</th>
                 <td>{{ entity.gender|gender }}</td>
@@ -64,10 +68,12 @@
                 <th>Lastname</th>
                 <td>{{ entity.lastName }}</td>
             </tr>
+            {% if entity.dateOfBirth %}
             <tr>
                 <th>Dateofbirth</th>
                 <td>{{ entity.dateOfBirth|date('d M Y') }} ({{ entity.age }} yrs old)</td>
             </tr>
+            {% endif %}
             <tr>
                 <th>Email</th>
                 <td>{{ entity.email|mail }}</td>
@@ -94,13 +100,13 @@
                 <th>Current position</th>
                 <td>
                     {{ entity.function.indentedName }} - {{ entity.level }}
-                    {{ entity.experience is not null and entity.experience != 0? ': ' ~ entity.experience ~ ' years' }}
+                    {{ entity.experience is not null and entity.experience != 0? ': ' ~ entity.ageExperience ~ ' year(s)' }}
                 </td>
             </tr>
             <tr>
                 <th>Income</th>
                 <td>
-                    Base salary {{ entity.annualIncome is not null and entity.annualIncome != 0?(entity.annualIncome|localizedcurrency(entity.currency))|raw }}
+                    {{ entity.annualIncome is not null and entity.annualIncome != 0?('Base salary ' ~ entity.annualIncome|localizedcurrency(entity.currency))|raw }}
                     {{ entity.bonusbenefits }}
                 </td>
             </tr>
@@ -135,10 +141,12 @@
                 <th>Tags</th>
                 <td>{{ entity.tags|join(' / ') }}</td>
             </tr>
+            {% if entity.resume %}
             <tr>
                 <th>Resume</th>
                 <td><a href="{% path entity.resume, 'reference' %}" target="_blank">{{ entity.resume }}</a></td>
             </tr>
+            {% endif %}
             <tr>
                 <th>Creation date</th>
                 <td>{{ entity.createdAt|date('D d M Y \\a\\t g:ia', "Europe/Paris") }}</td>

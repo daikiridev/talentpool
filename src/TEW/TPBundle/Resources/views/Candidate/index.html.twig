@@ -40,7 +40,7 @@
                 #}
                 <td>{{ entity.age }}</td>
                 <td>{{ entity.function }} {{ entity.level }}</td>
-                <td>{{ entity.experience }} yrs</td>
+                <td>{{ entity.ageExperience }} yrs</td>
                 <td>{{ entity.talentpools |join('<br>')|raw }}</td>
                 <td>{% if entity.createdAt %}{{ entity.createdAt|date('Y-m-d') }}{% endif %}</td>
                 <td>

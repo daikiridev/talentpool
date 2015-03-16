@@ -66,7 +66,7 @@ class Candidate implements Taggable
     /**
      * @var date
      * 
-     * @ORM\Column(name="dateofbirth", type="date")
+     * @ORM\Column(name="dateofbirth", type="date", nullable=true)
      */
     private $dateOfBirth;
     
@@ -136,7 +136,7 @@ class Candidate implements Taggable
     private $level;
     
     /**
-     * level: years of experience
+     * experience: years of experience
      * @var experience
      *
      * @ORM\Column(name="experience", type="smallint")
@@ -146,7 +146,7 @@ class Candidate implements Taggable
     /**
      * @var annualIncome (USD)
      *
-     * @ORM\Column(name="annualincome", type="integer")
+     * @ORM\Column(name="annualincome", type="integer", nullable=true)
      * @Assert\Range(
      *      min = 0,
      *      minMessage = "Annual income must be positive"
@@ -157,7 +157,7 @@ class Candidate implements Taggable
     /**
      * @var string
      *
-     * @ORM\Column(name="currency", type="string", length=7, nullable=false)
+     * @ORM\Column(name="currency", type="string", length=7, nullable=true)
      */
     private $currency;
     
@@ -287,7 +287,7 @@ class Candidate implements Taggable
     /**
      * @var string
      *
-     * @ORM\Column(name="globalcomment", type="text", length=null)
+     * @ORM\Column(name="globalcomment", type="text", length=null, nullable=true)
      */    
     private $globalComment;
 
@@ -299,7 +299,7 @@ class Candidate implements Taggable
      *      minMessage = "score must be positive",
      *      maxMessage = "max score is 5"
      * )
-     * @ORM\Column(name="globalscore", type="smallint")
+     * @ORM\Column(name="globalscore", type="smallint", nullable=true)
      */    
     private $globalScore;
 
@@ -477,7 +477,7 @@ class Candidate implements Taggable
     public function getAge()
     {
         $now = new \DateTime();
-        return $now->diff($this->dateOfBirth)->y;
+        return $this->dateOfBirth?$now->diff($this->dateOfBirth)->y:-1;
     }
     
 
@@ -954,7 +954,22 @@ class Candidate implements Taggable
     {
         return $this->experience;
     }
-
+    
+    /**
+     * Get ageExperience
+     *
+     * @return smallint
+     */
+    public function getAgeExperience()
+    {
+        $now = new \DateTime();
+        if ($this->experience) {
+            $exp = new \DateTime($this->experience.'-01-01');
+            return $now->diff($exp)->y;
+        }
+        return -1;
+    }
+    
     /**
      * Set function
      *

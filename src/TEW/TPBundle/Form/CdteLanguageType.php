@@ -19,7 +19,7 @@ class CdteLanguageType extends AbstractType
                 'attr' => array('class' => 'select2')
             ))
             ->add('skill', 'choice', array(
-                'choices' => array('none','novice','spoken','bilingual', 'mother tongue'),
+                'choices' => array('none','novice','spoken','fluent', 'mother tongue'),
                 //'attr' => array('class' => 'select2')
             ))
         ;
