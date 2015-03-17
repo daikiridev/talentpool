@@ -31,9 +31,14 @@ class CandidateController extends Controller {
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('TEWTPBundle:Candidate')->findAll();
+        $deleteForms = array();
 
+        foreach ($entities as $entity) {
+            $deleteForms[$entity->getId()] = $this->createDeleteForm($entity->getId(), 'btn-xs')->createView();
+        }
         return $this->render('TEWTPBundle:Candidate:index.html.twig', array(
                     'entities' => $entities,
+                    'delete_forms' => $deleteForms,
         ));
     }
 
@@ -369,14 +374,14 @@ class CandidateController extends Controller {
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm($id) {
+    private function createDeleteForm($id, $buttonformat=null) {
         return $this->createFormBuilder()
                         ->setAction($this->generateUrl('tew_candidate_delete', array('id' => $id)))
                         ->setMethod('DELETE')
                         ->add('submit', 'submit', array('label' => 'Delete',
                             'attr' => array(
-                                'class' => 'btn btn-danger',
-                                'onclick' => "if(!confirm('Are you sure? This will definetly erase the company from the DB!')) { return false; }"
+                                'class' => "btn btn-danger $buttonformat",
+                                'onclick' => "if(!confirm('Are you sure? This will definetly erase the candidate from the DB!')) { return false; }"
                             )
                         ))
                         ->getForm()

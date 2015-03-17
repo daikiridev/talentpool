@@ -18,7 +18,7 @@ imports:
     
     # Other stuff
     - { resource: other/doctrine_extensions.yml }
-    - { resource: other/ckeditor.yml }
+#    - { resource: other/ckeditor.yml }
 
 framework:
     #esi:             ~

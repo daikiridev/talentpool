@@ -67,6 +67,7 @@ class CandidateType extends AbstractType
                 'attr' => array('placeholder'=>'Email', 'class' => 'form-control')
             ))
             ->add('phone1', 'text', array(
+                'required' => false,
                 'attr' => array('placeholder'=>'Phone1', 'class' => 'form-control')
             ))
             ->add('phone2', 'text', array(
@@ -112,8 +113,9 @@ class CandidateType extends AbstractType
                 //'label_attr' => array('class' => 'col-md-2')
             ))
             ->add('experience', 'choice', array(
+                'required' => false,
                 'label' => 'Start workg yr',
-                'choices' => array_combine(range(date('Y')-50, date('Y')), range(date('Y')-50, date('Y'))),
+                'choices' => array_combine(range(date('Y'), date('Y')-50), range(date('Y'), date('Y')-50)),
                 'empty_value'=> 'Year',
                 'attr' => array('class' => 'form-control'),
                 //'label_attr' => array('class' => 'col-md-2')

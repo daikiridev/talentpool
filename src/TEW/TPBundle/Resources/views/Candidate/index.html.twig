@@ -1,26 +1,51 @@
 {% extends '::base.html.twig' %}
 
+{% block styles %}
+    <link rel="stylesheet" href="{{asset('bundles/tewtp/css/jquery.dataTables.css')}}">
+{% endblock styles %}
 {% block scripts %}
+    <script src="{{ asset('bundles/tewtp/js/jquery.dataTables.min.js') }}"></script>
     <script>
     $(function () {
       $('[data-toggle="popover"]').popover()
     })
+    $(document).ready(function() {
+        $('#list').dataTable({
+            "bJQueryUI": true,
+            // "sPaginationType": "full_numbers",
+            "bStateSave": true,
+            "bProcessing": true,
+                    //  "sAjaxSource": '{#{url('_ajaxlistes', {'registrantTypeId': registrantType.id})}#}', 
+                    //  "sAjaxDataProp": "listes"
+            "aoColumns":[
+                { "bSearchable": false, "bSortable": false },
+                { "bSearchable": true },
+                { "bSearchable": true },
+                { "bSearchable": true },
+                { "bSearchable": false },
+                { "bSearchable": false, "bSortable": false },
+                { "bSearchable": false },
+                { "bSearchable": false },
+                { "bSearchable": false, "bSortable": false  }           
+            ]            
+        }); 
+    });
     </script>
 {% endblock %}
 {% block body -%}
     <h1>Candidate list</h1>
 
-    <table class="records_list">
+    <table class="records_list" id="list">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Score</th>
+                <th>Entry score</th>
                 <th>Name</th>
-                <th>Age</th>
                 <th>Curr. Pos.</th>
                 <th>Exp.</th>
                 <th>Talent pools</th>
                 <th>Added on</th>
+                <th>Origin</th>
                 <th width="110">Actions</th>
             </tr>
         </thead>
@@ -29,7 +54,7 @@
             <tr>
                 <td><a href="{{ path('tew_candidate_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
                 <td>
-                    <div data-toggle="popover" data-placement="bottom" data-delay='{ "show": 500, "hide": 200 }' data-html="true" style="cursor:pointer"
+                    <div data-toggle="popover" data-placement="bottom" data-delay='{ "show": 500, "hide": 200 }' data-html="true" style="cursor:help"
                         data-content="{{ entity.globalComment }}" data-trigger='hover'>
                         {{ entity.globalScore|stars }}
                     </div>
@@ -38,11 +63,18 @@
                 {#
                 <td>{% if entity.dateOfBirth %}{{ entity.dateOfBirth|date('Y-m-d H:i:s') }}{% endif %}</td>
                 #}
+                {#
                 <td>{{ entity.age }}</td>
+                #}
                 <td>{{ entity.function }} {{ entity.level }}</td>
                 <td>{{ entity.ageExperience }} yrs</td>
-                <td>{{ entity.talentpools |join('<br>')|raw }}</td>
+                <td>
+                    {% for tp in entity.talentpools %}
+                        {{ tp }} {{ entity.averageScore(tp)|stars }}<br>
+                    {% endfor %}
+                </td>
                 <td>{% if entity.createdAt %}{{ entity.createdAt|date('Y-m-d') }}{% endif %}</td>
+                <td>{{ entity.origin }}</td>
                 <td>
                     <div class="btn-group btn-group-xs pull-right record_actions" role="group">
                             <a role="button"  class="btn btn-info" href="{{ path('tew_candidate_show', { 'id': entity.id }) }}">
@@ -51,6 +83,9 @@
                             <a role="button"  class="btn btn-warning" href="{{ path('tew_candidate_edit', { 'id': entity.id }) }}">
                                 edit
                             </a>
+                            {% if is_granted("ROLE_TEW_EXECUTOR") %}
+                                {{ form(delete_forms[entity.id]) }}
+                            {% endif %}
                     </div>
                 </td>
             </tr>

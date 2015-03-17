@@ -82,7 +82,7 @@ class Candidate implements Taggable
     /**
      * @var string
      *
-     * @ORM\Column(name="phone1", type="string", length=31)
+     * @ORM\Column(name="phone1", type="string", length=31, nullable=true)
      */
     private $phone1;
 
@@ -139,7 +139,7 @@ class Candidate implements Taggable
      * experience: years of experience
      * @var experience
      *
-     * @ORM\Column(name="experience", type="smallint")
+     * @ORM\Column(name="experience", type="smallint", nullable=true)
      */
     private $experience;
     
@@ -748,13 +748,15 @@ class Candidate implements Taggable
      *
      *  @return float
      */
-    public function getScoreAverage()
+    public function getAverageScore(\TEW\TPBundle\Entity\TalentPool $tp)
     {
         $score = 0;
         $nb = 0;
         foreach ($this->comments as $comment) {
-            $score += $comment->getScore();
-            $nb++;
+            if ($comment->getTalentpool() == $tp) {
+                $score += $comment->getScore();
+                $nb++;
+            }
         }
         return ($nb>0)?$score/$nb:-1;
     }

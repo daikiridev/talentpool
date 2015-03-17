@@ -143,8 +143,8 @@ class MenuBuilder
                     ->setLinkAttribute('target', '_new');
             }
         } else {
-            $menu->addChild('', array('route' => 'sonata_user_security_login'))
-                ->setAttribute('icon', 'icon-user');          
+//            $menu->addChild('', array('route' => 'sonata_user_security_login'))
+//                ->setAttribute('icon', 'icon-user');          
         }
         return $menu;
     }

@@ -26,8 +26,14 @@ class TalentPoolController extends Controller
 
         $entities = $em->getRepository('TEWTPBundle:TalentPool')->findAll();
 
+        $deleteForms = array();
+
+        foreach ($entities as $entity) {
+            $deleteForms[$entity->getId()] = $this->createDeleteForm($entity->getId(), 'btn-xs')->createView();
+        }
         return $this->render('TEWTPBundle:TalentPool:index.html.twig', array(
             'entities' => $entities,
+            'delete_forms' => $deleteForms,
         ));
     }
     /**
@@ -291,14 +297,14 @@ class TalentPoolController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm($id)
+    private function createDeleteForm($id, $buttonformat=null)
     {
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('tew_talentpool_delete', array('id' => $id)))
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete', 
                                         'attr' => array(
-                                            'class' => 'btn btn-danger',
+                                            'class' => "btn btn-danger $buttonformat",
                                             'onclick' => "if(!confirm('Are you sure? This will definetly erase the talent pool from the DB!')) { return false; }"
                                             )
                 ))

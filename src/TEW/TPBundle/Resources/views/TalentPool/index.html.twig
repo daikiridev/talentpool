@@ -20,7 +20,7 @@
     <table class="records_list">
         <thead>
             <tr>
-                <th>Def.</th>
+                <th><span style="cursor: help" data-toggle="tooltip" data-placement="left" title="Set working talentpool">Def.</span> </th>
                 <th>Name</th>
                 <th>Logo</th>
                 <th>Profiles</th>
@@ -39,8 +39,7 @@
                     {% else %}
                         <i class="icon icon-unchecked" id="{{ entity.id }}" name="{{ entity.name }}" style="cursor: pointer"
                            data-toggle="tooltip" data-placement="left" title="Click to set working talentpool"></i>
-                    {% endif %}
-                    
+                    {% endif %} 
                 </td>
                 <td>{{ entity.name }}</td>
                 <td>
@@ -60,6 +59,7 @@
                             <a role="button"  class="btn btn-warning" href="{{ path('tew_talentpool_edit', { 'id': entity.id }) }}">
                                 edit
                             </a>
+                            {{ form(delete_forms[entity.id]) }}
                             {% endif %}
                     </div>
                 </td>

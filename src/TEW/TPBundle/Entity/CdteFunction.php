@@ -127,7 +127,7 @@ class CdteFunction {
      */
     public function setParent(\TEW\TPBundle\Entity\CdteFunction $parent = null) {
         $this->parent = $parent;
-        //$parent->addChild($this);
+        $parent->addChild($this);
         $this->lvl = $parent->lvl+1;
         return $this;
     }
@@ -141,37 +141,37 @@ class CdteFunction {
         return $this->parent;
     }
 
-//    /**
-//     * Add children
-//     *
-//     * @param \TEW\TPBundle\Entity\CdteFunction $children
-//     * @return CdteFunction
-//     */
-//    public function addChild(\TEW\TPBundle\Entity\CdteFunction $children) {
-//        $this->children[] = $children;
-//        $children->setParent($this);
-//        return $this;
-//    }
-//
-//    /**
-//     * Remove children
-//     *
-//     * @param \TEW\TPBundle\Entity\CdteFunction $children
-//     */
-//    public function removeChild(\TEW\TPBundle\Entity\CdteFunction $children) {
-//        $this->children->removeElement($children);
-//        $children->setParent(null);
-//    }
-//
-//    /**
-//     * Get children
-//     *
-//     * @return \Doctrine\Common\Collections\Collection 
-//     */
-//    public function getChildren() {
-//        return $this->children;
-//    }
-//
+    /**
+     * Add children
+     *
+     * @param \TEW\TPBundle\Entity\CdteFunction $children
+     * @return CdteFunction
+     */
+    public function addChild(\TEW\TPBundle\Entity\CdteFunction $children) {
+        $this->children[] = $children;
+        $children->setParent($this);
+        return $this;
+    }
+
+    /**
+     * Remove children
+     *
+     * @param \TEW\TPBundle\Entity\CdteFunction $children
+     */
+    public function removeChild(\TEW\TPBundle\Entity\CdteFunction $children) {
+        $this->children->removeElement($children);
+        $children->setParent(null);
+    }
+
+    /**
+     * Get children
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getChildren() {
+        return $this->children;
+    }
+
 //
 //
 //    /**

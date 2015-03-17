@@ -56,10 +56,12 @@
                     {% endfor %}
                 </td>
             </tr>
+            {#
             <tr>
                 <th>Candidates (to be removed)</th>
                 <td>{{ entity.candidates|join(' / ') }}</td>
             </tr>
+            #}
             {% if is_granted("ROLE_TEW_EXECUTOR") %}
             <tr>
                 <th>Creationdate</th>

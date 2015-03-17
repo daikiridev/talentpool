@@ -24,7 +24,7 @@
                                 {{ tp }} {{ tpcomments|commentsAverageScore|stars }}
                                 <ul>
                                 {% for comment in tpcomments %}
-                                    <li data-toggle="popover" data-delay='{ "show": 500, "hide": 200 }' data-html="true" style="cursor:pointer" data-trigger='hover'
+                                    <li data-toggle="popover" data-delay='{ "show": 500, "hide": 200 }' data-html="true" style="cursor:help" data-trigger='hover'
                                         data-content="{{ comment.comment }}" data-title="{{ comment }}<br><em>- by {{ comment.author }}, on {{ comment.date|date('d M Y') }}</em>">
                                         {{ comment.score|stars }} {{ comment }} - <em>{{ comment.date|date('d M Y') }}</em>
                                     </li>
@@ -39,7 +39,7 @@
             {% if entity.globalScore>=0 %}
             <tr>
                 <th>Global score</th>
-                <td data-toggle="popover" data-content="{{ entity.globalComment }}" data-delay='{ "show": 500, "hide": 200 }' data-html="true" style="cursor:pointer" data-trigger='hover'>
+                <td data-toggle="popover" data-content="{{ entity.globalComment }}" data-delay='{ "show": 500, "hide": 200 }' data-html="true" style="cursor:help" data-trigger='hover'>
                     {{ entity.globalScore|stars }}
                 </td>
             </tr>
