@@ -242,10 +242,10 @@ class Company // implements Taggable
     /**
      * Add users
      *
-     * @param \TEW\TPBundle\Entity\User $users
+     * @param \TEW\UserBundle\Entity\User $users
      * @return Company
      */
-    public function addUser(\TEW\TPBundle\Entity\User $users)
+    public function addUser(\TEW\UserBundle\Entity\User $users)
     {
         $this->users[] = $users;
 
@@ -255,9 +255,9 @@ class Company // implements Taggable
     /**
      * Remove users
      *
-     * @param \TEW\TPBundle\Entity\User $users
+     * @param \TEW\UserBundle\Entity\User $users
      */
-    public function removeUser(\TEW\TPBundle\Entity\User $users)
+    public function removeUser(\TEW\UserBundle\Entity\User $users)
     {
         $this->users->removeElement($users);
     }
