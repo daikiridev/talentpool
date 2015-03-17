@@ -12,12 +12,16 @@ sonata_user:
 #        parameters:           { path: / }
 
     class:                  # Entity Classes
-        user:               Application\Sonata\UserBundle\Entity\User
-        group:              Application\Sonata\UserBundle\Entity\Group
+        user:               TEW\UserBundle\Entity\User
+        group:              TEW\UserBundle\Entity\Group
+        
+    impersonating:
+        route: tp_home
 
     admin:                  # Admin Classes
         user:
-            class:          Sonata\UserBundle\Admin\Entity\UserAdmin
+#            class:          Sonata\UserBundle\Admin\Entity\UserAdmin
+            class:          TEW\UserBundle\Admin\UserAdmin
             controller:     SonataAdminBundle:CRUD
             translation:    SonataUserBundle
 

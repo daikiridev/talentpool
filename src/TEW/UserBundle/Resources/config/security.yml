@@ -35,11 +35,12 @@ security:
             form_login:
                 provider:       fos_userbundle
                 csrf_provider:  form.csrf_provider
-                login_path:     /login
+                login_path:     fos_user_security_login
                 use_forward:    false
-                check_path:     /login_check
+                check_path:     fos_user_security_check
                 failure_path:   null
                 remember_me:    true
+                default_target_path: fos_user_profile_show
             remember_me:
                     key:        %secret%
                     lifetime:   3600 # in seconds
@@ -47,4 +48,6 @@ security:
                     domain:     ~
             logout:
                 invalidate_session: false # PHP 5.4.10 bug solved by setting this
-            anonymous:    false
+                path:           fos_user_security_logout
+                target:         tp_home
+            anonymous:          false

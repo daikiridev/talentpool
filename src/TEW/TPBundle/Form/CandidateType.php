@@ -90,7 +90,7 @@ class CandidateType extends AbstractType
 //                'attr' => array('class' => 'select2 form-control'),
 //                //'label_attr' => array('class' => 'col-md-2')
 //                ))
-                ->add('function', 'entity', array(
+            ->add('function', 'entity', array(
                 'required' => false,
                 'label' => 'Current function',
                 'class' => 'TEWTPBundle:CdteFunction',
@@ -113,7 +113,7 @@ class CandidateType extends AbstractType
             ))
             ->add('experience', 'choice', array(
                 'label' => 'Start workg yr',
-                'choices' => range(date('Y')-50, date('Y')),
+                'choices' => array_combine(range(date('Y')-50, date('Y')), range(date('Y')-50, date('Y'))),
                 'empty_value'=> 'Year',
                 'attr' => array('class' => 'form-control'),
                 //'label_attr' => array('class' => 'col-md-2')

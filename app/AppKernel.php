@@ -25,7 +25,7 @@ class AppKernel extends Kernel
             // USER
             new FOS\UserBundle\FOSUserBundle(), // User management
             new Sonata\UserBundle\SonataUserBundle('FOSUserBundle'), // User managment via Sonata
-            new Application\Sonata\UserBundle\ApplicationSonataUserBundle(),
+            new TEW\UserBundle\TEWUserBundle(),
             
             // MEDIA
             new Sonata\MediaBundle\SonataMediaBundle(),

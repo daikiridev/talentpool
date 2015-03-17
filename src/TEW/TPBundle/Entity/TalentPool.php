@@ -70,7 +70,7 @@ class TalentPool
     /**
      * @var creator
      *
-     * @ORM\ManyToOne(targetEntity="Application\Sonata\UserBundle\Entity\User", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="TEW\UserBundle\Entity\User", cascade={"persist"})
      * @ORM\JoinColumn(name="creator_id", nullable=false)
      */
     private $creator;
@@ -85,7 +85,7 @@ class TalentPool
     /**
      * Constructor
      */
-    public function __construct(\Application\Sonata\UserBundle\Entity\User $user)
+    public function __construct(\TEW\UserBundle\Entity\User $user)
     {
         $this->profiles = new \Doctrine\Common\Collections\ArrayCollection();
         $this->candidates = new \Doctrine\Common\Collections\ArrayCollection();
@@ -197,10 +197,10 @@ class TalentPool
     /**
      * Set creator
      *
-     * @param \Application\Sonata\UserBundle\Entity\User $creator
+     * @param \TEW\UserBundle\Entity\User $creator
      * @return TalentPool
      */
-    public function setCreator(\Application\Sonata\UserBundle\Entity\User $creator)
+    public function setCreator(\TEW\UserBundle\Entity\User $creator)
     {
         $this->creator = $creator;
 
@@ -210,7 +210,7 @@ class TalentPool
     /**
      * Get creator
      *
-     * @return \Application\Sonata\UserBundle\Entity\User 
+     * @return \TEW\UserBundle\Entity\User 
      */
     public function getCreator()
     {

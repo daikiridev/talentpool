@@ -49,7 +49,7 @@
                             {% set datacontent = datacontent ~ '<h5>Location(s)</h5>' ~ profile.locations|join(' / ') %}
                         {% endif %}
                         {% set datacontent = datacontent ~ '<h5>Description</h5>' ~ profile.description %}
-                        <div data-toggle="popover" data-delay='{ "show": 500, "hide": 200 }' data-html="true" style="cursor:pointer" data-trigger='hover'
+                        <div data-toggle="popover" data-delay='{ "show": 500, "hide": 200 }' data-html="true" style="cursor:help" data-trigger='hover'
                              data-content="{{ datacontent }}" data-title="{{ profile }}">
                             {{ profile }}
                         </div>

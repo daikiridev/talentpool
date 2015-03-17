@@ -1,6 +1,6 @@
 imports:
-    #- { resource: "@TEWUserBundle/Resources/config/security.yml" }
-    - { resource: "@ApplicationSonataUserBundle/Resources/config/security.yml" }
+    - { resource: "@TEWUserBundle/Resources/config/security.yml" }
+    #- { resource: "@ApplicationSonataUserBundle/Resources/config/security.yml" }
     
 security:
 

@@ -5,7 +5,7 @@ _console:
     
 # TEWUserBundle routes
 _tew_user:
-    resource: "@ApplicationSonataUserBundle/Resources/config/routing/routing.yml"
+    resource: "@TEWUserBundle/Resources/config/routing/routing.yml"
 
 # TEWTPBundle routes
 _tew_tp:

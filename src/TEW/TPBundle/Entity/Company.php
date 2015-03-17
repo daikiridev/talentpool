@@ -69,7 +69,7 @@ class Company // implements Taggable
     /**
      * @var users
      *
-     * @ORM\OneToMany(targetEntity="Application\Sonata\UserBundle\Entity\User", mappedBy="company") // , cascade={"persist", "remove"}   
+     * @ORM\OneToMany(targetEntity="TEW\UserBundle\Entity\User", mappedBy="company") // , cascade={"persist", "remove"}   
      * 
      */
     private $users;

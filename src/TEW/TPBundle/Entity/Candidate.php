@@ -313,7 +313,7 @@ class Candidate implements Taggable
     /**
      * @var creator
      *
-     * @ORM\ManyToOne(targetEntity="Application\Sonata\UserBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="TEW\UserBundle\Entity\User")
      * @ORM\JoinColumn(name="creator_id", nullable=false)
      */
     private $creator;
@@ -322,7 +322,7 @@ class Candidate implements Taggable
     /**
      * Constructor
      */
-    public function __construct(\Application\Sonata\UserBundle\Entity\User $user=null)
+    public function __construct(\TEW\UserBundle\Entity\User $user=null)
     {
         $this->active = true;
         $this->mobilities = new \Doctrine\Common\Collections\ArrayCollection();
@@ -646,10 +646,10 @@ class Candidate implements Taggable
     /**
      * Set creator
      *
-     * @param \Application\Sonata\UserBundle\Entity\User $creator
+     * @param \TEW\UserBundle\Entity\User $creator
      * @return Candidate
      */
-    public function setCreator(\Application\Sonata\UserBundle\Entity\User $creator)
+    public function setCreator(\TEW\UserBundle\Entity\User $creator)
     {
         $this->creator = $creator;
 
@@ -659,7 +659,7 @@ class Candidate implements Taggable
     /**
      * Get creator
      *
-     * @return \Application\Sonata\UserBundle\Entity\User 
+     * @return \TEW\UserBundle\Entity\User 
      */
     public function getCreator()
     {

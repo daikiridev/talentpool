@@ -73,7 +73,7 @@ class CdteComment
     /**
      * @var author
      *
-     * @ORM\ManyToOne(targetEntity="Application\Sonata\UserBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="TEW\UserBundle\Entity\User")
      * @ORM\JoinColumn(name="user_id")
      */
     private $author;
@@ -87,7 +87,7 @@ class CdteComment
     /**
      * Constructor
      */
-    public function __construct(\Application\Sonata\UserBundle\Entity\User $user=null)
+    public function __construct(\TEW\UserBundle\Entity\User $user=null)
     {
         $this->date = new \DateTime();
         $this->author = $user;
@@ -204,10 +204,10 @@ class CdteComment
     /**
      * Set user
      *
-     * @param \Application\Sonata\UserBundle\Entity\User $user
+     * @param \TEW\UserBundle\Entity\User $user
      * @return CdteComment
      */
-    public function setAuthor(\Application\Sonata\UserBundle\Entity\User $user = null)
+    public function setAuthor(\TEW\UserBundle\Entity\User $user = null)
     {
         $this->author = $user;
 
@@ -217,7 +217,7 @@ class CdteComment
     /**
      * Get user
      *
-     * @return \Application\Sonata\UserBundle\Entity\User 
+     * @return \TEW\UserBundle\Entity\User 
      */
     public function getAuthor()
     {

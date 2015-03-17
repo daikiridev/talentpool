@@ -73,9 +73,9 @@ doctrine:
             default:
                 #auto_mapping: true
                 mappings: # to be declared for each entity in MySQL DB
-                    ApplicationSonataUserBundle: ~
                     ApplicationSonataMediaBundle: ~
                     TEWTPBundle: ~
+                    TEWUserBundle: ~
                     SonataUserBundle: ~
                     FOSUserBundle: ~
                     SonataMediaBundle: ~
@@ -132,11 +132,13 @@ swiftmailer:
 fos_user:
     db_driver: orm
     firewall_name: main
-    user_class: Application\Sonata\UserBundle\Entity\User
+    user_class: TEW\UserBundle\Entity\User
     group:
-        group_class: Application\Sonata\UserBundle\Entity\Group
+        group_class: TEW\UserBundle\Entity\Group
         group_manager: sonata.user.orm.group_manager
-
+    from_email:
+        address: webmaster@tew-cc.com
+        sender_name: TEW webmaster
     service:
         user_manager: sonata.user.orm.user_manager
 
