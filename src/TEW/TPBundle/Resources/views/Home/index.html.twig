@@ -12,6 +12,12 @@
 {% endblock scripts %}
 
 {% block body %}
+    <div class="container row">
+        <form class="form pull-right" action='{{ path('tp_home') }}' method='POST'>
+            <i class="icon icon-sitemap"></i>{{ form_widget(form.talentpool) }}
+            {{ form_rest(form) }}
+        </form>
+    </div>
     <div class="jumbotron">
         <div class="row">
             <div class="col-lg-6">
@@ -40,13 +46,6 @@
                     <fieldset class="col-lg-12">
                         <legend><i class="icon icon-sitemap"></i> Talent Pools</legend>
                         <ul style="list-style-type: none;">
-                            <li>
-                                <form action='{{ path('tp_home') }}' method='POST'>
-                                    <i class="icon icon-sitemap"></i>{{ form_widget(form.talentpool) }}
-                                    {{ form_rest(form) }}
-                                </form>
-                            </li>
-
                             {% if workingtp is not null %}
                             <li><i class="icon icon-bookmark"></i>
                                 <a href="{{ path('tew_talentpool_show', { 'id': workingtp.id }) }}">View "{{ workingtp }}"</a>

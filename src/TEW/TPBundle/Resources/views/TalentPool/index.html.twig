@@ -1,7 +1,35 @@
 {# TEW/src/TEW/TPBundle/Resources/views/TalentPool/index.html.twig #}
 {% extends '::base.html.twig' %}
-
+{% block styles %}
+    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="{{asset('bundles/tewtp/css/jquery.dataTables.css')}}">
+{% endblock styles %}
 {% block scripts %}
+    <script src="{{ asset('bundles/tewtp/js/jquery.dataTables.min.js') }}"></script>
+    <script>
+    $(function () {
+      $('[data-toggle="popover"]').popover()
+    })
+    $(document).ready(function() {
+        $('#list').dataTable({
+            "bJQueryUI": true,
+            // "sPaginationType": "full_numbers",
+            "bStateSave": true,
+            "bProcessing": true,
+                    //  "sAjaxSource": '{#{url('_ajaxlistes', {'registrantTypeId': registrantType.id})}#}', 
+                    //  "sAjaxDataProp": "listes"
+            "aoColumns":[
+                { "bSearchable": false, "bSortable": false }, // Def
+                { "bSearchable": true }, // Name
+                { "bSearchable": false, "bSortable": false }, // Logo
+                { "bSearchable": true }, // Profiles
+                { "bSearchable": false }, // Creation Date
+                { "bSearchable": false }, // Creator
+                { "bSearchable": false, "bSortable": false } // Actions         
+            ]            
+        }); 
+    });
+    </script>
     <script>
         $('.icon-unchecked').click(function(){
            if (confirm('Change working talentpool to '+$(this).attr('name')+'? (to be implemented)')) {
@@ -17,7 +45,7 @@
 {% block body -%}
     <h1>TalentPool list</h1>
 
-    <table class="records_list">
+    <table id="list">
         <thead>
             <tr>
                 <th><span style="cursor: help" data-toggle="tooltip" data-placement="left" title="Set working talentpool">Def.</span> </th>

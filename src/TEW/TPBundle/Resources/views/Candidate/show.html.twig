@@ -144,7 +144,16 @@
             {% if entity.resume %}
             <tr>
                 <th>Resume</th>
-                <td><a href="{% path entity.resume, 'reference' %}" target="_blank">{{ entity.resume }}</a></td>
+                <td>
+                    <a href="{% path entity.resume, 'reference' %}" target="_blank">
+                        {% if entity.resume.contentType=='application/pdf' %}
+                            <img width="32" src="{{ asset('bundles/tewtp/images/icons/pdf.png') }}">
+                        {% elseif entity.resume.contentType=='application/word' %}
+                            <img width="32" src="{{ asset('bundles/tewtp/images/icons/word.png') }}">
+                        {% endif %}
+                        {{ entity.resume }}
+                    </a>
+                </td>
             </tr>
             {% endif %}
             <tr>

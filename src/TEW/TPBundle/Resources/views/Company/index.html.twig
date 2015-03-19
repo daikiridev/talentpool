@@ -1,9 +1,37 @@
 {% extends '::base.html.twig' %}
-
+{% block styles %}
+    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="{{asset('bundles/tewtp/css/jquery.dataTables.css')}}">
+{% endblock styles %}
+{% block scripts %}
+    <script src="{{ asset('bundles/tewtp/js/jquery.dataTables.min.js') }}"></script>
+    <script>
+    $(function () {
+      $('[data-toggle="popover"]').popover()
+    })
+    $(document).ready(function() {
+        $('#list').dataTable({
+            "bJQueryUI": true,
+            // "sPaginationType": "full_numbers",
+            "bStateSave": true,
+            "bProcessing": true,
+                    //  "sAjaxSource": '{#{url('_ajaxlistes', {'registrantTypeId': registrantType.id})}#}', 
+                    //  "sAjaxDataProp": "listes"
+            "aoColumns":[
+                { "bSearchable": false }, // Id
+                { "bSearchable": true }, // Name
+                { "bSearchable": false }, // Active
+                { "bSearchable": false }, // Created At
+                { "bSearchable": false, "bSortable": false } // Actions         
+            ]            
+        }); 
+    });
+    </script>
+{% endblock %}
 {% block body -%}
     <h1>Company list</h1>
 
-    <table class="records_list">
+    <table id="list">
         <thead>
             <tr>
                 <th>Id</th>

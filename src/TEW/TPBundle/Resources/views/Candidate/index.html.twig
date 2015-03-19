@@ -1,6 +1,7 @@
 {% extends '::base.html.twig' %}
 
 {% block styles %}
+    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet" href="{{asset('bundles/tewtp/css/jquery.dataTables.css')}}">
 {% endblock styles %}
 {% block scripts %}
@@ -35,7 +36,7 @@
 {% block body -%}
     <h1>Candidate list</h1>
 
-    <table class="records_list" id="list">
+    <table id="list">
         <thead>
             <tr>
                 <th>Id</th>
@@ -76,16 +77,22 @@
                 <td>{% if entity.createdAt %}{{ entity.createdAt|date('Y-m-d') }}{% endif %}</td>
                 <td>{{ entity.origin }}</td>
                 <td>
-                    <div class="btn-group btn-group-xs pull-right record_actions" role="group">
-                            <a role="button"  class="btn btn-info" href="{{ path('tew_candidate_show', { 'id': entity.id }) }}">
+                    <div class="btn-toolbar pull-right record_actions" role="group">
+                        <div class="btn-group">
+                            <a role="button"  class="btn btn-xs btn-info" href="{{ path('tew_candidate_show', { 'id': entity.id }) }}">
                                 show
                             </a>
-                            <a role="button"  class="btn btn-warning" href="{{ path('tew_candidate_edit', { 'id': entity.id }) }}">
+                        </div>
+                        <div class="btn-group">
+                            <a role="button"  class="btn btn-xs btn-warning" href="{{ path('tew_candidate_edit', { 'id': entity.id }) }}">
                                 edit
                             </a>
+                        </div>
+                        <div class="btn-group">        
                             {% if is_granted("ROLE_TEW_EXECUTOR") %}
                                 {{ form(delete_forms[entity.id]) }}
                             {% endif %}
+                        </div>
                     </div>
                 </td>
             </tr>
