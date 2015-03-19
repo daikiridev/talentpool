@@ -21,27 +21,22 @@
     <div class="jumbotron">
         <div class="row">
             <div class="col-lg-6">
-                {% if is_granted("ROLE_ADMIN") %}
                 <div class="row">
                     <fieldset class="col-lg-12">
-                        <legend><i class="icon icon-folder-open"></i> Companies / clients</legend>
+                        <legend><i class="icon icon-male"></i> Candidates</legend>
                         <ul style="list-style-type: none;">
                             <li><i class="icon icon-plus-sign-alt"></i>
-                                <a href="{{ path('tew_company_new') }}">Add</a> a new Company 
+                                <a href="{{ path('tew_candidate_new') }}">Add</a> a new Candidate 
                             </li>
-                            {% if workingtp is not null %}
                             <li><i class="icon icon-list"></i>
-                                <a href="{{ path('tew_company', {'tpid': workingtp.id }) }}">View companies</a> using "{{ workingtp }}"
+                                <a href="{{ path('tew_candidate') }}">View candidates</a>{{ workingtp?" belonging to "~workingtp}}
                             </li>
-                            {% else %}
-                            <li><i class="icon icon-list"></i>
-                                <a href="{{ path('tew_company') }}">View companies</a> using "{{ workingtp }}"
+                            <li><i class="icon icon-eye-open"></i>
+                                <a href="{{ path('tew_candidate_search') }}">Candidate search</a>
                             </li>
-                            {% endif %}
                         </ul>
                     </fieldset>
                 </div>
-                {% endif %}
                 <div class="row">
                     <fieldset class="col-lg-12">
                         <legend><i class="icon icon-sitemap"></i> Talent Pools</legend>
@@ -67,24 +62,27 @@
                         </ul>
                     </fieldset>
                 </div>
+                {% if is_granted("ROLE_ADMIN") %}
                 <div class="row">
                     <fieldset class="col-lg-12">
-                        <legend><i class="icon icon-male"></i> Candidates</legend>
+                        <legend><i class="icon icon-folder-open"></i> Companies / clients</legend>
                         <ul style="list-style-type: none;">
                             <li><i class="icon icon-plus-sign-alt"></i>
-                                <a href="{{ path('tew_candidate_new') }}">Add</a> a new Candidate 
+                                <a href="{{ path('tew_company_new') }}">Add</a> a new Company 
                             </li>
                             {% if workingtp is not null %}
                             <li><i class="icon icon-list"></i>
-                                <a href="{{ path('tew_candidate') }}">View candidates</a> belonging to "{{ workingtp }}"
+                                <a href="{{ path('tew_company', {'tpid': workingtp.id }) }}">View companies</a> using "{{ workingtp }}"
+                            </li>
+                            {% else %}
+                            <li><i class="icon icon-list"></i>
+                                <a href="{{ path('tew_company') }}">View companies</a>{{workingtp?" using "~workingtp}}
                             </li>
                             {% endif %}
-                            <li><i class="icon icon-eye-open"></i>
-                                <a href="{{ path('tew_candidate_search') }}">Candidate search</a>
-                            </li>
                         </ul>
                     </fieldset>
                 </div>
+                {% endif %}
                 {% if is_granted("ROLE_ADMIN") %}
                 <div class="row">
                     <fieldset class="col-lg-12">

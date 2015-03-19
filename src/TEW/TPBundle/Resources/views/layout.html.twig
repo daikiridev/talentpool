@@ -31,7 +31,13 @@
         <nav class="navbar navbar-default navbar-fixed-top">
             <div class='navbar-header'>
                 <a class='brand' href='{{ path('tp_home') }}'>
-                    <img height='49px' style='background-color:lightcyan; padding:3px;' src="{{ asset('bundles/tewtp/images/logo.png')  }}">
+                    <img height='49px' style='background-color:lightcyan; padding:3px;'
+                    {% if not (app.user and app.user.company and app.user.company.picture) %}
+                         src="{{ asset('bundles/tewtp/images/logo.png')}}"
+                    {% else %}
+                         src="{% path app.user.company.picture, 'admin' %}"
+                    {% endif %}
+                    >
                 </a>
             </div>
             <div class="container">
@@ -77,7 +83,7 @@
                            data-toggle="tooltip" data-placement="top" data-trigger="hover" data-delay="1000"
                            title="{{ beta?"Beta release":"Alpha-release / prototype" }}"
                            src="{{ asset('bundles/tewtp/images/icons/' ~ (beta?'beta':'alpha') ~ '.png') }}"
-                           style="cursor: help; float: initial; position: absolute; margin-top: -7px">
+                           style="cursor: help; float: initial; position: relative; margin-top: -7px">
                 </p>
             </div>
         </footer>
