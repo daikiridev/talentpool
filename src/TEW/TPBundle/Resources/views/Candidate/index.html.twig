@@ -7,30 +7,37 @@
 {% block scripts %}
     <script src="{{ asset('bundles/tewtp/js/jquery.dataTables.min.js') }}"></script>
     <script>
-    $(function () {
-      $('[data-toggle="popover"]').popover()
-    })
-    $(document).ready(function() {
-        $('#list').dataTable({
-            "bJQueryUI": true,
-            // "sPaginationType": "full_numbers",
-            "bStateSave": true,
-            "bProcessing": true,
-                    //  "sAjaxSource": '{#{url('_ajaxlistes', {'registrantTypeId': registrantType.id})}#}', 
-                    //  "sAjaxDataProp": "listes"
-            "aoColumns":[
-                { "bSearchable": false, "bSortable": false },
-                { "bSearchable": true },
-                { "bSearchable": true },
-                { "bSearchable": true },
-                { "bSearchable": false },
-                { "bSearchable": false, "bSortable": false },
-                { "bSearchable": false },
-                { "bSearchable": false },
-                { "bSearchable": false, "bSortable": false  }           
-            ]            
-        }); 
-    });
+        $(function () {
+            $('[data-toggle="popover"]').popover()
+        })
+        $(document).ready(function () {
+            $('#list').dataTable({
+                "bJQueryUI": true,
+                // "sPaginationType": "full_numbers",
+                "bStateSave": true,
+                "bProcessing": true,
+                //  "sAjaxSource": '{#{url('_ajaxlistes', {'registrantTypeId': registrantType.id})}#}', 
+                //  "sAjaxDataProp": "listes"
+                "aoColumns": [
+                    {"bSearchable": false, "bSortable": false}, // Check
+                    {"bSearchable": true}, // Entry score
+                    {"bSearchable": true}, // Name
+                    {"bSearchable": true}, // Current position
+                    {"bSearchable": false}, // Experience
+                    {"bSearchable": true, "bSortable": false}, // Mobilities
+                    {"bSearchable": true, "bSortable": false}, // Target functions
+                    {"bSearchable": false, "bSortable": false}, // Talent pools
+                    {"bSearchable": false}, // Added on
+                    {"bSearchable": false}, // Origin
+                    {"bSearchable": false, "bSortable": false} // Actions     
+                ]
+            });
+        });
+        $('.icon-unchecked').click(function () {
+            // alert('(to be implemented)') ;
+            $(this).toggleClass('icon-unchecked');
+            $(this).toggleClass('icon-check');
+        });
     </script>
 {% endblock %}
 {% block body -%}
@@ -39,11 +46,13 @@
     <table id="list">
         <thead>
             <tr>
-                <th>Id</th>
+                <th><span style="cursor: help" data-toggle="tooltip" data-placement="left" title="Check cdte for target action">Check</span></th>
                 <th>Entry score</th>
                 <th>Name</th>
                 <th>Curr. Pos.</th>
                 <th>Exp.</th>
+                <th>Mobility</th>
+                <th>Target functions</th>
                 <th>Talent pools</th>
                 <th>Added on</th>
                 <th>Origin</th>
@@ -51,62 +60,87 @@
             </tr>
         </thead>
         <tbody>
-        {% for entity in entities %}
-            <tr>
-                <td><a href="{{ path('tew_candidate_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                <td>
-                    <div data-toggle="popover" data-placement="bottom" data-delay='{ "show": 500, "hide": 200 }' data-html="true" style="cursor:help"
-                        data-content="{{ entity.globalComment }}" data-trigger='hover'>
-                        {{ entity.globalScore|stars }}
-                    </div>
-                </td>
-                <td>{{ entity.firstName }} {{ entity.middleName }} {{ entity.lastName }}</td>
-                {#
-                <td>{% if entity.dateOfBirth %}{{ entity.dateOfBirth|date('Y-m-d H:i:s') }}{% endif %}</td>
-                #}
-                {#
-                <td>{{ entity.age }}</td>
-                #}
-                <td>{{ entity.function }} {{ entity.level }}</td>
-                <td>{{ entity.ageExperience }} yrs</td>
-                <td>
+            {% for entity in entities %}
+                {# select candidates to be displayed #}
+                {% if is_granted('ROLE_TEW_EXECUTOR') %}
+                    {% set visible_cdte = true %}
+                {% else %}
+                    {% set visible_cdte = false %}
                     {% for tp in entity.talentpools %}
-                        {{ tp }} {{ entity.averageScore(tp)|stars }}<br>
+                        {% if app.user.company in tp.companies %}
+                            {% set visible_cdte = true %}
+                        {% endif %}
                     {% endfor %}
-                </td>
-                <td>{% if entity.createdAt %}{{ entity.createdAt|date('Y-m-d') }}{% endif %}</td>
-                <td>{{ entity.origin }}</td>
-                <td>
-                    <div class="btn-toolbar pull-right record_actions" role="group">
-                        <div class="btn-group">
-                            <a role="button"  class="btn btn-xs btn-info" href="{{ path('tew_candidate_show', { 'id': entity.id }) }}">
-                                show
-                            </a>
-                        </div>
-                        <div class="btn-group">
-                            <a role="button"  class="btn btn-xs btn-warning" href="{{ path('tew_candidate_edit', { 'id': entity.id }) }}">
-                                edit
-                            </a>
-                        </div>
-                        <div class="btn-group">        
-                            {% if is_granted("ROLE_TEW_EXECUTOR") %}
-                                {{ form(delete_forms[entity.id]) }}
-                            {% endif %}
-                        </div>
-                    </div>
-                </td>
-            </tr>
-        {% endfor %}
+                {% endif %}    
+
+                {% if visible_cdte %}
+                    {# Should this candidate details be displayed? #}
+                    {% set anonymous = (not is_granted('ROLE_TEW_EXECUTOR')) and (entity.creator.company != app.user.company) %}
+                    <tr>
+                        <td>
+                            <i class="icon icon-unchecked" id="{{ entity.id }}" name="{{ entity }}" style="cursor: pointer"
+                               data-toggle="tooltip" data-placement="left" title="Check cdte for target action"></i></td>
+                        <td>
+                            <div data-toggle="popover" data-placement="bottom" data-delay='{ "show": 500, "hide": 200 }' data-html="true" style="cursor:help"
+                                 data-content="{{ entity.globalComment }}" data-trigger='hover'>
+                                {{ entity.globalScore|stars }}
+                            </div>
+                        </td>
+                        <td>{{ not anonymous?entity.firstName:'anonymous' }} {{ not anonymous?entity.middleName }} {{ not anonymous?entity.lastName }}</td>
+                        {#
+                        <td>{% if entity.dateOfBirth %}{{ entity.dateOfBirth|date('Y-m-d H:i:s') }}{% endif %}</td>
+                        #}
+                        {#
+                        <td>{{ entity.age }}</td>
+                        #}
+                        <td>{{ entity.function }} {{ entity.level }}</td>
+                        <td>{{ entity.ageExperience }} yrs</td>
+                        <td>{{ entity.mobilities|join(' / ') }}</td>
+                        <td>{{ entity.targetFunctions|join(' / ') }}</td>
+                        <td>
+                            {% for tp in entity.talentpools %}
+                                {% set visible_tp = (app.user.company in tp.companies) or is_granted('ROLE_TEW_EXECUTOR') %}
+                                {% if visible_tp %}
+                                    {{ tp }} {{ entity.averageScore(tp)|stars }}<br>
+                                {% endif %}
+                            {% endfor %}
+                        </td>
+                        <td>{% if entity.createdAt %}{{ entity.createdAt|date('Y-m-d') }}{% endif %}</td>
+                        <td>{{ entity.origin }}</td>
+                        <td>
+                            <div class="btn-toolbar pull-right record_actions" role="group">
+                                <div class="btn-group">
+                                    <a role="button"  class="btn btn-xs btn-info" href="{{ path('tew_candidate_show', { 'id': entity.id }) }}">
+                                        show
+                                    </a>
+                                </div>
+                                {% if anonymous %}
+                                {% else %}
+                                    <div class="btn-group">
+                                        <a role="button"  class="btn btn-xs btn-warning" href="{{ path('tew_candidate_edit', { 'id': entity.id }) }}">
+                                            edit
+                                        </a>
+                                    </div>
+                                {% endif %}
+                                {% if is_granted("ROLE_TEW_EXECUTOR") %}
+                                    <div class="btn-group">        
+                                        {{ form(delete_forms[entity.id]) }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
         </tbody>
     </table>
-{% block actions %}
-    <div class="btn-toolbar pull-right record_actions" role="group">
-        <div class="btn-group">
-            <a role="button"  class="btn btn-warning" href="{{ path('tew_candidate_new') }}">
-                Create a new entry
-            </a>
+    {% block actions %}
+        <div class="btn-toolbar pull-right record_actions" role="group">
+            <div class="btn-group">
+                <a role="button"  class="btn btn-warning" href="{{ path('tew_candidate_new') }}">
+                    Create a new entry
+                </a>
+            </div>
         </div>
-    </div>
-{% endblock actions %}
-
-    {% endblock %}
+    {% endblock actions %}
+{% endblock %}

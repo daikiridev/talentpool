@@ -120,7 +120,7 @@ class Candidate implements Taggable
      *
      * @ORM\ManyToOne(targetEntity="CdteFunction")
      * @ORM\JoinColumns={
-     *      @ORM\JoinColumn(name="function_id", referencedColumnName="id")
+     *      @ORM\JoinColumn(name="function_id", referencedColumnName="id", nullable=true)
      *  })
      */
     private $function;   
@@ -144,15 +144,27 @@ class Candidate implements Taggable
     private $experience;
     
     /**
-     * @var annualIncome (USD)
+     * @var income
      *
-     * @ORM\Column(name="annualincome", type="integer", nullable=true)
+     * @ORM\Column(name="income", type="integer", nullable=true)
      * @Assert\Range(
      *      min = 0,
-     *      minMessage = "Annual income must be positive"
+     *      minMessage = "Income must be positive"
      * )
      */
-    private $annualIncome;
+    private $income;
+
+    /**
+     * @var incomemonths
+     *
+     * @ORM\Column(name="incomemonths", type="integer", nullable=true)
+     * @Assert\Range(
+     *      min = 6,
+     *      max = 20,
+     *      minMessage = "Number of income months must be between 6 and 20"
+     * )
+     */
+    private $incomeMonths;
     
     /**
      * @var string
@@ -621,26 +633,26 @@ class Candidate implements Taggable
     }
 
     /**
-     * Set annualIncome
+     * Set income
      *
-     * @param integer $annualIncome
+     * @param integer $income
      * @return Candidate
      */
-    public function setAnnualIncome($annualIncome)
+    public function setIncome($income)
     {
-        $this->annualIncome = $annualIncome;
+        $this->income = $income;
 
         return $this;
     }
 
     /**
-     * Get annualIncome
+     * Get income
      *
      * @return integer 
      */
-    public function getAnnualIncome()
+    public function getIncome()
     {
-        return $this->annualIncome;
+        return $this->income;
     }
     
     /**
@@ -1155,6 +1167,20 @@ class Candidate implements Taggable
     {
         return $this->targetLevel3;
     }
+    
+    /**
+     * Returns the collection of functions
+     *
+     * @return Doctrine\Common\Collections\Collection
+     */
+    public function getTargetFunctions()
+    {
+        $result = new ArrayCollection();
+        if ($this->targetFunction1) { $result[] = $this->targetFunction1; }
+        if ($this->targetFunction2) { $result[] = $this->targetFunction2; }
+        if ($this->targetFunction3) { $result[] = $this->targetFunction3; }
+        return $result;
+    }
 
     /**
      * Set active
@@ -1269,5 +1295,28 @@ class Candidate implements Taggable
     public function getBonusbenefits()
     {
         return $this->bonusbenefits;
+    }
+
+    /**
+     * Set incomeMonths
+     *
+     * @param integer $incomeMonths
+     * @return Candidate
+     */
+    public function setIncomeMonths($incomeMonths)
+    {
+        $this->incomeMonths = $incomeMonths;
+
+        return $this;
+    }
+
+    /**
+     * Get incomeMonths
+     *
+     * @return integer 
+     */
+    public function getIncomeMonths()
+    {
+        return $this->incomeMonths;
     }
 }

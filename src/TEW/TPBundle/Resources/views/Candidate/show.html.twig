@@ -1,191 +1,214 @@
 {% extends '::base.html.twig' %}
 
+{# Should this candidate details be displayed? #}
+{% set anonymous = (not is_granted('ROLE_TEW_EXECUTOR')) and (entity.creator.company != app.user.company) %}
+
 {% block scripts %}
     <script>
-    $(function () {
-      $('[data-toggle="popover"]').popover()
-    })
+        $(function () {
+            $('[data-toggle="popover"]').popover()
+        })
     </script>
 {% endblock %}
 
 {% block body -%}
-    <h1>Candidate</h1>
-    <table class="record_properties">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ entity.id }}</td>
-                <td rowspan="100" style="vertical-align: top">
-                    <h4>Talent pools</h4>
-                    {% for tp in entity.talentpools %}
-                        {% set tpcomments = entity.comments|commentsByTalentpool(tp) %}
-                        <ul>
-                            <li>
-                                {{ tp }} {{ tpcomments|commentsAverageScore|stars }}
-                                <ul>
+    <h1>
+        Candidate {{ anonymous?' <small>(anonymous)</small>'}}
+        {% if not anonymous and entity.picture %}
+            <img class="pull-right" src="{% path entity.picture, 'small' %}" alt="{{ entity.picture is null?'':entity.picture.name }}">
+        {% endif %}
+    </h1>
+    <div role="tabpanel">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs">
+            <li role="presentation" class="active"><a href="#details" aria-controls="details" role="tab" data-toggle="tab">Details</a></li>
+            <li role="presentation" ><a href="#talentpools" aria-controls="talentpools" role="tab" data-toggle="tab">Talent Pools</a></li>
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="details">
+                <table class="record_properties">
+                    <tbody>
+                        <tr>
+                            {% if is_granted('ROLE_TEW_EXECUTOR') %}
+                                <th>Id</th>
+                                <td>{{ entity.id }}</td>
+                            {% endif %}
+                        </tr>
+                        {% if entity.globalScore>=0 %}
+                            <tr>
+                                <th>Entry score</th>
+                                <td data-toggle="popover" data-content="{{ entity.globalComment }}" data-delay='{ "show": 500, "hide": 200 }' data-html="true" style="cursor:help" data-trigger='hover'>
+                                    {{ entity.globalScore|stars }}
+                                </td>
+                            </tr>
+                        {% endif %}
+                        <tr>
+                            <th>Name</th>
+                            <td>
+                                {{ ((not anonymous)?entity.firstName:'<em>hidden</em>')|raw }}
+                                {{ ((not anonymous) and entity.middleName)?entity.middleName }}
+                                {{ (not anonymous)?entity.lastName }}
+                                ({{ entity.gender|gender }})
+                                {% if entity.dateOfBirth %} / date of birth:
+                                    {{ anonymous?entity.dateOfBirth|date('Y'):entity.dateOfBirth|date('d M Y') }} ({{ entity.age }} yrs old)
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Current position</th>
+                            <td>
+                                {{ entity.function.indentedName }} - {{ entity.level }}
+                                {{ entity.experience is not null and entity.experience != 0? ': ' ~ entity.ageExperience ~ ' year(s)' }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Income</th>
+                            <td>
+                                {{ entity.income is not null and entity.income != 0?(('Base salary per month ' ~ entity.income|localizedcurrency(entity.currency)) ~ ' <em>(currency convertion to be implemented)</em>')|raw }}
+                                {{ entity.incomeMonths?' on '~ entity.incomeMonths ~ 'months'}}
+                                {{ entity.bonusbenefits }}
+                            </td>
+                        </tr>
+                        {% if entity.targetFunction1 and entity.targetFunction3 and entity.targetFunction3 %}
+                            <tr>
+                                <th>Target positions</th>
+                                <td>
+                                    {{ entity.targetFunction1 is not null? entity.targetFunction1 }} {{ entity.targetLevel1 is not null? entity.targetLevel1 }}
+                                    {{ entity.targetFunction2 is not null?' / ' ~ entity.targetFunction2 }} {{ entity.targetLevel2 is not null? entity.targetLevel2 }}
+                                    {{ entity.targetFunction3 is not null?' / ' ~ entity.targetFunction3 }} {{ entity.targetLevel3 is not null? entity.targetLevel3 }}
+                                </td>
+                            </tr>
+                        {% endif %}
+                        {% if entity.languagesSkills %}
+                            <tr>
+                                <th>Languages</th>
+                                <td>
+                                    {% for lskill in  entity.languagesSkills %}
+                                        {{ loop.index>1?' / '}}
+                                        {{ lskill|languageSkill }} {# filter defined in src/.../Twig/Extension #}
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                        {% endif %}
+                        {% if entity.mobilities %}
+                            <tr>
+                                <th>Mobility</th>
+                                <td>{{ entity.mobilities|join(' / ') }}</td>
+                            </tr>
+                        {% endif %}
+                        <tr>
+                            <th>Tags</th>
+                            <td>{{ entity.tags|join(' / ') }}</td>
+                        </tr>
+                        {% if not anonymous %}
+                            <tr>
+                                <th>Contact</th>
+                                <td>{{ entity.email|mail }} {{ entity.phone1?' / phone1: '~entity.phone1 }} {{ entity.phone2?' / phone2: '~entity.phone2 }}</td>
+                            </tr>
+                            <tr>
+                                <th>Addresses</th>
+                                <td>
+                                    {% for address in entity.addresses %}
+                                        <div>{{ address }}: {{ anonymous?'':address.street1 }} {{ anonymous?'':address.street2 }} {{ anonymous?'':address.zip }} {{ anonymous?'':address.city }} {{ address.country }}</div>
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                        {% endif %}
+                        {% if not anonymous and entity.resume %}
+                            <tr>
+                                <th>Resume</th>
+                                <td>
+                                    <a href="{% path entity.resume, 'reference' %}" target="_blank">
+                                        {% if entity.resume.contentType=='application/pdf' %}
+                                            <img width="32" src="{{ asset('bundles/tewtp/images/icons/pdf.png') }}">
+                                        {% elseif entity.resume.contentType=='application/msword' %}
+                                            <img width="32" src="{{ asset('bundles/tewtp/images/icons/word.png') }}">
+                                        {% endif %}
+                                        {{ entity.resume }}
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endif %}
+                        {% if not anonymous %}
+                            <tr>
+                                <th>Created by</th>
+                                <td>{{ entity.creator }} on {{ entity.createdAt|date('D d M Y \\a\\t g:ia', "Europe/Paris") }}</td>
+                            </tr>
+                            <tr>
+                                <th>Origin</th>
+                                <td>{{ entity.origin }}</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="talentpools">
+                <h4>Talent pools</h4>
+                {% for tp in entity.talentpools %}
+                    {% set visible_tp = (app.user.company in tp.companies) or is_granted('ROLE_TEW_EXECUTOR') %}
+                    {% if visible_tp %}
+                    {% set tpcomments = entity.comments|commentsByTalentpool(tp) %}
+                    <ul>
+                        <li>
+                            {{ tp }} {{ tpcomments|commentsAverageScore|stars }}
+                            <ul>
                                 {% for comment in tpcomments %}
                                     <li data-toggle="popover" data-delay='{ "show": 500, "hide": 200 }' data-html="true" style="cursor:help" data-trigger='hover'
                                         data-content="{{ comment.comment }}" data-title="{{ comment }}<br><em>- by {{ comment.author }}, on {{ comment.date|date('d M Y') }}</em>">
                                         {{ comment.score|stars }} {{ comment }} - <em>{{ comment.date|date('d M Y') }}</em>
                                     </li>
-                                 {% endfor %}
-                                 </ul>
-                             </li>
-                        </ul>
-                    {% endfor %}
-                    
-                </td>
-            </tr>
-            {% if entity.globalScore>=0 %}
-            <tr>
-                <th>Global score</th>
-                <td data-toggle="popover" data-content="{{ entity.globalComment }}" data-delay='{ "show": 500, "hide": 200 }' data-html="true" style="cursor:help" data-trigger='hover'>
-                    {{ entity.globalScore|stars }}
-                </td>
-            </tr>
-            {% endif %}
-            {% if entity.picture %}
-            <tr>
-                <th>Picture</th>
-                <td><img src="{% path entity.picture, 'small' %}" alt="{{ entity.picture is null?'':entity.picture.name }}"></td>
-            </tr>
-            {% endif %}
-            <tr>
-                <th>Gender</th>
-                <td>{{ entity.gender|gender }}</td>
-            </tr>
-            <tr>
-                <th>Firstname</th>
-                <td>{{ entity.firstName }}</td>
-            </tr>
-            {% if entity.middleName %}
-            <tr>
-                <th>Middlename</th>
-                <td>{{ entity.middleName }}</td>
-            </tr>
-            {% endif %}
-            <tr>
-                <th>Lastname</th>
-                <td>{{ entity.lastName }}</td>
-            </tr>
-            {% if entity.dateOfBirth %}
-            <tr>
-                <th>Dateofbirth</th>
-                <td>{{ entity.dateOfBirth|date('d M Y') }} ({{ entity.age }} yrs old)</td>
-            </tr>
-            {% endif %}
-            <tr>
-                <th>Email</th>
-                <td>{{ entity.email|mail }}</td>
-            </tr>
-            <tr>
-                <th>Phone1</th>
-                <td>{{ entity.phone1 }}</td>
-            </tr>
-            {% if entity.phone2 %}
-            <tr>
-                <th>Phone2</th>
-                <td>{{ entity.phone2 }}</td>
-            </tr>
-            {% endif %}
-            <tr>
-                <th>Addresses</th>
-                <td>
-                    {% for address in entity.addresses %}
-                        <div>{{ address }}: {{ address.street1 }} {{ address.street2 }} {{ address.zip }} {{ address.city }} {{ address.country }}</div>
-                    {% endfor %}
-                </td>
-            </tr> 
-            <tr>
-                <th>Current position</th>
-                <td>
-                    {{ entity.function.indentedName }} - {{ entity.level }}
-                    {{ entity.experience is not null and entity.experience != 0? ': ' ~ entity.ageExperience ~ ' year(s)' }}
-                </td>
-            </tr>
-            <tr>
-                <th>Income</th>
-                <td>
-                    {{ entity.annualIncome is not null and entity.annualIncome != 0?('Base salary ' ~ entity.annualIncome|localizedcurrency(entity.currency))|raw }}
-                    {{ entity.bonusbenefits }}
-                </td>
-            </tr>
-            {% if entity.targetFunction1 and entity.targetFunction3 and entity.targetFunction3 %}
-            <tr>
-                <th>Target positions</th>
-                <td>
-                    {{ entity.targetFunction1 is not null? entity.targetFunction1 }} {{ entity.targetLevel1 is not null? entity.targetLevel1 }}
-                    {{ entity.targetFunction2 is not null?' / ' ~ entity.targetFunction2 }} {{ entity.targetLevel2 is not null? entity.targetLevel2 }}
-                    {{ entity.targetFunction3 is not null?' / ' ~ entity.targetFunction3 }} {{ entity.targetLevel3 is not null? entity.targetLevel3 }}
-                </td>
-            </tr>
-            {% endif %}
-            {% if entity.languagesSkills %}
-            <tr>
-                <th>Languages</th>
-                <td>
-                    {% for lskill in  entity.languagesSkills %}
-                        {{ loop.index>1?' / '}}
-                        {{ lskill|languageSkill }} {# filter defined in src/.../Twig/Extension #}
-                    {% endfor %}
-                </td>
-            </tr>
-            {% endif %}
-            {% if entity.mobilities %}
-            <tr>
-                <th>Mobility</th>
-                <td>{{ entity.mobilities|join(' / ') }}</td>
-            </tr>
-            {% endif %}
-            <tr>
-                <th>Tags</th>
-                <td>{{ entity.tags|join(' / ') }}</td>
-            </tr>
-            {% if entity.resume %}
-            <tr>
-                <th>Resume</th>
-                <td>
-                    <a href="{% path entity.resume, 'reference' %}" target="_blank">
-                        {% if entity.resume.contentType=='application/pdf' %}
-                            <img width="32" src="{{ asset('bundles/tewtp/images/icons/pdf.png') }}">
-                        {% elseif entity.resume.contentType=='application/word' %}
-                            <img width="32" src="{{ asset('bundles/tewtp/images/icons/word.png') }}">
-                        {% endif %}
-                        {{ entity.resume }}
-                    </a>
-                </td>
-            </tr>
-            {% endif %}
-            <tr>
-                <th>Creation date</th>
-                <td>{{ entity.createdAt|date('D d M Y \\a\\t g:ia', "Europe/Paris") }}</td>
-            </tr>
-            <tr>
-                <th>Creator</th>
-                <td>{{ entity.creator }}</td>
-            </tr>
-            <tr>
-                <th>Origin</th>
-                <td>{{ entity.origin }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-{% block actions %}
-    <div class="btn-toolbar pull-right record_actions" role="group">
-        <div class="btn-group">
-            <a role="button"  class="btn btn-info" href="{{ path('tew_candidate') }}">
-                Back to the list
-            </a>
-        </div>
-        <div class="btn-group">
-            <a role="button" class="btn btn-warning" href="{{ path('tew_candidate_edit', { 'id': entity.id }) }}" >
-                Edit
-            </a>
-        </div>
-        <div class="btn-group">
-            {{ form(delete_form) }}
+                                {% endfor %}
+                            </ul>
+                        </li>
+                    </ul>
+                    {% endif %}
+                {% endfor %}
+            </div>
         </div>
     </div>
-{% endblock actions %}
+
+    {% block actions %}
+        <div class="btn-toolbar pull-right record_actions" role="group">
+            <div class="btn-group">
+                <a role="button"  class="btn btn-info" href="{{ path('tew_candidate') }}">
+                    Back to the list
+                </a>
+            </div>
+            {% if not anonymous %}
+                <div class="btn-group">
+                    <a role="button" class="btn btn-warning" href="{{ path('tew_candidate_edit', { 'id': entity.id }) }}" >
+                        Edit
+                    </a>
+                </div>
+            {% else %}
+                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#myModal">
+                    Request candidate details
+                </button>
+            {% endif %}
+            {% if is_granted('ROLE_TEW_EXECUTOR')%}
+                <div class="btn-group">
+                    {{ form(delete_form) }}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="modal fade" id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Request candidate details</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p><em>To be implemented</em></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-warning">Submit</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+    {% endblock actions %}
 {% endblock %}

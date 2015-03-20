@@ -38,7 +38,7 @@ class CdteProfile
 
     /**
      * @ORM\ManyToOne(targetEntity="TEW\TPBundle\Entity\CdteFunction")
-     * @ORM\JoinColumn(name="function_id", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="function_id", referencedColumnName="id", nullable=true)
      */
     private $function;
 
@@ -168,7 +168,7 @@ class CdteProfile
      * @param \TEW\TPBundle\Entity\CdteFunction $function
      * @return CdteProfile
      */
-    public function setFunction(\TEW\TPBundle\Entity\CdteFunction $function)
+    public function setFunction(\TEW\TPBundle\Entity\CdteFunction $function=null)
     {
         $this->function = $function;
 

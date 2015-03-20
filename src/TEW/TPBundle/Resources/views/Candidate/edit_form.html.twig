@@ -78,15 +78,21 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-3">
-                    {{ form_label(this_form.annualIncome) }}<br>
-                    {{ form_widget(this_form.annualIncome) }}
+                <div class="col-lg-4">
+                    {{ form_label(this_form.income) }}<br>
+                    {{ form_widget(this_form.income) }}
                 </div>
                 <div class="col-lg-5">
                     {{ form_label(this_form.currency) }}<br>
                     {{ form_widget(this_form.currency) }}
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-2">
+                    {{ form_label(this_form.incomeMonths) }}<br>
+                    {{ form_widget(this_form.incomeMonths) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
                     {{ form_label(this_form.bonusbenefits) }}<br>
                     {{ form_widget(this_form.bonusbenefits) }}
                 </div>

@@ -120,9 +120,10 @@ class MenuBuilder
         if($is_granted) {
             
             $username = $user->getUsername(); // Get username of the current logged in user
+            $company = $user->getCompany();
             
             // User
-            $menu->addChild('User', array('label' => $username))
+            $menu->addChild('User', array('label' => $username . ($company?' ('.$company.')':'')))
                 ->setAttribute('dropdown', true)
                 ->setAttribute('icon', 'icon-user');
             if ($is_admin) {

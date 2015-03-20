@@ -14,7 +14,8 @@ class TEWExtension extends \Twig_Extension
     
     public function __construct()
     {
-        $this->skills = new ArrayCollection(array('none','novice','spoken','fluent', 'mother tongue'));
+        $this->skills = new ArrayCollection(array('none','novice','intermediate','fluent', 'mother tongue'));
+        $this->cdteStatuses = new ArrayCollection(array('sleeping','active','in process','hired'));
         $this->languages = Intl::getLanguageBundle()->getLanguageNames();
         // $this->currencies = Intl::getCurrencyBundle()->getCurrencyNames(); // exhaustive list -> very long...
         // var_dump($this->currencies); exit;

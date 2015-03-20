@@ -96,7 +96,7 @@ class CandidateType extends AbstractType
                 'label' => 'Current function',
                 'class' => 'TEWTPBundle:CdteFunction',
                 'attr' => array('class' => 'select2 form-control'),
-                'empty_value' => 'Select',
+                'empty_value' => 'All',
                 'property' => 'indentedName',
                 'multiple' => false,
                 'expanded' => false ,
@@ -108,7 +108,7 @@ class CandidateType extends AbstractType
             ->add('level', 'entity', array(
                 'class' => 'TEWTPBundle:CdteLevel',
                 'label' => 'Current level',
-                'empty_value' => 'Select',
+                'empty_value' => 'All',
                 'attr' => array('class' => 'select2  form-control'),
                 //'label_attr' => array('class' => 'col-md-2')
             ))
@@ -120,21 +120,32 @@ class CandidateType extends AbstractType
                 'attr' => array('class' => 'form-control'),
                 //'label_attr' => array('class' => 'col-md-2')
             ))
-            ->add('annualIncome', 'integer', array(
+            ->add('income', 'integer', array(
                 //'currency' => 'USD', // if type = 'money'
-                'label' => 'Base salary',
+                'label' => 'Base salary per month',
                 'required' => false,
+                //'precision' => 0,
+                'attr' => array('class' => 'form-control'),
+                //'label_attr' => array('class' => 'col-md-2')
+            ))
+            ->add('incomeMonths', 'choice', array(
+                //'currency' => 'USD', // if type = 'money'
+                'label' => 'Nb of months',
+                'required' => false,
+                'choices' => range(6, 20),
+                'empty_value'=> 'Select',
                 'attr' => array('class' => 'form-control'),
                 //'label_attr' => array('class' => 'col-md-2')
             ))
             ->add('bonusbenefits', 'text', array(
                 'label' => 'Bonus & benefits',
-                'attr' => array('class' => 'form-control'),
+                'attr' => array('class' => 'form-control', 'size' => 80),
                 'required' => false,
             ))
             ->add('currency', 'currency', array(
                 'attr' => array('class' => 'select2'),
                 'empty_value' => 'Select',
+                'preferred_choices' => array('USD', 'EUR'),
                 'required' => false,
             ))
             ->add('targetFunction1', 'entity', array(
@@ -142,7 +153,7 @@ class CandidateType extends AbstractType
                 'label' => 'Target function #1',
                 'class' => 'TEWTPBundle:CdteFunction',
                 'attr' => array('class' => 'select2 form-control'),
-                'empty_value' => 'Select',
+                'empty_value' => 'All',
                 'property' => 'indentedName',
                 'multiple' => false,
                 'expanded' => false ,
@@ -155,7 +166,7 @@ class CandidateType extends AbstractType
                 'class' => 'TEWTPBundle:CdteLevel',
                 'required' => false,
                 'label' => 'Target level #1',
-                'empty_value' => 'Select',
+                'empty_value' => 'All',
                 'attr' => array('class' => 'select2'),           
             ))
             ->add('targetFunction2', 'entity', array(
@@ -163,7 +174,7 @@ class CandidateType extends AbstractType
                 'label' => 'Target function #2',
                 'class' => 'TEWTPBundle:CdteFunction',
                 'attr' => array('class' => 'select2 form-control'),
-                'empty_value' => 'Select',
+                'empty_value' => 'All',
                 'property' => 'indentedName',
                 'multiple' => false,
                 'expanded' => false ,
@@ -175,7 +186,7 @@ class CandidateType extends AbstractType
                 'class' => 'TEWTPBundle:CdteLevel',
                 'required' => false,
                 'label' => 'Target level #2',
-                'empty_value' => 'Select',
+                'empty_value' => 'All',
                 'attr' => array('class' => 'select2'),                   
             ))   
             ->add('targetFunction3', 'entity', array(
@@ -183,7 +194,7 @@ class CandidateType extends AbstractType
                 'label' => 'Target function #3',
                 'class' => 'TEWTPBundle:CdteFunction',
                 'attr' => array('class' => 'select2 form-control'),
-                'empty_value' => 'Select',
+                'empty_value' => 'All',
                 'property' => 'indentedName',
                 'multiple' => false,
                 'expanded' => false ,
@@ -196,7 +207,7 @@ class CandidateType extends AbstractType
                 'class' => 'TEWTPBundle:CdteLevel',
                 'required' => false,
                 'label' => 'Target level #3',
-                'empty_value' => 'Select',
+                'empty_value' => 'All',
                 'attr' => array('class' => 'select2'),                    
             ))
             ->add('mobilities', 'modalcollection', array(

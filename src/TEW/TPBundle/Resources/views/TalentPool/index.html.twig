@@ -7,37 +7,37 @@
 {% block scripts %}
     <script src="{{ asset('bundles/tewtp/js/jquery.dataTables.min.js') }}"></script>
     <script>
-    $(function () {
-      $('[data-toggle="popover"]').popover()
-    })
-    $(document).ready(function() {
-        $('#list').dataTable({
-            "bJQueryUI": true,
-            // "sPaginationType": "full_numbers",
-            "bStateSave": true,
-            "bProcessing": true,
-                    //  "sAjaxSource": '{#{url('_ajaxlistes', {'registrantTypeId': registrantType.id})}#}', 
-                    //  "sAjaxDataProp": "listes"
-            "aoColumns":[
-                { "bSearchable": false, "bSortable": false }, // Def
-                { "bSearchable": true }, // Name
-                { "bSearchable": false, "bSortable": false }, // Logo
-                { "bSearchable": true }, // Profiles
-                { "bSearchable": false }, // Creation Date
-                { "bSearchable": false }, // Creator
-                { "bSearchable": false, "bSortable": false } // Actions         
-            ]            
-        }); 
-    });
+        $(function () {
+            $('[data-toggle="popover"]').popover()
+        })
+        $(document).ready(function () {
+            $('#list').dataTable({
+                "bJQueryUI": true,
+                // "sPaginationType": "full_numbers",
+                "bStateSave": true,
+                "bProcessing": true,
+                //  "sAjaxSource": '{#{url('_ajaxlistes', {'registrantTypeId': registrantType.id})}#}', 
+                //  "sAjaxDataProp": "listes"
+                "aoColumns": [
+                    {"bSearchable": false, "bSortable": false}, // Check
+                    {"bSearchable": false, "bSortable": false}, // Logo
+                    {"bSearchable": true}, // Name
+                    {"bSearchable": true}, // Profiles
+                    {"bSearchable": false}, // Creation Date
+                    {"bSearchable": false}, // Creator
+                    {"bSearchable": false, "bSortable": false} // Actions         
+                ]
+            });
+        });
     </script>
     <script>
-        $('.icon-unchecked').click(function(){
-           if (confirm('Change working talentpool to '+$(this).attr('name')+'? (to be implemented)')) {
-               // do a submit on the homecontroller and forward to the list
-           }
+        $('.icon-unchecked').click(function () {
+            if (confirm('Change working talentpool to ' + $(this).attr('name') + '? (to be implemented)')) {
+                // do a submit on the homecontroller and forward to the list
+            }
         });
         $(function () {
-          $('[data-toggle="tooltip"]').tooltip()
+            $('[data-toggle="tooltip"]').tooltip()
         });
     </script>
 {% endblock scripts %}
@@ -49,8 +49,8 @@
         <thead>
             <tr>
                 <th><span style="cursor: help" data-toggle="tooltip" data-placement="left" title="Set working talentpool">Def.</span> </th>
-                <th>Name</th>
                 <th>Logo</th>
+                <th>Name</th>
                 <th>Profiles</th>
                 <th>Creation date</th>
                 <th>Creator</th>
@@ -58,50 +58,54 @@
             </tr>
         </thead>
         <tbody>
-        {% for entity in entities %}
-            <tr>
-                <td>
-                    {% if (workingtp is not null) and workingtp.id == entity.id %}
-                        <i class="icon icon-check" id="{{ entity.id }}" name="{{ entity.name }}"
-                           data-toggle="tooltip" data-placement="left" title="Working (default) talentpool"></i>
-                    {% else %}
-                        <i class="icon icon-unchecked" id="{{ entity.id }}" name="{{ entity.name }}" style="cursor: pointer"
-                           data-toggle="tooltip" data-placement="left" title="Click to set working talentpool"></i>
-                    {% endif %} 
-                </td>
-                <td>{{ entity.name }}</td>
-                <td>
-                    {% if entity.picture is not null%}
-                        <img src="{% path entity.picture, 'admin' %}" alt="{{ entity.picture.name }}" width="80px">
-                    {% endif %}
-                </td>
-                <td>{{ entity.profiles|join(' / ') }}</td>
-                <td>{% if entity.createdAt %}{{ entity.createdAt|date('Y-m-d') }}{% endif %}</td>
-                <td>{{ entity.creator }}</td>
-                <td>
-                    <div class="btn-group btn-group-xs pull-right record_actions" role="group">
-                            <a role="button"  class="btn btn-info" href="{{ path('tew_talentpool_show', { 'id': entity.id }) }}">
-                                show
-                            </a>
-                            {% if is_granted("ROLE_TEW_EXECUTOR") %}
-                            <a role="button"  class="btn btn-warning" href="{{ path('tew_talentpool_edit', { 'id': entity.id }) }}">
-                                edit
-                            </a>
-                            {{ form(delete_forms[entity.id]) }}
+            {% for entity in entities %}
+                {% if (app.user.company in entity.companies) or is_granted('ROLE_TEW_EXECUTOR') %}
+                    <tr>
+                        <td>
+                            {% if (workingtp is not null) and workingtp.id == entity.id %}
+                                <i class="icon icon-check" id="{{ entity.id }}" name="{{ entity.name }}"
+                                   data-toggle="tooltip" data-placement="left" title="Working (default) talentpool"></i>
+                            {% else %}
+                                <i class="icon icon-unchecked" id="{{ entity.id }}" name="{{ entity.name }}" style="cursor: pointer"
+                                   data-toggle="tooltip" data-placement="left" title="Click to set working talentpool"></i>
+                            {% endif %} 
+                        </td>
+                        <td>
+                            {% if entity.picture is not null%}
+                                <img src="{% path entity.picture, 'admin' %}" alt="{{ entity.picture.name }}" width="80px">
                             {% endif %}
-                    </div>
-                </td>
-            </tr>
-        {% endfor %}
+                        </td>
+                        <td>{{ entity.name }}</td>
+                        <td>{{ entity.profiles|join(' / ') }}</td>
+                        <td>{% if entity.createdAt %}{{ entity.createdAt|date('Y-m-d') }}{% endif %}</td>
+                        <td>{{ entity.creator }}</td>
+                        <td>
+                            <div class="btn-group btn-group-xs pull-right record_actions" role="group">
+                                <a role="button"  class="btn btn-info" href="{{ path('tew_talentpool_show', { 'id': entity.id }) }}">
+                                    show
+                                </a>
+                                {% if is_granted("ROLE_TEW_EXECUTOR") %}
+                                    <a role="button"  class="btn btn-warning" href="{{ path('tew_talentpool_edit', { 'id': entity.id }) }}">
+                                        edit
+                                    </a>
+                                    {{ form(delete_forms[entity.id]) }}
+                                {% endif %}
+                            </div>
+                        </td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
         </tbody>
     </table>
-{% block actions %}
-    <div class="btn-toolbar pull-right record_actions" role="group">
-        <div class="btn-group">
-            <a role="button"  class="btn btn-warning" href="{{ path('tew_talentpool_new') }}">
-                Create a new entry
-            </a>
-        </div>
-    </div>
-{% endblock actions %}
-    {% endblock %}
+    {% if is_granted('ROLE_TEW_EXECUTOR') %}        
+        {% block actions %}
+            <div class="btn-toolbar pull-right record_actions" role="group">
+                <div class="btn-group">
+                    <a role="button"  class="btn btn-warning" href="{{ path('tew_talentpool_new') }}">
+                        Create a new entry
+                    </a>
+                </div>
+            </div>
+        {% endblock actions %}
+    {% endif %}
+{% endblock %}
