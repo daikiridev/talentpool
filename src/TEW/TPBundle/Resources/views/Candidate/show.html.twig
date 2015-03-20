@@ -3,7 +3,12 @@
 {# Should this candidate details be displayed? #}
 {% set anonymous = (not is_granted('ROLE_TEW_EXECUTOR')) and (entity.creator.company != app.user.company) %}
 
+{% block styles %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/tewtp/css/bootstrap-magnify.css') }}" />
+{% endblock styles %}
+
 {% block scripts %}
+    <script src="{{ asset('bundles/tewtp/js/bootstrap-magnify.js') }}"></script>
     <script>
         $(function () {
             $('[data-toggle="popover"]').popover()
@@ -15,12 +20,14 @@
     <h1>
         Candidate {{ anonymous?' <small>(anonymous)</small>'}}
         {% if not anonymous and entity.picture %}
-            <img class="pull-right" src="{% path entity.picture, 'small' %}" alt="{{ entity.picture is null?'':entity.picture.name }}">
+            <div class="mag pull-right">
+            <img height="100" data-toggle="magnify" src="{% path entity.picture, 'big' %}" alt="{{ entity.picture is null?'':entity.picture.name }}">
+            </div>
         {% endif %}
     </h1>
     <div role="tabpanel">
         <!-- Nav tabs -->
-        <ul class="nav nav-tabs">
+        <ul class="nav nav-pills">
             <li role="presentation" class="active"><a href="#details" aria-controls="details" role="tab" data-toggle="tab">Details</a></li>
             <li role="presentation" ><a href="#talentpools" aria-controls="talentpools" role="tab" data-toggle="tab">Talent Pools</a></li>
         </ul>
@@ -143,27 +150,27 @@
                     </tbody>
                 </table>
             </div>
-            <div role="tabpanel" class="tab-pane" id="talentpools">
-                <h4>Talent pools</h4>
-                {% for tp in entity.talentpools %}
-                    {% set visible_tp = (app.user.company in tp.companies) or is_granted('ROLE_TEW_EXECUTOR') %}
-                    {% if visible_tp %}
-                    {% set tpcomments = entity.comments|commentsByTalentpool(tp) %}
-                    <ul>
-                        <li>
-                            {{ tp }} {{ tpcomments|commentsAverageScore|stars }}
-                            <ul>
-                                {% for comment in tpcomments %}
-                                    <li data-toggle="popover" data-delay='{ "show": 500, "hide": 200 }' data-html="true" style="cursor:help" data-trigger='hover'
-                                        data-content="{{ comment.comment }}" data-title="{{ comment }}<br><em>- by {{ comment.author }}, on {{ comment.date|date('d M Y') }}</em>">
-                                        {{ comment.score|stars }} {{ comment }} - <em>{{ comment.date|date('d M Y') }}</em>
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                        </li>
-                    </ul>
-                    {% endif %}
-                {% endfor %}
+            <div role="tabpanel" class="tab-pane col-lg-12" id="talentpools">
+                <div class="row">
+                    <div class="col-lg-12">
+                        {% for tp in entity.talentpools %}
+                            {% set visible_tp = (app.user.company in tp.companies) or is_granted('ROLE_TEW_EXECUTOR') %}
+                            {% if visible_tp %}
+                                {% set tpcomments = entity.comments|commentsByTalentpool(tp) %}
+                                <div class="row">
+                                    <h5>{{ tp }} {{ tpcomments|commentsAverageScore|stars }}</h5>
+                                        {% for comment in tpcomments %}
+                                            <div class="col-lg-3 col-lg-offset-1"
+                                                data-toggle="popover" data-delay='{ "show": 500, "hide": 200 }' data-html="true" style="cursor:help" data-trigger='hover' data-placement="top"
+                                                data-content="{{ comment.comment }}" data-title="{{ comment }}<br><em>- by {{ comment.author }}, on {{ comment.date|date('d M Y') }}</em>">
+                                                {{ comment.score|stars }} {{ comment }} - <em>{{ comment.date|date('d M Y') }}</em>
+                                            </div>
+                                        {% endfor %}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
             </div>
         </div>
     </div>
