@@ -159,13 +159,38 @@
                                 {% set tpcomments = entity.comments|commentsByTalentpool(tp) %}
                                 <div class="row">
                                     <h5>{{ tp }} {{ tpcomments|commentsAverageScore|stars }}</h5>
+                                    <div class="col-lg-11 col-lg-offset-1">
+                                        {% for prof in tp.profiles %}
+                                            <div class="row">
+                                                Profile {{ prof }}:
+                                                {% if (prof.function==entity.function and prof.level==entity.level)
+                                                   or (prof.function==entity.targetFunction1 and prof.level==entity.targetLevel1)
+                                                   or (prof.function==entity.targetFunction2 and prof.level==entity.targetLevel2)
+                                                   or (prof.function==entity.targetFunction3 and prof.level==entity.targetLevel3)
+                                                %}
+                                                    {{ ('<i class="icon icon-ok" style="color:green"></i> '~prof.function)|raw}}
+                                                    {{ ('<i class="icon icon-ok" style="color:green"></i> '~prof.level)|raw}}  
+                                                {% else %}
+                                                    {{ (prof.function==entity.function?'<i class="icon icon-ok" style="color:green"></i> '~prof.function:'<i class="icon icon-remove" style="color:lightcoral"></i> '~prof.function)|raw}}
+                                                    {{ (prof.level==entity.level?'<i class="icon icon-ok" style="color:green"></i> '~prof.level:'<i class="icon icon-remove" style="color:lightcoral"></i> '~prof.level)|raw}}
+                                                {% endif %}
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="col-lg-11 col-lg-offset-1">
+                                        <div class='row'>
+                                            {{ (tpcomments is not empty)?'Users comments' }}
+                                        </div>
+                                        <div class='row'>
                                         {% for comment in tpcomments %}
-                                            <div class="col-lg-3 col-lg-offset-1"
+                                            <div class="col-lg-6"
                                                 data-toggle="popover" data-delay='{ "show": 500, "hide": 200 }' data-html="true" style="cursor:help" data-trigger='hover' data-placement="top"
                                                 data-content="{{ comment.comment }}" data-title="{{ comment }}<br><em>- by {{ comment.author }}, on {{ comment.date|date('d M Y') }}</em>">
                                                 {{ comment.score|stars }} {{ comment }} - <em>{{ comment.date|date('d M Y') }}</em>
                                             </div>
                                         {% endfor %}
+                                        </div>
+                                    </div>
                                 </div>
                             {% endif %}
                         {% endfor %}
