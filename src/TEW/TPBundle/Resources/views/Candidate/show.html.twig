@@ -163,16 +163,16 @@
                                         {% for prof in tp.profiles %}
                                             <div class="row">
                                                 Profile {{ prof }}:
-                                                {% if (prof.function==entity.function and prof.level==entity.level)
-                                                   or (prof.function==entity.targetFunction1 and prof.level==entity.targetLevel1)
-                                                   or (prof.function==entity.targetFunction2 and prof.level==entity.targetLevel2)
-                                                   or (prof.function==entity.targetFunction3 and prof.level==entity.targetLevel3)
+                                                {% if ((prof.function==entity.function or not prof.function) and (prof.level==entity.level or not prof.level))
+                                                   or ((prof.function==entity.targetFunction1 or not prof.function) and (prof.level==entity.targetLevel1 or not prof.level))
+                                                   or ((prof.function==entity.targetFunction2 or not prof.function) and (prof.level==entity.targetLevel2 or not prof.level))
+                                                   or ((prof.function==entity.targetFunction3 or not prof.function) and (prof.level==entity.targetLevel3 or not prof.level))
                                                 %}
-                                                    {{ ('<i class="icon icon-ok" style="color:green"></i> '~prof.function)|raw}}
-                                                    {{ ('<i class="icon icon-ok" style="color:green"></i> '~prof.level)|raw}}  
+                                                    {{ ('<i class="icon icon-ok" style="color:green"></i> '~(prof.function?prof.function:'all'))|raw}}
+                                                    {{ ('<i class="icon icon-ok" style="color:green"></i> '~(prof.level?prof.level:'all'))|raw}}  
                                                 {% else %}
-                                                    {{ (prof.function==entity.function?'<i class="icon icon-ok" style="color:green"></i> '~prof.function:'<i class="icon icon-remove" style="color:lightcoral"></i> '~prof.function)|raw}}
-                                                    {{ (prof.level==entity.level?'<i class="icon icon-ok" style="color:green"></i> '~prof.level:'<i class="icon icon-remove" style="color:lightcoral"></i> '~prof.level)|raw}}
+                                                    {{ ((prof.function==entity.function or not prof.function)?'<i class="icon icon-ok" style="color:green"></i> '~(prof.function?prof.function:entity.function):'<i class="icon icon-remove" style="color:lightcoral"></i> '~(prof.function?prof.function:entity.function))|raw}}
+                                                    {{ ((prof.level==entity.level or not prof.level)?'<i class="icon icon-ok" style="color:green"></i> '~(prof.level?prof.level:entity.level):'<i class="icon icon-remove" style="color:lightcoral"></i> '~(prof.level?prof.level:entity.level))|raw}}
                                                 {% endif %}
                                             </div>
                                         {% endfor %}
