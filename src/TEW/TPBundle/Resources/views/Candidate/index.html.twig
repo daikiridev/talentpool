@@ -97,7 +97,7 @@
                         <td>
                             <div data-toggle="popover" data-placement="bottom" data-delay='{ "show": 500, "hide": 200 }' data-html="true" style="cursor:help"
                                  data-content="{{ entity.globalComment }}" data-trigger='hover'>
-                                {{ entity.globalScore|stars }}
+                                <small>{{ entity.globalScore|stars }}</small>
                             </div>
                         </td>
                         <td>{{ not anonymous?entity.firstName:'anonymous' }} {{ not anonymous?entity.lastName }} {{ not anonymous?entity.middleName }}</td>
@@ -169,6 +169,14 @@
             {% endfor %}
         </tbody>
     </table>
+    
+        <div class='col-lg-12'>
+            <br>
+            <select>
+                <option>Select an action</option>
+                <option value="disp">Compare selected candidates (to be implemented)</option>
+            </select>
+        </div>
     {% block actions %}
         <div class="btn-toolbar pull-right record_actions" role="group">
             <div class="btn-group">

@@ -1,6 +1,4 @@
 {% extends '::base.html.twig' %}
-{# Should this candidate details be displayed? #}
-{% set anonymous = (not is_granted('ROLE_TEW_EXECUTOR')) and (entity.creator.company != app.user.company) %}
 
 {% block styles %}
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/tewtp/css/bootstrap-magnify.css') }}" />
@@ -16,5 +14,9 @@
 {% endblock %}
 
 {% block body -%}
-{% include 'TEWTPBundle:Candidate:view.html.twig' %}
+    {% for candidate in candidates %}
+        {# Should this candidate details be displayed? #}
+        {% set anonymous = (not is_granted('ROLE_TEW_EXECUTOR')) and (candidate.creator.company != app.user.company) %}
+        {% include('TEWTPBundle:Candidate:view.html.twig', {'entity': candidate}) %}
+    {% endfor %}
 {% endblock body %}

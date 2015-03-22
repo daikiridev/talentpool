@@ -18,16 +18,29 @@ class CdteCommentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title')
-            ->add('talentpool')
+            ->add('title', 'text', array(
+                'required' => true,
+                'label' => 'Candidate overview',
+            ))
+            ->add('talentpool', 'entity', array(
+                'required' => true,
+                'label' => 'Target talentpool',
+                'class' => 'TEWTPBundle:TalentPool',
+                'attr' => array('class' => 'select2 form-control'),
+                //'empty_value' => 'All',
+                'multiple' => false, 'expanded' => false,
+            ))
             ->add('score', 'choice', array(
-                    'choices' => range(0,5),
-                    'empty_value'=> '',
-                    //'expanded' => true, 'multiple' => false, // radio button : memory error!!!
-                    'attr' => array('class' => 'form-control'),
+                'choices' => range(0,5),
+                'empty_value'=> '',
+                //'expanded' => true, 'multiple' => false, // radio button : memory error!!!
+                'attr' => array('class' => 'form-control'),
             ))
             //->add('comment', 'ckeditor', array('config_name' => 'user_config'))
-            ->add('comment')
+            ->add('comment', 'textarea', array(
+                'label' => 'Detailed comment',
+                'required' => false,
+            ))
         ;
     }
 

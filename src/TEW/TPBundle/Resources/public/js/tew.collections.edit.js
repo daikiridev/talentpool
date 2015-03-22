@@ -24,8 +24,10 @@ function addItemForm(collectionHolder, length) {
             var supprQuote = embeddedPrototypes[i].replace(/&quot;/g, 'π');
             var embeddedCollectionName = supprQuote.match(/π[^π]*__name__[^π]*__name__[^π]*π/);
             var embeddedName = embeddedCollectionName[0].replace(/π[^π]*__name___([^π]*)___name__[^π]*π/g,'$1');
-            alert('WARNING: collection ' + collId + ' includes a collection of '+ embeddedName +
-                    '. Please save your ' + collId.replace(/(.*)_\w+$/,'$1') + ' before adding ' + embeddedName + '.');
+            var globCollName = collId.replace(/.*_(\w+)$/,'$1');
+            var globName = collId.replace(/(.*)_\w+$/,'$1');
+            alert('WARNING: collection of ' + globCollName + ' includes a collection of '+ embeddedName +
+                    '. Please SAVE your ' + globName + ' before adding new ' + embeddedName + ' to newly created ' + globCollName + '.');
         }
     }
     // Replace '__name__' in each field of the prototype by the index of the current item

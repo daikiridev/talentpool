@@ -24,8 +24,8 @@ class CandidateType extends AbstractType
                 'label' => 'Score',
                 'required' => false,
                 'choices' => range(0,5),
-                //'empty_value'=> '',
-                'expanded' => true, 'multiple' => false, // radio button
+                'empty_value'=> '',
+                //'expanded' => true, 'multiple' => false, // radio button
                 'attr' => array('class' => 'form-control'),
             ))
             ->add('active', 'checkbox', array(
@@ -92,7 +92,7 @@ class CandidateType extends AbstractType
 //                //'label_attr' => array('class' => 'col-md-2')
 //                ))
             ->add('function', 'entity', array(
-                'required' => false,
+                'required' => true,
                 'label' => 'Current function',
                 'class' => 'TEWTPBundle:CdteFunction',
                 'attr' => array('class' => 'select2 form-control'),
@@ -113,7 +113,7 @@ class CandidateType extends AbstractType
                 //'label_attr' => array('class' => 'col-md-2')
             ))
             ->add('experience', 'choice', array(
-                'required' => false,
+                'required' => true,
                 'label' => 'Start workg yr',
                 'choices' => array_combine(range(date('Y'), date('Y')-50), range(date('Y'), date('Y')-50)),
                 'empty_value'=> 'Year',

@@ -15,7 +15,15 @@ class TalentPoolType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
+            ->add('name', 'text', array(
+                'attr' => array(
+                    'placeholder' => 'XXX domain geography',
+                    'data-toggle' => 'tooltip',
+                    'data-placement' => 'top',
+                    'title' => 'Should be: XXX(company) functional domain(eg. manufacturing) geography(eg. Asia)',
+                    
+                    ),
+            ))
             //->add('description', 'ckeditor', array('config_name' => 'user_config'))
             ->add('description')
             ->add('companies', 'entity', array( 
