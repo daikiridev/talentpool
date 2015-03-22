@@ -14,7 +14,7 @@
     <h1>TalentPool
         {% if entity.picture %}
             <div class="mag pull-right">
-                <img height="100" data-toggle="magnify" src="{% path entity.picture, 'big' %}" alt="{{ entity.picture is null?'':entity.picture.name }}">
+                <img data-toggle="magnify" src="{% path entity.picture, 'admin' %}" alt="{{ entity.picture is null?'':entity.picture.name }}">
             </div>
         {% endif %}
     </h1>
