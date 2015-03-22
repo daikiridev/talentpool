@@ -14,7 +14,7 @@ class TEWExtension extends \Twig_Extension
     
     public function __construct()
     {
-        $this->skills = new ArrayCollection(array('none','novice','intermediate','fluent', 'mother tongue'));
+        $this->skills = new ArrayCollection(array('none','beginner','intermediate','fluent', 'mother tongue'));
         $this->cdteStatuses = new ArrayCollection(array('sleeping','active','in process','hired'));
         $this->languages = Intl::getLanguageBundle()->getLanguageNames();
         // $this->currencies = Intl::getCurrencyBundle()->getCurrencyNames(); // exhaustive list -> very long...
@@ -54,7 +54,7 @@ class TEWExtension extends \Twig_Extension
         $stars = "";
         if ($nb>=0) {
             for ($i=1;$i<=5;$i++ ) { // star color: #158cba
-                $stars .= $i<=$nb?"<i class=\"icon-star\" style=\"color:gold\" data-rating=\"$i\"></i>":"<i class=\"icon-star-empty\" style=\"color:lightgrey\" data-rating=\"$i\"></i>";
+                $stars .= $i<=$nb?"<i class=\"icon-star\" style=\"color:#ff851b\" data-rating=\"$i\"></i>":"<i class=\"icon-star-empty\" style=\"color:lightgrey\" data-rating=\"$i\"></i>";
             }
         }
         return $stars;

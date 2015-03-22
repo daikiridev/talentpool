@@ -3,6 +3,7 @@
 {% block styles %}
     <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet" href="{{asset('bundles/tewtp/css/jquery.dataTables.css')}}">
+    <link rel="stylesheet" href="{{asset('bundles/tewtp/css/jquery.tagsinput.css')}}">
 {% endblock styles %}
 {% block scripts %}
     <script src="{{ asset('bundles/tewtp/js/jquery.dataTables.min.js') }}"></script>
@@ -76,7 +77,13 @@
                             {% endif %}
                         </td>
                         <td>{{ entity.name }}</td>
-                        <td>{{ entity.profiles|join(' / ') }}</td>
+                        <td>
+                            <small>
+                            {% for prof in entity.profiles %}
+                                <span class='tag'>{{ prof }}</span>
+                            {% endfor %}
+                            </small>
+                        </td>
                         <td>{% if entity.createdAt %}{{ entity.createdAt|date('Y-m-d') }}{% endif %}</td>
                         <td>{{ entity.creator }}</td>
                         <td>

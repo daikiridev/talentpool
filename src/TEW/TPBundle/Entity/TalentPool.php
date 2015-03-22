@@ -102,7 +102,7 @@ class TalentPool
     public function __toString()
     {
         // return $this->getName().' (created by '.$this->getCreator()->getUsername().')';
-        return $this->getName();
+        return $this->profiles->count()==1?$this->getName().' > '.$this->profiles[0]:$this->getName();
     }
     
     /**

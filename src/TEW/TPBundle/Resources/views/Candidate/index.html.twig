@@ -5,6 +5,7 @@
     {# <link rel="stylesheet" href="{{asset('bundles/tewtp/css/jquery.dataTables.css')}}"> #}
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.5/css/jquery.dataTables.css">
     <link rel="stylesheet" href="//cdn.datatables.net/tabletools/2.2.3/css/dataTables.tableTools.css">
+    <link rel="stylesheet" href="{{asset('bundles/tewtp/css/jquery.tagsinput.css')}}">
 {% endblock styles %}
 {% block scripts %}
     {# <script src="{{ asset('bundles/tewtp/js/jquery.dataTables.min.js') }}"></script> #}
@@ -23,6 +24,7 @@
                 //  "sAjaxDataProp": "listes"
                 "aoColumns": [
                     {"bSearchable": false, "bSortable": false}, // Check
+                    {"bSearchable": false, "bSortable": false}, // Resume
                     {"bSearchable": true}, // Entry score
                     {"bSearchable": true}, // Name
                     {"bSearchable": true}, // Current position
@@ -30,6 +32,7 @@
                     {"bSearchable": true, "bSortable": false}, // Mobilities
                     {"bSearchable": true, "bSortable": false}, // Target functions
                     {"bSearchable": false, "bSortable": false}, // Talent pools
+                    {"bSearchable": false, "bSortable": false}, // Tags
                     {"bSearchable": false}, // Added on
                     {"bSearchable": false}, // Origin
                     {"bSearchable": false, "bSortable": false} // Actions     
@@ -49,7 +52,8 @@
     <table id="list" class="display" cellspacing="0">
         <thead>
             <tr>
-                <th><span style="cursor: help" data-toggle="tooltip" data-placement="left" title="Check cdte for target action">Check</span></th>
+                <th><i class="icon icon-unchecked main"></i></th>
+                <th><i class="icon icon-paperclip"></i></th>
                 <th>Entry score</th>
                 <th>Name</th>
                 <th>Curr. Pos.</th>
@@ -57,6 +61,7 @@
                 <th>Mobility</th>
                 <th>Target functions</th>
                 <th>Talent pools</th>
+                <th>Tags</th>
                 <th>Added on</th>
                 <th>Origin</th>
                 <th width="110">Actions</th>
@@ -82,14 +87,20 @@
                     <tr>
                         <td>
                             <i class="icon icon-unchecked" id="{{ entity.id }}" name="{{ entity }}" style="cursor: pointer"
-                               data-toggle="tooltip" data-placement="left" title="Check cdte for target action"></i></td>
+                               data-toggle="tooltip" data-placement="left" title="Check cdte for target action"></i>
+                        </td>
+                        <td>
+                        {% if entity.resume %}
+                            <i class="icon icon-paperclip"></i>
+                        {% endif %}
+                        </td>
                         <td>
                             <div data-toggle="popover" data-placement="bottom" data-delay='{ "show": 500, "hide": 200 }' data-html="true" style="cursor:help"
                                  data-content="{{ entity.globalComment }}" data-trigger='hover'>
                                 {{ entity.globalScore|stars }}
                             </div>
                         </td>
-                        <td>{{ not anonymous?entity.firstName:'anonymous' }} {{ not anonymous?entity.middleName }} {{ not anonymous?entity.lastName }}</td>
+                        <td>{{ not anonymous?entity.firstName:'anonymous' }} {{ not anonymous?entity.lastName }} {{ not anonymous?entity.middleName }}</td>
                         {#
                         <td>{% if entity.dateOfBirth %}{{ entity.dateOfBirth|date('Y-m-d H:i:s') }}{% endif %}</td>
                         #}
@@ -98,15 +109,36 @@
                         #}
                         <td>{{ entity.function }} {{ entity.level }}</td>
                         <td>{{ entity.ageExperience }} yrs</td>
-                        <td>{{ entity.mobilities|join(' / ') }}</td>
-                        <td>{{ entity.targetFunctions|join(' / ') }}</td>
                         <td>
+                            <small>
+                            {% for mob in entity.mobilities %}
+                                <span class='tag'>{{ mob }}</span>
+                            {% endfor %}
+                            </small>
+                        </td>
+                        <td>
+                            <small>
+                            {% for func in entity.targetFunctions %}
+                                <span class='tag'>{{ func }}</span>
+                            {% endfor %}
+                            </small>
+                        </td>
+                        <td>
+                            <small>
                             {% for tp in entity.talentpools %}
                                 {% set visible_tp = (app.user.company in tp.companies) or is_granted('ROLE_TEW_EXECUTOR') %}
                                 {% if visible_tp %}
-                                    {{ tp }} {{ entity.averageScore(tp)|stars }}<br>
+                                    <span class='tag'>{{ tp }} {{ entity.averageScore(tp)|stars }}</span>
                                 {% endif %}
                             {% endfor %}
+                            </small>
+                        </td>
+                        <td>
+                            <small>
+                            {% for tag in entity.tags %}
+                                <span class='tag'>{{ tag }}</span>
+                            {% endfor %}
+                            </small>
                         </td>
                         <td>{% if entity.createdAt %}{{ entity.createdAt|date('Y-m-d') }}{% endif %}</td>
                         <td>{{ entity.origin }}</td>

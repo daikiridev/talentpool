@@ -49,7 +49,7 @@ twig:
         resources:
             # other files
             - 'SonataMediaBundle:Form:media_widgets.html.twig'
-            - 'TEWTPBundle:Form:modalcollection_widget.html.twig'
+            - 'TEWTPBundle:Form:tew_widgets.html.twig'
    
 
 # Doctrine Configuration

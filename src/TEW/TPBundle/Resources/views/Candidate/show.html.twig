@@ -72,9 +72,9 @@
                         <tr>
                             <th>Income</th>
                             <td>
-                                {{ entity.income is not null and entity.income != 0?(('Base salary per month ' ~ entity.income|localizedcurrency(entity.currency)) ~ ' <em>(currency convertion to be implemented)</em>')|raw }}
-                                {{ entity.incomeMonths?' on '~ entity.incomeMonths ~ 'months'}}
-                                {{ entity.bonusbenefits }}
+                                {{ entity.income is not null and entity.income != 0?(('Base salary ' ~ entity.income|localizedcurrency(entity.currency)) ~ ' <em>(currency convertion to be implemented)</em>')|raw }}
+                                {#{ entity.incomeMonths?' on '~ entity.incomeMonths ~ 'months'}#}
+                                {{ entity.bonusbenefits?'. Bonus & details: '~entity.bonusbenefits }}
                             </td>
                         </tr>
                         {% if entity.targetFunction1 and entity.targetFunction3 and entity.targetFunction3 %}

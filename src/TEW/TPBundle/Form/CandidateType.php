@@ -102,7 +102,7 @@ class CandidateType extends AbstractType
                 'expanded' => false ,
                 'query_builder' => function (\Gedmo\Tree\Entity\Repository\NestedTreeRepository $r)
                     {
-                        return $r->getChildrenQueryBuilder(null, null, 'root', 'asc', false);
+                        return $r->getChildrenQueryBuilder(null, null, 'name', 'asc', false);
                     }
             ))
             ->add('level', 'entity', array(
@@ -122,23 +122,23 @@ class CandidateType extends AbstractType
             ))
             ->add('income', 'integer', array(
                 //'currency' => 'USD', // if type = 'money'
-                'label' => 'Base salary per month',
+                'label' => 'Base salary',
                 'required' => false,
                 //'precision' => 0,
                 'attr' => array('class' => 'form-control'),
                 //'label_attr' => array('class' => 'col-md-2')
             ))
-            ->add('incomeMonths', 'choice', array(
-                //'currency' => 'USD', // if type = 'money'
-                'label' => 'Nb of months',
-                'required' => false,
-                'choices' => range(6, 20),
-                'empty_value'=> 'Select',
-                'attr' => array('class' => 'form-control'),
-                //'label_attr' => array('class' => 'col-md-2')
-            ))
+//            ->add('incomeMonths', 'choice', array(
+//                //'currency' => 'USD', // if type = 'money'
+//                'label' => 'Nb of months',
+//                'required' => false,
+//                'choices' => array_combine(range(6, 20), range(6, 20)),
+//                'empty_value'=> 'Select',
+//                'attr' => array('class' => 'form-control'),
+//                //'label_attr' => array('class' => 'col-md-2')
+//            ))
             ->add('bonusbenefits', 'text', array(
-                'label' => 'Bonus & benefits',
+                'label' => 'Bonus & details',
                 'attr' => array('class' => 'form-control', 'size' => 80),
                 'required' => false,
             ))
@@ -159,7 +159,7 @@ class CandidateType extends AbstractType
                 'expanded' => false ,
                 'query_builder' => function (\Gedmo\Tree\Entity\Repository\NestedTreeRepository $r)
                     {
-                        return $r->getChildrenQueryBuilder(null, null, 'root', 'asc', false);
+                        return $r->getChildrenQueryBuilder(null, null, 'name', 'asc', false);
                     }
             ))
             ->add('targetLevel1', 'entity', array(
@@ -179,7 +179,7 @@ class CandidateType extends AbstractType
                 'multiple' => false,
                 'expanded' => false ,
                 'query_builder' => function (\Gedmo\Tree\Entity\Repository\NestedTreeRepository $r){
-                        return $r->getChildrenQueryBuilder(null, null, 'root', 'asc', false);
+                        return $r->getChildrenQueryBuilder(null, null, 'name', 'asc', false);
                     }
             ))
             ->add('targetLevel2', 'entity', array(
@@ -200,7 +200,7 @@ class CandidateType extends AbstractType
                 'expanded' => false ,
                 'query_builder' => function (\Gedmo\Tree\Entity\Repository\NestedTreeRepository $r)
                     {
-                        return $r->getChildrenQueryBuilder(null, null, 'root', 'asc', false);
+                        return $r->getChildrenQueryBuilder(null, null, 'name', 'asc', false);
                     }
             ))
             ->add('targetLevel3', 'entity', array(
@@ -233,8 +233,11 @@ class CandidateType extends AbstractType
                 'expanded' => false, // checkboxes?
                 'attr' => array('class' => 'select2', 'style' => 'width:300px'),
             ))
-            ->add('origin', 'text', array(
-                'attr' => array('class' => 'form-control')
+            ->add('origin', 'choice', array(
+                'choices' => array(
+                    'TEW' => 'TEW', 
+                    'other' => 'other'),
+                'attr' => array('class' => 'form-control'),
             ))
             ->add('tags','tags', array(
                 'required' => false,
