@@ -32,6 +32,17 @@ class CandidateType extends AbstractType
                 'required' => false,
                 //'attr' => array('class' => 'form-control'),
             ))
+            ->add('alert', 'checkbox', array(
+                'required' => false,
+                //'attr' => array('class' => 'form-control'),
+            ))
+            ->add('status', 'entity', array(
+                'class' => 'TEWTPBundle:CdteStatus',
+                'label' => 'Status',
+                //'empty_value' => 'All',
+                'attr' => array('class' => 'form-control'),
+                //'label_attr' => array('class' => 'col-md-2')
+            ))
             ->add('picture', 'sonata_media_type', array(
                 'label' => false, // 'label'    =>  'Image'
                 'required' => false,
@@ -62,6 +73,13 @@ class CandidateType extends AbstractType
                 'empty_value' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day'),
                 'attr' => array('class' => 'date form-control'), // datepicker when available
                 'required' => false,
+            ))
+            ->add('nationality1', 'country', array(
+                'attr' => array('class' => 'select2')
+            ))
+            ->add('nationality2', 'country', array(
+               'required' => false,
+                'attr' => array('class' => 'select2')
             ))
             ->add('email', 'email',  array(
                 'attr' => array('placeholder'=>'Email', 'class' => 'form-control')
@@ -219,6 +237,7 @@ class CandidateType extends AbstractType
                 'by_reference' => false, // 'false' forces setMobilities() to be called
             ))
             ->add('languagesSkills', 'modalcollection', array(
+                'label' => 'Languages',
                 'attr' => array('class' => 'form-collection'), // in order to handle jquery functions of tew.candidate.edit.js
                 'type' => new CdteLanguageType(),
                 'required' => false,

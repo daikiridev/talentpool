@@ -9,6 +9,7 @@ class TEWExtension extends \Twig_Extension
 {
     private $skills;
     private $languages;
+    private $countries;
     private $currencies;
     
     
@@ -17,6 +18,7 @@ class TEWExtension extends \Twig_Extension
         $this->skills = new ArrayCollection(array('none','beginner','intermediate','fluent', 'mother tongue'));
         $this->cdteStatuses = new ArrayCollection(array('sleeping','active','in process','hired'));
         $this->languages = Intl::getLanguageBundle()->getLanguageNames();
+        $this->countries = Intl::getRegionBundle()->getCountryNames();
         // $this->currencies = Intl::getCurrencyBundle()->getCurrencyNames(); // exhaustive list -> very long...
         // var_dump($this->currencies); exit;
         $this->currencies = array(
@@ -43,7 +45,9 @@ class TEWExtension extends \Twig_Extension
             new \Twig_SimpleFilter('gender', array($this, 'genderFilter')),
             new \Twig_SimpleFilter('mail', array($this, 'mailFilter'), array('is_safe' => array('html'))),
             new \Twig_SimpleFilter('languageSkill', array($this, 'languageSkillFilter')),
+            new \Twig_SimpleFilter('country', array($this, 'countryFilter')),
             new \Twig_SimpleFilter('currency', array($this, 'currencyFilter')),
+            new \Twig_SimpleFilter('status', array($this, 'statusFilter'), array('is_safe' => array('html'))),
             new \Twig_SimpleFilter('commentsByTalentpool', array($this, 'commentsByTalentpoolFilter')),
             new \Twig_SimpleFilter('commentsAverageScore', array($this, 'commentsAverageScoreFilter')),
         );
@@ -78,9 +82,21 @@ class TEWExtension extends \Twig_Extension
         return $result;
     }
     
+    public function countryFilter($country = null)
+    {
+        $result = (($this->countries!=null) && $country)?$this->countries[$country]:'';
+        return $result;
+    }
+    
     public function currencyFilter($currency = null)
     {
         $result = ($this->currencies!=null && $currency)?$this->currencies[$currency]:'';
+        return $result;
+    }
+
+    public function statusFilter(\TEW\TPBundle\Entity\CdteStatus $status = null)
+    {
+        $result = '<i class="icon icon-'.$status->getIcon().'" style="cursor:help; color:'.$status->getColor().'" title="'.$status->getName().'"></i>';
         return $result;
     }
     

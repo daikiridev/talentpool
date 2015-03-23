@@ -46,6 +46,7 @@ sonata_admin:
 #                    - tew_tp.admin.language
                     - tew_tp.admin.cdtefunction
                     - tew_tp.admin.cdtelevel
+                    - tew_tp.admin.cdtestatus
 #                    - tew_tp.admin.cdtelanguage
             tew.admin.group.data:
                 label: Pools & Candidates

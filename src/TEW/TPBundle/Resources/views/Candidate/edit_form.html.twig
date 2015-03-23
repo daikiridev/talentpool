@@ -60,10 +60,19 @@
     <div class="row">
         <fieldset class="col-lg-8">
             <legend>Main</legend>
-            <div class="row">
-                <div class="col-lg-1">
-                    {{ form_label(this_form.active) }} {{ form_widget(this_form.active) }}
+             <div class="row">
+                <div class="col-lg-2">
+                    {{ form_row(this_form.alert) }}
                 </div>
+                <div class="col-lg-2">
+                    {{ form_row(this_form.active) }}
+                </div>
+                <div class="col-lg-4">
+                    {{ form_row(this_form.status) }}
+                </div>
+            </div>
+            <div class="row"><br></div>
+            <div class="row">
                 <div class="col-lg-5">
                     {{ form_label(this_form.function) }}<br>
                     {{ form_widget(this_form.function) }}
@@ -114,20 +123,24 @@
             </div>
             <div class="row"><br></div>
             <div class="row">
-                <div class="col-lg-12">
-                     {{ form_row(this_form.dateOfBirth) }}
+                <div class="col-lg-6">
+                    {{ form_row(this_form.dateOfBirth) }}
                 </div>
+                <div class="col-lg-6">
+                     {{ form_row(this_form.nationality1) }}
+                </div>
+
             </div>
             <div class="row"><br></div>
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-lg-3">
                      {{ form_row(this_form.languagesSkills) }}
                 </div>
-            </div>
-            <div class="row"><br></div>
-            <div class="row">
-                <div class="col-lg-12">
+                <div class="col-lg-3">
                      {{ form_row(this_form.mobilities) }}
+                </div>
+                <div class="col-lg-6">
+                     {{ form_row(this_form.nationality2) }}
                 </div>
             </div>
         </fieldset>

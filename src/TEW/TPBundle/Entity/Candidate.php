@@ -69,6 +69,20 @@ class Candidate implements Taggable
      * @ORM\Column(name="dateofbirth", type="date", nullable=true)
      */
     private $dateOfBirth;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nationality1", type="string", length=31, nullable=false)
+     */
+    private $nationality1;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nationality2", type="string", length=31, nullable=true)
+     */
+    private $nationality2;
     
     /**
      * @var string
@@ -186,6 +200,23 @@ class Candidate implements Taggable
      * @ORM\Column(name="active", type="boolean")
      */
     private $active;
+    
+    /**
+     * @var status
+     *
+     * @ORM\ManyToOne(targetEntity="CdteStatus")
+     * @ORM\JoinColumns={
+     *      @ORM\JoinColumn(name="status_id", referencedColumnName="id", nullable=true)
+     *  })
+     */
+    private $status;
+    
+    /**
+     * @var bool $alert
+     *
+     * @ORM\Column(name="alert", type="boolean")
+     */
+    private $alert;
     
     /**
      * @var targetFunction1
@@ -1318,5 +1349,97 @@ class Candidate implements Taggable
     public function getIncomeMonths()
     {
         return $this->incomeMonths;
+    }
+
+    /**
+     * Set nationality1
+     *
+     * @param string $nationality1
+     * @return Candidate
+     */
+    public function setNationality1($nationality1)
+    {
+        $this->nationality1 = $nationality1;
+
+        return $this;
+    }
+
+    /**
+     * Get nationality1
+     *
+     * @return string 
+     */
+    public function getNationality1()
+    {
+        return $this->nationality1;
+    }
+
+    /**
+     * Set nationality2
+     *
+     * @param string $nationality2
+     * @return Candidate
+     */
+    public function setNationality2($nationality2)
+    {
+        $this->nationality2 = $nationality2;
+
+        return $this;
+    }
+
+    /**
+     * Get nationality2
+     *
+     * @return string 
+     */
+    public function getNationality2()
+    {
+        return $this->nationality2;
+    }
+
+    /**
+     * Set status
+     *
+     * @param \TEW\TPBundle\Entity\CdteStatus $status
+     * @return Candidate
+     */
+    public function setStatus(\TEW\TPBundle\Entity\CdteStatus $status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return \TEW\TPBundle\Entity\CdteStatus 
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * Set alert
+     *
+     * @param boolean $alert
+     * @return Candidate
+     */
+    public function setAlert($alert)
+    {
+        $this->alert = $alert;
+
+        return $this;
+    }
+
+    /**
+     * Get alert
+     *
+     * @return boolean 
+     */
+    public function getAlert()
+    {
+        return $this->alert;
     }
 }

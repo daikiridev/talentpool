@@ -7,6 +7,21 @@
             <img height="100" data-toggle="magnify" src="{% path entity.picture, 'big' %}" alt="{{ entity.picture is null?'':entity.picture.name }}">
             </div>
         {% endif %}
+        <br>
+        <small>
+        {% if entity.alert %}
+            <i class="icon-white icon-bell" style="color:red; cursor:help" title="alert"></i>
+        {% endif %}
+        {% if not entity.active %}
+            <i class="icon-remove" style="color:lightcoral; cursor:help" title="cancelled"></i>
+        {% endif %}
+        {% if entity.status %}
+            {{entity.status|status}}
+        {% endif %}
+        {% if entity.resume %}
+            <i class="icon icon-paperclip" style="cursor:help" title="resume attached"></i>
+        {% endif %}
+        </small>
     </h1>
     <div role="tabpanel">
         <!-- Nav tabs -->
@@ -81,6 +96,10 @@
                                 </td>
                             </tr>
                         {% endif %}
+                            <tr>
+                                <th>Nationality</th>
+                                <td>{{ entity.nationality1 }} {{ entity.nationality2 }}</td>
+                            </tr>
                         {% if entity.mobilities %}
                             <tr>
                                 <th>Mobility</th>

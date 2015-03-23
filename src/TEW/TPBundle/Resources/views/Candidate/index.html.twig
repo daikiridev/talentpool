@@ -29,6 +29,7 @@
                     {"bSearchable": true}, // Name
                     {"bSearchable": true}, // Current position
                     {"bSearchable": false}, // Experience
+                    {"bSearchable": true, "bSortable": false}, // Nationality
                     {"bSearchable": true, "bSortable": false}, // Mobilities
                     {"bSearchable": true, "bSortable": false}, // Target functions
                     {"bSearchable": false, "bSortable": false}, // Talent pools
@@ -40,7 +41,7 @@
             });
         });
         $('.checkall').click(function () {
-            $('#list').children('tbody').find(':checkbox').prop('checked',$(this).hasClass('icon-unchecked'));
+            $('#list').children('tbody').find(':checkbox').prop('checked', $(this).hasClass('icon-unchecked'));
             $(this).toggleClass('icon-unchecked');
             $(this).toggleClass('icon-check');
         });
@@ -48,16 +49,17 @@
 {% endblock %}
 {% block body -%}
     <h1>Candidate list</h1>
-{{ form_start(check_candidates_form) }}
+    {{ form_start(check_candidates_form) }}
     <table id="list" class="display" cellspacing="0">
         <thead>
             <tr>
                 <th><i class="icon icon-unchecked checkall"></i></th>
-                <th><i class="icon icon-paperclip"></i></th>
+                <th>&nbsp;</th>
                 <th>Entry score</th>
                 <th>Name</th>
                 <th>Curr. Pos.</th>
                 <th>Exp.</th>
+                <th>Nationality</th>
                 <th>Mobility</th>
                 <th>Target functions</th>
                 <th>Talent pools</th>
@@ -89,9 +91,18 @@
                             {{ form_widget(check_candidates_form.candidates[entity.id]) }}
                         </td>
                         <td>
-                        {% if entity.resume %}
-                            <i class="icon icon-paperclip"></i>
-                        {% endif %}
+                            {% if entity.alert %}
+                                <i class="icon-white icon-bell" style="color:red; cursor:help" title="alert"></i>
+                            {% endif %}
+                            {% if not entity.active %}
+                                <i class="icon-remove" style="color:lightcoral; cursor:help" title="cancelled"></i>
+                            {% endif %}
+                            {% if entity.status %}
+                                {{entity.status|status}}
+                            {% endif %}
+                            {% if entity.resume %}
+                                <i class="icon icon-paperclip" style="cursor:help" title="resume attached"></i>
+                            {% endif %}
                         </td>
                         <td>
                             <div data-toggle="popover" data-placement="bottom" data-delay='{ "show": 500, "hide": 200 }' data-html="true" style="cursor:help"
@@ -108,35 +119,36 @@
                         #}
                         <td>{{ entity.function }} {{ entity.level }}</td>
                         <td>{{ entity.ageExperience }} yrs</td>
+                        <td>{{ entity.nationality1|country }} {{ entity.nationality2|country }}</td>
                         <td>
                             <small>
-                            {% for mob in entity.mobilities %}
-                                <span class='tag'>{{ mob }}</span>
-                            {% endfor %}
+                                {% for mob in entity.mobilities %}
+                                    <span class='tag'>{{ mob }}</span>
+                                {% endfor %}
                             </small>
                         </td>
                         <td>
                             <small>
-                            {% for func in entity.targetFunctions %}
-                                <span class='tag'>{{ func }}</span>
-                            {% endfor %}
+                                {% for func in entity.targetFunctions %}
+                                    <span class='tag'>{{ func }}</span>
+                                {% endfor %}
                             </small>
                         </td>
                         <td>
                             <small>
-                            {% for tp in entity.talentpools %}
-                                {% set visible_tp = (app.user.company in tp.companies) or is_granted('ROLE_TEW_EXECUTOR') %}
-                                {% if visible_tp %}
-                                    <span class='tag'>{{ tp }} {{ entity.averageScore(tp)|stars }}</span>
-                                {% endif %}
-                            {% endfor %}
+                                {% for tp in entity.talentpools %}
+                                    {% set visible_tp = (app.user.company in tp.companies) or is_granted('ROLE_TEW_EXECUTOR') %}
+                                    {% if visible_tp %}
+                                        <span class='tag'>{{ tp }} {{ entity.averageScore(tp)|stars }}</span>
+                                    {% endif %}
+                                {% endfor %}
                             </small>
                         </td>
                         <td>
                             <small>
-                            {% for tag in entity.tags %}
-                                <span class='tag'>{{ tag }}</span>
-                            {% endfor %}
+                                {% for tag in entity.tags %}
+                                    <span class='tag'>{{ tag }}</span>
+                                {% endfor %}
                             </small>
                         </td>
                         <td>{% if entity.createdAt %}{{ entity.createdAt|date('Y-m-d') }}{% endif %}</td>
@@ -168,25 +180,25 @@
                 <div style="display: none">
                     {{ form_widget(check_candidates_form.candidates[entity.id]) }}
                 </div>
-                {% endif %}
-            {% endfor %}
-        </tbody>
-    </table>
-        <br>
-        <div class='col-lg-5'>
-           {{ form_widget(check_candidates_form.selectactions) }}
+            {% endif %}
+        {% endfor %}
+    </tbody>
+</table>
+<br>
+<div class='col-lg-5'>
+    {{ form_widget(check_candidates_form.selectactions) }}
+</div>
+<div class='col-lg-6'>
+    {{ form_widget(check_candidates_form.submit) }}
+</div>
+{{ form_end(check_candidates_form) }}
+{% block actions %}
+    <div class="btn-toolbar pull-right record_actions" role="group">
+        <div class="btn-group">
+            <a role="button"  class="btn btn-warning" href="{{ path('tew_candidate_new') }}">
+                Create a new entry
+            </a>
         </div>
-        <div class='col-lg-6'>
-            {{ form_widget(check_candidates_form.submit) }}
-        </div>
-    {{ form_end(check_candidates_form) }}
-    {% block actions %}
-        <div class="btn-toolbar pull-right record_actions" role="group">
-            <div class="btn-group">
-                <a role="button"  class="btn btn-warning" href="{{ path('tew_candidate_new') }}">
-                    Create a new entry
-                </a>
-            </div>
-        </div>
-    {% endblock actions %}
+    </div>
+{% endblock actions %}
 {% endblock %}

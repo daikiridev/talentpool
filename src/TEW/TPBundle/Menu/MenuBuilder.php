@@ -98,8 +98,8 @@ class MenuBuilder
             $menu->addChild('Candidates')
                     ->setAttribute('icon', 'icon-male')
                     ->setAttribute('dropdown', true);
-            $menu['Candidates']->addChild('Search', array('route' => 'tew_candidate_search'))
-                    ->setAttribute('icon', 'icon-eye-open');
+//            $menu['Candidates']->addChild('Search', array('route' => 'tew_candidate_search'))
+//                    ->setAttribute('icon', 'icon-eye-open');
             $menu['Candidates']->addChild('List', array('route' => 'tew_candidate'))
                     ->setAttribute('icon', 'icon-list');
             $menu['Candidates']->addChild('Add', array('route' => 'tew_candidate_new'))
