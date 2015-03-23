@@ -1,6 +1,11 @@
 tew_candidate:
     path:     /
     defaults: { _controller: "TEWTPBundle:Candidate:index" }
+    
+tew_candidate_compare:
+    path:     /compare
+    defaults: { _controller: "TEWTPBundle:Candidate:compare" }
+    requirements: { _method: post }
 
 tew_candidate_search:
     path:     /search

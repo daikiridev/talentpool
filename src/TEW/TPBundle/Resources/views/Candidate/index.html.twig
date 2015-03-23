@@ -39,8 +39,8 @@
                 ]
             });
         });
-        $('.icon-unchecked').click(function () {
-            // alert('(to be implemented)') ;
+        $('.checkall').click(function () {
+            $('#list').children('tbody').find(':checkbox').prop('checked',$(this).hasClass('icon-unchecked'));
             $(this).toggleClass('icon-unchecked');
             $(this).toggleClass('icon-check');
         });
@@ -48,11 +48,11 @@
 {% endblock %}
 {% block body -%}
     <h1>Candidate list</h1>
-
+{{ form_start(check_candidates_form) }}
     <table id="list" class="display" cellspacing="0">
         <thead>
             <tr>
-                <th><i class="icon icon-unchecked main"></i></th>
+                <th><i class="icon icon-unchecked checkall"></i></th>
                 <th><i class="icon icon-paperclip"></i></th>
                 <th>Entry score</th>
                 <th>Name</th>
@@ -86,8 +86,7 @@
                     {% set anonymous = (not is_granted('ROLE_TEW_EXECUTOR')) and (entity.creator.company != app.user.company) %}
                     <tr>
                         <td>
-                            <i class="icon icon-unchecked" id="{{ entity.id }}" name="{{ entity }}" style="cursor: pointer"
-                               data-toggle="tooltip" data-placement="left" title="Check cdte for target action"></i>
+                            {{ form_widget(check_candidates_form.candidates[entity.id]) }}
                         </td>
                         <td>
                         {% if entity.resume %}
@@ -157,7 +156,7 @@
                                         </a>
                                     </div>
                                 {% endif %}
-                                {% if is_granted("ROLE_TEW_EXECUTOR") %}
+                                {% if is_granted("ROLE_TEW_EXECUTOR") and delete_forms[entity.id] is defined %}
                                     <div class="btn-group">        
                                         {{ form(delete_forms[entity.id]) }}
                                     </div>
@@ -165,18 +164,22 @@
                             </div>
                         </td>
                     </tr>
+                {% else %}
+                <div style="display: none">
+                    {{ form_widget(check_candidates_form.candidates[entity.id]) }}
+                </div>
                 {% endif %}
             {% endfor %}
         </tbody>
     </table>
-    
-        <div class='col-lg-12'>
-            <br>
-            <select>
-                <option>Select an action</option>
-                <option value="disp">Compare selected candidates (to be implemented)</option>
-            </select>
+        <br>
+        <div class='col-lg-5'>
+           {{ form_widget(check_candidates_form.selectactions) }}
         </div>
+        <div class='col-lg-6'>
+            {{ form_widget(check_candidates_form.submit) }}
+        </div>
+    {{ form_end(check_candidates_form) }}
     {% block actions %}
         <div class="btn-toolbar pull-right record_actions" role="group">
             <div class="btn-group">

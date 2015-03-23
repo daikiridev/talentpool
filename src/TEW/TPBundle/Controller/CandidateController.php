@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Doctrine\Common\Collections\ArrayCollection;
 use TEW\TPBundle\Entity\Candidate;
 use TEW\TPBundle\Form\CandidateType;
+use TEW\TPBundle\Form\CheckCandidatesType;
 
 /**
  * Candidate controller.
@@ -27,19 +28,81 @@ class CandidateController extends Controller {
      * Lists all Candidate entities.
      *
      */
-    public function indexAction() {
+    public function indexAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
+        $entities = $request->request->get('entities');
+  
+        // Lists given candidates (result of a search, POST method), otherwise all candidates
+        $candidates = $entities?$entities:$em->getRepository('TEWTPBundle:Candidate')->findAll();
+        $deleteForms = array();
+        
+        $form = $this->createCheckCdtesForm($candidates);
+        
+        //$form->handleRequest($request);
+        
+//        if ($form->isValid()) {
+//
+//        } else {
+//            foreach ($candidates as $entity) {
+//                $deleteForms[$entity->getId()] = $this->createDeleteForm($entity->getId(), 'btn-xs')->createView();
+//            }
+            return $this->render('TEWTPBundle:Candidate:index.html.twig', array(
+                        'entities' => $candidates,
+                        'check_candidates_form' => $form->createView(),
+                        'delete_forms' => $deleteForms,
+            ));            
+//        }
+    }
 
-        $entities = $em->getRepository('TEWTPBundle:Candidate')->findAll();
+    /**
+     * Creates a form to list all candidates and check them.
+     *
+     * @param \Doctrine\Common\Collections\ArrayCollection $entities The candidates
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createCheckCdtesForm($entities=null) {
+        $form = $this->createForm(new CheckCandidatesType(), $entities, array(
+            //'action' => $this->generateUrl('tew_candidate_update', array('id' => $entity->getId())),
+            'action' => $this->generateUrl('tew_candidate_compare'),
+            'method' => 'POST',
+        ));
+
+//        $form->add('submit', 'submit', array('label' => 'Update',
+//            'attr' => array(
+//                'class' => 'btn btn-warning',
+//            )
+//        ));
+
+        return $form;
+    }
+    
+    /**
+     * Compares given candidate entities.
+     *
+     */
+    public function compareAction(Request $request) {
+        
+       // $entities = $request->get('candidates');
+        //var_dump($entities); exit;
+        $form = $this->createForm(new CheckCandidatesType());
+        $form->handleRequest($request);
+        $data = $form->getData();
+        $entities = $data['candidates'];
+        //var_dump($entities);
         $deleteForms = array();
 
-        foreach ($entities as $entity) {
-            $deleteForms[$entity->getId()] = $this->createDeleteForm($entity->getId(), 'btn-xs')->createView();
-        }
-        return $this->render('TEWTPBundle:Candidate:index.html.twig', array(
+        if (count($entities)>0) {
+            foreach ($entities as $entity) {
+                $deleteForms[$entity->getId()] = $this->createDeleteForm($entity->getId(), 'btn-xs')->createView();
+            }
+            return $this->render('TEWTPBundle:Candidate:compare.html.twig', array(
                     'entities' => $entities,
                     'delete_forms' => $deleteForms,
         ));
+        } else {
+            return $this->redirect($this->generateUrl('tew_candidate'));
+        }
     }
 
     /**

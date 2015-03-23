@@ -1,7 +1,8 @@
-
+{# Should this candidate details be displayed? #}
+{% set anonymous = (not is_granted('ROLE_TEW_EXECUTOR')) and (entity.creator.company != app.user.company) %}
     <h1>
         Candidate {{ anonymous?' <small>(anonymous)</small>'}}
-        {% if not anonymous and entity.picture %}
+        {% if entity.picture %}
             <div class="mag pull-right">
             <img height="100" data-toggle="magnify" src="{% path entity.picture, 'big' %}" alt="{{ entity.picture is null?'':entity.picture.name }}">
             </div>
@@ -10,12 +11,12 @@
     <div role="tabpanel">
         <!-- Nav tabs -->
         <ul class="nav nav-pills">
-            <li role="presentation" class="active"><a href="#details" aria-controls="details" role="tab" data-toggle="tab">Details</a></li>
-            <li role="presentation" ><a href="#talentpools" aria-controls="talentpools" role="tab" data-toggle="tab">Talent Pools</a></li>
+            <li role="presentation" class="active"><a href="#details_{{entity.id}}" aria-controls="details" role="tab" data-toggle="tab">Details</a></li>
+            <li role="presentation" ><a href="#talentpools_{{entity.id}}" aria-controls="talentpools" role="tab" data-toggle="tab">Talent Pools</a></li>
         </ul>
         <!-- Tab panes -->
         <div class="tab-content">
-            <div role="tabpanel" class="tab-pane active" id="details">
+            <div role="tabpanel" class="tab-pane active" id="details_{{entity.id}}">
                 <table class="record_properties">
                     <tbody>
                         <tr>
@@ -132,7 +133,7 @@
                     </tbody>
                 </table>
             </div>
-            <div role="tabpanel" class="tab-pane col-lg-12" id="talentpools">
+            <div role="tabpanel" class="tab-pane col-lg-12" id="talentpools_{{entity.id}}">
                 <div class="row">
                     <div class="col-lg-12">
                         {% for tp in entity.talentpools %}
@@ -200,7 +201,7 @@
                     Request candidate details
                 </button>
             {% endif %}
-            {% if is_granted('ROLE_TEW_EXECUTOR')%}
+            {% if is_granted('ROLE_TEW_EXECUTOR') and delete_form is defined %}
                 <div class="btn-group">
                     {{ form(delete_form) }}
                 </div>

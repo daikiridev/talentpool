@@ -14,9 +14,21 @@
 {% endblock %}
 
 {% block body -%}
-    {% for candidate in candidates %}
-        {# Should this candidate details be displayed? #}
-        {% set anonymous = (not is_granted('ROLE_TEW_EXECUTOR')) and (candidate.creator.company != app.user.company) %}
-        {% include('TEWTPBundle:Candidate:view.html.twig', {'entity': candidate}) %}
-    {% endfor %}
+    <div role="tabpanel">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs">
+            {% for candidate in entities %}
+                {% set anonymous = (not is_granted('ROLE_TEW_EXECUTOR')) and (candidate.creator.company != app.user.company) %}
+                <li role="presentation" {{ loop.index==1?'class="active"' }}><a href="#cdte{{ loop.index }}" aria-controls="cdte{{ loop.index }}" role="tab" data-toggle="tab">{{ anonymous?'Candidate#'~loop.index:candidate }}</a></li>
+            {% endfor %}
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content">
+            {% for candidate in entities %}
+                <div role="tabpanel" class="tab-pane col-lg-12 {{ loop.index==1?'active' }}" id="cdte{{ loop.index }}">
+                    {{ include('TEWTPBundle:Candidate:view.html.twig', {'entity': candidate}) }}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 {% endblock body %}

@@ -1,50 +1,50 @@
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
 }
 .footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  /* Set the fixed height of the footer here */
-  height: 40px;
-  background-color: #f5f5f5;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    height: 40px;
+    background-color: #f5f5f5;
 }
 
 
 body > .container {
-  padding: 60px 15px 0;
+    padding: 60px 15px 0;
 }
 .container .text-muted {
-  margin: 10px 0;
+    margin: 10px 0;
 }
 
 .footer > .container {
-  padding-right: 15px;
-  padding-left: 15px;
+    padding-right: 15px;
+    padding-left: 15px;
 }
 
 code {
-  font-size: 80%;
+    font-size: 80%;
 }
 
-// Others
+/* Others */
 
 .navbar-inverse {
     background-color: navy;
     border-color: yellow;
 }
 
-// Popover
+/* Popover */
 .popover{
-    max-width: 100%; // Max Width of the popover (depending on the container!)
+    max-width: 100%; /* Max Width of the popover (depending on the container!) */
 }
 
-// Records
+/* Records */
 
 .records_list {
     border: 1px solid white;
@@ -55,16 +55,26 @@ code {
 }
 
 .record_properties {
-    //text-align: center;
-/*    margin: 10px;
-    padding: 10px;*/
+    /*    margin: 10px;
+        padding: 10px;*/
 }
 .record_properties td {
-    //border: 1px solid;
+/*    border: 1px solid;*/
     padding: 10px;
 }
 
-// Google place's dropdown above modal popups
+.nav-tabs > li.active > a,
+.nav-tabs > li.active > a:hover,
+.nav-tabs > li.active > a:focus {
+    cursor: default;
+    background-color: #75caeb;
+    border-color: #5fc1e8;
+    color: #ffffff;
+    border: 1px solid #dddddd;
+    border-bottom-color: transparent;
+} 
+
+/* Google place's dropdown above modal popups */
 .modal {
     z-index: 10;   
 }
@@ -75,7 +85,7 @@ code {
     z-index: 9999 !important;
 }
 
-// customizing form layout
+/* customizing form layout */
 h1, .h1 {
     color: darkblue;
     font-size: 36px;
@@ -86,8 +96,8 @@ fieldset {
 }
 fieldset:hover {
     background-color: #fbfbfb;
-//    box-shadow: 2px 2px 5px #555555;
+    /*box-shadow: 2px 2px 5px #555555;*/
 }
 legend {
-   color: darkblue;
+    color: darkblue;
 }
