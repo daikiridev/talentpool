@@ -59,7 +59,7 @@ code {
         padding: 10px;*/
 }
 .record_properties td {
-/*    border: 1px solid;*/
+    /*    border: 1px solid;*/
     padding: 10px;
 }
 
@@ -76,7 +76,10 @@ code {
 
 /* Google place's dropdown above modal popups */
 .modal {
-    z-index: 10;   
+    z-index: 10;
+    top:50px;
+    //right:50%;
+    outline: none;
 }
 /*.modal-backdrop{
     z-index: 10;        

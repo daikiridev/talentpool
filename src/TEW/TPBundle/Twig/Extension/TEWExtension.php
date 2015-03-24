@@ -42,7 +42,7 @@ class TEWExtension extends \Twig_Extension
     {
         return array(
             new \Twig_SimpleFilter('stars', array($this, 'starsFilter'), array('is_safe' => array('html'))),
-            new \Twig_SimpleFilter('gender', array($this, 'genderFilter')),
+            new \Twig_SimpleFilter('gender', array($this, 'genderFilter'), array('is_safe' => array('html'))),
             new \Twig_SimpleFilter('mail', array($this, 'mailFilter'), array('is_safe' => array('html'))),
             new \Twig_SimpleFilter('languageSkill', array($this, 'languageSkillFilter')),
             new \Twig_SimpleFilter('country', array($this, 'countryFilter')),
@@ -66,7 +66,7 @@ class TEWExtension extends \Twig_Extension
     
     public function genderFilter($gender)
     {
-        return $gender=='m'?'Male':'Female';
+        return $gender=='m'?'<i class="icon-male"></i>':'<i class="icon-female"></i>';
     }
     
     public function mailFilter($email)

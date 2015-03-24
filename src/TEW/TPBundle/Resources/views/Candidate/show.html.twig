@@ -1,17 +1,22 @@
 {% extends '::base.html.twig' %}
 {% block styles %}
+     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/tewtp/css/jquery.tagsinput.css') }}" />
+    {# jQuery zoom on pictures #}
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/tewtp/css/bootstrap-magnify.css') }}" />
 {% endblock styles %}
 
 {% block scripts %}
+    {# jQuery zoom on pictures #}
     <script src="{{ asset('bundles/tewtp/js/bootstrap-magnify.js') }}"></script>
     <script>
         $(function () {
             $('[data-toggle="popover"]').popover()
         })
     </script>
+    {#{ include('TEWTPBundle:Candidate:common/cdtedetails_request_script.js.twig', {'entity': entity} ) }#}
 {% endblock %}
 
 {% block body -%}
     {{ include('TEWTPBundle:Candidate:view.html.twig', {'entity': entity} ) }}
+    {{ include('TEWTPBundle:Candidate:common/cdtedetails_request.html.twig', {'entity': entity} ) }}
 {% endblock body %}

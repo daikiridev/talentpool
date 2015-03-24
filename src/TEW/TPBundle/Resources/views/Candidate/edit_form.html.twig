@@ -15,7 +15,7 @@
     <script src="{{ asset('bundles/tewtp/js/tew.collections.edit.js') }}"></script>
     <script src="{{ asset('bundles/tewtp/js/tew.candidate.edit.js') }}"></script>
     <script>
-        $(document).ready(function(){
+        $(document).ready(function () {
             $('.tags-field').tagsInput({
                 'autocomplete_url': '{{ path('tew_json_allcandidatetags') }}',
                 'autocomplete': {selectFirst: true, width: '4px', autoFill: true},
@@ -29,246 +29,267 @@
             $(function () {
                 $('[data-toggle="popover"]').popover();
             });
-            {# if there is a new country in a mobility form, add the corresponding zone by an ajax request on tew_json_findzone #}
-            {# !!! Check if called !!!#}
-            $('.mobility_country').change(function () {
-                console.log('change country ' + $(this).val());
-                var zoneid = $(this).attr('id').replace((/country/), "zone");
-                $.post("{{ path('tew_json_findzone') }}", {country: $(this).val()})
-                    .done(function (data) {
-                        $('#' + zoneid).val(data.zone[0].id); // setting the right zone
-                        console.log(zoneid + ': ' + ($('#' + zoneid).val()));
-                    })
-                    .fail(function () {
-                        alert("The zone was not found, please reload the location");
-                    })
-                    .always(function () {
-                        console.log(zoneid + " finished");
-                    });
+        {# if there is a new country in a mobility form, add the corresponding zone by an ajax request on tew_json_findzone #}
+        {# !!! Check if called !!!#}
+                $('.mobility_country').change(function () {
+                    console.log('change country ' + $(this).val());
+                    var zoneid = $(this).attr('id').replace((/country/), "zone");
+                    $.post("{{ path('tew_json_findzone') }}", {country: $(this).val()})
+                            .done(function (data) {
+                                $('#' + zoneid).val(data.zone[0].id); // setting the right zone
+                                console.log(zoneid + ': ' + ($('#' + zoneid).val()));
+                            })
+                            .fail(function () {
+                                alert("The zone was not found, please reload the location");
+                            })
+                            .always(function () {
+                                console.log(zoneid + " finished");
+                            });
+                });
+                $('#candidate_picture_contentType').parent('div').hide();
+                $('#candidate_resume_contentType').parent('div').hide();
             });
-            $('#candidate_picture_contentType').parent('div').hide();
-            $('#candidate_resume_contentType').parent('div').hide();
-        });
     </script>    
 {% endblock scripts %}
 
+{% set anonymous = (not is_granted('ROLE_TEW_EXECUTOR')) and entity.lastname and (entity.creator.company != app.user.company) %}
 {% block body -%}
-    <h1>Candidate {{ operation }} </h1>
-
-    {{ form_start(this_form, { 'attr' : { 'class': 'form-inline' } }) }}
-
-    <div class="row">
-        <fieldset class="col-lg-8">
-            <legend>Main</legend>
-             <div class="row">
-                <div class="col-lg-2">
-                    {{ form_row(this_form.alert) }}
-                </div>
-                <div class="col-lg-2">
-                    {{ form_row(this_form.active) }}
-                </div>
-                <div class="col-lg-4">
-                    {{ form_row(this_form.status) }}
-                </div>
+    {% if anonymous %}
+        <h1>Candidate {{ operation }} not allowed </h1>
+        <div class="btn-toolbar pull-right record_actions" role="group">
+            <div class="btn-group">
+                <a role="button"  class="btn btn-info" href="{{ path('tew_candidate') }}">
+                    Back to the list
+                </a>
             </div>
-            <div class="row"><br></div>
-            <div class="row">
-                <div class="col-lg-5">
-                    {{ form_label(this_form.function) }}<br>
-                    {{ form_widget(this_form.function) }}
-                </div>
-                <div class="col-lg-4">
-                    {{ form_label(this_form.level) }}<br>
-                    {{ form_widget(this_form.level) }}
-                </div>
-                <div class="col-lg-2">
-                    {{ form_label(this_form.experience) }}<br>
-                    {{ form_widget(this_form.experience) }}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-4">
-                    {{ form_label(this_form.income) }}<br>
-                    {{ form_widget(this_form.income) }}
-                </div>
-                <div class="col-lg-5">
-                    {{ form_label(this_form.currency) }}<br>
-                    {{ form_widget(this_form.currency) }}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-12">
-                    {{ form_label(this_form.bonusbenefits) }}<br>
-                    {{ form_widget(this_form.bonusbenefits) }}
-                </div>
-            </div>
-            <div class="row"><br></div>
-            <div class="row">
-                <div class="col-lg-3">
-                    {{ form_label(this_form.gender) }}<br>
-                    {{ form_widget(this_form.gender) }}
-                </div>
-                <div class="col-lg-3">
-                    {{ form_label(this_form.firstName) }}<br>
-                    {{ form_widget(this_form.firstName) }}
-                </div>
-                <div class="col-lg-3">
-                    {{ form_label(this_form.middleName) }}<br>
-                    {{ form_widget(this_form.middleName) }}
-                </div>
-                <div class="col-lg-3">
-                    {{ form_label(this_form.lastName) }}<br>
-                    {{ form_widget(this_form.lastName) }}
-                </div>
-            </div>
-            <div class="row"><br></div>
-            <div class="row">
-                <div class="col-lg-6">
-                    {{ form_row(this_form.dateOfBirth) }}
-                </div>
-                <div class="col-lg-6">
-                     {{ form_row(this_form.nationality1) }}
-                </div>
-
-            </div>
-            <div class="row"><br></div>
-            <div class="row">
-                <div class="col-lg-3">
-                     {{ form_row(this_form.languagesSkills) }}
-                </div>
-                <div class="col-lg-3">
-                     {{ form_row(this_form.mobilities) }}
-                </div>
-                <div class="col-lg-6">
-                     {{ form_row(this_form.nationality2) }}
-                </div>
-            </div>
-        </fieldset>
-        <fieldset class="col-lg-4">
-            <legend>Attached</legend>
-            <div class="row">
-                <div class="col-lg-12">
-                     Picture {{ form_row(this_form.picture) }}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-12">
-                     Resume {{ form_row(this_form.resume) }}
-                </div>
-            </div>
-        </fieldset>
-    </div>
-    <div class="row"><br></div>
-    <div class="row">
-        <div class="col-lg-6">
-            <div class="row">
-                <fieldset class="col-lg-12">
-                    <legend>Details</legend>
-                    <div class="row">
-                        <div class="col-lg-4">
-                            {{ form_label(this_form.email) }}
-                            {{ form_widget(this_form.email) }}
-                        </div>
-                        <div class="col-lg-4">
-                            {{ form_label(this_form.phone1) }}
-                            {{ form_widget(this_form.phone1) }}
-                        </div>
-                        <div class="col-lg-4">
-                            {{ form_label(this_form.phone2) }}
-                            {{ form_widget(this_form.phone2) }}
-                        </div>
-                    </div>
-                    <div class="row"><br></div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            {{ form_row(this_form.addresses) }}
-                        </div>
-                    </div>
-                </fieldset>
-            </div>
-            <div class="row">
-                <fieldset class="col-lg-12">
-                    <legend>Opinion</legend>
-                    <div class="row">
-                        <div class="col-lg-6">{{ form_label(this_form.globalScore) }} {{ form_widget(this_form.globalScore) }}</div>
-                        <div class="col-lg-6">{{ form_label(this_form.origin) }} {{ form_widget(this_form.origin) }}</div>
-                    </div>
-                    <div class="row"><br></div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            {{ form_row(this_form.globalComment, { 'attr': {'cols': '80', 'rows': '10'} }) }}
-                        </div>
-                    </div>
-                    <div class="row"><br></div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            {{ form_row(this_form.tags) }}
-                        </div>
-                    </div>
-                </fieldset>
-            </div>
-            <div class="row"><br></div>
         </div>
-        <div  class="col-lg-6">                
-            <div class="row">
-                <fieldset class="col-lg-12">
-                    <legend>Talent Pools</legend>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            {{ form_row(this_form.talentpools) }}
-                        </div>
+    {% else %}
+
+        <h1>Candidate {{ operation }}{{ entity.lastname?': '~entity }}</h1>
+
+        {{ form_start(this_form, { 'attr' : { 'class': 'form-inline' } }) }}
+
+        <div class="row">
+            <fieldset class="col-lg-8">
+                <legend>Main</legend>
+                <div class="row">
+                    <div class="col-lg-5">
+                        {{ form_label(this_form.function) }}<br>
+                        {{ form_widget(this_form.function) }}
                     </div>
-                    <div class="row"><br></div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <label>Target pos#1</label>
-                            {{ form_widget(this_form.targetFunction1) }}{{ form_widget(this_form.targetLevel1) }}
-                        </div>
+                    <div class="col-lg-4">
+                        {{ form_label(this_form.level) }}<br>
+                        {{ form_widget(this_form.level) }}
                     </div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <label>Target pos#2</label>
-                            {{ form_widget(this_form.targetFunction2) }}{{ form_widget(this_form.targetLevel2) }}
-                        </div>
+                    <div class="col-lg-2">
+                        {{ form_label(this_form.experience) }}<br>
+                        {{ form_widget(this_form.experience) }}
                     </div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <label>Target pos#3</label>
-                            {{ form_widget(this_form.targetFunction3) }}{{ form_widget(this_form.targetLevel3) }}
-                        </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        {{ form_label(this_form.income) }}<br>
+                        {{ form_widget(this_form.income) }}
                     </div>
-                    <div class="row"><br></div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <label>{{ form_label(this_form.comments) }}</label>
-                            <div id="candidate_comments_new" class="form-collection" data-prototype="{{ form_widget(this_form.comments.vars.prototype)|e }}"></div>
-                            <div style="display: none"> {# older comments are hidden #}
-                                {{ form_row(this_form.comments) }}
+                    <div class="col-lg-5">
+                        {{ form_label(this_form.currency) }}<br>
+                        {{ form_widget(this_form.currency) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        {{ form_label(this_form.bonusbenefits) }}<br>
+                        {{ form_widget(this_form.bonusbenefits) }}
+                    </div>
+                </div>
+                <div class="row"><br></div>
+                <div class="row">
+                    <div class="col-lg-3">
+                        {{ form_label(this_form.gender) }}<br>
+                        {{ form_widget(this_form.gender) }}
+                    </div>
+                    <div class="col-lg-3">
+                        {{ form_label(this_form.firstName) }}<br>
+                        {{ form_widget(this_form.firstName) }}
+                    </div>
+                    <div class="col-lg-3">
+                        {{ form_label(this_form.middleName) }}<br>
+                        {{ form_widget(this_form.middleName) }}
+                    </div>
+                    <div class="col-lg-3">
+                        {{ form_label(this_form.lastName) }}<br>
+                        {{ form_widget(this_form.lastName) }}
+                    </div>
+                </div>
+                <div class="row"><br></div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        {{ form_row(this_form.dateOfBirth) }}
+                    </div>
+                    <div class="col-lg-6">
+                        {{ form_row(this_form.nationality1) }}
+                    </div>
+
+                </div>
+                <div class="row"><br></div>
+                <div class="row">
+                    <div class="col-lg-3">
+                        {{ form_row(this_form.languagesSkills) }}
+                    </div>
+                    <div class="col-lg-3">
+                        {{ form_row(this_form.mobilities) }}
+                    </div>
+                    <div class="col-lg-6">
+                        {{ form_row(this_form.nationality2) }}
+                    </div>
+                </div>
+            </fieldset>
+            <div class="col-lg-4">
+                <div class="row">
+                    <fieldset class="col-lg-12">
+                        <legend>Status</legend>
+                        <div class="col-lg-3">
+                            <span><i class="icon icon-bell" style="color:red; cursor:help" title="alert"></i></span>
+                            {{ form_widget(this_form.alert) }}
+                        </div>
+                        <div class="col-lg-3">
+                            {{ form_row(this_form.active) }}
+                        </div>
+                        <div class="col-lg-6">
+                            {{ form_row(this_form.status) }}
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="row"><br></div>
+                <div class="row">
+                    <fieldset class="col-lg-12">
+                        <legend>Attached</legend>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                Picture {{ form_row(this_form.picture) }}
                             </div>
                         </div>
-                    </div>
-                </fieldset>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                Resume {{ form_row(this_form.resume) }}
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
             </div>
         </div>
-    </div>
+        <div class="row"><br></div>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="row">
+                    <fieldset class="col-lg-12">
+                        <legend>Details</legend>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                {{ form_label(this_form.email) }}
+                                {{ form_widget(this_form.email) }}
+                            </div>
+                            <div class="col-lg-4">
+                                {{ form_label(this_form.phone1) }}
+                                {{ form_widget(this_form.phone1) }}
+                            </div>
+                            <div class="col-lg-4">
+                                {{ form_label(this_form.phone2) }}
+                                {{ form_widget(this_form.phone2) }}
+                            </div>
+                        </div>
+                        <div class="row"><br></div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                {{ form_row(this_form.addresses) }}
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="row">
+                    <fieldset class="col-lg-12">
+                        <legend>Opinion</legend>
+                        <div class="row">
+                            <div class="col-lg-6">{{ form_label(this_form.globalScore) }} {{ form_widget(this_form.globalScore) }}</div>
+                            <div class="col-lg-6">{{ form_label(this_form.origin) }} {{ form_widget(this_form.origin) }}</div>
+                        </div>
+                        <div class="row"><br></div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                {{ form_row(this_form.globalComment, { 'attr': {'cols': '80', 'rows': '10'} }) }}
+                            </div>
+                        </div>
+                        <div class="row"><br></div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                {{ form_row(this_form.tags) }}
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="row"><br></div>
+            </div>
+            <div  class="col-lg-6">                
+                <div class="row">
+                    <fieldset class="col-lg-12">
+                        <legend>Talent Pools</legend>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                {{ form_row(this_form.talentpools) }}
+                            </div>
+                        </div>
+                        <div class="row"><br></div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <label>Target pos#1</label>
+                                {{ form_widget(this_form.targetFunction1) }}{{ form_widget(this_form.targetLevel1) }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <label>Target pos#2</label>
+                                {{ form_widget(this_form.targetFunction2) }}{{ form_widget(this_form.targetLevel2) }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <label>Target pos#3</label>
+                                {{ form_widget(this_form.targetFunction3) }}{{ form_widget(this_form.targetLevel3) }}
+                            </div>
+                        </div>
+                        <div class="row"><br></div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <label>{{ form_label(this_form.comments) }}</label>
+                                <div id="candidate_comments_new" class="form-collection" data-prototype="{{ form_widget(this_form.comments.vars.prototype)|e }}"></div>
+                                <div style="display: none"> {# older comments are hidden #}
+                                    {{ form_row(this_form.comments) }}
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
 
-    <br>
-{% block actions %}
-    <div class="btn-toolbar pull-right record_actions" role="group">
-        <div class="btn-group">
-            {{ form_row(this_form.submit) }}
-        </div>
-        {{ form_end(this_form, {'render_rest': true}) }} {# this should be put before the form(delete_form) button #}
-        <div class="btn-group">
-            <a role="button"  class="btn btn-info" href="{{ path('tew_candidate') }}">
-                Back to the list
-            </a>
-        </div>
-        {% if operation == 'edit' %}
-        <div class="btn-group">
-            {{ form(delete_form) }}
-        </div>
-        {% endif %}
-    </div>
-{% endblock actions %}
+        <br>
+        {% block actions %}
+            <div class="btn-toolbar pull-right record_actions" role="group">
+                <div class="btn-group">
+                    {{ form_row(this_form.submit) }}
+                </div>
+                {{ form_end(this_form, {'render_rest': true}) }} {# this should be put before the form(delete_form) button #}
+                <div class="btn-group">
+                    <a role="button"  class="btn btn-info" href="{{ path('tew_candidate') }}">
+                        Back to the list
+                    </a>
+                </div>
+                {% if operation == 'edit' %}
+                    <div class="btn-group">
+                        {{ form(delete_form) }}
+                    </div>
+                {% endif %}
+            </div>
+        {% endblock actions %}
+    {% endif %}
 {% endblock body %}

@@ -26,7 +26,8 @@
         <div class="tab-content">
             {% for candidate in entities %}
                 <div role="tabpanel" class="tab-pane col-lg-12 {{ loop.index==1?'active' }}" id="cdte{{ loop.index }}">
-                    {{ include('TEWTPBundle:Candidate:view.html.twig', {'entity': candidate}) }}
+                    {{ include('TEWTPBundle:Candidate:view.html.twig', {'entity': candidate, 'delete_form': delete_forms[candidate.id]}) }}
+                    {{ include('TEWTPBundle:Candidate:common/cdtedetails_request.html.twig', {'entity': candidate, 'mail_form': mail_forms[candidate.id]} ) }}
                 </div>
             {% endfor %}
         </div>

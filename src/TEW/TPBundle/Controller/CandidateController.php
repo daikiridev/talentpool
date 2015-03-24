@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use TEW\TPBundle\Entity\Candidate;
 use TEW\TPBundle\Form\CandidateType;
 use TEW\TPBundle\Form\CheckCandidatesType;
+use TEW\TPBundle\Form\MailType;
 
 /**
  * Candidate controller.
@@ -31,9 +32,15 @@ class CandidateController extends Controller {
     public function indexAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
         $entities = $request->request->get('entities');
+        
+        $tagManager = $this->get('fpn_tag.tag_manager');
   
         // Lists given candidates (result of a search, POST method), otherwise all candidates
         $candidates = $entities?$entities:$em->getRepository('TEWTPBundle:Candidate')->findAll();
+        
+        foreach ($candidates as $cdte) {
+            $tagManager->loadTagging($cdte);
+        }
         $deleteForms = array();
         
         $form = $this->createCheckCdtesForm($candidates);
@@ -94,11 +101,19 @@ class CandidateController extends Controller {
 
         if (count($entities)>0) {
             foreach ($entities as $entity) {
-                $deleteForms[$entity->getId()] = $this->createDeleteForm($entity->getId(), 'btn-xs')->createView();
+                $id = $entity->getId();
+                $deleteForms[$id] = $this->createDeleteForm($entity->getId(), 'btn')->createView();
+                $mail = new \TEW\TPBundle\Entity\Mail($this->getUser());
+                $mail->setObject("[TEW TP] User ".$this->getUser()->getUserName()." (".$this->getUser()->getCompany().") request candidate #$id details");
+                $content = $this->generateUrl('tew_candidate_edit', array('id' => $id));
+                $mail->setContent($content);
+                $mail->setTo("vincent@123vpc.com"); // TO BE CHANGED
+                $mailForms[$id] = $this->createMailForm($mail)->createView();
             }
             return $this->render('TEWTPBundle:Candidate:compare.html.twig', array(
                     'entities' => $entities,
                     'delete_forms' => $deleteForms,
+                    'mail_forms' => $mailForms,
         ));
         } else {
             return $this->redirect($this->generateUrl('tew_candidate'));
@@ -225,13 +240,43 @@ class CandidateController extends Controller {
         $tagManager->loadTagging($entity);
         
         $deleteForm = $this->createDeleteForm($id);
+        
+        $mail = new \TEW\TPBundle\Entity\Mail($this->getUser());
+        $mail->setObject("[TEW TP] User ".$this->getUser()->getUserName()." (".$this->getUser()->getCompany().") request candidate #$id details");
+        $content = $this->generateUrl('tew_candidate_edit', array('id' => $entity->getId()));
+        $mail->setContent($content);
+        $mail->setTo("vincent@123vpc.com"); // TO BE CHANGED
+        $mailForm = $this->createMailForm($mail);
 
         return $this->render('TEWTPBundle:Candidate:show.html.twig', array(
                     'entity' => $entity,
 //            'languagesSkills' => $languageRep->findAllSkills(),
 //            'languages' => $languageRep->findAllLanguages(),
                     'delete_form' => $deleteForm->createView(),
+                    'mail_form' => $mailForm->createView(),
         ));
+    }
+    
+    /**
+     * Creates a form to request Candidate's details
+     *
+     * @param Candidate $entity The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createMailForm(\TEW\TPBundle\Entity\Mail $entity) {
+        $form = $this->createForm(new MailType(), $entity, array(
+//            'action' => $this->generateUrl('tew_cdtedetails_request', array('id' => $entity->getId(), 'user_id' => $this->getUser()->getId())),
+            'action' => $this->generateUrl('tew_cdtedetails_request'),
+            'method' => 'POST',
+        ));
+//        $form->add('submit', 'submit', array('label' => 'Update',
+//            'attr' => array(
+//                'class' => 'btn btn-warning',
+//            )
+//        ));
+
+        return $form;
     }
 
     /**

@@ -206,7 +206,7 @@ class Candidate implements Taggable
      *
      * @ORM\ManyToOne(targetEntity="CdteStatus")
      * @ORM\JoinColumns={
-     *      @ORM\JoinColumn(name="status_id", referencedColumnName="id", nullable=true)
+     *      @ORM\JoinColumn(name="status_id", referencedColumnName="id", nullable=false)
      *  })
      */
     private $status;
