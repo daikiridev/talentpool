@@ -91,7 +91,7 @@ class CandidateController extends Controller {
      *
      */
     public function compareAction(Request $request) {
-        
+        $em = $this->getDoctrine()->getManager();
        // $entities = $request->get('candidates');
         //var_dump($entities); exit;
         $form = $this->createForm(new CheckCandidatesType());
@@ -106,8 +106,12 @@ class CandidateController extends Controller {
                 $id = $entity->getId();
                 $deleteForms[$id] = $this->createDeleteForm($entity->getId(), 'btn')->createView();
                 $mail = new Mail($this->getUser(), $em->getRepository('TEWUserBundle:User')->findOneByUsername('admin'));
-                $mail->setObject("[TEW TP] User ".$this->getUser()->getUserName()." (".$this->getUser()->getCompany().") request candidate #$id details");
-                $content = $this->generateUrl('tew_candidate_edit', array('id' => $id));
+                $mail->setObject("[TEW TP] User ".$this->getUser()->getUserName()." (".$this->getUser()->getCompany().") requests candidate #$id details");
+                
+                $content = $this->getRequest()->server->get('HTTPS')?'https://':'http://';
+                $content .= $this->getRequest()->server->get('SERVER_NAME').':'.$this->getRequest()->server->get('SERVER_PORT');
+                $content .= $this->generateUrl('tew_candidate_edit', array('id' => $id));
+
                 $mail->setContent($content);
                 //$mail->setTo("vincent@123vpc.com"); // TO BE CHANGED
                 $mailForms[$id] = $this->createMailForm($mail)->createView();
@@ -227,7 +231,7 @@ class CandidateController extends Controller {
      */
     public function showAction($id) {
         $em = $this->getDoctrine()->getManager();
-        $languageRep = $em->getRepository('TEWTPBundle:CdteLanguage');
+        //$languageRep = $em->getRepository('TEWTPBundle:CdteLanguage');
 
         $entity = $em->getRepository('TEWTPBundle:Candidate')->find($id);
 
@@ -244,10 +248,11 @@ class CandidateController extends Controller {
         $deleteForm = $this->createDeleteForm($id);
         
         $mail = new Mail($this->getUser(), $em->getRepository('TEWUserBundle:User')->findOneByUsername('admin'));
-        $mail->setObject("[TEW TP] User ".$this->getUser()->getUserName()." (".$this->getUser()->getCompany().") request candidate #$id details");
-        $content = $this->generateUrl('tew_candidate_edit', array('id' => $entity->getId()));
+        $mail->setObject("[TEW TP] User ".$this->getUser()->getUserName()." (".$this->getUser()->getCompany().") requests candidate #$id details");
+        $content = $this->getRequest()->server->get('HTTPS')?'https://':'http://';
+        $content .= $this->getRequest()->server->get('SERVER_NAME').':'.$this->getRequest()->server->get('SERVER_PORT');
+        $content .= $this->generateUrl('tew_candidate_edit', array('id' => $entity->getId()));
         $mail->setContent($content);
-        //$mail->setTo("vincent@123vpc.com"); // TO BE CHANGED
         $mailForm = $this->createMailForm($mail);
 
         return $this->render('TEWTPBundle:Candidate:show.html.twig', array(
