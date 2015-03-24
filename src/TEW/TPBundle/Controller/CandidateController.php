@@ -8,7 +8,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 use TEW\TPBundle\Entity\Candidate;
 use TEW\TPBundle\Form\CandidateType;
 use TEW\TPBundle\Form\CheckCandidatesType;
+use TEW\TPBundle\Entity\Mail;
 use TEW\TPBundle\Form\MailType;
+//use TEW\UserBundle\Entity\User;
 
 /**
  * Candidate controller.
@@ -103,11 +105,11 @@ class CandidateController extends Controller {
             foreach ($entities as $entity) {
                 $id = $entity->getId();
                 $deleteForms[$id] = $this->createDeleteForm($entity->getId(), 'btn')->createView();
-                $mail = new \TEW\TPBundle\Entity\Mail($this->getUser());
+                $mail = new Mail($this->getUser(), $em->getRepository('TEWUserBundle:User')->findOneByUsername('admin'));
                 $mail->setObject("[TEW TP] User ".$this->getUser()->getUserName()." (".$this->getUser()->getCompany().") request candidate #$id details");
                 $content = $this->generateUrl('tew_candidate_edit', array('id' => $id));
                 $mail->setContent($content);
-                $mail->setTo("vincent@123vpc.com"); // TO BE CHANGED
+                //$mail->setTo("vincent@123vpc.com"); // TO BE CHANGED
                 $mailForms[$id] = $this->createMailForm($mail)->createView();
             }
             return $this->render('TEWTPBundle:Candidate:compare.html.twig', array(
@@ -241,11 +243,11 @@ class CandidateController extends Controller {
         
         $deleteForm = $this->createDeleteForm($id);
         
-        $mail = new \TEW\TPBundle\Entity\Mail($this->getUser());
+        $mail = new Mail($this->getUser(), $em->getRepository('TEWUserBundle:User')->findOneByUsername('admin'));
         $mail->setObject("[TEW TP] User ".$this->getUser()->getUserName()." (".$this->getUser()->getCompany().") request candidate #$id details");
         $content = $this->generateUrl('tew_candidate_edit', array('id' => $entity->getId()));
         $mail->setContent($content);
-        $mail->setTo("vincent@123vpc.com"); // TO BE CHANGED
+        //$mail->setTo("vincent@123vpc.com"); // TO BE CHANGED
         $mailForm = $this->createMailForm($mail);
 
         return $this->render('TEWTPBundle:Candidate:show.html.twig', array(

@@ -24,7 +24,7 @@ class CheckCandidatesType extends AbstractType
                 ))
             ->add('selectactions', 'choice', array(
                 'empty_value' => 'Select an action',
-                'choices' => array('compare' => 'Compare selected candidates'),
+                'choices' => array('compare' => 'Show selected candidates'),
                 'attr' => array('class' => 'form-control'),
             ))
             ->add('submit', 'submit', array(

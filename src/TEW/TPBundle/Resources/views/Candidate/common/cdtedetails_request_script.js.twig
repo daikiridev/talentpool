@@ -1,58 +1,43 @@
 <script>
-{# masquage de la barre de progression #}
-$('#confirmmodify').on('hidden', function () {
-    {# suppression de la barre de progression #}
-    $('#progressbar').css('display', 'none');
-    $(document.body).css('cursor','default');
-});
-
-{# envoi du mail au safety manager #}
-$(document.body).on('click', '.mail', function(event) {
-    event.preventDefault();
-    var result = false;
-    var footer_div = $(this).parent('.modal-footer');
-    var content_div = footer_div.parent().children('.modal-body');
-    var etab = "{{ app.request.session.get('establishments')['titles'][app.request.session.get('establishment')] }}";
-    var ident = "{{ app.security.token.user.username }}";
-    var comment = content_div.children('#comments').val();
-    var content ='';
-    $.ajax({
-            type: 'post',
-            url: "/mailer",
-            data: {
-                to: 'hotline',
-                subject: 'Demande de modification EVRP magasin '+etab,
-                msg: "Vous avez reçu une demande de modification d’un questionnaire EVRP de la part de "+ident+" \\r\\n{{ 'nav.establishment.nb'|trans }}"+etab+". Message facultatif :\\r\\n"+comment,
-                response: "{{ 'home.actions.modify.response'|trans|capitalize }}",
-                error: "{{ 'home.actions.modify.error'|trans|capitalize }}"
-            },
-            dataType: 'json'
-    })
-    .done(function (data) { {# traitement du retour #}
-        console.log(data);
-        if (data.error) {
-            alert('Erreur serveur distant: '+data.error);
-        } else {
-            content = data.response;
-            console.log('appel mailer ok (user '+ident+') '+data.response);
-            result = true;
-        }
-    })
-    .fail(function (jqXHR, textStatus, error) { {# Pb de connexion #}
-        alert("Erreur de communication ("+textStatus+": "+error+")");
-    })
-    .always(function () { {# Trace console #}
-        console.log("L'appel AJAX a réussi !");
-    })
-    .then(function(){ {# fin du visuel d'attente #}
-        if (result) {
-            footer_div.hide();
-            content_div.html(content);
-            setTimeout(function () {
-                $('#confirmmodify').modal('hide');
-            }, 2000);
-        }
-    });
-    return result;
-});
-</script>
+            $(document).ready(function() {
+                $('.mailrequest').click(function(event) {
+                    event.preventDefault(); 
+                    footer_div = $(this).parent('.modal-footer');
+                    form = footer_div.parent('form');
+                    content_div = form.children('.modal-body');
+                    modal = form.parents('.modal');
+                    console.log('Posting to: '+form.attr('action'));
+                    $.ajax({
+                            type: 'post',
+                            url: form.attr('action'),
+                            data: {
+                                mail_form: {
+                                    from: form.find('#mail_form_from').val(),
+                                    to: form.find('#mail_form_to').val(),
+                                    object: form.find('#mail_form_object').val(),
+                                    content: form.find('#mail_form_content').val(),
+                                }
+                            },
+                            dataType: 'json'
+                    })
+                    .done(function (data) {
+                        console.log(data);
+                        if (data.error>0) { alert(data.message); }
+                        content = data.message;
+                    })
+                    .fail(function (jqXHR, textStatus, error) {
+                        alert("Communication issue ("+textStatus+": "+error+")");
+                    })
+                    .always(function () {
+                        console.log("ajax request succeeded");
+                    })
+                    .then(function(){
+                        footer_div.hide();
+                        content_div.html(content);
+                        setTimeout(function () {
+                            modal.modal('hide');
+                        }, 2000);
+                    });              
+                });
+            });
+        </script>

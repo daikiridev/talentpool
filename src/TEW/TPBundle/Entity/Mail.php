@@ -38,9 +38,10 @@ class Mail
     /**
      * Constructor
      */
-    public function __construct(\TEW\UserBundle\Entity\User $user=null)
+    public function __construct(\TEW\UserBundle\Entity\User $fromUser=null, \TEW\UserBundle\Entity\User $toUser=null)
     {
-        $this->from = $user?$user->getEmail():null;
+        $this->from = $fromUser?$fromUser->getEmail():null;
+        $this->to = $toUser?$toUser->getEmail():null;
     }
     
     /**
