@@ -102,8 +102,10 @@ class CandidateController extends Controller {
         $deleteForms = array();
 
         if (count($entities)>0) {
+            $tagManager = $this->get('fpn_tag.tag_manager');
             foreach ($entities as $entity) {
                 $id = $entity->getId();
+                $tagManager->loadTagging($entity);
                 $deleteForms[$id] = $this->createDeleteForm($entity->getId(), 'btn')->createView();
                 $mail = new Mail($this->getUser(), $em->getRepository('TEWUserBundle:User')->findOneByUsername('admin'));
                 $mail->setObject("[TEW TP] User ".$this->getUser()->getUserName()." (".$this->getUser()->getCompany().") requests candidate #$id details");

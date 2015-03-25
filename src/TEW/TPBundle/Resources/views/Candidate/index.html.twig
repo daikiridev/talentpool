@@ -24,18 +24,15 @@
                 //  "sAjaxDataProp": "listes"
                 "aoColumns": [
                     {"bSearchable": false, "bSortable": false}, // Check
-                    {"bSearchable": false, "bSortable": false}, // Resume
-                    {"bSearchable": true}, // Entry score
+                    {"bSearchable": false, "bSortable": false}, // Pictos
                     {"bSearchable": true}, // Name
                     {"bSearchable": true}, // Current position
-                    {"bSearchable": false}, // Experience
                     {"bSearchable": true, "bSortable": false}, // Nationality
                     {"bSearchable": true, "bSortable": false}, // Mobilities
                     {"bSearchable": true, "bSortable": false}, // Target functions
                     {"bSearchable": false, "bSortable": false}, // Talent pools
                     {"bSearchable": false, "bSortable": false}, // Tags
                     {"bSearchable": false}, // Added on
-                    {"bSearchable": false}, // Origin
                     {"bSearchable": false, "bSortable": false} // Actions     
                 ]
             });
@@ -55,17 +52,14 @@
             <tr>
                 <th><i class="icon icon-unchecked checkall"></i></th>
                 <th>&nbsp;</th>
-                <th>Entry score</th>
-                <th>Name</th>
+                <th>Cdte</th>
                 <th>Curr. Pos.</th>
-                <th>Exp.</th>
                 <th>Nationality</th>
                 <th>Mobility</th>
                 <th>Target functions</th>
                 <th>Talent pools</th>
                 <th>Tags</th>
-                <th>Added on</th>
-                <th>Origin</th>
+                <th>Date</th>
                 <th width="110">Actions</th>
             </tr>
         </thead>
@@ -105,20 +99,18 @@
                             {% endif %}
                         </td>
                         <td>
-                            <div data-toggle="popover" data-placement="bottom" data-delay='{ "show": 500, "hide": 200 }' data-html="true" style="cursor:help"
+                            <span data-toggle="popover" data-placement="top" data-delay='{ "show": 500, "hide": 200 }' data-html="true" style="cursor:help"
                                  data-content="{{ entity.globalComment }}" data-trigger='hover'>
-                                <small>{{ entity.globalScore|stars }}</small>
-                            </div>
-                        </td>
-                        <td>{{ not anonymous?entity.firstName:'anonymous' }} {{ not anonymous?entity.lastName }} {{ not anonymous?entity.middleName }}</td>
+                                <small title="entry score">{{ entity.globalScore|stars }}</small>
+                            </span>
+                        {{ not anonymous?entity.firstName:'anonymous' }} {{ not anonymous?entity.lastName }} {{ not anonymous?entity.middleName }}</td>
                         {#
                         <td>{% if entity.dateOfBirth %}{{ entity.dateOfBirth|date('Y-m-d H:i:s') }}{% endif %}</td>
                         #}
                         {#
                         <td>{{ entity.age }}</td>
                         #}
-                        <td>{{ entity.function }} {{ entity.level }}</td>
-                        <td>{{ entity.ageExperience }} yrs</td>
+                        <td>{{ entity.function }} {{ entity.level }} {{ entity.ageExperience }}&nbsp;yrs</td>
                         <td>{{ entity.nationality1|country }} {{ entity.nationality2|country }}</td>
                         <td>
                             <small>
@@ -151,8 +143,7 @@
                                 {% endfor %}
                             </small>
                         </td>
-                        <td>{% if entity.createdAt %}{{ entity.createdAt|date('Y-m-d') }}{% endif %}</td>
-                        <td>{{ entity.origin }}</td>
+                        <td>{{ entity.origin }} {% if entity.createdAt %}{{ entity.createdAt|date('Y-m-d') }}{% endif %}</td>
                         <td>
                             <div class="btn-toolbar pull-right record_actions" role="group">
                                 <div class="btn-group">

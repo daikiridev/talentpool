@@ -1,6 +1,8 @@
 {% extends '::base.html.twig' %}
 
 {% block styles %}
+     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/tewtp/css/jquery.tagsinput.css') }}" />
+    {# jQuery zoom on pictures #}
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/tewtp/css/bootstrap-magnify.css') }}" />
 {% endblock styles %}
 
@@ -11,6 +13,7 @@
             $('[data-toggle="popover"]').popover()
         })
     </script>
+    {{ include('TEWTPBundle:Candidate:common/cdtedetails_request_script.js.twig') }}
 {% endblock %}
 
 {% block body -%}
