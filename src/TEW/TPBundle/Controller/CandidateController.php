@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Doctrine\Common\Collections\ArrayCollection;
 use TEW\TPBundle\Entity\Candidate;
 use TEW\TPBundle\Form\CandidateType;
+use TEW\TPBundle\Form\CdteSearchType;
 use TEW\TPBundle\Form\CheckCandidatesType;
 use TEW\TPBundle\Entity\Mail;
 use TEW\TPBundle\Form\MailType;
@@ -18,14 +19,6 @@ use TEW\TPBundle\Form\MailType;
  */
 class CandidateController extends Controller {
 
-    /**
-     * Search 
-     *
-     */
-    public function searchAction() {
-        return $this->render('TEWTPBundle:Candidate:search.html.twig', array(
-        ));
-    }
 
     /**
      * Lists all Candidate entities.
@@ -62,7 +55,92 @@ class CandidateController extends Controller {
             ));            
 //        }
     }
-
+    /**
+     * Creates a form to list all candidates and check them.
+     *
+     * @param \Doctrine\Common\Collections\ArrayCollection $entities The candidates
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createCdteSearchForm($entities=null) {
+        $form = $this->createForm(new CdteSearchType(), $entities, array(
+            //'action' => $this->generateUrl('tew_candidate_update', array('id' => $entity->getId())),
+            'action' => $this->generateUrl('tew_candidate_compare'),
+            'method' => 'POST',
+        ));
+        return $form;
+    }
+    
+    /**
+     * Search form on candidates
+     *
+     */
+    public function cdteSearchAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+       // $entities = $request->get('candidates');
+        //var_dump($entities); exit;
+        $form = $this->createForm(new CdteSearchType());
+        $form->handleRequest($request);
+//        $data = $form->getData();
+//        $entities = $data['candidates'];
+        //var_dump($entities);
+        //var_dump($form->getData()); exit;
+        $deleteForms = array();
+        if ($form->isValid()){
+            $data = $form->getData('cdtesearch');
+            $repository = $em->getRepository('TEWTPBundle:Candidate');
+            $query = $repository->createQueryBuilder('c')->where('1=1');
+            $i = 0;
+            foreach($data as $key=>$value) {
+                switch ($key) {
+                    case 'function':
+                    case 'level':
+                    case 'alert':
+                    case 'active':
+                        if ($value !='' ) {
+                            $query->andWhere("c.$key = :$key")->setParameter($key, $value);
+                        }
+                        break;
+                    case 'experience':
+                        if ($value !='' ) {
+                            $query->andWhere('c.experience < :year')->setParameter('year', date('Y')-$value);
+                        }
+                        break;
+                    case 'status':
+                        if (count($value)>0) {
+                            foreach($value as $status) {
+                                $statuses[] = $status->getId();
+                            }
+                            $query->andWhere('c.status IN (:ids)')->setParameter('ids', $statuses);
+                        }
+                        break;
+                }   
+            }
+            // we add access restrictions
+            // ...
+//            echo $query->getQuery()->getDQL();
+//            print_r($query->getQuery()->getArrayResult());
+            $candidates = $query->getQuery()->getResult();;
+            // We load tags of all candidates
+            $tagManager = $this->get('fpn_tag.tag_manager');
+            foreach ($candidates as $cdte) {
+                $tagManager->loadTagging($cdte);
+            }
+            $form = $this->createCheckCdtesForm($candidates);
+            return $this->render('TEWTPBundle:Candidate:index.html.twig', array(
+                        'entities' => $candidates,
+                        'check_candidates_form' => $form->createView(),
+                        'delete_forms' => $deleteForms,
+            ));
+        } else {
+            return $this->render('TEWTPBundle:Candidate:search.html.twig', array(
+                        'this_form' => $form->createView(),
+//                        'entities' => $entities,
+//                        'delete_forms' => $deleteForms,
+            ));
+        }
+    }
+    
     /**
      * Creates a form to list all candidates and check them.
      *
@@ -76,13 +154,6 @@ class CandidateController extends Controller {
             'action' => $this->generateUrl('tew_candidate_compare'),
             'method' => 'POST',
         ));
-
-//        $form->add('submit', 'submit', array('label' => 'Update',
-//            'attr' => array(
-//                'class' => 'btn btn-warning',
-//            )
-//        ));
-
         return $form;
     }
     

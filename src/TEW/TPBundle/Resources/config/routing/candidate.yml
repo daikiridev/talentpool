@@ -1,6 +1,10 @@
 tew_candidate:
     path:     /
     defaults: { _controller: "TEWTPBundle:Candidate:index" }
+
+tew_candidate_search:
+    path:     /search
+    defaults: { _controller: "TEWTPBundle:Candidate:cdteSearch" }
     
 tew_candidate_compare:
     path:     /compare
@@ -10,10 +14,6 @@ tew_candidate_compare:
 tew_cdtedetails_request:
     path:     /request
     defaults: { _controller: "TEWTPBundle:Mailer:mail" }
-
-tew_candidate_search:
-    path:     /search
-    defaults: { _controller: "TEWTPBundle:Candidate:search" }
 
 tew_candidate_show:
     path:     /{id}/show

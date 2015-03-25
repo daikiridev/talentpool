@@ -1,39 +1,152 @@
 {% extends '::base.html.twig' %}
+{% form_theme this_form 'TEWTPBundle:Form:tew_widgets.html.twig' %}
+
 {% block styles %}
-    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/tewtp/css//jquery.tagsinput.css') }}" />
+    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/start/jquery-ui.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/tewtp/css/jquery.tagsinput.css') }}" />
+    <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0-beta.3/css/select2.min.css" rel="stylesheet" />
 {% endblock styles %}
 {% block scripts %}
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>{# needed for the tagsinput 'autocomplete_url' feature #}
     <script src="{{ asset('bundles/tewtp/js/jquery.tagsinput.js') }}"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0-beta.3/js/select2.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places&language=en"></script>
+    <script src="{{ asset('bundles/tewtp/js/tew.collections.edit.js') }}"></script>
+    <script src="{{ asset('bundles/tewtp/js/tew.candidate.edit.js') }}"></script>
     <script>
-        $('.tags-field').tagsInput({
-            //'autocomplete_url': url_to_autocomplete_api,
-            //'autocomplete': { option: value, option: value},
-            'height':'30px',
-            'width':'400px',
-            //'interactive':true,
-            //'defaultText':'add a tag',
-            //'onAddTag':callback_function,
-            //'onRemoveTag':callback_function,
-            //'onChange' : callback_function,
-            //'removeWithBackspace' : true,
-            //'minChars' : 0,
-            //'maxChars' : 0 //if not provided there is no limit,
-            //'placeholderColor' : '#666666'
-            
-        });
-    </script>
+        $(document).ready(function () {
+            $('.tags-field').tagsInput({
+                'autocomplete_url': '{{ path('tew_json_allcandidatetags') }}',
+                'autocomplete': {selectFirst: true, width: '4px', autoFill: true},
+                'height': '30px',
+                'width': '400px',
+                'interactive': true,
+                'defaultText': 'add a tag',
+            });
+            $('.select2').select2(); // trouble with modal popups
+            $('.modal .select2').select2({dropdownParent: $('.modal')});
+            $(function () {
+                $('[data-toggle="popover"]').popover();
+            });
+        {# if there is a new country in a mobility form, add the corresponding zone by an ajax request on tew_json_findzone #}
+        {# !!! Check if called !!!#}
+                $('.mobility_country').change(function () {
+                    console.log('change country ' + $(this).val());
+                    var zoneid = $(this).attr('id').replace((/country/), "zone");
+                    $.post("{{ path('tew_json_findzone') }}", {country: $(this).val()})
+                            .done(function (data) {
+                                $('#' + zoneid).val(data.zone[0].id); // setting the right zone
+                                console.log(zoneid + ': ' + ($('#' + zoneid).val()));
+                            })
+                            .fail(function () {
+                                alert("The zone was not found, please reload the location");
+                            })
+                            .always(function () {
+                                console.log(zoneid + " finished");
+                            });
+                });
+            });
+    </script>    
 {% endblock scripts %}
 
 {% block body -%}
-    <h1>Candidate search</h1>
 
-    {{ form(search_form) }}
+        <h1>Candidate search</h1>
 
-    <ul class="record_actions">
-        <li>
-            <a href="{{ path('tew_candidate') }}">
-                Back to the list
-            </a>
-        </li>
-    </ul>
+        {{ form_start(this_form, { 'attr' : { 'class': 'form-inline' } }) }}
+
+        <div class="row">
+            <fieldset class="col-lg-8">
+                <legend>Main</legend>
+                <div class="row">
+                    <div class="col-lg-5">
+                        {{ form_label(this_form.function) }}<br>
+                        {{ form_widget(this_form.function) }}
+                    </div>
+                    <div class="col-lg-4">
+                        {{ form_label(this_form.level) }}<br>
+                        {{ form_widget(this_form.level) }}
+                    </div>
+                    <div class="col-lg-2">
+                        {{ form_label(this_form.experience) }}<br>
+                        {{ form_widget(this_form.experience) }}
+                    </div>
+                </div>
+{#
+                <div class="row"><br></div>
+                <div class="row">
+                    <div class="col-lg-3">
+                        {{ form_label(this_form.firstName) }}<br>
+                        {{ form_widget(this_form.firstName) }}
+                    </div>
+                    <div class="col-lg-3">
+                        {{ form_label(this_form.middleName) }}<br>
+                        {{ form_widget(this_form.middleName) }}
+                    </div>
+                    <div class="col-lg-3">
+                        {{ form_label(this_form.lastName) }}<br>
+                        {{ form_widget(this_form.lastName) }}
+                    </div>
+                </div>
+                <div class="row"><br></div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        {{ form_row(this_form.nationality1) }}
+                    </div>
+                    <div class="col-lg-6">
+                        {{ form_row(this_form.nationality2) }}
+                    </div>
+                </div>
+                <div class="row"><br></div>
+                <div class="row">
+                    <div class="col-lg-3">
+                        {{ form_row(this_form.languagesSkills) }}
+                    </div>
+                    <div class="col-lg-3">
+                        {{ form_row(this_form.mobilities) }}
+                    </div>
+                </div>
+#}
+            </fieldset>
+            <div class="col-lg-4">
+                <div class="row">
+                    <fieldset class="col-lg-12">
+                        <legend>Status</legend>
+                        <div class="col-lg-3">
+                            <span><i class="icon icon-bell" style="color:red; cursor:help" title="alert"></i></span>
+                            {{ form_widget(this_form.alert) }}
+                        </div>
+                        <div class="col-lg-3">
+                            {{ form_row(this_form.active) }}
+                        </div>
+                        <div class="col-lg-6">
+                            {{ form_row(this_form.status) }}
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="row"><br></div>
+            </div>
+        </div>
+{#
+        <div class="row"><br></div>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="row">
+                            <div class="col-lg-12">
+                                {{ form_row(this_form.tags) }}
+                            </div>
+                </div>
+            </div>
+        </div>
+#}
+
+        <br>
+        {% block actions %}
+            <div class="btn-toolbar pull-right" role="group">
+                <div class="btn-group">
+                    <button type="submit" class="btn btn-info">Search</button>
+                </div>
+                {{ form_end(this_form, {'render_rest': true}) }} {# this should be put before the form(delete_form) button #}
+            </div>
+        {% endblock actions %}
 {% endblock body %}
