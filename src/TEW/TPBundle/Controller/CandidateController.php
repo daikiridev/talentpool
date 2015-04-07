@@ -24,10 +24,9 @@ class CandidateController extends Controller {
      * Lists all Candidate entities.
      *
      */
-    public function indexAction(Request $request) {
+    public function indexAction(Request $request, $entities=null) {
         $em = $this->getDoctrine()->getManager();
-        $entities = $request->request->get('entities');
-        
+        //$entities = $request->request->get('entities');
         $tagManager = $this->get('fpn_tag.tag_manager');
   
         // Lists given candidates (result of a search, POST method), otherwise all candidates
@@ -36,39 +35,22 @@ class CandidateController extends Controller {
         foreach ($candidates as $cdte) {
             $tagManager->loadTagging($cdte);
         }
-        $deleteForms = array();
         
         $form = $this->createCheckCdtesForm($candidates);
+        $form->handleRequest($request);
         
-        //$form->handleRequest($request);
-        
-//        if ($form->isValid()) {
-//
-//        } else {
-//            foreach ($candidates as $entity) {
-//                $deleteForms[$entity->getId()] = $this->createDeleteForm($entity->getId(), 'btn-xs')->createView();
-//            }
+        if ($form->isValid()){
             return $this->render('TEWTPBundle:Candidate:index.html.twig', array(
                         'entities' => $candidates,
                         'check_candidates_form' => $form->createView(),
-                        'delete_forms' => $deleteForms,
             ));            
-//        }
-    }
-    /**
-     * Creates a form to list all candidates and check them.
-     *
-     * @param \Doctrine\Common\Collections\ArrayCollection $entities The candidates
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createCdteSearchForm($entities=null) {
-        $form = $this->createForm(new CdteSearchType(), $entities, array(
-            //'action' => $this->generateUrl('tew_candidate_update', array('id' => $entity->getId())),
-            'action' => $this->generateUrl('tew_candidate_compare'),
-            'method' => 'POST',
-        ));
-        return $form;
+        } else { // either select action is invalid or we come from a search request
+            return $this->render('TEWTPBundle:Candidate:index.html.twig', array(
+                        'entities' => $candidates,
+                        'check_candidates_form' => $form->createView(),
+                        'fromSearch'=>false,
+            ));            
+        } 
     }
     
     /**
@@ -77,33 +59,38 @@ class CandidateController extends Controller {
      */
     public function cdteSearchAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
-       // $entities = $request->get('candidates');
-        //var_dump($entities); exit;
+
         $form = $this->createForm(new CdteSearchType());
         $form->handleRequest($request);
-//        $data = $form->getData();
-//        $entities = $data['candidates'];
-        //var_dump($entities);
-        //var_dump($form->getData()); exit;
         $deleteForms = array();
         if ($form->isValid()){
             $data = $form->getData('cdtesearch');
             $repository = $em->getRepository('TEWTPBundle:Candidate');
-            $query = $repository->createQueryBuilder('c')->where('1=1');
-            $i = 0;
-            foreach($data as $key=>$value) {
+            $qb = $repository->createQueryBuilder('c')->where('1=1');
+            $qb->orderBy('c.alert', 'DESC');
+            $qb->addOrderBy('c.globalScore', 'DESC');
+            $filterDetails = array();
+            
+            foreach($data as $key => $value) {
                 switch ($key) {
+                    case 'invisible':
+                        if ($value==1) {
+                            $qb->andWhere("c.active = :$key")->setParameter($key, 0);
+                            $filterDetails['invisible'] = 'yes';
+                        }
+                        break;
+                    case 'alert':
                     case 'function':
                     case 'level':
-                    case 'alert':
-                    case 'active':
-                        if ($value !='' ) {
-                            $query->andWhere("c.$key = :$key")->setParameter($key, $value);
+                        if ($value !='') {
+                            $qb->andWhere("c.$key = :$key")->setParameter($key, $value);
+                            $filterDetails[$key] = gettype($value)=='object'?$value->getName():$value;
                         }
                         break;
                     case 'experience':
-                        if ($value !='' ) {
-                            $query->andWhere('c.experience < :year')->setParameter('year', date('Y')-$value);
+                        if ($value !='') {
+                            $qb->andWhere('c.experience < :year')->setParameter('year', date('Y')-$value);
+                            $filterDetails[$key] = '> '.(date('Y')-$value);
                         }
                         break;
                     case 'status':
@@ -111,27 +98,38 @@ class CandidateController extends Controller {
                             foreach($value as $status) {
                                 $statuses[] = $status->getId();
                             }
-                            $query->andWhere('c.status IN (:ids)')->setParameter('ids', $statuses);
+                            $qb->andWhere('c.status IN (:ids)')->setParameter('ids', $statuses);
+                            $filterDetails[$key] = ' in ('.implode(', ',$statuses).')';
                         }
                         break;
                 }   
             }
             // we add access restrictions
             // ...
-//            echo $query->getQuery()->getDQL();
-//            print_r($query->getQuery()->getArrayResult());
-            $candidates = $query->getQuery()->getResult();;
+            $query = $qb->getQuery();
+//            print $query->getDQL().'<br>';
+//            print $query->getSQL().'<br>';
+//            print_r($query->getArrayResult());
+            $candidates = $query->getResult();
+            //print "nb candidates=".count($candidates).'<br>';
             // We load tags of all candidates
             $tagManager = $this->get('fpn_tag.tag_manager');
             foreach ($candidates as $cdte) {
                 $tagManager->loadTagging($cdte);
             }
-            $form = $this->createCheckCdtesForm($candidates);
+            $checkform = $this->createCheckCdtesForm($candidates);
+            //$checkform->handleRequest($request);
+
             return $this->render('TEWTPBundle:Candidate:index.html.twig', array(
                         'entities' => $candidates,
-                        'check_candidates_form' => $form->createView(),
+                        'check_candidates_form' => $checkform->createView(),
                         'delete_forms' => $deleteForms,
+                        'filter_details' => $filterDetails,
             ));
+//            return $this->forward('TEWTPBundle:Candidate:index', array(
+//                'entities' => $candidates,
+//                'filter_details' => $filterDetails,
+//            ));
         } else {
             return $this->render('TEWTPBundle:Candidate:search.html.twig', array(
                         'this_form' => $form->createView(),
@@ -149,7 +147,8 @@ class CandidateController extends Controller {
      * @return \Symfony\Component\Form\Form The form
      */
     private function createCheckCdtesForm($entities=null) {
-        $form = $this->createForm(new CheckCandidatesType(), $entities, array(
+        //$form = $this->createForm(new CheckCandidatesType(), $entities, array(
+        $form = $this->createForm(new CheckCandidatesType($entities), $entities, array(
             //'action' => $this->generateUrl('tew_candidate_update', array('id' => $entity->getId())),
             'action' => $this->generateUrl('tew_candidate_compare'),
             'method' => 'POST',
@@ -163,13 +162,13 @@ class CandidateController extends Controller {
      */
     public function compareAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
-       // $entities = $request->get('candidates');
-        //var_dump($entities); exit;
-        $form = $this->createForm(new CheckCandidatesType());
+        $form = $this->createForm(new CheckCandidatesType(null));
         $form->handleRequest($request);
+        $form->isValid();
         $data = $form->getData();
+        //exit;
         $entities = $data['candidates'];
-        //var_dump($entities);
+
         $deleteForms = array();
 
         if (count($entities)>0) {
@@ -186,7 +185,6 @@ class CandidateController extends Controller {
                 $content .= $this->generateUrl('tew_candidate_edit', array('id' => $id));
 
                 $mail->setContent($content);
-                //$mail->setTo("vincent@123vpc.com"); // TO BE CHANGED
                 $mailForms[$id] = $this->createMailForm($mail)->createView();
             }
             return $this->render('TEWTPBundle:Candidate:compare.html.twig', array(

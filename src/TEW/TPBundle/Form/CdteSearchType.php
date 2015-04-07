@@ -15,7 +15,7 @@ class CdteSearchType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('active', 'checkbox', array(
+            ->add('invisible', 'checkbox', array(
                 'required' => false,
                 //'attr' => array('class' => 'form-control'),
             ))

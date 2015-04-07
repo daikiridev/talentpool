@@ -47,6 +47,7 @@ class TEWExtension extends \Twig_Extension
             new \Twig_SimpleFilter('languageSkill', array($this, 'languageSkillFilter')),
             new \Twig_SimpleFilter('country', array($this, 'countryFilter')),
             new \Twig_SimpleFilter('currency', array($this, 'currencyFilter')),
+            new \Twig_SimpleFilter('hashJoin', array($this, 'hashJoinFilter')),
             new \Twig_SimpleFilter('status', array($this, 'statusFilter'), array('is_safe' => array('html'))),
             new \Twig_SimpleFilter('commentsByTalentpool', array($this, 'commentsByTalentpoolFilter')),
             new \Twig_SimpleFilter('commentsAverageScore', array($this, 'commentsAverageScoreFilter')),
@@ -94,6 +95,16 @@ class TEWExtension extends \Twig_Extension
         return $result;
     }
 
+    public function hashJoinFilter($array = null, $join)
+    {
+        $result = '';
+        foreach ($array as $key=>$value){
+            $key = $key=='active'?'visible':$key;
+            $result .= ($result!=''?$join:'')."$key: $value";
+        }
+        return $result;
+    }
+    
     public function statusFilter(\TEW\TPBundle\Entity\CdteStatus $status = null)
     {
         $result = '<i class="icon icon-'.$status->getIcon().'" style="cursor:help; color:'.$status->getColor().'" title="'.$status->getName().'"></i>';

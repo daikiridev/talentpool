@@ -30,8 +30,8 @@
                     {"bSearchable": true, "bSortable": false}, // Nationality
                     {"bSearchable": true, "bSortable": false}, // Mobilities
                     {"bSearchable": true, "bSortable": false}, // Target functions
-                    {"bSearchable": false, "bSortable": false}, // Talent pools
-                    {"bSearchable": false, "bSortable": false}, // Tags
+                    {"bSearchable": true, "bSortable": false}, // Talent pools
+                    {"bSearchable": true, "bSortable": false}, // Tags
                     {"bSearchable": false}, // Added on
                     {"bSearchable": false, "bSortable": false} // Actions     
                 ]
@@ -45,7 +45,15 @@
     </script>
 {% endblock %}
 {% block body -%}
-    <h1>Candidate list</h1>
+    
+<div>
+  {{ form_errors(check_candidates_form) }}
+</div>
+    
+  <h1>Candidate list <small>({{ check_candidates_form.candidates|length}} people)</small>
+         <small><em>{{ filter_details is defined and filter_details|length>0?'filter: '~filter_details|hashJoin(' / ')}}</em></small>
+    </h1>
+        
     {{ form_start(check_candidates_form) }}
     <table id="list" class="display" cellspacing="0">
         <thead>

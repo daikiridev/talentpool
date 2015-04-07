@@ -29,6 +29,7 @@ class CandidateType extends AbstractType
                 'attr' => array('class' => 'form-control'),
             ))
             ->add('active', 'checkbox', array(
+                'label' => 'visible',
                 'required' => false,
                 //'attr' => array('class' => 'form-control'),
             ))

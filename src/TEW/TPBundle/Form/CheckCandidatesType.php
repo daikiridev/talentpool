@@ -8,20 +8,52 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class CheckCandidatesType extends AbstractType
 {
+    private $cdteIds = null;
+    
+    public function __construct($entities=null)
+    {
+        if (count($entities)>0) {
+            $cdteIds = [];
+            foreach ($entities as $cdte) {
+                $this->cdteIds[] = $cdte->getId();
+            }
+        }
+//    print "candidates: ";
+//    print_r($this->cdteIds);
+    }
+    
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        if ($this->cdteIds) { // the constructor returned a non empty list (i.e. the list was intialized appart from the handleRequest call)
+            $builder->add('candidates', 'entity', array(
+                    'attr' => array('class' => 'form-collection'), // in order to handle jquery functions of tew.candidate.edit.js
+                    'class' => 'TEWTPBundle:Candidate',
+                    'required' => true,
+                    'expanded' => true,
+                    'multiple' => true,
+                    'query_builder' => function(\TEW\TPBundle\Entity\CandidateRepository $r) {
+                                $qb = $r->createQueryBuilder('c');
+                                $qb->where('c.id in (:ids)')
+                                          ->setParameter('ids', $this->cdteIds);
+//                                print $qb->getQuery()->getDQL().'<br>';
+//                                print $qb->getQuery()->getParameters().'<br>';
+                                return $qb;
+                        }
+                    ));
+        } else {
+            $builder->add('candidates', 'entity', array(
+                    'attr' => array('class' => 'form-collection'), // in order to handle jquery functions of tew.candidate.edit.js
+                    'class' => 'TEWTPBundle:Candidate',
+                    'required' => true,
+                    'expanded' => true,
+                    'multiple' => true,
+                    ));
+        }
         $builder
-            ->add('candidates', 'entity', array(
-                'attr' => array('class' => 'form-collection'), // in order to handle jquery functions of tew.candidate.edit.js
-                'class' => 'TEWTPBundle:Candidate',
-                'required' => true,
-                'expanded' => true,
-                'multiple' => true,
-                ))
             ->add('selectactions', 'choice', array(
                 'empty_value' => 'Select an action',
                 'choices' => array('compare' => 'Show selected candidates'),
