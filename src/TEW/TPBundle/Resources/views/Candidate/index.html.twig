@@ -32,7 +32,7 @@
                     {"bSearchable": true, "bSortable": false}, // Target functions
                     {"bSearchable": true, "bSortable": false}, // Talent pools
                     {"bSearchable": true, "bSortable": false}, // Tags
-                    {"bSearchable": false}, // Added on
+                    {"bSearchable": true}, // Added on
                     {"bSearchable": false, "bSortable": false} // Actions     
                 ]
             });
@@ -51,7 +51,11 @@
 </div>
     
   <h1>Candidate list <small>({{ check_candidates_form.candidates|length}} people)</small>
-         <small><em>{{ filter_details is defined and filter_details|length>0?'filter: '~filter_details|hashJoin(' / ')}}</em></small>
+    {% if (filter_details is defined and filter_details|length>0) %}
+        <small><em><i class="icon-filter" data-toggle="popover" data-placement="top" data-delay='{ "show": 500, "hide": 200 }' data-html="true" style="cursor:help"
+                      data-title="Search filter" data-content="{{ filter_details|hashJoin(' <br> ') }}" data-trigger='hover'></i>
+                </em></small>
+    {% endif %}
     </h1>
         
     {{ form_start(check_candidates_form) }}
@@ -151,7 +155,7 @@
                                 {% endfor %}
                             </small>
                         </td>
-                        <td>{{ entity.origin }} {% if entity.createdAt %}{{ entity.createdAt|date('Y-m-d') }}{% endif %}</td>
+                        <td>{{ entity.owningcompany }} {% if entity.createdAt %}{{ entity.createdAt|date('Y-m-d') }}{% endif %}</td>
                         <td>
                             <div class="btn-toolbar pull-right record_actions" role="group">
                                 <div class="btn-group">

@@ -253,12 +253,13 @@ class CandidateType extends AbstractType
                 'expanded' => false, // checkboxes?
                 'attr' => array('class' => 'select2', 'style' => 'width:300px'),
             ))
-            ->add('origin', 'choice', array(
-                'choices' => array(
-                    'TEW' => 'TEW', 
-                    'other' => 'other'),
-                'attr' => array('class' => 'form-control'),
-            ))
+            ->add('owningcompany')
+//            ->add('origin', 'choice', array(
+//                'choices' => array(
+//                    'TEW' => 'TEW', 
+//                    'other' => 'other'),
+//                'attr' => array('class' => 'form-control'),
+//            ))
             ->add('tags','tags', array(
                 'required' => false,
                 'attr' => array('class' => 'tags-field input-block-level', 'multiple' => 'multiple', 'style' => 'width:300px')

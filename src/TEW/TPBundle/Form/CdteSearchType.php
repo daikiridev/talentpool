@@ -63,6 +63,14 @@ class CdteSearchType extends AbstractType
                 'attr' => array('class' => 'form-control'),
                 //'label_attr' => array('class' => 'col-md-2')
             ))
+            ->add("owningcompany", 'entity', array(
+                'required' => false,
+                'class' => 'TEWTPBundle:Company',
+                'label' => 'Owner',
+                'empty_value' => 'All',
+                'attr' => array('class' => 'select2  form-control'),
+                //'label_attr' => array('class' => 'col-md-2')
+            ))
 /*
             ->add('firstName', 'text', array(
                 'required' => false,

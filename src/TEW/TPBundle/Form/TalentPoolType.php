@@ -26,6 +26,7 @@ class TalentPoolType extends AbstractType
             ))
             //->add('description', 'ckeditor', array('config_name' => 'user_config'))
             ->add('description')
+            ->add('owningcompany')
             ->add('companies', 'entity', array( 
                 'required'  => false,
                 'class'    => 'TEWTPBundle:Company',

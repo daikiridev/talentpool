@@ -27,7 +27,7 @@ class User extends BaseUser
      *
      * @ORM\ManyToOne(targetEntity="\TEW\TPBundle\Entity\Company", inversedBy="users")
      * @ORM\JoinColumns={
-     *      @ORM\JoinColumn(name="company_id", referencedColumnName="id", nullable=true)
+     *      @ORM\JoinColumn(name="company_id", referencedColumnName="id", nullable=false)
      *  })
      */
     protected $company;

@@ -59,7 +59,14 @@ class TalentPool
     
     /**
     
-
+    /**
+     * @var owningcompany
+     *
+     * @ORM\ManyToOne(targetEntity="Company", cascade={"persist"})
+     * @ORM\JoinColumn(name="owningcompany_id", nullable=true)
+     */
+    private $owningcompany;
+    
     /**
      * @var date
      * 
@@ -328,5 +335,28 @@ class TalentPool
     public function getCompanies()
     {
         return $this->companies;
+    }
+
+    /**
+     * Set owningcompany
+     *
+     * @param \TEW\TPBundle\Entity\Company $owningcompany
+     * @return TalentPool
+     */
+    public function setOwningcompany(\TEW\TPBundle\Entity\Company $owningcompany)
+    {
+        $this->owningcompany = $owningcompany;
+
+        return $this;
+    }
+
+    /**
+     * Get owningcompany
+     *
+     * @return \TEW\TPBundle\Entity\Company 
+     */
+    public function getOwningcompany()
+    {
+        return $this->owningcompany;
     }
 }

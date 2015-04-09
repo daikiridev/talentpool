@@ -82,6 +82,7 @@ class CandidateController extends Controller {
                     case 'alert':
                     case 'function':
                     case 'level':
+                    case 'owningcompany':
                         if ($value !='') {
                             $qb->andWhere("c.$key = :$key")->setParameter($key, $value);
                             $filterDetails[$key] = gettype($value)=='object'?$value->getName():$value;

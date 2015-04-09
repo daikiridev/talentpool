@@ -307,11 +307,12 @@ class Candidate implements Taggable
     private $talentpools;
     
     /**
-     * @var string
+     * @var owningcompany
      *
-     * @ORM\Column(name="origin", type="string", length=127)
+     * @ORM\ManyToOne(targetEntity="Company", cascade={"persist"})
+     * @ORM\JoinColumn(name="owningcompany_id", nullable=true)
      */
-    private $origin;
+    private $owningcompany;
     
     /**
      * @var comments
@@ -1441,5 +1442,28 @@ class Candidate implements Taggable
     public function getAlert()
     {
         return $this->alert;
+    }
+
+    /**
+     * Set owningcompany
+     *
+     * @param \TEW\TPBundle\Entity\Company $owningcompany
+     * @return Candidate
+     */
+    public function setOwningcompany(\TEW\TPBundle\Entity\Company $owningcompany = null)
+    {
+        $this->owningcompany = $owningcompany;
+
+        return $this;
+    }
+
+    /**
+     * Get owningcompany
+     *
+     * @return \TEW\TPBundle\Entity\Company 
+     */
+    public function getOwningcompany()
+    {
+        return $this->owningcompany;
     }
 }

@@ -34,10 +34,14 @@
                     <tbody>
                         {% if is_granted("ROLE_TEW_EXECUTOR") %}
                             <tr>
-                                <th>Owner</th>
+                                <th>Creator</th>
                                 <td>{{ entity.creator }}</td>
                             </tr>
                         {% endif %}
+                        <tr>
+                            <th>Owner</th>
+                            <td>{{ entity.owningcompany }}</td>
+                        </tr>
                         <tr>
                             <th>Name</th>
                             <td>{{ entity.name }}</td>
