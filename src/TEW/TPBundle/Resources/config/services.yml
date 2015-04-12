@@ -1,4 +1,12 @@
 services:
+    
+# General credentials via voters
+    owner_voter:
+            class: TEW\TPBundle\Security\OwnerVoter
+            public: false
+            tags:
+                - { name: security.voter }
+
 #    twig.extension.intl:
 #        class: Twig_Extensions_Extension_Intl
 #        tags:

@@ -30,12 +30,14 @@ class MenuBuilder
     public function createMainMenu(Request $request)    
     {
         $is_client = $this->securityContext->isGranted(array('ROLE_CLIENT'));
-        $is_executor = $this->securityContext->isGranted(array('ROLE_TEW_EXECUTOR'));
+        $is_standard_executor = $this->securityContext->isGranted(array('ROLE_CLIENT_STD_EXECUTOR'));
+        $is_master_executor = $this->securityContext->isGranted(array('ROLE_CLIENT_MASTER_EXECUTOR'));
+        $is_tew_executor = $this->securityContext->isGranted(array('ROLE_TEW_EXECUTOR'));
         $is_admin = $this->securityContext->isGranted(array('ROLE_ADMIN'));
         
         $menu = $this->factory->createItem('root');
         $menu->setChildrenAttribute('class', 'nav navbar-nav');
-        if ($is_executor) {
+        if ($is_tew_executor) {
             $menu->addChild('Companies')
                     ->setAttribute('icon', 'icon-folder-open')
                     ->setAttribute('dropdown', true);
@@ -58,7 +60,7 @@ class MenuBuilder
                         ->setAttribute('dropdown', true);
                 $menu['Talent pools']->addChild('List', array('route' => 'tew_talentpool'))
                         ->setAttribute('icon', 'icon-list');
-                if ($is_executor) { // only executors can add talentpools
+                if ($is_master_executor) { // only executors can add talentpools
                     $menu['Talent pools']->addChild('New', array('route' => 'tew_talentpool_new'))
                             ->setAttribute('icon', 'icon-plus-sign-alt');   
                 }
@@ -82,7 +84,7 @@ class MenuBuilder
                             'routeParameters' => array( 'id' => $workingtp->getId() )
                         ))
                         ->setAttribute('icon', 'icon-bookmark');
-                if ($is_executor) { // only executors can edit talentpools
+                if ($is_master_executor) { // only execmaster utors can edit talentpools
                     $menu[$workingtp->getName()]->addChild('Edit '.$workingtp->getName(), array(
                                 'route' => 'tew_talentpool_edit',
                                 'routeParameters' => array( 'id' => $workingtp->getId() )
@@ -138,7 +140,7 @@ class MenuBuilder
                 ->setAttribute('icon', 'icon-off');
             
             // Backoffice
-            if ($is_admin){
+            if ($this->securityContext->isGranted(array('ROLE_SONATA_ADMIN'))){
                 $menu->addChild('Backoffice', array('route' => 'sonata_admin_redirect'))
                     ->setAttribute('icon', 'icon-dashboard')
                     ->setLinkAttribute('target', '_new');

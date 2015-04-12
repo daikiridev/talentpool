@@ -72,7 +72,18 @@ code {
     color: #ffffff;
     border: 1px solid #dddddd;
     border-bottom-color: transparent;
-} 
+}
+
+li.warning > a,
+li.warning > a:hover,
+li.warning > a:focus {
+    cursor: default;
+    background-color: #fdd49a;
+/*    border-color: #5fc1e8;
+    color: #ffffff;
+    border: 1px solid #dddddd;
+    border-bottom-color: transparent;*/
+}
 
 /* Google place's dropdown above modal popups */
 .modal {

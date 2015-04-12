@@ -24,7 +24,7 @@
         <ul class="nav nav-pills">
             <li role="presentation" class="active"><a href="#details" aria-controls="details" role="tab" data-toggle="tab">Details</a></li>
                 {% for profile in entity.profiles %}
-                <li role="presentation" ><a href="#prof{{ loop.index }}" aria-controls="prof{{ loop.index }}" role="tab" data-toggle="tab">Profile {{ profile }}</a></li>
+                <li role="presentation" class="warning"><a href="#prof{{ loop.index }}" aria-controls="prof{{ loop.index }}" role="tab" data-toggle="tab">Profile {{ profile }}</a></li>
                 {% endfor %}
         </ul>
         <!-- Tab panes -->

@@ -3,17 +3,46 @@ imports:
     #- { resource: "@ApplicationSonataUserBundle/Resources/config/security.yml" }
     
 security:
-
+    access_decision_manager:
+        # Strategy can be one of: affirmative, unanimous ou consensus
+        # - affirmative (default): grant access as soon as any voter returns an affirmative response;
+        # - consensus: grant access if there are more voters granting access than there are denying;
+        # - unanimous: only grant access if none of the voters has denied access; 
+        strategy: unanimous
+#        strategy: consensus
+        
     role_hierarchy:
+        ROLE_TEW_READER:
+            - ROLE_TEW_OBJECT_VIEW
+            - ROLE_TEW_OBJECT_LIST
+        ROLE_TEW_CREATOR:
+            - ROLE_TEW_OBJECT_CREATE
+        ROLE_TEW_MASTER:
+            - ROLE_TEW_OBJECT_EDIT
+            - ROLE_TEW_OBJECT_DELETE
+      
         # a USER is at least a candidate with an account
         # a client is a TEW Client
-        ROLE_CLIENT:        ROLE_USER
-        # a TEW Executor is responsible/moderator of one or several talent pool(s)
-        ROLE_TEW_EXECUTOR:  [ROLE_USER, ROLE_CLIENT]
+        ROLE_CLIENT:                    [ROLE_USER]
+
+        # a CLIENT Standard Executor is responsible/moderator of its own talent pool(s)
+        ROLE_CLIENT_STD_EXECUTOR:       [ROLE_CLIENT, ROLE_TEW_READER, ROLE_TEW_CREATOR]
+
+        # a CLIENT Standard Executor is responsible/moderator of its own talent pool(s)
+        ROLE_CLIENT_MASTER_EXECUTOR:    [ROLE_CLIENT_STD_EXECUTOR, ROLE_TEW_MASTER]
+
+        # a TEW STD Executor is responsible/moderator of one or several talent pool(s)
+        ROLE_TEW_STD_EXECUTOR:       [ROLE_CLIENT_STD_EXECUTOR]
+        
+        # a TEW MASTER Executor is responsible/moderator of one or several talent pool(s)
+        ROLE_TEW_MASTER_EXECUTOR:       [ROLE_TEW_STD_EXECUTOR, ROLE_CLIENT_MASTER_EXECUTOR]
+        
         # the admin is the TEW CEO
-        ROLE_ADMIN:         [ROLE_USER, ROLE_CLIENT, ROLE_TEW_EXECUTOR]
+        ROLE_ADMIN: [ROLE_TEW_MASTER_EXECUTOR, ROLE_SONATA_ADMIN]
+        
         # the super admin is the technical superuser
-        ROLE_SUPER_ADMIN:   [ROLE_USER, ROLE_CLIENT, ROLE_TEW_EXECUTOR, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+        
         # if you are using acl then this line must be commented
         SONATA:
             - ROLE_SONATA_PAGE_ADMIN_PAGE_EDIT
@@ -24,7 +53,7 @@ security:
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         
-        # Admin login page needs to be access without credential
+        # Admin login page needs to be accessed without credential
         - { path: ^/admin/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/logout$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/login_check$, role: IS_AUTHENTICATED_ANONYMOUSLY }

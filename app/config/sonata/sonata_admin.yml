@@ -3,6 +3,11 @@
 sonata_admin:
     title: backoffice
     title_logo: /bundles/tewtp/images/icons/tew.png
+
+#    security:
+#        in order to override the isGranted method with own voters...
+#        handler: sonata.admin.security.handler.role
+        
      # default value, change it to sonata.admin.security.handler.acl to use ACL
 #    security:
 #        handler: sonata.admin.security.handler.acl

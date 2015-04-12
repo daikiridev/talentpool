@@ -5,6 +5,7 @@ namespace TEW\TPBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 use TEW\TPBundle\Entity\TalentPool;
 use TEW\TPBundle\Form\TalentPoolType;
@@ -46,6 +47,10 @@ class TalentPoolController extends Controller
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
+        // Is the user allowed to perform such action?
+        if (!($this->get('security.context')->isGranted('ROLE_TEW_OBJECT_CREATE'))) {
+            throw new AccessDeniedException('Access Denied');
+        }
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 // Added by VP ->            
@@ -112,6 +117,11 @@ class TalentPoolController extends Controller
         if ($currentUser === NULL) { // this should not append...
             return $this->redirect($this->generateUrl('sonata_user_security_login'));
         }
+        // Is the user allowed to perform such action?
+        if (!($this->get('security.context')->isGranted('ROLE_TEW_OBJECT_CREATE'))) {
+            throw new AccessDeniedException('Access Denied');
+        }
+        
         $entity = new TalentPool($currentUser);
         $form   = $this->createCreateForm($entity);
 
@@ -135,12 +145,19 @@ class TalentPoolController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find TalentPool entity.');
         }
-
-        $deleteForm = $this->createDeleteForm($id);
+        
+        // Is the user allowed to perform such action?
+        if (!($this->get('security.context')->isGranted('ROLE_TEW_OBJECT_VIEW', $entity) ||
+                $this->get('security.context')->isGranted('ROLE_TEW_STD_EXECUTOR'))) {
+            throw new AccessDeniedException('Access Denied');
+        }
+        $deleteAccess = $this->get('security.context')->isGranted('ROLE_TEW_OBJECT_DELETE', $entity) ||
+                        $this->get('security.context')->isGranted('ROLE_TEW_MASTER_EXECUTOR');
+        $deleteFormView = $deleteAccess?$this->createDeleteForm($id)->createView():null;
 
         return $this->render('TEWTPBundle:TalentPool:show.html.twig', array(
             'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
+            'delete_form' => $deleteFormView,
         ));
     }
 
@@ -157,15 +174,22 @@ class TalentPoolController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find TalentPool entity.');
         }
-
+        
+        // Is the user allowed to perform such action?
+        if (!($this->get('security.context')->isGranted('ROLE_TEW_OBJECT_EDIT', $entity) ||
+              $this->get('security.context')->isGranted('ROLE_TEW_MASTER_EXECUTOR'))) {
+            throw new AccessDeniedException('Access Denied');
+        }
         $editForm = $this->createEditForm($entity);
-        $deleteForm = $this->createDeleteForm($id);
+        $deleteAccess = $this->get('security.context')->isGranted('ROLE_TEW_OBJECT_DELETE', $entity) ||
+                        $this->get('security.context')->isGranted('ROLE_TEW_MASTER_EXECUTOR');
+        $deleteFormView = $deleteAccess?$this->createDeleteForm($id)->createView():null;
 
         return $this->render('TEWTPBundle:TalentPool:edit_form.html.twig', array(
             'entity'      => $entity,
             'this_form'   => $editForm->createView(),
             'operation'   => 'edit',
-            'delete_form' => $deleteForm->createView(),
+            'delete_form' => $deleteFormView,
         ));
     }
 
@@ -272,6 +296,7 @@ class TalentPoolController extends Controller
      */
     public function deleteAction(Request $request, $id)
     {
+
         $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
 
@@ -281,6 +306,11 @@ class TalentPoolController extends Controller
 
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find TalentPool entity.');
+            }
+            // Is the user allowed to perform such action?
+            if (!($this->get('security.context')->isGranted('ROLE_TEW_OBJECT_DELETE', $entity) ||
+                  $this->get('security.context')->isGranted('ROLE_TEW_MASTER_EXECUTOR'))) {
+                throw new AccessDeniedException('Access Denied');
             }
 
             $em->remove($entity);
