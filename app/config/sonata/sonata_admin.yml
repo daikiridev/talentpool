@@ -63,7 +63,8 @@ sonata_admin:
                 label: Users
                 icon: '<i class="fa fa-th"></i>'
                 items:
-                    - sonata.user.admin.user
+                    #- sonata.user.admin.user
+                    - tew_user.admin.users
             tew.admin.group.misc:
                 label: Misc parameters
                 icon: '<i class="fa fa-th"></i>'

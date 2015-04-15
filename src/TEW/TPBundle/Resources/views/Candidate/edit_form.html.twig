@@ -52,9 +52,9 @@
     </script>    
 {% endblock scripts %}
 
-{% set anonymous = (not is_granted('ROLE_TEW_EXECUTOR')) and entity.lastname and (entity.creator.company != app.user.company) %}
+{% set anonymous = entity.lastname and (not is_granted('ROLE_TEW_STD_EXECUTOR')) and  (not is_granted('ROLE_TEW_OBJECT_VIEW', entity)) %}
 {% block body -%}
-    {% if anonymous %}
+    {% if anonymous %} {# this should not append -> blocked by voters #}
         <h1>Candidate {{ operation }} not allowed </h1>
         <div class="btn-toolbar pull-right record_actions" role="group">
             <div class="btn-group">

@@ -5,6 +5,8 @@ namespace TEW\TPBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+
 use TEW\TPBundle\Entity\Candidate;
 use TEW\TPBundle\Form\CandidateType;
 use TEW\TPBundle\Form\CdteSearchType;
@@ -211,6 +213,11 @@ class CandidateController extends Controller {
         
         $form->handleRequest($request);
 
+        // Is the user allowed to perform such action?
+        if (!($this->get('security.context')->isGranted('ROLE_TEW_OBJECT_CREATE'))) {
+            throw new AccessDeniedException('Access Denied');
+        }        
+        
         if ($form->isValid()) {
             // here, we can save the candidate, its tags, addresses, etc.
             $em = $this->getDoctrine()->getManager();
@@ -287,6 +294,10 @@ class CandidateController extends Controller {
         if ($currentUser === NULL) { // this should not append...
             return $this->redirect($this->generateUrl('sonata_user_security_login'));
         }
+       // Is the user allowed to perform such action?
+        if (!($this->get('security.context')->isGranted('ROLE_TEW_OBJECT_CREATE'))) {
+            throw new AccessDeniedException('Access Denied');
+        }
         $entity = new Candidate($currentUser);
         $form = $this->createCreateForm($entity);
 
@@ -310,14 +321,21 @@ class CandidateController extends Controller {
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Candidate entity.');
         }
+        
+//        // Is the user allowed to perform such action?
+//        if (!($this->get('security.context')->isGranted('ROLE_TEW_OBJECT_VIEW', $entity) ||
+//                $this->get('security.context')->isGranted('ROLE_TEW_STD_EXECUTOR'))) {
+//            throw new AccessDeniedException('Access Denied');
+//        }
+        $deleteAccess = $this->get('security.context')->isGranted('ROLE_TEW_OBJECT_DELETE', $entity) ||
+                        $this->get('security.context')->isGranted('ROLE_TEW_MASTER_EXECUTOR');
+        $deleteFormView = $deleteAccess?$this->createDeleteForm($id)->createView():null;
 
         // Adding Intl
         //$this->get('twig')->addExtension(new Twig_Extensions_Extension_Intl());
         // Adding tagging stuff - see https://github.com/FabienPennequin/FPNTagBundle
         $tagManager = $this->get('fpn_tag.tag_manager');
         $tagManager->loadTagging($entity);
-        
-        $deleteForm = $this->createDeleteForm($id);
         
         $mail = new Mail($this->getUser(), $em->getRepository('TEWUserBundle:User')->findOneByUsername('admin'));
         $mail->setObject("[TEW TP] User ".$this->getUser()->getUserName()." (".$this->getUser()->getCompany().") requests candidate #$id details");
@@ -331,7 +349,7 @@ class CandidateController extends Controller {
                     'entity' => $entity,
 //            'languagesSkills' => $languageRep->findAllSkills(),
 //            'languages' => $languageRep->findAllLanguages(),
-                    'delete_form' => $deleteForm->createView(),
+                    'delete_form' => $deleteFormView,
                     'mail_form' => $mailForm->createView(),
         ));
     }
@@ -370,18 +388,26 @@ class CandidateController extends Controller {
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Candidate entity.');
         }
+        
+        // Is the user allowed to perform such action?
+        if (!($this->get('security.context')->isGranted('ROLE_TEW_OBJECT_EDIT', $entity) ||
+              $this->get('security.context')->isGranted('ROLE_TEW_MASTER_EXECUTOR'))) {
+            throw new AccessDeniedException('Access Denied');
+        }
+        $editForm = $this->createEditForm($entity);
+        $deleteAccess = $this->get('security.context')->isGranted('ROLE_TEW_OBJECT_DELETE', $entity) ||
+                        $this->get('security.context')->isGranted('ROLE_TEW_MASTER_EXECUTOR');
+        $deleteFormView = $deleteAccess?$this->createDeleteForm($id)->createView():null;
+        
         // Adding tagging stuff - see https://github.com/FabienPennequin/FPNTagBundle
         $tagManager = $this->get('fpn_tag.tag_manager');
         $tagManager->loadTagging($entity);
-        
-        $editForm = $this->createEditForm($entity);
-        $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('TEWTPBundle:Candidate:edit_form.html.twig', array(
                     'entity' => $entity,
                     'this_form' => $editForm->createView(),
                     'operation' => 'edit',
-                    'delete_form' => $deleteForm->createView(),
+                    'delete_form' => $deleteFormView,
         ));
     }
 
@@ -532,7 +558,11 @@ class CandidateController extends Controller {
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find Candidate entity.');
             }
-            
+            // Is the user allowed to perform such action?
+            if (!($this->get('security.context')->isGranted('ROLE_TEW_OBJECT_DELETE', $entity) ||
+                  $this->get('security.context')->isGranted('ROLE_TEW_MASTER_EXECUTOR'))) {
+                throw new AccessDeniedException('Access Denied');
+            }
             // Delete addresses, comments and media attached to the candidate
             // Ok, not necessary anymore: this is handled by the ORM OneToMany cascade={"persist", "remove"}
 //            $addresses = $em->getRepository('TEWTPBundle:Address')->findByCandidate($entity->getId());

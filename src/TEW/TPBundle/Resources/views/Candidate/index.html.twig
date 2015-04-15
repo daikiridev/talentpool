@@ -78,7 +78,7 @@
         <tbody>
             {% for entity in entities %}
                 {# select candidates to be displayed #}
-                {% if is_granted('ROLE_TEW_EXECUTOR') %}
+                {% if is_granted('ROLE_TEW_STD_EXECUTOR') or is_granted('ROLE_TEW_OBJECT_VIEW', entity)%}
                     {% set visible_cdte = true %}
                 {% else %}
                     {% set visible_cdte = false %}
@@ -91,7 +91,7 @@
 
                 {% if visible_cdte %}
                     {# Should this candidate details be displayed? #}
-                    {% set anonymous = (not is_granted('ROLE_TEW_EXECUTOR')) and (entity.creator.company != app.user.company) %}
+                    {% set anonymous = (not is_granted('ROLE_TEW_STD_EXECUTOR')) and (not is_granted('ROLE_TEW_OBJECT_VIEW', entity)) %}
                     <tr>
                         <td>
                             {{ form_widget(check_candidates_form.candidates[entity.id]) }}
@@ -163,15 +163,14 @@
                                         show
                                     </a>
                                 </div>
-                                {% if anonymous %}
-                                {% else %}
+                                {% if is_granted("ROLE_TEW_OBJECT_EDIT", entity) or is_granted("ROLE_TEW_MASTER_EXECUTOR") %}
                                     <div class="btn-group">
                                         <a role="button"  class="btn btn-xs btn-warning" href="{{ path('tew_candidate_edit', { 'id': entity.id }) }}">
                                             edit
                                         </a>
                                     </div>
                                 {% endif %}
-                                {% if is_granted("ROLE_TEW_EXECUTOR") and delete_forms[entity.id] is defined %}
+                                {% if delete_forms[entity.id] is defined and (is_granted("ROLE_TEW_OBJECT_DELETE", entity) or is_granted("ROLE_TEW_MASTER_EXECUTOR")) %}
                                     <div class="btn-group">        
                                         {{ form(delete_forms[entity.id]) }}
                                     </div>
@@ -195,13 +194,15 @@
     {{ form_widget(check_candidates_form.submit) }}
 </div>
 {{ form_end(check_candidates_form) }}
-{% block actions %}
-    <div class="btn-toolbar pull-right record_actions" role="group">
-        <div class="btn-group">
-            <a role="button"  class="btn btn-warning" href="{{ path('tew_candidate_new') }}">
-                Create a new entry
-            </a>
+{% if is_granted('ROLE_TEW_OBJECT_CREATE') %} 
+    {% block actions %}
+        <div class="btn-toolbar pull-right record_actions" role="group">
+            <div class="btn-group">
+                <a role="button"  class="btn btn-warning" href="{{ path('tew_candidate_new') }}">
+                    Create a new entry
+                </a>
+            </div>
         </div>
-    </div>
-{% endblock actions %}
+    {% endblock actions %}
+{% endif %}
 {% endblock %}
