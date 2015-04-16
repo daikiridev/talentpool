@@ -77,19 +77,6 @@
         </thead>
         <tbody>
             {% for entity in entities %}
-                {# select candidates to be displayed #}
-                {% if is_granted('ROLE_TEW_STD_EXECUTOR') or is_granted('ROLE_TEW_OBJECT_VIEW', entity)%}
-                    {% set visible_cdte = true %}
-                {% else %}
-                    {% set visible_cdte = false %}
-                    {% for tp in entity.talentpools %}
-                        {% if app.user.company in tp.companies %}
-                            {% set visible_cdte = true %}
-                        {% endif %}
-                    {% endfor %}
-                {% endif %}    
-
-                {% if visible_cdte %}
                     {# Should this candidate details be displayed? #}
                     {% set anonymous = (not is_granted('ROLE_TEW_STD_EXECUTOR')) and (not is_granted('ROLE_TEW_OBJECT_VIEW', entity)) %}
                     <tr>
@@ -141,7 +128,7 @@
                         <td>
                             <small>
                                 {% for tp in entity.talentpools %}
-                                    {% set visible_tp = (app.user.company in tp.companies) or is_granted('ROLE_TEW_EXECUTOR') %}
+                                    {% set visible_tp = is_granted("ROLE_TEW_OBJECT_VIEW", tp) or is_granted('ROLE_TEW_STD_EXECUTOR') %}
                                     {% if visible_tp %}
                                         <span class='tag'>{{ tp }} {{ entity.averageScore(tp)|stars }}</span>
                                     {% endif %}
@@ -178,11 +165,9 @@
                             </div>
                         </td>
                     </tr>
-                {% else %}
                 <div style="display: none">
                     {{ form_widget(check_candidates_form.candidates[entity.id]) }}
                 </div>
-            {% endif %}
         {% endfor %}
     </tbody>
 </table>

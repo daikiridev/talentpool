@@ -1,26 +1,5 @@
 {# Should this candidate details be displayed? #}
-{% set visible_cdte = false %}
-{% if is_granted('ROLE_TEW_STD_EXECUTOR') or is_granted('ROLE_TEW_OBJECT_VIEW', entity)%}
-    {% set visible_cdte = true %}
-{% else %}
-    {% set visible_cdte = false %}
-    {% for tp in entity.talentpools %}
-        {% if app.user.company in tp.companies %}
-            {% set visible_cdte = true %}
-        {% endif %}
-    {% endfor %}
-{% endif %} 
 {% set anonymous =(not is_granted('ROLE_TEW_STD_EXECUTOR')) and (not is_granted('ROLE_TEW_OBJECT_VIEW', entity)) %}
-    {% if not visible_cdte %} {# this should not append -> blocked by voters #}
-        <h1>Candidate view not allowed </h1>
-        <div class="btn-toolbar pull-right record_actions" role="group">
-            <div class="btn-group">
-                <a role="button"  class="btn btn-info" href="{{ path('tew_candidate') }}">
-                    Back to the list
-                </a>
-            </div>
-        </div>
-    {% else %}
     <h1>
         Candidate {{ anonymous?' <small>(anonymous)</small>'}}
         {% if entity.picture %}
@@ -48,7 +27,7 @@
         <!-- Nav tabs -->
         <ul class="nav nav-pills">
             <li role="presentation" class="active"><a href="#details_{{entity.id}}" aria-controls="details" role="tab" data-toggle="tab">Details</a></li>
-            <li role="presentation" ><a href="#talentpools_{{entity.id}}" aria-controls="talentpools" role="tab" data-toggle="tab">Talent Pools</a></li>
+            <li role="presentation" ><a href="#talentpools_{{entity.id}}" aria-controls="talentpools" role="tab" data-toggle="tab">Talent Pools &amp; User comments</a></li>
         </ul>
         <!-- Tab panes -->
         <div class="tab-content">
@@ -180,11 +159,11 @@
                 <div class="row">
                     <div class="col-lg-12">
                         {% for tp in entity.talentpools %}
-                            {% set visible_tp = (app.user.company in tp.companies) or is_granted('ROLE_TEW_EXECUTOR') %}
+                            {% set visible_tp = is_granted('ROLE_TEW_MASTER') or is_granted('ROLE_TEW_OBJECT_VIEW', tp) %}
                             {% if visible_tp %}
                                 {% set tpcomments = entity.comments|commentsByTalentpool(tp) %}
                                 <div class="row">
-                                    <h5>{{ tp }} {{ tpcomments|commentsAverageScore|stars }}</h5>
+                                    <h4>{{ tp }} {{ tpcomments|commentsAverageScore|stars }}</h4>
                                     <div class="col-lg-11 col-lg-offset-1">
                                         {% for prof in tp.profiles %}
                                             <div class="row">
@@ -203,20 +182,23 @@
                                             </div>
                                         {% endfor %}
                                     </div>
-                                    <div class="col-lg-11 col-lg-offset-1">
-                                        <div class='row'>
-                                            {{ (tpcomments is not empty)?'Users comments' }}
-                                        </div>
-                                        <div class='row'>
-                                        {% for comment in tpcomments %}
-                                            <div class="col-lg-6"
-                                                data-toggle="popover" data-delay='{ "show": 500, "hide": 200 }' data-html="true" style="cursor:help" data-trigger='hover' data-placement="top"
-                                                data-content="{{ comment.comment }}" data-title="{{ comment }}<br><em>- by {{ comment.author }}, on {{ comment.date|date('d M Y') }}</em>">
-                                                {{ comment.score|stars }} {{ comment }} - <em>{{ comment.date|date('d M Y') }}</em>
+                                    {% if is_granted('ROLE_TEW_MASTER') or is_granted('ROLE_TEW_OBJECT_VIEW', tp) %}
+                                        <div class="col-lg-11 col-lg-offset-1">
+                                            <div class='row'>
+                                                <h5>{{ (tpcomments is not empty)?'Users comments' }}</h5>
                                             </div>
-                                        {% endfor %}
+                                            <div class='row'>
+
+                                            {% for comment in tpcomments %}
+                                                <div class="col-lg-6"
+                                                    data-toggle="popover" data-delay='{ "show": 500, "hide": 200 }' data-html="true" style="cursor:help" data-trigger='hover' data-placement="top"
+                                                    data-content="{{ comment.comment }}" data-title="{{ comment }}<br><em>- by {{ comment.author }}, on {{ comment.date|date('d M Y') }}</em>">
+                                                    {{ comment.score|stars }} {{ comment }} - <em>{{ comment.date|date('d M Y') }}</em>
+                                                </div>
+                                            {% endfor %}
+                                            </div>
                                         </div>
-                                    </div>
+                                    {% endif %}
                                 </div>
                             {% endif %}
                         {% endfor %}
@@ -244,11 +226,10 @@
                     Request candidate details
                 </button>
             {% endif %}
-            {% if is_granted('ROLE_TEW_EXECUTOR') and delete_form is defined %}
+            {% if is_granted('ROLE_TEW_MASTER') and delete_form is defined %}
                 <div class="btn-group">
                     {{ form(delete_form) }}
                 </div>
             {% endif %}
         </div>
     {% endblock actions %}
-{% endif %}

@@ -199,11 +199,20 @@ class UserAdmin extends BaseAdmin
 //                ->add('gplusUid')
 //                ->add('gplusName')
 //            ->end()
-            ->with('Security')
-                ->add('token')
-                ->add('twoStepVerificationCode')
-            ->end()
+//            ->with('Security')
+//                ->add('token')
+//                ->add('twoStepVerificationCode')
+//            ->end()
         ;
     }
-
+    
+    /*
+     * {@inheritdoc}
+     * This function has been overrided since updateCanonicalFields() and updatePassword() don't work
+     */
+    public function preUpdate($user)
+    {
+//        $this->getUserManager()->updateCanonicalFields($user);
+//        $this->getUserManager()->updatePassword($user);
+    }
 }

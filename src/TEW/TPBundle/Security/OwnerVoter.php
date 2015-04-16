@@ -6,29 +6,28 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
  
 class OwnerVoter implements VoterInterface
 {
-    // Cette méthode permet de définir pour quels rôles le voteur doit être
-    // appelé, nous définissons ici que ce voteur sera appelé seulement sur
-    // les rôles qui commencent par 'ROLE_ARTICLE_'
+
     public function supportsAttribute($attribute)
     {
         //return 1 === preg_match('/^ROLE_(TALENTPOOL|CANDIDATE|COMPANY)_/', $attribute);
-        return 1 === preg_match('/^ROLE_TEW_OBJECT_(EDIT|DELETE|VIEW)/', $attribute);
+        return 1 === preg_match('/^ROLE_TEW_OBJECT_(EDIT|DELETE|VIEW|ANONYMOUS_VIEW)/', $attribute);
     }
  
-    // Cette méthode est utilisée pour vérifier la classe de l'utilisateur,
-    // ce qui ne nous concerne pas dans notre exemple
+
     public function supportsClass($class) 
     {
-        return true;
+        return false;
     }
  
-    // La méthode principale qui doit retourner le vote
     public function vote(TokenInterface $token, $object, array $attributes)
     {
         //return VoterInterface::ACCESS_GRANTED;
         // No opinion by default
         $vote = VoterInterface::ACCESS_ABSTAIN;
- 
+        $classname = get_class($object);
+        if ($classname === 'TEW\TPBundle\Security\OwnerVoter') { // in sonata_admin, this could happen
+            return $vote;
+        }
         // we check all roles for this user...
 //                    print_r($attributes);
         foreach ($attributes as $attribute) {
@@ -39,13 +38,48 @@ class OwnerVoter implements VoterInterface
  
             // for a given target role, the default rule is to deny access...
             $user = $token->getUser();
+//            print "<br>$attribute - ".get_class($object)."<br>";
 //            print "<br>$attribute - user cie: ".$user->getCompany()."<br>";
  
             // ...except for the owner of the object
             if ($object->getOwningCompany()->getId() === $user->getCompany()->getId()) { // the user's company is the same as the object's one
-                return VoterInterface::ACCESS_GRANTED;
+                return 'ROLE_TEW_OBJECT_DELETE'!==$attribute?VoterInterface::ACCESS_GRANTED:VoterInterface::ACCESS_DENIED;
             } else { // The user is not owner but has the role to do it 
-                return VoterInterface::ACCESS_DENIED;
+                switch ($attribute) {
+                    case "ROLE_TEW_OBJECT_VIEW":
+//                        print "<em>$classname</em><br>";
+                        switch($classname) {
+                            case "TEW\TPBundle\Entity\TalentPool":
+                                return $object->getCompanies()->contains($user->getCompany())?VoterInterface::ACCESS_GRANTED:VoterInterface::ACCESS_DENIED;
+                                break;
+                            case "TEW\TPBundle\Entity\Candidate":
+                                $vote = VoterInterface::ACCESS_DENIED;
+                                foreach ($object->getTalentPools() as $tp) {
+//                                    if ($this->get('security.context')->isGranted($attribute, $tp)) { // undefined ->get()
+//                                        return VoterInterface::ACCESS_GRANTED;
+//                                    }
+                                    if ($tp->getOwningCompany()->getId()===$user->getCompany()->getId() or $tp->getCompanies()->contains($user->getCompany())) {
+                                        return VoterInterface::ACCESS_GRANTED;
+                                    }
+                                }
+                                return $vote;
+                                break;
+                            default: // this should not happen
+                                return VoterInterface::ACCESS_DENIED;
+                        }
+                        break;
+                        
+                    case "ROLE_TEW_OBJECT_ANONYMOUS_VIEW":
+                        $classname = get_class($object);
+                        if ("Candidate" === $classname) {
+                            // TO BE IMPLEMENTED
+                        } else {
+                            return VoterInterface::ACCESS_DENIED;
+                        }
+                        break;
+                    default:
+                        return VoterInterface::ACCESS_DENIED;
+                }
 //                print "<br>$attribute - user cie: ".$user->getCompany()." / object cie: ".$object->getOwningCompany()."<br>";
                 
             }

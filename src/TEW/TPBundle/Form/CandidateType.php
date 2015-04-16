@@ -253,7 +253,13 @@ class CandidateType extends AbstractType
                 'expanded' => false, // checkboxes?
                 'attr' => array('class' => 'select2', 'style' => 'width:300px'),
             ))
-            ->add('owningcompany')
+            ->add('owningcompany', 'entity', array( 
+                'required'  => true,
+                'class'    => 'TEWTPBundle:Company',
+                'multiple' => false,
+                'expanded' => false, // checkboxes?
+//                'attr' => array('class' => 'select2', 'style' => 'width:300px'),
+            ))
 //            ->add('origin', 'choice', array(
 //                'choices' => array(
 //                    'TEW' => 'TEW', 

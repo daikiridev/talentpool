@@ -328,7 +328,7 @@ class CandidateController extends Controller {
 //            throw new AccessDeniedException('Access Denied');
 //        }
         $deleteAccess = $this->get('security.context')->isGranted('ROLE_TEW_OBJECT_DELETE', $entity) ||
-                        $this->get('security.context')->isGranted('ROLE_TEW_MASTER_EXECUTOR');
+                        $this->get('security.context')->isGranted('ROLE_TEW_MASTER');
         $deleteFormView = $deleteAccess?$this->createDeleteForm($id)->createView():null;
 
         // Adding Intl
@@ -391,12 +391,12 @@ class CandidateController extends Controller {
         
         // Is the user allowed to perform such action?
         if (!($this->get('security.context')->isGranted('ROLE_TEW_OBJECT_EDIT', $entity) ||
-              $this->get('security.context')->isGranted('ROLE_TEW_MASTER_EXECUTOR'))) {
+              $this->get('security.context')->isGranted('ROLE_TEW_MASTER'))) {
             throw new AccessDeniedException('Access Denied');
         }
         $editForm = $this->createEditForm($entity);
         $deleteAccess = $this->get('security.context')->isGranted('ROLE_TEW_OBJECT_DELETE', $entity) ||
-                        $this->get('security.context')->isGranted('ROLE_TEW_MASTER_EXECUTOR');
+                        $this->get('security.context')->isGranted('ROLE_TEW_MASTER');
         $deleteFormView = $deleteAccess?$this->createDeleteForm($id)->createView():null;
         
         // Adding tagging stuff - see https://github.com/FabienPennequin/FPNTagBundle
@@ -560,7 +560,7 @@ class CandidateController extends Controller {
             }
             // Is the user allowed to perform such action?
             if (!($this->get('security.context')->isGranted('ROLE_TEW_OBJECT_DELETE', $entity) ||
-                  $this->get('security.context')->isGranted('ROLE_TEW_MASTER_EXECUTOR'))) {
+                  $this->get('security.context')->isGranted('ROLE_TEW_MASTER'))) {
                 throw new AccessDeniedException('Access Denied');
             }
             // Delete addresses, comments and media attached to the candidate

@@ -152,7 +152,7 @@ class TalentPoolController extends Controller
             throw new AccessDeniedException('Access Denied');
         }
         $deleteAccess = $this->get('security.context')->isGranted('ROLE_TEW_OBJECT_DELETE', $entity) ||
-                        $this->get('security.context')->isGranted('ROLE_TEW_MASTER_EXECUTOR');
+                        $this->get('security.context')->isGranted('ROLE_TEW_MASTER');
         $deleteFormView = $deleteAccess?$this->createDeleteForm($id)->createView():null;
 
         return $this->render('TEWTPBundle:TalentPool:show.html.twig', array(
@@ -177,12 +177,12 @@ class TalentPoolController extends Controller
         
         // Is the user allowed to perform such action?
         if (!($this->get('security.context')->isGranted('ROLE_TEW_OBJECT_EDIT', $entity) ||
-              $this->get('security.context')->isGranted('ROLE_TEW_MASTER_EXECUTOR'))) {
+              $this->get('security.context')->isGranted('ROLE_TEW_MASTER'))) {
             throw new AccessDeniedException('Access Denied');
         }
         $editForm = $this->createEditForm($entity);
         $deleteAccess = $this->get('security.context')->isGranted('ROLE_TEW_OBJECT_DELETE', $entity) ||
-                        $this->get('security.context')->isGranted('ROLE_TEW_MASTER_EXECUTOR');
+                        $this->get('security.context')->isGranted('ROLE_TEW_MASTER');
         $deleteFormView = $deleteAccess?$this->createDeleteForm($id)->createView():null;
 
         return $this->render('TEWTPBundle:TalentPool:edit_form.html.twig', array(
@@ -309,7 +309,7 @@ class TalentPoolController extends Controller
             }
             // Is the user allowed to perform such action?
             if (!($this->get('security.context')->isGranted('ROLE_TEW_OBJECT_DELETE', $entity) ||
-                  $this->get('security.context')->isGranted('ROLE_TEW_MASTER_EXECUTOR'))) {
+                  $this->get('security.context')->isGranted('ROLE_TEW_MASTER'))) {
                 throw new AccessDeniedException('Access Denied');
             }
 

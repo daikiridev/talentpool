@@ -30,9 +30,8 @@ class MenuBuilder
     public function createMainMenu(Request $request)    
     {
         $is_client = $this->securityContext->isGranted(array('ROLE_CLIENT'));
-        $is_standard_executor = $this->securityContext->isGranted(array('ROLE_CLIENT_STD_EXECUTOR'));
-        $is_master_executor = $this->securityContext->isGranted(array('ROLE_CLIENT_MASTER_EXECUTOR'));
-        $is_tew_executor = $this->securityContext->isGranted(array('ROLE_TEW_EXECUTOR'));
+        $is_master_executor = $this->securityContext->isGranted(array('ROLE_MASTER_EXECUTOR'));
+        $is_tew_executor = $this->securityContext->isGranted(array('ROLE_TEW_STD_EXECUTOR'));
         $is_admin = $this->securityContext->isGranted(array('ROLE_ADMIN'));
         
         $menu = $this->factory->createItem('root');
