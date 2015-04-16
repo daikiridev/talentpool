@@ -12,24 +12,24 @@ security:
 #        strategy: consensus
         
     role_hierarchy:
-        ROLE_TEW_READER:
+        ROLE_USER_READER:
             - ROLE_TEW_OBJECT_VIEW
             - ROLE_TEW_OBJECT_LIST
-        ROLE_TEW_CREATOR:
+        ROLE_USER_CREATOR:
             - ROLE_TEW_OBJECT_CREATE
         ROLE_TEW_MASTER:
             - ROLE_TEW_OBJECT_EDIT
             - ROLE_TEW_OBJECT_DELETE
-        ROLE_TEW_OBJECT_OWNER:
+        ROLE_USER_OWNER:
             - ROLE_TEW_OBJECT_VIEW
             - ROLE_TEW_OBJECT_EDIT
       
         # a USER is at least a candidate with an account
         # a client is a TEW Client
-        ROLE_CLIENT:                    [ROLE_USER, ROLE_TEW_OBJECT_OWNER, ROLE_TEW_CREATOR]
+        ROLE_CLIENT:                    [ROLE_USER, ROLE_USER_OWNER, ROLE_USER_CREATOR]
 
         # a CLIENT Standard Executor is responsible/moderator of its own talent pool(s)
-        ROLE_CLIENT_STD_EXECUTOR:       [ROLE_CLIENT, ROLE_TEW_READER]
+        ROLE_CLIENT_STD_EXECUTOR:       [ROLE_CLIENT, ROLE_USER_READER]
 
         # a CLIENT Standard Executor is responsible/moderator of its own talent pool(s)
         ROLE_CLIENT_MASTER_EXECUTOR:    [ROLE_CLIENT_STD_EXECUTOR, ROLE_TEW_MASTER]

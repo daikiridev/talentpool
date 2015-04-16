@@ -32,10 +32,14 @@
             <div role="tabpanel" class="tab-pane active" id="details">
                 <table class="record_properties">
                     <tbody>
-                        {% if is_granted('ROLE_TEW_STD_EXECUTOR') %}
+                        {% if is_granted('ROLE_TEW_STD_EXECUTOR') or is_granted('ROLE_TEW_MASTER') %}
                             <tr>
                                 <th>Creator</th>
                                 <td>{{ entity.creator }}</td>
+                            </tr>
+                            <tr>
+                                <th>Access rights</th>
+                                <td>{{ entity.companies|join(' / ') }}</td>
                             </tr>
                         {% endif %}
                         <tr>
@@ -50,7 +54,7 @@
                             <th>Description</th>
                             <td>{{ entity.description|raw }}</td>
                         </tr>
-                        {% if is_granted('ROLE_TEW_STD_EXECUTOR') %}
+                        {% if is_granted('ROLE_TEW_STD_EXECUTOR') or is_granted('ROLE_TEW_MASTER') %}
                             <tr>
                                 <th>Clients</th>
                                 <td>{{ entity.companies|join(' / ') }}</td>
@@ -62,7 +66,7 @@
                             <td>{{ entity.candidates|join(' / ') }}</td>
                         </tr>
                         #}
-                        {% if is_granted('ROLE_TEW_STD_EXECUTOR') %}
+                        {% if is_granted('ROLE_TEW_STD_EXECUTOR') or is_granted('ROLE_TEW_MASTER') %}
                             <tr>
                                 <th>Creationdate</th>
                                 <td>{{ entity.createdAt|date('d M Y H:i:s') }}</td>
