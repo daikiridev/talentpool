@@ -53,7 +53,7 @@
 {% endblock scripts %}
 
 {% block body -%}
-    {% if entity.lastname and not (is_granted('ROLE_TEW_OBJECT_EDIT', entity) or is_granted('ROLE_TEW_MASTER'))  %} {# this should not append -> blocked by voters #}
+    {% if entity.lastname and not (is_granted('ROLE_TEW_OBJECT_EDIT', entity) or is_granted('ROLE_MASTER_EXECUTOR'))  %} {# this should not append -> blocked by voters #}
         <h1>Candidate {{ operation }} not allowed </h1>
         <div class="btn-toolbar pull-right record_actions" role="group">
             <div class="btn-group">
@@ -283,7 +283,7 @@
                         Back to the list
                     </a>
                 </div>
-                {% if operation == 'edit' and (is_granted('ROLE_TEW_OBJECT_DELETE', entity) or is_granted('ROLE_TEW_MASTER')) %}
+                {% if operation == 'edit' and (is_granted('ROLE_TEW_OBJECT_DELETE', entity) or is_granted('ROLE_MASTER_EXECUTOR')) %}
                     <div class="btn-group">
                         {{ form(delete_form) }}
                     </div>

@@ -21,7 +21,8 @@
         <!-- Nav tabs -->
         <ul class="nav nav-tabs">
             {% for candidate in entities %}
-                {% set anonymous =(not is_granted('ROLE_TEW_STD_EXECUTOR')) and (not is_granted('ROLE_TEW_OBJECT_VIEW', candidate)) %}
+                {% set fullview = is_granted('ROLE_PARTNER_STD_EXECUTOR') or is_granted('ROLE_TEW_OBJECT_VIEW', candidate) %}
+                {% set anonymous = (not fullview) and is_granted('ROLE_TEW_OBJECT_ANONYMOUS_VIEW', candidate) %}
                 <li role="presentation" {{ loop.index==1?'class="active"' }}><a href="#cdte{{ loop.index }}" aria-controls="cdte{{ loop.index }}" role="tab" data-toggle="tab">{{ anonymous?'Candidate#'~loop.index:candidate }}</a></li>
             {% endfor %}
         </ul>

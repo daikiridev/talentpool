@@ -3,7 +3,9 @@
     {% set workingtp = app.session.get('workingtp') %}
 {% endif %}
 {# Beta or alpha release? #}
-{% set beta=(app.request.server.get("SERVER_NAME")=="talent.tew.com") %}
+{% set beta=(app.request.server.get("SERVER_NAME")=="talentpool.theexecutiveway.com") %}
+
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -11,11 +13,15 @@
         <meta name="robots" content="noindex,nofollow" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="icon" sizes="16x16" href="{{ asset('favicon.ico') }}" />
+        <link rel="icon" sizes="16x16" href="{{ asset('bundles/tewtp/'~(beta?'favicon.ico':'test.ico')) }}" />
         <title>{% block title %}TEW TalentPool{% endblock %}</title>
         {% block stylesheets %}	
             <!--link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"-->
-            <link rel="stylesheet" href="{{ asset('bundles/tewtp/css/bootstrap.min.css') }}">
+            {% if beta %}
+                <link rel="stylesheet" href="{{ asset('bundles/tewtp/css/bootstrap.min.css') }}">
+            {% else %}
+                <link rel="stylesheet" href="{{ asset('bundles/tewtp/css/bootstrap.test.min.css') }}">
+            {% endif %}
             <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css">
             <link rel="stylesheet" href="{{ asset('bundles/tewtp/css/talentpool.css') }}">
             <link rel="stylesheet" type="text/css" href="{{ asset('bundles/tewtp/css/bootstrap3-wysihtml5.css') }}" />
@@ -33,7 +39,7 @@
                 <a class='brand' href='{{ path('tp_home') }}'>
                     <img height='49px' style='background-color:lightcyan; padding:3px;'
                     {% if not (app.user and app.user.company and app.user.company.picture) %}
-                         src="{{ asset('bundles/tewtp/images/logo.png')}}"
+                         src="{{ asset(beta?'bundles/tewtp/images/logo.png':'bundles/tewtp/images/logotest.png')}}"
                     {% else %}
                          src="{% path app.user.company.picture, 'admin' %}"
                     {% endif %}

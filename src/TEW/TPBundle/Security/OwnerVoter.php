@@ -52,6 +52,28 @@ class OwnerVoter implements VoterInterface
                             case "TEW\TPBundle\Entity\TalentPool":
                                 return $object->getCompanies()->contains($user->getCompany())?VoterInterface::ACCESS_GRANTED:VoterInterface::ACCESS_DENIED;
                                 break;
+//                            case "TEW\TPBundle\Entity\Candidate":
+//                                $vote = VoterInterface::ACCESS_DENIED;
+//                                foreach ($object->getTalentPools() as $tp) {
+////                                    if ($this->get('security.context')->isGranted($attribute, $tp)) { // undefined ->get()
+////                                        return VoterInterface::ACCESS_GRANTED;
+////                                    }
+//                                    if ($tp->getOwningCompany()->getId()===$user->getCompany()->getId() or $tp->getCompanies()->contains($user->getCompany())) {
+//                                        return VoterInterface::ACCESS_GRANTED;
+//                                    }
+//                                }
+//                                return $vote;
+//                                break;
+                            default:
+                                return VoterInterface::ACCESS_DENIED;
+                        }
+                        break;
+                        
+                    case "ROLE_TEW_OBJECT_ANONYMOUS_VIEW":
+                        switch($classname) {
+                            case "TEW\TPBundle\Entity\TalentPool":
+                                return $object->getCompanies()->contains($user->getCompany())?VoterInterface::ACCESS_GRANTED:VoterInterface::ACCESS_DENIED;
+                                break;
                             case "TEW\TPBundle\Entity\Candidate":
                                 $vote = VoterInterface::ACCESS_DENIED;
                                 foreach ($object->getTalentPools() as $tp) {
@@ -66,15 +88,6 @@ class OwnerVoter implements VoterInterface
                                 break;
                             default: // this should not happen
                                 return VoterInterface::ACCESS_DENIED;
-                        }
-                        break;
-                        
-                    case "ROLE_TEW_OBJECT_ANONYMOUS_VIEW":
-                        $classname = get_class($object);
-                        if ("Candidate" === $classname) {
-                            // TO BE IMPLEMENTED
-                        } else {
-                            return VoterInterface::ACCESS_DENIED;
                         }
                         break;
                     default:

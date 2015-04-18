@@ -31,12 +31,12 @@ class MenuBuilder
     {
         $is_client = $this->securityContext->isGranted(array('ROLE_CLIENT'));
         $is_master_executor = $this->securityContext->isGranted(array('ROLE_MASTER_EXECUTOR'));
-        $is_tew_executor = $this->securityContext->isGranted(array('ROLE_TEW_STD_EXECUTOR'));
+        $is_tew_staff = $this->securityContext->isGranted(array('ROLE_TEW_STAFF'));
         $is_admin = $this->securityContext->isGranted(array('ROLE_ADMIN'));
         
         $menu = $this->factory->createItem('root');
         $menu->setChildrenAttribute('class', 'nav navbar-nav');
-        if ($is_tew_executor) {
+        if ($is_tew_staff) {
             $menu->addChild('Companies')
                     ->setAttribute('icon', 'icon-folder-open')
                     ->setAttribute('dropdown', true);

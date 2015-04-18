@@ -78,7 +78,10 @@
         <tbody>
             {% for entity in entities %}
                     {# Should this candidate details be displayed? #}
-                    {% set anonymous = (not is_granted('ROLE_TEW_STD_EXECUTOR')) and (not is_granted('ROLE_TEW_OBJECT_VIEW', entity)) %}
+                    {% set fullview = is_granted('ROLE_TEW_STAFF') or is_granted('ROLE_TEW_OBJECT_VIEW', entity) %}
+                    {% set visible = (not fullview) and is_granted('ROLE_TEW_OBJECT_ANONYMOUS_VIEW', entity) %}
+                    {% set anonymous = visible and not is_granted('ROLE_STD_EXECUTOR') %}
+                    {% if fullview or visible %}
                     <tr>
                         <td>
                             {{ form_widget(check_candidates_form.candidates[entity.id]) }}
@@ -128,7 +131,7 @@
                         <td>
                             <small>
                                 {% for tp in entity.talentpools %}
-                                    {% set visible_tp = is_granted("ROLE_TEW_OBJECT_VIEW", tp) or is_granted('ROLE_TEW_STD_EXECUTOR') %}
+                                    {% set visible_tp = is_granted("ROLE_TEW_OBJECT_VIEW", tp) or is_granted('ROLE_STD_EXECUTOR') %}
                                     {% if visible_tp %}
                                         <span class='tag'>{{ tp }} {{ entity.averageScore(tp)|stars }}</span>
                                     {% endif %}
@@ -150,14 +153,14 @@
                                         show
                                     </a>
                                 </div>
-                                {% if is_granted("ROLE_TEW_OBJECT_EDIT", entity) or is_granted("ROLE_TEW_MASTER") %}
+                                {% if is_granted("ROLE_TEW_OBJECT_EDIT", entity) or is_granted("ROLE_MASTER_EXECUTOR") %}
                                     <div class="btn-group">
                                         <a role="button"  class="btn btn-xs btn-warning" href="{{ path('tew_candidate_edit', { 'id': entity.id }) }}">
                                             edit
                                         </a>
                                     </div>
                                 {% endif %}
-                                {% if delete_forms[entity.id] is defined and (is_granted("ROLE_TEW_OBJECT_DELETE", entity) or is_granted("ROLE_TEW_MASTER")) %}
+                                {% if delete_forms[entity.id] is defined and (is_granted("ROLE_TEW_OBJECT_DELETE", entity) or is_granted("ROLE_MASTER_EXECUTOR")) %}
                                     <div class="btn-group">        
                                         {{ form(delete_forms[entity.id]) }}
                                     </div>
@@ -165,6 +168,7 @@
                             </div>
                         </td>
                     </tr>
+                    {% endif %}
                 <div style="display: none">
                     {{ form_widget(check_candidates_form.candidates[entity.id]) }}
                 </div>

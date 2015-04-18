@@ -99,7 +99,7 @@
                 Back to the list
             </a>
         </div>
-        {% if operation=='edit' and is_granted('ROLE_TEW_OBJECT_DELETE', entity)%}
+        {% if operation=='edit' and is_granted('ROLE_TEW_OBJECT_DELETE', entity) %}
         <div class="btn-group">
             {{ form(delete_form) }}
         </div>
