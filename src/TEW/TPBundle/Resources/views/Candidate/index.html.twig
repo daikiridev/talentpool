@@ -96,8 +96,15 @@
                             {% if entity.status %}
                                 {{entity.status|status}}
                             {% endif %}
-                            {% if entity.resume %}
-                                <i class="icon icon-paperclip" style="cursor:help" title="resume attached"></i>
+                            {% if entity.resume and (not anonymous) %}
+                                <a href="{% path entity.resume, 'reference' %}" target="_blank" style="text-decoration: none; cursor: pointer">
+                                    <i class="icon icon-paperclip" style="cursor:help" title="resume attached"></i>
+                                </a>
+                            {% endif %}
+                            {% if entity.anonymousResume and anonymous %}
+                                <a href="{% path entity.anonymousResume, 'reference' %}" target="_blank" style="text-decoration: none; cursor: pointer">
+                                    <i class="icon icon-paperclip" style="cursor:help" title="resume attached"></i>
+                                </a>
                             {% endif %}
                         </td>
                         <td>

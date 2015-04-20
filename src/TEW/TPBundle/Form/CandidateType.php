@@ -254,6 +254,7 @@ class CandidateType extends AbstractType
                 'attr' => array('class' => 'select2', 'style' => 'width:300px'),
             ))
             ->add('owningcompany', 'entity', array( 
+                'label' => 'Owner',
                 'required'  => true,
                 'class'    => 'TEWTPBundle:Company',
                 'multiple' => false,
@@ -277,6 +278,13 @@ class CandidateType extends AbstractType
                 'context'  => 'candidate',
                 'attr' => array('class' => 'span16') // doesn't work
             ))
+            ->add('anonymousResume', 'sonata_media_type', array(
+                'label' => false,
+                'required' => false,
+                'provider' => 'sonata.media.provider.file',
+                'context'  => 'candidate',
+                'attr' => array('class' => 'span16') // doesn't work
+            ))
             ->add('comments', 'modalcollection', array(
                 'label' => 'User comments',
                 'attr' => array('class' => 'form-collection'), // in order to handle jquery functions of tew.candidate.edit.js
@@ -292,6 +300,8 @@ class CandidateType extends AbstractType
                 ->add('unlink', 'hidden', ['mapped' => false, 'data' => false])// removing the 'unlink' checkbox
                 ; 
         $builder->get('resume')->add('binaryContent', 'file', ['label' => false,])
+                ->add('unlink', 'hidden', ['mapped' => false, 'data' => false]); // removing the 'unlink' checkbox
+        $builder->get('anonymousResume')->add('binaryContent', 'file', ['label' => false,])
                 ->add('unlink', 'hidden', ['mapped' => false, 'data' => false]); // removing the 'unlink' checkbox
     }
     

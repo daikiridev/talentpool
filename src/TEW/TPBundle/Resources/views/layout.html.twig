@@ -37,7 +37,7 @@
         <nav class="navbar navbar-default navbar-fixed-top">
             <div class='navbar-header'>
                 <a class='brand' href='{{ path('tp_home') }}'>
-                    <img height='49px' style='background-color:lightcyan; padding:3px;'
+                    <img height='49' style='background-color:lightcyan; padding:3px;'
                     {% if not (app.user and app.user.company and app.user.company.picture) %}
                          src="{{ asset(beta?'bundles/tewtp/images/logo.png':'bundles/tewtp/images/logotest.png')}}"
                     {% else %}
@@ -85,7 +85,7 @@
         <footer class="footer">
             <div class="container">
                 <p class="text-muted pull-right">&copy; <a href="http://tew-cc.com" target='_blank'>TEW</a> {{ "now"|date("Y") }}
-                    <img height="32px"
+                    <img height="32" alt="{{ beta?"Beta release":"Alpha-release / prototype" }}"
                            data-toggle="tooltip" data-placement="top" data-trigger="hover" data-delay="1000"
                            title="{{ beta?"Beta release":"Alpha-release / prototype" }}"
                            src="{{ asset('bundles/tewtp/images/icons/' ~ (beta?'beta':'alpha') ~ '.png') }}"

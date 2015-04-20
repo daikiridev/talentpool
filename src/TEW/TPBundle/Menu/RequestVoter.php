@@ -21,9 +21,9 @@ class RequestVoter implements VoterInterface
     	if ($item->getUri() === $this->container->get('request')->getRequestUri()) {
     		// URL's completely match
             return true;
-        } else if($item->getUri() !== $this->container->get('request')->getBaseUrl().'/' && (substr($this->container->get('request')->getRequestUri(), 0, strlen($item->getUri())) === $item->getUri())) {
-        	// URL isn't just "/" and the first part of the URL match
-	    	return true;
+//        } else if($item->getUri() !== $this->container->get('request')->getBaseUrl().'/' && (substr($this->container->get('request')->getRequestUri(), 0, strlen($item->getUri())) === $item->getUri())) {
+//        	// URL isn't just "/" and the first part of the URL match
+//	    	return true;
     	}
         return null;
     }

@@ -82,9 +82,9 @@
                                 {{ entity.bonusbenefits?'. Bonus & details: '~entity.bonusbenefits }}
                             </td>
                         </tr>
-                        {% if entity.targetFunction1 and entity.targetFunction3 and entity.targetFunction3 %}
+                        {% if entity.targetFunction1 or entity.targetFunction3 or entity.targetFunction3 %}
                             <tr>
-                                <th>Target positions</th>
+                                <th>Target position(s)</th>
                                 <td>
                                     {{ entity.targetFunction1 is not null? entity.targetFunction1 }} {{ entity.targetLevel1 is not null? entity.targetLevel1 }}
                                     {{ entity.targetFunction2 is not null?' / ' ~ entity.targetFunction2 }} {{ entity.targetLevel2 is not null? entity.targetLevel2 }}
@@ -145,6 +145,21 @@
                                             <img width="32" src="{{ asset('bundles/tewtp/images/icons/word.png') }}">
                                         {% endif %}
                                         {{ entity.resume }}
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endif %}
+                        {% if entity.anonymousResume and (anonymous or is_granted('ROLE_MASTER_EXECUTOR'))  %}
+                            <tr>
+                                <th>{{is_granted('ROLE_MASTER_EXECUTOR')?'Anonymous '}}Resume</th>
+                                <td>
+                                    <a href="{% path entity.anonymousResume, 'reference' %}" target="_blank">
+                                        {% if entity.anonymousResume.contentType=='application/pdf' %}
+                                            <img width="32" src="{{ asset('bundles/tewtp/images/icons/pdf.png') }}">
+                                        {% elseif entity.anonymousResume.contentType=='application/msword' %}
+                                            <img width="32" src="{{ asset('bundles/tewtp/images/icons/word.png') }}">
+                                        {% endif %}
+                                        {{ entity.anonymousResume }}
                                     </a>
                                 </td>
                             </tr>

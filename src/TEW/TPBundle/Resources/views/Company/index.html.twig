@@ -20,6 +20,7 @@
                     //  "sAjaxDataProp": "listes"
             "aoColumns":[
                 { "bSearchable": false }, // Id
+                {"bSearchable": false, "bSortable": false}, // Logo
                 { "bSearchable": true }, // Name
                 { "bSearchable": false }, // Active
                 { "bSearchable": false }, // Created At
@@ -36,7 +37,8 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Name</th>
+                <th>Logo</th>
+                <th>Corporate</th>
                 <th>Active</th>
                 <th>Creation date</th>
                 <th>Actions</th>
@@ -46,6 +48,11 @@
         {% for entity in entities %}
             <tr>
                 <td><a href="{{ path('tew_company_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>
+                    {% if entity.picture is not null%}
+                        <img src="{% path entity.picture, 'admin' %}" alt="{{ entity.picture.name }}" width="80px">
+                    {% endif %}
+                </td>
                 <td>{{ entity.name }}</td>
                 <td>{{ entity.active }}</td>
                 <td>{% if entity.createdAt %}{{ entity.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>

@@ -128,6 +128,14 @@ class Candidate implements Taggable
      * @ORM\OneToOne(targetEntity="Application\Sonata\MediaBundle\Entity\Media", cascade={"all"})
      */
     private $resume;
+    
+    /**
+     * @var anonymousResume
+     *
+     * @ORM\OneToOne(targetEntity="Application\Sonata\MediaBundle\Entity\Media", cascade={"all"})
+     * @ORM\JoinColumn(name="anonresume_id", referencedColumnName="id")
+     */
+    private $anonymousResume;
 
     /**
      * @var function
@@ -1465,5 +1473,28 @@ class Candidate implements Taggable
     public function getOwningcompany()
     {
         return $this->owningcompany;
+    }
+
+    /**
+     * Set anonymousResume
+     *
+     * @param \Application\Sonata\MediaBundle\Entity\Media $anonymousResume
+     * @return Candidate
+     */
+    public function setAnonymousResume(\Application\Sonata\MediaBundle\Entity\Media $anonymousResume = null)
+    {
+        $this->anonymousResume = $anonymousResume;
+
+        return $this;
+    }
+
+    /**
+     * Get anonymousResume
+     *
+     * @return \Application\Sonata\MediaBundle\Entity\Media 
+     */
+    public function getAnonymousResume()
+    {
+        return $this->anonymousResume;
     }
 }
