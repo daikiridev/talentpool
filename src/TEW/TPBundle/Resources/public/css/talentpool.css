@@ -95,6 +95,9 @@ li.warning > a:focus {
 /*.modal-backdrop{
     z-index: 10;        
 }​*/
+.modal-dialog {
+    z-index: 10000;
+}
 .pac-container {
     z-index: 9999 !important;
 }

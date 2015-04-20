@@ -60,7 +60,7 @@ class MenuBuilder
                 $menu['Talent pools']->addChild('List', array('route' => 'tew_talentpool'))
                         ->setAttribute('icon', 'icon-list');
                 if ($is_master_executor) { // only executors can add talentpools
-                    $menu['Talent pools']->addChild('Add<<<', array('route' => 'tew_talentpool_new'))
+                    $menu['Talent pools']->addChild('Add', array('route' => 'tew_talentpool_new'))
                             ->setAttribute('icon', 'icon-plus-sign-alt');   
                 }
             } else { // working talentpool exists

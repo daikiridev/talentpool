@@ -47,23 +47,10 @@ class OwnerVoter implements VoterInterface
             } else { // The user is not owner but has the role to do it 
                 switch ($attribute) {
                     case "ROLE_TEW_OBJECT_VIEW":
-//                        print "<em>$classname</em><br>";
                         switch($classname) {
                             case "TEW\TPBundle\Entity\TalentPool":
                                 return $object->getCompanies()->contains($user->getCompany())?VoterInterface::ACCESS_GRANTED:VoterInterface::ACCESS_DENIED;
                                 break;
-//                            case "TEW\TPBundle\Entity\Candidate":
-//                                $vote = VoterInterface::ACCESS_DENIED;
-//                                foreach ($object->getTalentPools() as $tp) {
-////                                    if ($this->get('security.context')->isGranted($attribute, $tp)) { // undefined ->get()
-////                                        return VoterInterface::ACCESS_GRANTED;
-////                                    }
-//                                    if ($tp->getOwningCompany()->getId()===$user->getCompany()->getId() or $tp->getCompanies()->contains($user->getCompany())) {
-//                                        return VoterInterface::ACCESS_GRANTED;
-//                                    }
-//                                }
-//                                return $vote;
-//                                break;
                             default:
                                 return VoterInterface::ACCESS_DENIED;
                         }
@@ -74,17 +61,15 @@ class OwnerVoter implements VoterInterface
                             case "TEW\TPBundle\Entity\TalentPool":
                                 return $object->getCompanies()->contains($user->getCompany())?VoterInterface::ACCESS_GRANTED:VoterInterface::ACCESS_DENIED;
                                 break;
-                            case "TEW\TPBundle\Entity\Candidate":
-                                $vote = VoterInterface::ACCESS_DENIED;
+                            case "TEW\TPBundle\Entity\Candidate": 
                                 foreach ($object->getTalentPools() as $tp) {
-//                                    if ($this->get('security.context')->isGranted($attribute, $tp)) { // undefined ->get()
-//                                        return VoterInterface::ACCESS_GRANTED;
-//                                    }
-                                    if ($tp->getOwningCompany()->getId()===$user->getCompany()->getId() or $tp->getCompanies()->contains($user->getCompany())) {
+                                    if (($tp->getOwningCompany()->getId()===$user->getCompany()->getId()) ||
+                                        $tp->getCompanies()->contains($user->getCompany())) {
+                                        print "<em>$object tp $tp</em>: anonymous OK<br>";
                                         return VoterInterface::ACCESS_GRANTED;
                                     }
                                 }
-                                return $vote;
+                                return VoterInterface::ACCESS_DENIED;;
                                 break;
                             default: // this should not happen
                                 return VoterInterface::ACCESS_DENIED;
@@ -96,8 +81,7 @@ class OwnerVoter implements VoterInterface
 //                print "<br>$attribute - user cie: ".$user->getCompany()." / object cie: ".$object->getOwningCompany()."<br>";
                 
             }
-        }   
-        
+        }  
         return $vote;
     }
 }

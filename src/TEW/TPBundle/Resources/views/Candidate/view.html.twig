@@ -237,7 +237,7 @@
                     Back to the list
                 </a>
             </div>
-            {% if is_granted('ROLE_MASTER_EXECUTOR') or is_granted('ROLE_TEW_OBJECT_EDIT', tp) %}
+            {% if is_granted('ROLE_MASTER_EXECUTOR') or is_granted('ROLE_TEW_OBJECT_EDIT', entity) %}
                 <div class="btn-group">
                     <a role="button" class="btn btn-warning" href="{{ path('tew_candidate_edit', { 'id': entity.id }) }}" >
                         Edit

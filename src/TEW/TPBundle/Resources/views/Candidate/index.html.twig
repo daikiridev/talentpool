@@ -79,9 +79,11 @@
             {% for entity in entities %}
                     {# Should this candidate details be displayed? #}
                     {% set fullview = is_granted('ROLE_TEW_STAFF') or is_granted('ROLE_TEW_OBJECT_VIEW', entity) %}
+                    
+                    {# BUG: is_granted('ROLE_TEW_OBJECT_ANONYMOUS_VIEW', entity) returns false but the voter is OK!!! #}
                     {% set visible = (not fullview) and is_granted('ROLE_TEW_OBJECT_ANONYMOUS_VIEW', entity) %}
                     {% set anonymous = visible and not is_granted('ROLE_STD_EXECUTOR') %}
-                    {% if fullview or visible %}
+                    {% if (fullview or visible) %}
                     <tr>
                         <td>
                             {{ form_widget(check_candidates_form.candidates[entity.id]) }}
@@ -175,10 +177,12 @@
                             </div>
                         </td>
                     </tr>
+                    {% else %}
+                    <div style="display: none">
+                        {{ form_widget(check_candidates_form.candidates[entity.id]) }}
+                    </div>
                     {% endif %}
-                <div style="display: none">
-                    {{ form_widget(check_candidates_form.candidates[entity.id]) }}
-                </div>
+
         {% endfor %}
     </tbody>
 </table>
