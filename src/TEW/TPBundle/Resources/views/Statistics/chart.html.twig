@@ -1,0 +1,23 @@
+{# TEW/TPBundle/src/Resources/views/TalentPool/show.html.twig #}
+{% extends '::base.html.twig' %}
+{% block title %}Pie chart - {{ title }}{% endblock title %}
+{% block scripts %}
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+    google.load("visualization", "1", {packages:["corechart", 'table', 'treemap', 'gauge']});
+    $(function() {
+    {{
+        chartType=='pie'?
+            gchart_pie_chart(dataTable1, 'chart1', 800, 400, title):
+        chartType=='column'?
+            gchart_column_chart(dataTable1, 'chart1', 800, 400, title)
+    }}
+    });
+</script>
+{% endblock %}
+{% block body -%}
+    <h1>Pie chart - {{ title }}</h1>
+    <div id="chart1">&nbsp;</div>
+    {% block actions %}
+    {% endblock actions %}
+{% endblock %}

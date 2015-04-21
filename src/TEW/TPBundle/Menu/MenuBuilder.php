@@ -36,18 +36,21 @@ class MenuBuilder
         
         $menu = $this->factory->createItem('root');
         $menu->setChildrenAttribute('class', 'nav navbar-nav');
-        if ($is_tew_staff) {
-            $menu->addChild('Companies')
-                    ->setAttribute('icon', 'icon-folder-open')
+        
+        // Candidates
+        if ($is_client) {
+            $menu->addChild('Candidates')
+                    ->setAttribute('icon', 'icon-male')
                     ->setAttribute('dropdown', true);
-            $menu['Companies']->addChild('List', array('route' => 'tew_company'))
+            $menu['Candidates']->addChild('Search', array('route' => 'tew_candidate_search'))
+                    ->setAttribute('icon', 'icon-eye-open');
+            $menu['Candidates']->addChild('List', array('route' => 'tew_candidate'))
                     ->setAttribute('icon', 'icon-list');
-            if ($is_admin) {
-                $menu['Companies']->addChild('Add', array('route' => 'tew_company_new'))
-                        ->setAttribute('icon', 'icon-plus-sign-alt');
-            }
+            $menu['Candidates']->addChild('Add', array('route' => 'tew_candidate_new'))
+                    ->setAttribute('icon', 'icon-plus-sign-alt');
         }
-            
+        
+        // Talent pools
         // add authorized items for the current user
         if ($is_client) {
             $session = $request->getSession();
@@ -92,20 +95,31 @@ class MenuBuilder
                 }
                 $menu[$workingtp->getName()]->addChild('Change working talent pool', array('route' => 'tew_talentpool'))
                         ->setAttribute('icon', 'icon-random');
-                }
-            
-            
-            // Candidates
-            $menu->addChild('Candidates')
-                    ->setAttribute('icon', 'icon-male')
-                    ->setAttribute('dropdown', true);
-            $menu['Candidates']->addChild('Search', array('route' => 'tew_candidate_search'))
-                    ->setAttribute('icon', 'icon-eye-open');
-            $menu['Candidates']->addChild('List', array('route' => 'tew_candidate'))
-                    ->setAttribute('icon', 'icon-list');
-            $menu['Candidates']->addChild('Add', array('route' => 'tew_candidate_new'))
-                    ->setAttribute('icon', 'icon-plus-sign-alt');
+            }
         }
+        
+        // Companies
+        if ($is_tew_staff) {
+            $menu->addChild('Companies')
+                    ->setAttribute('icon', 'icon-folder-open')
+                    ->setAttribute('dropdown', true);
+            $menu['Companies']->addChild('List', array('route' => 'tew_company'))
+                    ->setAttribute('icon', 'icon-list');
+            if ($is_admin) {
+                $menu['Companies']->addChild('Add', array('route' => 'tew_company_new'))
+                        ->setAttribute('icon', 'icon-plus-sign-alt');
+            }
+        }
+        
+        // Statistics
+        if ($is_client) {
+            $menu->addChild('Statistics')
+                    ->setAttribute('icon', 'icon-bar-chart')
+                    ->setAttribute('dropdown', true);
+            $menu['Statistics']->addChild('#cdte / talentpool', array('route' => 'tew_stats_cdtetalentpool'))
+                    ->setAttribute('icon', 'icon-sitemap');
+        }
+        
         return $menu;
     }
 

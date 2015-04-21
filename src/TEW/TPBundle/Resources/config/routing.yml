@@ -26,3 +26,8 @@ TEWTPBundle_tew_talentpool:
 TEWTPBundle_tew_ajaxrequests:
     resource: "@TEWTPBundle/Resources/config/routing/ajaxrequests.yml"
     prefix:   /tew_ajax
+
+# Statistics routes
+TEWTPBundle_tew_statistics:
+    resource: "@TEWTPBundle/Resources/config/routing/statistics.yml"
+    prefix:   /tew_statistics

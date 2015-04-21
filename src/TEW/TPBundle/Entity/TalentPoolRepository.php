@@ -3,6 +3,7 @@
 namespace TEW\TPBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query\ResultSetMapping;
 
 /**
  * TalentPoolRepository
@@ -12,4 +13,16 @@ use Doctrine\ORM\EntityRepository;
  */
 class TalentPoolRepository extends EntityRepository
 {
+    public function countCandidatesByTalentPool($id) {
+        $rsm = new ResultSetMapping();
+        $rsm->addScalarResult('nb', 'nb', 'integer');
+        $query = $this->getEntityManager()->createNativeQuery("SELECT COUNT(tc.candidate_id) as nb "
+                . "FROM tew_talentpool_candidates tc "
+                . "WHERE tc.talentpool_id = ?",
+                $rsm);
+        $query->setParameter(1, $id);
+        
+        $result = $query->getResult();
+        return $result[0]['nb'];
+    }
 }

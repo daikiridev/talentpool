@@ -12,12 +12,14 @@
 {% endblock scripts %}
 
 {% block body %}
+    {#
     <div class="container row">
         <form class="form pull-right" action='{{ path('tp_home') }}' method='POST'>
             <i class="icon icon-sitemap"></i>{{ form_widget(form.talentpool) }}
             {{ form_rest(form) }}
         </form>
     </div>
+    #}
     <div class="jumbotron">
         <div class="row">
             <div class="col-lg-6">
@@ -25,14 +27,14 @@
                     <fieldset class="col-lg-12">
                         <legend><i class="icon icon-male"></i> Candidates</legend>
                         <ul style="list-style-type: none;">
-                            <li><i class="icon icon-plus-sign-alt"></i>
-                                <a href="{{ path('tew_candidate_new') }}">Add</a> a new Candidate 
+                            <li><i class="icon icon-eye-open"></i>
+                                <a href="{{ path('tew_candidate_search') }}">Candidate search</a>
                             </li>
                             <li><i class="icon icon-list"></i>
                                 <a href="{{ path('tew_candidate') }}">View candidates</a>{{ workingtp?" belonging to "~workingtp}}
                             </li>
-                            <li><i class="icon icon-eye-open"></i>
-                                <a href="{{ path('tew_candidate_search') }}">Candidate search</a>
+                            <li><i class="icon icon-plus-sign-alt"></i>
+                                <a href="{{ path('tew_candidate_new') }}">Add</a> a new Candidate 
                             </li>
                         </ul>
                     </fieldset>
@@ -45,13 +47,13 @@
                             <li><i class="icon icon-bookmark"></i>
                                 <a href="{{ path('tew_talentpool_show', { 'id': workingtp.id }) }}">View "{{ workingtp }}"</a>
                             </li>
-                                {% if is_granted("ROLE_TEW_EXECUTOR") %}
+                                {% if is_granted("ROLE_MASTER_EXECUTOR") %}
                                 <li><i class="icon icon-edit"></i>
                                     <a href="{{ path('tew_talentpool_edit', { 'id': workingtp.id }) }}">Edit "{{ workingtp }}"</a>
                                 </li>
                                 {% endif %}
                             {% endif %}
-                            {% if is_granted("ROLE_TEW_EXECUTOR") %}
+                            {% if is_granted("ROLE_MASTER_EXECUTOR") %}
                             <li><i class="icon icon-plus-sign-alt"></i>
                                 <a href="{{ path('tew_talentpool_new') }}">Add</a> a new Talent Pool 
                             </li>
@@ -83,7 +85,7 @@
                     </fieldset>
                 </div>
                 {% endif %}
-                {% if is_granted("ROLE_ADMIN") %}
+                {% if is_granted("ROLE_CLIENT") %}
                 <div class="row">
                     <fieldset class="col-lg-12">
                         <legend><i class="icon icon-bar-chart"></i> Statistics</legend>

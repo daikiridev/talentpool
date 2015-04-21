@@ -1,0 +1,3 @@
+tew_stats_cdtetalentpool:
+    path:     /cdtenumbytalentpool
+    defaults: { _controller: "TEWTPBundle:Statistics:cdteNumberByTalentPools" }
