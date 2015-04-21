@@ -34,6 +34,9 @@ class AppKernel extends Kernel
             new Sonata\ClassificationBundle\SonataClassificationBundle(), // needed by Sonata Media
             new Application\Sonata\ClassificationBundle\ApplicationSonataClassificationBundle(), // needed by Sonata Media
             
+            // STATISTICS
+            new SaadTazi\GChartBundle\SaadTaziGChartBundle(),
+            
             // SONATA CORE & HELPER BUNDLES
             new Sonata\EasyExtendsBundle\SonataEasyExtendsBundle(), // In order to generate a valid bundle structure from a Vendor bundle
             new Sonata\CoreBundle\SonataCoreBundle(), // In order to make the admin managment work

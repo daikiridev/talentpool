@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "98fe7623e76d1b2ac06e1cc6b4d8219b",
+    "hash": "492a7d457d2beb515f1c0ed03360dfb4",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -2356,6 +2356,46 @@
             "time": "2012-12-21 11:40:51"
         },
         {
+            "name": "saad-tazi/g-chart-bundle",
+            "version": "dev-master",
+            "target-dir": "SaadTazi/GChartBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/saadtazi/SaadTaziGChartBundle.git",
+                "reference": "a54c4fb47ff5eefdcbc86c75db21b3ffcf751407"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/saadtazi/SaadTaziGChartBundle/zipball/a54c4fb47ff5eefdcbc86c75db21b3ffcf751407",
+                "reference": "a54c4fb47ff5eefdcbc86c75db21b3ffcf751407",
+                "shasum": ""
+            },
+            "require": {
+                "symfony/framework-bundle": "2.*"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-0": {
+                    "SaadTazi\\GChartBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Saad Tazi"
+                }
+            ],
+            "description": "A super simple Bundle that facilitate the usage of Google Chart Tool, Google Chart Image API and Google Infographics.",
+            "keywords": [
+                "chart",
+                "google"
+            ],
+            "time": "2013-11-09 01:15:39"
+        },
+        {
             "name": "sensio/distribution-bundle",
             "version": "v2.3.14",
             "target-dir": "Sensio/Bundle/DistributionBundle",
@@ -2506,12 +2546,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataAdminBundle.git",
-                "reference": "b05de47f949586705a326f5ec93f4ce9fc176602"
+                "reference": "8e7832ff7bb109a6eca7629196b398f21866a9cb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataAdminBundle/zipball/b05de47f949586705a326f5ec93f4ce9fc176602",
-                "reference": "b05de47f949586705a326f5ec93f4ce9fc176602",
+                "url": "https://api.github.com/repos/sonata-project/SonataAdminBundle/zipball/8e7832ff7bb109a6eca7629196b398f21866a9cb",
+                "reference": "8e7832ff7bb109a6eca7629196b398f21866a9cb",
                 "shasum": ""
             },
             "require": {
@@ -2582,7 +2622,7 @@
                 "bootstrap",
                 "sonata"
             ],
-            "time": "2015-04-20 04:34:00"
+            "time": "2015-04-20 12:47:37"
         },
         {
             "name": "sonata-project/block-bundle",
@@ -2783,12 +2823,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataClassificationBundle.git",
-                "reference": "aa8c7e02bae3d944698ca006e7a6183bee4ae90e"
+                "reference": "5543caadace85b2cdc8ac4a3b41b403b0356f913"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataClassificationBundle/zipball/aa8c7e02bae3d944698ca006e7a6183bee4ae90e",
-                "reference": "aa8c7e02bae3d944698ca006e7a6183bee4ae90e",
+                "url": "https://api.github.com/repos/sonata-project/SonataClassificationBundle/zipball/5543caadace85b2cdc8ac4a3b41b403b0356f913",
+                "reference": "5543caadace85b2cdc8ac4a3b41b403b0356f913",
                 "shasum": ""
             },
             "require": {
@@ -2839,7 +2879,7 @@
                 "tag",
                 "taxonomy"
             ],
-            "time": "2015-03-28 14:29:05"
+            "time": "2015-04-20 11:36:37"
         },
         {
             "name": "sonata-project/core-bundle",
@@ -2847,12 +2887,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataCoreBundle.git",
-                "reference": "04a0bafdc550cb42b4aca1b1fe84c1672156a3db"
+                "reference": "d64ca82926ce75a3726ab528accd3b5d9351e052"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataCoreBundle/zipball/04a0bafdc550cb42b4aca1b1fe84c1672156a3db",
-                "reference": "04a0bafdc550cb42b4aca1b1fe84c1672156a3db",
+                "url": "https://api.github.com/repos/sonata-project/SonataCoreBundle/zipball/d64ca82926ce75a3726ab528accd3b5d9351e052",
+                "reference": "d64ca82926ce75a3726ab528accd3b5d9351e052",
                 "shasum": ""
             },
             "require": {
@@ -2904,7 +2944,7 @@
             "keywords": [
                 "sonata"
             ],
-            "time": "2015-03-31 08:28:02"
+            "time": "2015-04-20 12:10:12"
         },
         {
             "name": "sonata-project/datagrid-bundle",
@@ -3313,12 +3353,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataMediaBundle.git",
-                "reference": "b54a881f3a254189f348e1bc229ef5051c403cb9"
+                "reference": "fbada306a25034fbeed3a0aa22acf7c5f2f7779f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataMediaBundle/zipball/b54a881f3a254189f348e1bc229ef5051c403cb9",
-                "reference": "b54a881f3a254189f348e1bc229ef5051c403cb9",
+                "url": "https://api.github.com/repos/sonata-project/SonataMediaBundle/zipball/fbada306a25034fbeed3a0aa22acf7c5f2f7779f",
+                "reference": "fbada306a25034fbeed3a0aa22acf7c5f2f7779f",
                 "shasum": ""
             },
             "require": {
@@ -3392,7 +3432,7 @@
                 "vimeo",
                 "youtube"
             ],
-            "time": "2015-04-16 13:04:11"
+            "time": "2015-04-20 13:00:58"
         },
         {
             "name": "sonata-project/notification-bundle",
@@ -3471,12 +3511,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataUserBundle.git",
-                "reference": "1cbbd1615295d6f7f598f3e4e006b11e59c8c507"
+                "reference": "34a9a7f1020daba1b292ceab2379a762ef167b46"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataUserBundle/zipball/1cbbd1615295d6f7f598f3e4e006b11e59c8c507",
-                "reference": "1cbbd1615295d6f7f598f3e4e006b11e59c8c507",
+                "url": "https://api.github.com/repos/sonata-project/SonataUserBundle/zipball/34a9a7f1020daba1b292ceab2379a762ef167b46",
+                "reference": "34a9a7f1020daba1b292ceab2379a762ef167b46",
                 "shasum": ""
             },
             "require": {
@@ -3536,7 +3576,7 @@
                 "sonata",
                 "user"
             ],
-            "time": "2015-03-28 11:41:41"
+            "time": "2015-04-20 21:23:21"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -4225,7 +4265,8 @@
         "sonata-project/classification-bundle": 20,
         "sonata-project/media-bundle": 20,
         "jms/serializer-bundle": 20,
-        "fpn/tag-bundle": 20
+        "fpn/tag-bundle": 20,
+        "saad-tazi/g-chart-bundle": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

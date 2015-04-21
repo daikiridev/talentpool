@@ -14,7 +14,7 @@ app/console fos:user:create client client@local.host client
 app/console fos:user:promote client ROLE_CLIENT
 
 app/console fos:user:create tew_exec tew_exec@local.host tew_exec
-app/console fos:user:promote tew_exec ROLE_TEW_EXECUTOR
+app/console fos:user:promote tew_exec ROLE_TEW_MASTER_EXECUTOR
 
 # Entity creation
 app/console doctrine:generate:entity --format=yml --with-repository --entity=TEWTPBundle:Candidate \
