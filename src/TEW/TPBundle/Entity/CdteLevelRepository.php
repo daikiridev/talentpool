@@ -3,6 +3,7 @@
 namespace TEW\TPBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use JMS\Serializer\Serializer;
 
 /**
  * CdteLevelRepository

@@ -6,6 +6,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 use TEW\TPBundle\Entity\Candidate;
 use TEW\TPBundle\Form\CandidateType;
@@ -140,6 +142,65 @@ class CandidateController extends Controller {
 //                        'delete_forms' => $deleteForms,
             ));
         }
+    }
+    
+    /**
+     * Anonymous search form on candidates (webservice call)
+     *
+     */
+    public function jsonCdteAnonSearchAction() {
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository('TEWTPBundle:Candidate');
+        
+        $request = $this->container->get('request');
+        if ($request->getMethod()==='POST') {
+            $level = $request->request->get('level');
+            $function = $request->request->get('function');
+        } else {
+            $level = $request->query->get('level');
+            $function = $request->query->get('function');
+        }
+        
+//        print("level: $level. function: $function. <br>");
+        if ($request->isXmlHttpRequest()) {
+        //if (true) {
+            $response = new JsonResponse();
+            $qb = $repository->createQueryBuilder('c')->where('1=1')
+                //->select(array('c.level', 'c.function', 'c.experience', 'c.nationality1', 'c.globalScore'))
+                ->select(array('c.globalComment', 'c.globalScore', 'c.experience', 'c.nationality1'))
+//                ->select(array('c.experience', 'c.nationality1'))
+                ->orderBy('c.globalScore', 'DESC');
+            
+            if ($level != '' && $level !='null') {
+                $qb->andWhere("c.level = :level OR c.targetLevel1 = :level OR c.targetLevel2 = :level OR c.targetLevel2 = :level")
+                        ->setParameter('level', $level)
+                    ;                ;
+            }
+            if ($function != '' && $function != 'null') {
+                $qb->andWhere("c.function = :function OR c.targetFunction1 = :function OR c.targetFunction2 = :function OR c.targetFunction2 = :function")
+                        ->setParameter('function', $function)
+                    ;
+            }
+            $query = $qb->getQuery();
+            $candidates = $query->getResult();
+            
+            /* TODO:
+             * - set empty value in level and function select2
+             * - apply star twig filter to scores
+             * - set comments as bootstrap popovers on global scores
+             */
+            
+            $response->setData(array(
+                'data' => $candidates,
+                //'query' => "cdteAnonSearchAction(level: $level, function: $function)"
+            ));
+            return $response;
+//            $serializedEntity = $this->container->get('serializer')->serialize($candidates, 'json');
+//            $response->headers->set('Content-Type', 'application/json');
+//            return new Response($serializedEntity);
+        }
+        throw new \Exception('Invalid call');
+
     }
     
     /**

@@ -4,6 +4,24 @@ tew_json_findzone:
   defaults: { _controller: TEWTPBundle:CountryZone:jsonFindZoneByCountry }
   requirements: { _method: post }
 
+# Level search
+tew_json_findlevel:
+  pattern: /levels
+  defaults: { _controller: TEWTPBundle:CdteLevel:jsonFindAllLevel}
+  requirements: { _method: get }
+  
+# Function search
+tew_json_findfunction:
+  pattern: /functions
+  defaults: { _controller: TEWTPBundle:CdteFunction:jsonFindAllFunction}
+  requirements: { _method: get }
+
+# Candidate search
+tew_json_anoncandidates:
+  pattern: /anoncdtes
+  defaults: { _controller: TEWTPBundle:Candidate:jsonCdteAnonSearch }
+  requirements: { _method: get|post }
+
 # Tag management
 tew_json_allcandidatetags:
   pattern: /tags/allcandidate

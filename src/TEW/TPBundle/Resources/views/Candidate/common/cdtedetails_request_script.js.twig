@@ -1,43 +1,45 @@
 <script>
-            $(document).ready(function() {
-                $('.mailrequest').click(function(event) {
-                    event.preventDefault(); 
-                    footer_div = $(this).parent('.modal-footer');
-                    form = footer_div.parent('form');
-                    content_div = form.children('.modal-body');
-                    modal = form.parents('.modal');
-                    console.log('Posting to: '+form.attr('action'));
-                    $.ajax({
-                            type: 'post',
-                            url: form.attr('action'),
-                            data: {
-                                mail_form: {
-                                    from: form.find('#mail_form_from').val(),
-                                    to: form.find('#mail_form_to').val(),
-                                    object: form.find('#mail_form_object').val(),
-                                    content: form.find('#mail_form_content').val(),
-                                }
-                            },
-                            dataType: 'json'
-                    })
+    $(document).ready(function () {
+        $('.mailrequest').click(function (event) {
+            event.preventDefault();
+            footer_div = $(this).parent('.modal-footer');
+            form = footer_div.parent('form');
+            content_div = form.children('.modal-body');
+            modal = form.parents('.modal');
+            console.log('Posting to: ' + form.attr('action'));
+            $.ajax({
+                type: 'post',
+                url: form.attr('action'),
+                data: {
+                    mail_form: {
+                        from: form.find('#mail_form_from').val(),
+                        to: form.find('#mail_form_to').val(),
+                        object: form.find('#mail_form_object').val(),
+                        content: form.find('#mail_form_content').val(),
+                    }
+                },
+                dataType: 'json'
+            })
                     .done(function (data) {
                         console.log(data);
-                        if (data.error>0) { alert(data.message); }
+                        if (data.error > 0) {
+                            alert(data.message);
+                        }
                         content = data.message;
                     })
                     .fail(function (jqXHR, textStatus, error) {
-                        alert("Communication issue ("+textStatus+": "+error+")");
+                        alert("Communication issue (" + textStatus + ": " + error + ")");
                     })
                     .always(function () {
                         console.log("ajax request succeeded");
                     })
-                    .then(function(){
+                    .then(function () {
                         footer_div.hide();
                         content_div.html(content);
                         setTimeout(function () {
                             modal.modal('hide');
                         }, 2000);
-                    });              
-                });
-            });
-        </script>
+                    });
+        });
+    });
+</script>
