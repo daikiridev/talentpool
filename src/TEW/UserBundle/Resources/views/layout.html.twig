@@ -5,6 +5,12 @@
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.5/css/jquery.dataTables.css">
     <link rel="stylesheet" href="//cdn.datatables.net/tabletools/2.2.3/css/dataTables.tableTools.css">
     <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0-beta.3/css/select2.min.css" rel="stylesheet" />
+    <style>
+        .jumbotron p {
+            font-size: 12px;
+            font-weight: 200;
+        }
+    </style>
 {% endblock styles %}
 
 {% block scripts %}
@@ -16,10 +22,6 @@
             $.get("{{ path('tew_json_findlevel')}}", function (data) {
                 $("#level").select2({
                     placeholder: "Any level",
-                    /*
-                    initSelection: function(element, callback) {                   
-                    },
-            */
                     data: data['data']
                 }).select2('val', '');
             });
@@ -29,28 +31,31 @@
                     placeholder: "Any function",
                     data: data['data']
                 }).select2('val', '');
-
             });
-            
-            var table = $('#result-table').DataTable(
-                    {
-                        "dom": '<"top"i>rt<"bottom"flp><"clear">',
-                        "bFilter": false,
-                        "paging":   true,
-                        //"ordering": false,
-                        "info":     true,
-                        "columns": [
-                            { "data": "globalScore" },
-                            { "data": "globalComment" },
-                            { "data": "experience" },
-                            { "data": "nationality1" },
-                        ]//,
-                        //ajax: "{{ path('tew_json_anoncandidates') }}"
-                    }
-            );
 
+            var table = $('#result-table')
+                    .on('order.dt', function () {
+                        $('[data-toggle="popover"]').popover();
+                    })
+                    .DataTable(
+                            {
+                                "dom": '<"top"i>rt<"bottom"flp><"clear">',
+                                "bFilter": false,
+                                "paging": true,
+                                //"ordering": false,
+                                "info": true,
+                                "columns": [
+                                    {"data": "globalScore", "bSortable": false},
+                                    {"data": "experience"},
+                                    {"data": "nationality1"}
+                                ]
+                            }
+                    );
             $('.select2').change(function () {
-                table.ajax.url( '{{ path('tew_json_anoncandidates') }}?level='+$('#level').val()+'&function='+ $('#function').val() ).load();
+                table.ajax.url('{{ path('tew_json_anoncandidates') }}?level=' + $('#level').val() + '&function=' + $('#function').val()).load(
+                        function (jsondata) {
+                            $('[data-toggle="popover"]').popover();
+                        });
             });
         });
     </script>
@@ -83,24 +88,26 @@
             <br>
         </div>
     </div>
-    <div class="row centered-form">
-        <div class="">
-            <h3>Some of our candidates...</h3>
-            <select class="select2 form-control" id="level" style="width: 40%"/></select>
-            <select class="select2 form-control" id="function" style="width: 40%"/></select>               
+            <div class="row">&nbsp<br><br><br></div>
+    <div class="jumbotron">
+        <div class="row">
+            <h2><span class="label label-info">Some of our candidates...</span></h2><br>
         </div>
-    </div>
-    <div class="row centered-form">
-        <table id="result-table" class="table table-striped table-bordered" cellspacing="0" width="50%">
-            <thead>
-                <tr>
-                    <th>Score</th>
-                    <th>Comment</th>
-                    <th>Experience</th>
-                    <th>Nationality</th>
-                </tr>
-            </thead>
-        </table>
-        <p class="result"></p>
+        <div class="row centered-form">
+            <select class="select2 form-control" id="level" style="width: 40%"/></select>
+            <select class="select2 form-control" id="function" style="width: 40%"/></select>          
+        </div>
+        <div class="row centered-form">
+            <table id="result-table" class="table table-striped table-bordered" cellspacing="0" width="50%">
+                <thead>
+                    <tr>
+                        <th>Score</th>
+                        <th>Experience</th>
+                        <th>Nationality</th>
+                    </tr>
+                </thead>
+            </table>
+            <p class="result"></p>
+        </div>
     </div>
 {% endblock body %}

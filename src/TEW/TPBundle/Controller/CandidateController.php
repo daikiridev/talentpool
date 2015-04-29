@@ -15,6 +15,8 @@ use TEW\TPBundle\Form\CdteSearchType;
 use TEW\TPBundle\Form\CheckCandidatesType;
 use TEW\TPBundle\Entity\Mail;
 use TEW\TPBundle\Form\MailType;
+use TEW\TPBundle\Twig\Extension\TEWExtension;
+
 //use TEW\UserBundle\Entity\User;
 
 /**
@@ -184,12 +186,19 @@ class CandidateController extends Controller {
             $query = $qb->getQuery();
             $candidates = $query->getResult();
             
-            /* TODO:
-             * - set empty value in level and function select2
-             * - apply star twig filter to scores
-             * - set comments as bootstrap popovers on global scores
-             */
-            
+            $candidates = array_map(
+                function($cdte){
+                    static $tewext;
+                    $tewext = new TEWExtension();
+                    $cdte['globalScore'] = "<span style='cursor:help' data-html='true' data-delay='{ \"show\": 500, \"hide\": 200 }' data-placement='top'  data-trigger='hover' data-toggle='popover' title='Comment' ".
+                            "data-content='".$cdte['globalComment']."'>".
+                            $tewext->starsFilter($cdte['globalScore'])."</span>";
+                    $cdte['nationality1'] = $tewext->countryFilter($cdte['nationality1']);
+
+                    return $cdte;
+                },
+                $candidates
+            );
             $response->setData(array(
                 'data' => $candidates,
                 //'query' => "cdteAnonSearchAction(level: $level, function: $function)"

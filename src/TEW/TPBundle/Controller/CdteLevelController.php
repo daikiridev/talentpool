@@ -21,7 +21,7 @@ class CdteLevelController extends Controller {
 //        if (true) {
             $response = new JsonResponse();
             $array = $this->getDoctrine()->getEntityManager()->getRepository('TEWTPBundle:CdteLevel')->findAll();
-            $array2 = array_map(function($level){ return ['id' => $level->getId(), 'text' => $level->getName()];}, $array);
+            $array2 = array_merge([['id' => 'null', 'text' => 'Any level']], array_map(function($level){ return ['id' => $level->getId(), 'text' => $level->getName()];}, $array));
             $response->setData(array(
                     'data' => $array2,
                     'query' => "jsonFindAllLevel()"

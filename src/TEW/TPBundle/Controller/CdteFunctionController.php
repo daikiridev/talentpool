@@ -21,7 +21,7 @@ class CdteFunctionController extends Controller {
 //        if (true) {
             $response = new JsonResponse();
             $array = $this->getDoctrine()->getEntityManager()->getRepository('TEWTPBundle:CdteFunction')->findAll();
-            $array2 = array_map(function($function){ return ['id' => $function->getId(), 'text' => $function->getName()];}, $array);
+            $array2 = array_merge([['id' => 'null', 'text' => 'Any function']], array_map(function($function){ return ['id' => $function->getId(), 'text' => $function->getName()];}, $array));
             $response->setData(array(
                     'data' => $array2,
                     'query' => "jsonFindAllFunction()"
