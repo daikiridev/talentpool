@@ -164,13 +164,16 @@ class CandidateController extends Controller {
         }
         
 //        print("level: $level. function: $function. <br>");
-        if ($request->isXmlHttpRequest()) {
-        //if (true) {
+        //if ($request->isXmlHttpRequest()) {
+        if (true) {
             $response = new JsonResponse();
             $qb = $repository->createQueryBuilder('c')->where('1=1')
                 //->select(array('c.level', 'c.function', 'c.experience', 'c.nationality1', 'c.globalScore'))
-                ->select(array('c.globalComment', 'c.globalScore', 'c.experience', 'c.nationality1'))
+                ->select(array('c.id', 's.name as status', 'l.name as level', 'f.name as function', 'c.globalComment', 'c.globalScore', 'c.experience', 'c.nationality1'))
 //                ->select(array('c.experience', 'c.nationality1'))
+                ->join('c.status', 's', 'WITH', 's.id = c.status')
+                ->join('c.level', 'l', 'WITH', 'l.id = c.level')
+                ->join('c.function', 'f', 'WITH', 'f.id = c.function')
                 ->orderBy('c.globalScore', 'DESC');
             
             if ($level != '' && $level !='null') {
@@ -183,18 +186,33 @@ class CandidateController extends Controller {
                         ->setParameter('function', $function)
                     ;
             }
+            $qb->setMaxResults(10);
             $query = $qb->getQuery();
             $candidates = $query->getResult();
             
             $candidates = array_map(
                 function($cdte){
+                    static $em;
+                    $em = $this->getDoctrine()->getManager();
+                    static $repository;
+                    $repository=$em->getRepository('TEWTPBundle:CdteMobility');
                     static $tewext;
                     $tewext = new TEWExtension();
-                    $cdte['globalScore'] = "<span style='cursor:help' data-html='true' data-delay='{ \"show\": 500, \"hide\": 200 }' data-placement='top'  data-trigger='hover' data-toggle='popover' title='Comment' ".
+                    $cdte['globalScore'] = "<span style='cursor:help' data-html='true' data-delay='{ \"show\": 500, \"hide\": 200 }' data-placement='right'  data-trigger='hover' data-toggle='popover' title='Comment' ".
                             "data-content='".$cdte['globalComment']."'>".
                             $tewext->starsFilter($cdte['globalScore'])."</span>";
                     $cdte['nationality1'] = $tewext->countryFilter($cdte['nationality1']);
-
+                    $cdte['experience'] = $cdte['function'].' '.$cdte['level'].' '.(date('Y')-$cdte['experience'])." yrs";
+                    
+                    // mobilities
+                    $qb = $repository->createQueryBuilder('m') 
+                        ->select(array('m.location'))
+                        ->join('m.candidate', 'c', 'WITH', 'c.id = m.candidate')
+                        ->where('c.id=:c_id')
+                        ->setParameter('c_id', $cdte['id']);
+                    $query = $qb->getQuery();
+                    $mobilities = $query->getResult();
+                    $cdte['mobilities'] = implode(' / ', array_map(function($mob) {return $mob['location']; }, $mobilities));
                     return $cdte;
                 },
                 $candidates
