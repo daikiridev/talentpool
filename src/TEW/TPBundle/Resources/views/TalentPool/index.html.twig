@@ -20,7 +20,7 @@
                 //  "sAjaxSource": '{#{url('_ajaxlistes', {'registrantTypeId': registrantType.id})}#}', 
                 //  "sAjaxDataProp": "listes"
                 "aoColumns": [
-                    {"bSearchable": false, "bSortable": false}, // Check
+                    // {"bSearchable": false, "bSortable": false}, // Check
                     {"bSearchable": false, "bSortable": false}, // Logo
                     {"bSearchable": true}, // Name
                     {"bSearchable": true}, // Profiles
@@ -49,7 +49,9 @@
     <table id="list">
         <thead>
             <tr>
+                {# sets working talentpool...
                 <th><span style="cursor: help" data-toggle="tooltip" data-placement="left" title="Set working talentpool">Def.</span> </th>
+                #}
                 <th>Logo</th>
                 <th>Name</th>
                 <th>Profiles</th>
@@ -62,6 +64,7 @@
             {% for entity in entities %}
                 {% if is_granted('ROLE_TEW_OBJECT_VIEW', entity) or is_granted('ROLE_STD_EXECUTOR') %}
                     <tr>
+                        {# sets working talentpool...
                         <td>
                             {% if (workingtp is not null) and workingtp.id == entity.id %}
                                 <i class="icon icon-check" id="{{ entity.id }}" name="{{ entity.name }}"
@@ -71,6 +74,7 @@
                                    data-toggle="tooltip" data-placement="left" title="Click to set working talentpool"></i>
                             {% endif %} 
                         </td>
+                        #}
                         <td>
                             {% if entity.picture is not null%}
                                 <img src="{% path entity.picture, 'admin' %}" alt="{{ entity.picture.name }}" width="80px">

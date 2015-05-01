@@ -21,14 +21,14 @@
             // loading of DB levels
             $.get("{{ path('tew_json_findlevel')}}", function (data) {
                 $("#level").select2({
-                    placeholder: "Any level",
+                    placeholder: "Any level (current or target)",
                     data: data['data']
                 }).select2('val', '');
             });
             // loading of DB functions
             $.get("{{ path('tew_json_findfunction')}}", function (data) {
                 $("#function").select2({
-                    placeholder: "Any function",
+                    placeholder: "Any function (current or target)",
                     data: data['data']
                 }).select2('val', '');
             });
@@ -97,7 +97,9 @@
             <div class="row">&nbsp<br><br><br></div>
     <div class="jumbotron">
         <div class="row">
-            <h2><span class="label label-info">Some of our candidates...</span></h2><br>
+            <h2><span class="label label-info"
+                      style='cursor:help' data-delay='{ "show": 500, "hide": 200 }' data-placement='right'  data-trigger='hover' data-toggle='tooltip'
+                      title='search limited to 10 candidates'>Some of our candidates...</span></h2><br>
         </div>
         <div class="row centered-form">
             <select class="select2 form-control" id="level" style="width: 40%"/></select>

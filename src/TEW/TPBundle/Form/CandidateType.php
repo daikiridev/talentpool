@@ -53,6 +53,7 @@ class CandidateType extends AbstractType
             ))
             ->add('gender', 'choice', array(
                 'choices' => array('m' => 'Male', 'f' => 'Female'),
+                'required' => false,
                 'attr' => array('class' => 'form-control'),
                 //'label_attr' => array('class' => 'col-md-2')
             ))

@@ -167,6 +167,7 @@ class CandidateController extends Controller {
         //if ($request->isXmlHttpRequest()) {
         if (true) {
             $response = new JsonResponse();
+            $max = $em->createQuery('SELECT MAX(c.id) FROM TEWTPBundle:Candidate c')->getSingleScalarResult();
             $qb = $repository->createQueryBuilder('c')->where('1=1')
                 //->select(array('c.level', 'c.function', 'c.experience', 'c.nationality1', 'c.globalScore'))
                 ->select(array('c.id', 's.name as status', 'l.name as level', 'f.name as function', 'c.globalComment', 'c.globalScore', 'c.experience', 'c.nationality1'))
@@ -174,15 +175,16 @@ class CandidateController extends Controller {
                 ->join('c.status', 's', 'WITH', 's.id = c.status')
                 ->join('c.level', 'l', 'WITH', 'l.id = c.level')
                 ->join('c.function', 'f', 'WITH', 'f.id = c.function')
-                ->orderBy('c.globalScore', 'DESC');
+//                ->orderBy('rand')
+                    ; 
             
             if ($level != '' && $level !='null') {
-                $qb->andWhere("c.level = :level OR c.targetLevel1 = :level OR c.targetLevel2 = :level OR c.targetLevel2 = :level")
+                $qb->andWhere("c.level = :level OR c.targetLevel1 = :level OR c.targetLevel2 = :level OR c.targetLevel3 = :level")
                         ->setParameter('level', $level)
-                    ;                ;
+                    ;
             }
             if ($function != '' && $function != 'null') {
-                $qb->andWhere("c.function = :function OR c.targetFunction1 = :function OR c.targetFunction2 = :function OR c.targetFunction2 = :function")
+                $qb->andWhere("c.function = :function OR c.targetFunction1 = :function OR c.targetFunction2 = :function OR c.targetFunction3 = :function")
                         ->setParameter('function', $function)
                     ;
             }

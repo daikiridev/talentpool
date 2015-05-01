@@ -15,6 +15,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
+use Locale;
+
 /**
  * Candidate
  * 
@@ -393,7 +395,8 @@ class Candidate implements Taggable
     public function __toString()
     {
         // return $this->getName().' (created by '.$this->getCreator()->getUsername().')';
-        return $this->getLastName().' '.$this->getFirstName().' '.$this->getMiddleName().' ('.$this->getGender().')';
+        return $this->getLastName().' '.$this->getFirstName().' '.$this->getMiddleName().
+                ($this->getGender()?' ('.$this->getGender().')':'');
     }    
 
     /**
@@ -426,6 +429,8 @@ class Candidate implements Taggable
      */
     public function getGender()
     {
+//        $locale = Locale::acceptFromHttp($_SERVER['HTTP_ACCEPT_LANGUAGE']);
+//        return $locale=='en_US'?'':$this->gender;
         return $this->gender;
     }
 
@@ -518,6 +523,8 @@ class Candidate implements Taggable
      */
     public function getDateOfBirth()
     {
+//        $locale = Locale::acceptFromHttp($_SERVER['HTTP_ACCEPT_LANGUAGE']);
+//        return $locale=='en_US'?new \DateTime('01-01-1900'):$this->dateOfBirth;
         return $this->dateOfBirth;
     }
 

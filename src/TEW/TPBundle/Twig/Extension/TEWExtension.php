@@ -67,7 +67,7 @@ class TEWExtension extends \Twig_Extension
     
     public function genderFilter($gender)
     {
-        return $gender=='m'?'<i class="icon-male"></i>':'<i class="icon-female"></i>';
+        return ($gender=='m')?'<i class="icon-male"></i>':($gender=='f'?'<i class="icon-female"></i>':'');
     }
     
     public function mailFilter($email)
