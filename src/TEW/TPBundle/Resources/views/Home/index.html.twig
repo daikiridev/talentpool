@@ -138,6 +138,21 @@
                     </fieldset>
                 </div>
                 {% endif %}
+                {% if app.environment == 'alpha' %}
+                <div class="row">
+                    <fieldset class="col-lg-12">
+                        <legend><i class="icon icon-bug"></i> Bugs and improvements</legend>
+                        <ul style="list-style-type: none;">
+                           <li><i class="icon icon-plus-sign-alt"></i>
+                                <a href="{{ path('hackzilla_ticket_new') }}">Add</a> a new bug / evolution request 
+                            </li>
+                            <li><i class="icon icon-list"></i>
+                                <a target="_bank" href="{{ path('hackzilla_ticket') }}">Bug list</a>
+                            </li>
+                        </ul>
+                    </fieldset>
+                </div>
+                {% endif %}
             </div>
         </div>
     </div>

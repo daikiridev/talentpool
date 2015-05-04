@@ -48,7 +48,7 @@ security:
         ROLE_ADMIN: [ROLE_TEW_MASTER_EXECUTOR, ROLE_SONATA_ADMIN]
         
         # the super admin is the technical superuser
-        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_TICKET_ADMIN, ROLE_ALLOWED_TO_SWITCH]
         
         # if you are using acl then this line must be commented
         SONATA:

@@ -80,6 +80,7 @@ doctrine:
                     FOSUserBundle: ~
                     SonataMediaBundle: ~
                     SonataClassificationBundle: ~
+                    HackzillaTicketBundle: ~
                     #FogsTaggingBundle: ~
                     taggable:
                             type: annotation

@@ -120,6 +120,18 @@ class MenuBuilder
                     ->setAttribute('icon', 'icon-sitemap');
         }
         
+        // Bug tracking
+        $is_alpha = preg_match('/app_alpha.php/', $request->getRequestUri());
+        if ($is_client && $is_alpha) {
+            $menu->addChild('Bugs and improvements')
+                    ->setAttribute('icon', 'icon-bug')
+                    ->setAttribute('dropdown', true);
+            $menu['Bugs and improvements']->addChild('List', array('route' => 'hackzilla_ticket'))
+                    ->setAttribute('icon', 'icon-list');
+            $menu['Bugs and improvements']->addChild('Add', array('route' => 'hackzilla_ticket_new'))
+                    ->setAttribute('icon', 'icon-plus-sign-alt');
+        }        
+        
         return $menu;
     }
 

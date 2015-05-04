@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "492a7d457d2beb515f1c0ed03360dfb4",
+    "hash": "24ec7a0012c2f5bbbce8a76bec68c0f9",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -871,12 +871,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/migrations.git",
-                "reference": "efb77c10dfb75485998a843154bbc44d8124c4d1"
+                "reference": "252fb449d5c45a4c1a92497b43d4c246bde0ee6b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/migrations/zipball/efb77c10dfb75485998a843154bbc44d8124c4d1",
-                "reference": "efb77c10dfb75485998a843154bbc44d8124c4d1",
+                "url": "https://api.github.com/repos/doctrine/migrations/zipball/252fb449d5c45a4c1a92497b43d4c246bde0ee6b",
+                "reference": "252fb449d5c45a4c1a92497b43d4c246bde0ee6b",
                 "shasum": ""
             },
             "require": {
@@ -884,6 +884,8 @@
                 "php": ">=5.3.2"
             },
             "require-dev": {
+                "doctrine/orm": "2.*",
+                "phpunit/phpunit": "~4.0",
                 "symfony/console": "2.*",
                 "symfony/yaml": "2.*"
             },
@@ -921,7 +923,7 @@
                 "database",
                 "migrations"
             ],
-            "time": "2015-04-07 10:34:31"
+            "time": "2015-04-29 07:54:59"
         },
         {
             "name": "doctrine/orm",
@@ -1229,12 +1231,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Atlantic18/DoctrineExtensions.git",
-                "reference": "2972a09764e4e915b070f4325b79fa660c371e6d"
+                "reference": "3940af1099c47dd4bea036616730e8760a3fdba1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Atlantic18/DoctrineExtensions/zipball/2972a09764e4e915b070f4325b79fa660c371e6d",
-                "reference": "2972a09764e4e915b070f4325b79fa660c371e6d",
+                "url": "https://api.github.com/repos/Atlantic18/DoctrineExtensions/zipball/3940af1099c47dd4bea036616730e8760a3fdba1",
+                "reference": "3940af1099c47dd4bea036616730e8760a3fdba1",
                 "shasum": ""
             },
             "require": {
@@ -1300,7 +1302,73 @@
                 "tree",
                 "uploadable"
             ],
-            "time": "2015-04-15 01:03:59"
+            "time": "2015-05-01 08:39:37"
+        },
+        {
+            "name": "hackzilla/ticket-bundle",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hackzilla/TicketBundle.git",
+                "reference": "2234dbc4a51b8c6c388f6edc961cb67cdb73e0c1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hackzilla/TicketBundle/zipball/2234dbc4a51b8c6c388f6edc961cb67cdb73e0c1",
+                "reference": "2234dbc4a51b8c6c388f6edc961cb67cdb73e0c1",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/doctrine-bundle": "~1.2",
+                "doctrine/orm": "~2.2,>=2.2.3",
+                "knplabs/knp-paginator-bundle": "~2.3",
+                "php": ">=5.3.3",
+                "symfony/symfony": "~2.3"
+            },
+            "require-dev": {
+                "symfony/form": "~2.3"
+            },
+            "suggest": {
+                "hackzilla/bootstrap-bundle": "used to define the layout (v3)"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Hackzilla\\Bundle\\TicketBundle\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel Platt",
+                    "email": "github@ofdan.co.uk",
+                    "homepage": "http://www.hackzilla.org",
+                    "role": "Developer"
+                }
+            ],
+            "description": "This Bundle provides ticketing functionality for Symfony2 applications. Multilingual capable",
+            "keywords": [
+                "english",
+                "french",
+                "german",
+                "help desk",
+                "helpdesk",
+                "multilingual",
+                "russian",
+                "spanish",
+                "support",
+                "ticket",
+                "ticketing"
+            ],
+            "time": "2015-04-12 14:32:04"
         },
         {
             "name": "imagine/imagine",
@@ -1783,6 +1851,74 @@
             "time": "2015-03-09 08:06:57"
         },
         {
+            "name": "knplabs/knp-components",
+            "version": "1.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/KnpLabs/knp-components.git",
+                "reference": "6d091c2f16eec2769db38f38e08c7bd5847ce072"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/KnpLabs/knp-components/zipball/6d091c2f16eec2769db38f38e08c7bd5847ce072",
+                "reference": "6d091c2f16eec2769db38f38e08c7bd5847ce072",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2"
+            },
+            "require-dev": {
+                "doctrine/mongodb-odm": "~1.0@beta",
+                "doctrine/orm": "~2.4",
+                "phpunit/phpunit": "~4.2",
+                "ruflin/elastica": "~1.0",
+                "symfony/event-dispatcher": "~2.5"
+            },
+            "suggest": {
+                "doctrine/common": "to allow usage pagination with Doctrine ArrayCollection",
+                "doctrine/mongodb-odm": "to allow usage pagination with Doctrine ODM MongoDB",
+                "doctrine/orm": "to allow usage pagination with Doctrine ORM",
+                "propel/propel1": "to allow usage pagination with Propel ORM",
+                "ruflin/Elastica": "to allow usage pagination with ElasticSearch Client",
+                "solarium/solarium": "to allow usage pagination with Solarium Client"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.2.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Knp\\Component": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "KnpLabs Team",
+                    "homepage": "http://knplabs.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://github.com/KnpLabs/knp-components/contributors"
+                }
+            ],
+            "description": "Knplabs component library",
+            "homepage": "http://github.com/KnpLabs/knp-components",
+            "keywords": [
+                "components",
+                "knp",
+                "knplabs",
+                "pager",
+                "paginator"
+            ],
+            "time": "2014-10-06 10:38:10"
+        },
+        {
             "name": "knplabs/knp-menu",
             "version": "v2.0.0",
             "source": {
@@ -1899,6 +2035,65 @@
                 "menu"
             ],
             "time": "2014-08-01 09:57:23"
+        },
+        {
+            "name": "knplabs/knp-paginator-bundle",
+            "version": "2.4.1",
+            "target-dir": "Knp/Bundle/PaginatorBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/KnpLabs/KnpPaginatorBundle.git",
+                "reference": "701dffe02dbe4aa8784d3d9e5343985318ef5e2c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/KnpLabs/KnpPaginatorBundle/zipball/701dffe02dbe4aa8784d3d9e5343985318ef5e2c",
+                "reference": "701dffe02dbe4aa8784d3d9e5343985318ef5e2c",
+                "shasum": ""
+            },
+            "require": {
+                "knplabs/knp-components": "~1.2",
+                "php": ">=5.3.3",
+                "symfony/framework-bundle": "~2.0",
+                "twig/twig": "~1.5"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.4.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Knp\\Bundle\\PaginatorBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "KnpLabs Team",
+                    "homepage": "http://knplabs.com"
+                },
+                {
+                    "name": "Symfony2 Community",
+                    "homepage": "http://github.com/KnpLabs/KnpPaginatorBundle/contributors"
+                }
+            ],
+            "description": "Paginator bundle for Symfony2 to automate pagination and simplify sorting and other features",
+            "homepage": "http://github.com/KnpLabs/KnpPaginatorBundle",
+            "keywords": [
+                "Symfony2",
+                "bundle",
+                "knp",
+                "knplabs",
+                "pager",
+                "pagination",
+                "paginator"
+            ],
+            "time": "2014-09-15 15:49:24"
         },
         {
             "name": "kriswallsmith/assetic",
@@ -2546,12 +2741,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataAdminBundle.git",
-                "reference": "8e7832ff7bb109a6eca7629196b398f21866a9cb"
+                "reference": "4f23e1a30e49681bf8ebdbbae549848784be7699"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataAdminBundle/zipball/8e7832ff7bb109a6eca7629196b398f21866a9cb",
-                "reference": "8e7832ff7bb109a6eca7629196b398f21866a9cb",
+                "url": "https://api.github.com/repos/sonata-project/SonataAdminBundle/zipball/4f23e1a30e49681bf8ebdbbae549848784be7699",
+                "reference": "4f23e1a30e49681bf8ebdbbae549848784be7699",
                 "shasum": ""
             },
             "require": {
@@ -2622,7 +2817,7 @@
                 "bootstrap",
                 "sonata"
             ],
-            "time": "2015-04-20 12:47:37"
+            "time": "2015-04-29 09:05:01"
         },
         {
             "name": "sonata-project/block-bundle",
@@ -2823,12 +3018,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataClassificationBundle.git",
-                "reference": "5543caadace85b2cdc8ac4a3b41b403b0356f913"
+                "reference": "b932dfba7e76f9b22f87a95c28e3eaea18c0e1d0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataClassificationBundle/zipball/5543caadace85b2cdc8ac4a3b41b403b0356f913",
-                "reference": "5543caadace85b2cdc8ac4a3b41b403b0356f913",
+                "url": "https://api.github.com/repos/sonata-project/SonataClassificationBundle/zipball/b932dfba7e76f9b22f87a95c28e3eaea18c0e1d0",
+                "reference": "b932dfba7e76f9b22f87a95c28e3eaea18c0e1d0",
                 "shasum": ""
             },
             "require": {
@@ -2879,7 +3074,7 @@
                 "tag",
                 "taxonomy"
             ],
-            "time": "2015-04-20 11:36:37"
+            "time": "2015-04-27 14:55:46"
         },
         {
             "name": "sonata-project/core-bundle",
@@ -3052,12 +3247,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataDoctrineORMAdminBundle.git",
-                "reference": "a7eec64ddc35dc56b410fd90f479d369b1d714d1"
+                "reference": "e114b10f5c62cbc361633d666fef281b5240ed27"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataDoctrineORMAdminBundle/zipball/a7eec64ddc35dc56b410fd90f479d369b1d714d1",
-                "reference": "a7eec64ddc35dc56b410fd90f479d369b1d714d1",
+                "url": "https://api.github.com/repos/sonata-project/SonataDoctrineORMAdminBundle/zipball/e114b10f5c62cbc361633d666fef281b5240ed27",
+                "reference": "e114b10f5c62cbc361633d666fef281b5240ed27",
                 "shasum": ""
             },
             "require": {
@@ -3115,7 +3310,7 @@
                 "generator",
                 "sonata"
             ],
-            "time": "2015-04-19 21:51:59"
+            "time": "2015-04-27 14:54:55"
         },
         {
             "name": "sonata-project/easy-extends-bundle",
@@ -3353,12 +3548,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataMediaBundle.git",
-                "reference": "fbada306a25034fbeed3a0aa22acf7c5f2f7779f"
+                "reference": "6bebc3583be7990e80a6ef41421d8c37cfe62169"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataMediaBundle/zipball/fbada306a25034fbeed3a0aa22acf7c5f2f7779f",
-                "reference": "fbada306a25034fbeed3a0aa22acf7c5f2f7779f",
+                "url": "https://api.github.com/repos/sonata-project/SonataMediaBundle/zipball/6bebc3583be7990e80a6ef41421d8c37cfe62169",
+                "reference": "6bebc3583be7990e80a6ef41421d8c37cfe62169",
                 "shasum": ""
             },
             "require": {
@@ -3432,7 +3627,7 @@
                 "vimeo",
                 "youtube"
             ],
-            "time": "2015-04-20 13:00:58"
+            "time": "2015-04-28 19:22:37"
         },
         {
             "name": "sonata-project/notification-bundle",
@@ -3511,12 +3706,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataUserBundle.git",
-                "reference": "34a9a7f1020daba1b292ceab2379a762ef167b46"
+                "reference": "65558a80d0b8268d27bc811b40fa2c2cbd315d99"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataUserBundle/zipball/34a9a7f1020daba1b292ceab2379a762ef167b46",
-                "reference": "34a9a7f1020daba1b292ceab2379a762ef167b46",
+                "url": "https://api.github.com/repos/sonata-project/SonataUserBundle/zipball/65558a80d0b8268d27bc811b40fa2c2cbd315d99",
+                "reference": "65558a80d0b8268d27bc811b40fa2c2cbd315d99",
                 "shasum": ""
             },
             "require": {
@@ -3576,7 +3771,7 @@
                 "sonata",
                 "user"
             ],
-            "time": "2015-04-20 21:23:21"
+            "time": "2015-04-27 14:57:54"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -4125,12 +4320,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/twitter/typeahead.js.git",
-                "reference": "c078cf9c7dcb698ef23c2d0dc41d4f00231458d1"
+                "reference": "588440f66559714280628a4f9799f0c4eb880a4a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twitter/typeahead.js/zipball/c078cf9c7dcb698ef23c2d0dc41d4f00231458d1",
-                "reference": "c078cf9c7dcb698ef23c2d0dc41d4f00231458d1",
+                "url": "https://api.github.com/repos/twitter/typeahead.js/zipball/588440f66559714280628a4f9799f0c4eb880a4a",
+                "reference": "588440f66559714280628a4f9799f0c4eb880a4a",
                 "shasum": ""
             },
             "type": "library",
@@ -4150,7 +4345,7 @@
                 "autocomplete",
                 "typeahead"
             ],
-            "time": "2015-04-17 18:59:51"
+            "time": "2015-04-27 04:02:14"
         },
         {
             "name": "willdurand/jsonp-callback-validator",
@@ -4266,7 +4461,8 @@
         "sonata-project/media-bundle": 20,
         "jms/serializer-bundle": 20,
         "fpn/tag-bundle": 20,
-        "saad-tazi/g-chart-bundle": 20
+        "saad-tazi/g-chart-bundle": 20,
+        "hackzilla/ticket-bundle": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

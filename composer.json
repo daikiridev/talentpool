@@ -59,11 +59,14 @@
         
         "knplabs/knp-menu": "2.0.0",
         "knplabs/knp-menu-bundle": "2.0.0",
+        "knplabs/knp-paginator-bundle": "~2.0",
         
         "fpn/doctrine-extensions-taggable": "v0.9.0",
         "fpn/tag-bundle":"dev-master",
         
-        "saad-tazi/g-chart-bundle": "dev-master"
+        "saad-tazi/g-chart-bundle": "dev-master",
+        
+        "hackzilla/ticket-bundle": "dev-master"
 
     },
     "repositories": [

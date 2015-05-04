@@ -27,7 +27,11 @@ media:
     resource: '@SonataMediaBundle/Resources/config/routing/media.xml'
     prefix: /media
     
-
+# ticketing
+hackzilla_ticket:
+    resource: "@HackzillaTicketBundle/Resources/config/routing/ticket.yml"
+    prefix:   /ticket
+    
 # SonataAdminBundle routes
 admin:
     resource: '@SonataAdminBundle/Resources/config/routing/sonata_admin.xml'
