@@ -25,6 +25,7 @@ security:
             - ROLE_TEW_OBJECT_EDIT
             - ROLE_TEW_OBJECT_DELETE
         ROLE_USER_OWNER:
+            - ROLE_USER_READER
             - ROLE_TEW_OBJECT_VIEW
             - ROLE_TEW_OBJECT_EDIT
       

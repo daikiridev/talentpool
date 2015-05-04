@@ -78,11 +78,12 @@
         <tbody>
             {% for entity in entities %}
                     {# Should this candidate details be displayed? #}
-                    {% set fullview = is_granted('ROLE_TEW_STAFF') or is_granted('ROLE_TEW_OBJECT_VIEW', entity) %}
-                    
-                    {# BUG: is_granted('ROLE_TEW_OBJECT_ANONYMOUS_VIEW', entity) returns false but the voter is OK!!! #}
-                    {% set visible = (not fullview) and is_granted('ROLE_TEW_OBJECT_ANONYMOUS_VIEW', entity) %}
+                    {% set staff = is_granted('ROLE_TEW_STAFF') %}
+                    {% set fullview = staff or is_granted('ROLE_TEW_OBJECT_VIEW', entity) %}
+                    {% set anon_view = is_granted('ROLE_TEW_OBJECT_ANONYMOUS_VIEW', entity) %}
+                    {% set visible = (not fullview) and anon_view %}
                     {% set anonymous = visible and not is_granted('ROLE_STD_EXECUTOR') %}
+                    {# [Rights for {{ entity }}: {{ staff?'staff ' }} {{ fullview?'fullview ' }} {{ anon_view?'anon_view ' }} {{ visible?'visible ' }} {{ anonymous?'anonymous' }}] #}
                     {% if (fullview or visible) %}
                     <tr>
                         <td>

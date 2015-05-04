@@ -38,7 +38,7 @@
                                 <td>{{ entity.creator }}</td>
                             </tr>
                             <tr>
-                                <th>Access rights</th>
+                                <th>Clients</th>
                                 <td>{{ entity.companies|join(' / ') }}</td>
                             </tr>
                         {% endif %}
@@ -54,12 +54,6 @@
                             <th>Description</th>
                             <td>{{ entity.description|raw }}</td>
                         </tr>
-                        {% if is_granted('ROLE_STD_EXECUTOR') %}
-                            <tr>
-                                <th>Clients</th>
-                                <td>{{ entity.companies|join(' / ') }}</td>
-                            </tr>
-                        {% endif %}
                         {#
                         <tr>
                             <th>Candidates (to be removed)</th>

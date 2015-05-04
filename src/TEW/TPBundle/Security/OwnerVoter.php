@@ -16,7 +16,17 @@ class OwnerVoter implements VoterInterface
 
     public function supportsClass($class) 
     {
-        return false;
+//        return false;
+        $classes = array(
+            'TEW\TPBundle\Entity\TalentPool',
+            'TEW\TPBundle\Entity\Candidate'
+        );
+        $ok = false;
+        foreach($classes as $supportedClass) {
+            $ok = $ok || $supportedClass === $class || is_subclass_of($class, $supportedClass);
+        }
+//        print "<br>class $class supported: $ok<br>";
+        return $ok;
     }
  
     public function vote(TokenInterface $token, $object, array $attributes)
@@ -31,11 +41,12 @@ class OwnerVoter implements VoterInterface
         // we check all roles for this user...
 //                    print_r($attributes);
         foreach ($attributes as $attribute) {
-            // ... we ignore roles that are not concerned by the voter rule
-            if (false === $this->supportsAttribute($attribute)) {
+            // ... we ignore roles and classes that are not concerned by the voter rule
+            if ((false === $this->supportsAttribute($attribute)) || (false === $this->supportsClass($classname))) {
+                //print "<br><em>$object / $attribute</em>: nothing to do<br>";
                 continue;
             }
- 
+            
             // for a given target role, the default rule is to deny access...
             $user = $token->getUser();
 //            print "<br>$attribute - ".get_class($object)."<br>";
@@ -43,7 +54,7 @@ class OwnerVoter implements VoterInterface
  
             // ...except for the owner of the object
             if ($object->getOwningCompany()->getId() === $user->getCompany()->getId()) { // the user's company is the same as the object's one
-                return 'ROLE_TEW_OBJECT_DELETE'!==$attribute?VoterInterface::ACCESS_GRANTED:VoterInterface::ACCESS_DENIED;
+                return ('ROLE_TEW_OBJECT_DELETE'!==$attribute)?VoterInterface::ACCESS_GRANTED:VoterInterface::ACCESS_DENIED;
             } else { // The user is not owner but has the role to do it 
                 switch ($attribute) {
                     case "ROLE_TEW_OBJECT_VIEW":
@@ -51,7 +62,9 @@ class OwnerVoter implements VoterInterface
                             case "TEW\TPBundle\Entity\TalentPool":
                                 return $object->getCompanies()->contains($user->getCompany())?VoterInterface::ACCESS_GRANTED:VoterInterface::ACCESS_DENIED;
                                 break;
+                            // no right on candidates
                             default:
+                                //print "<br><em>$object ($classname)</em>: view KO<br>";
                                 return VoterInterface::ACCESS_DENIED;
                         }
                         break;
@@ -65,7 +78,7 @@ class OwnerVoter implements VoterInterface
                                 foreach ($object->getTalentPools() as $tp) {
                                     if (($tp->getOwningCompany()->getId()===$user->getCompany()->getId()) ||
                                         $tp->getCompanies()->contains($user->getCompany())) {
-                                        print "<em>$object tp $tp</em>: anonymous OK<br>";
+//                                        print "<br><em>$object ($tp)</em>: anonymous OK<br>";
                                         return VoterInterface::ACCESS_GRANTED;
                                     }
                                 }
