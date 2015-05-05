@@ -62,6 +62,9 @@ class AppKernel extends Kernel
         
             // TEW BUNDLE
             new TEW\TPBundle\TEWTPBundle(),
+            
+            // TO BE REMOVED...
+            new Hackzilla\Bundle\TicketBundle\HackzillaTicketBundle()
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test', 'alpha'))) {
