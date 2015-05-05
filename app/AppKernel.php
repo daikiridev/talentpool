@@ -72,7 +72,7 @@ class AppKernel extends Kernel
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
             $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
             // TICKETING
-            $bundles[] = new Hackzilla\Bundle\TicketBundle\HackzillaTicketBundle();
+            //$bundles[] = new Hackzilla\Bundle\TicketBundle\HackzillaTicketBundle();
             $bundles[] = new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle();
             //$bundles[] = new CoreSphere\ConsoleBundle\CoreSphereConsoleBundle();
         }
