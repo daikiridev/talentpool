@@ -27,6 +27,13 @@ services:
 #        arguments:
 #            - {type=service, id:twig.extension.tew.tp}
 
+    tew.listener.candidate:
+        class: TEW\TPBundle\EventListener\CdteOperationListener
+        arguments: ['@service_container']
+        tags:
+            - { name: doctrine.event_listener, event: postPersist }
+            - { name: doctrine.event_listener, event: postUpdate }
+
 # Twig filters
     tew.twig.tew_extension:
         class: TEW\TPBundle\Twig\Extension\TEWExtension

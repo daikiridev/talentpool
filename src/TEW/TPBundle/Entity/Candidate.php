@@ -40,7 +40,7 @@ class Candidate implements Taggable
     /**
      * @var string
      *
-     * @ORM\Column(name="gender", type="string", length=3)
+     * @ORM\Column(name="gender", type="string", length=3, nullable=true)
      */
     private $gender;
 

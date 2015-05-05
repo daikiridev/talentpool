@@ -24,4 +24,4 @@ app/console cache:warmup --env=prod
 # app/console assets:install --symlink
 
 # checking rights
-chown -R www-data:www-data /srv/123vpc/www/tew-test.123vpc.com
+chown -R www-data:www-data .
