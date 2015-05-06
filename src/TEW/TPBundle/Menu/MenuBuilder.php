@@ -118,6 +118,8 @@ class MenuBuilder
                     ->setAttribute('dropdown', true);
             $menu['Statistics']->addChild('#cdte / talentpool', array('route' => 'tew_stats_cdtetalentpool'))
                     ->setAttribute('icon', 'icon-sitemap');
+            $menu['Statistics']->addChild('#cdte / status / talentpool', array('route' => 'tew_stats_cdtestatustalentpool'))
+                    ->setAttribute('icon', 'icon-sitemap');
         }
         
         // Bug tracking

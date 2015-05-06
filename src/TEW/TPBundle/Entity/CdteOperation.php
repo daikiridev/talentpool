@@ -53,12 +53,6 @@ class CdteOperation
      */
     private $type;
     
-    /**
-     * @var description
-     *
-     * @ORM\Column(name="description", type="text", length=null, nullable=true)
-     */    
-    private $description;
     
     /**
      * @var candidate
@@ -164,28 +158,6 @@ class CdteOperation
         return $this->status;
     }
 
-    /**
-     * Set description
-     *
-     * @param string $description
-     * @return CdteOperation
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    /**
-     * Get description
-     *
-     * @return string 
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
 
     /**
      * Set role

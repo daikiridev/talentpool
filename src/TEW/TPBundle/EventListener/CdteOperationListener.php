@@ -17,11 +17,19 @@ class CdteOperationListener
         $this->container = $container;
     }
     
-    public function storeCdteOperation($em, $cdte, $user, $status){
+    public function storeCdteOperation($em, $cdte, $status){
+        $securityContext = $this->container->get('security.context');
+        $user = $securityContext->getToken()->getUser();
         $cdteOp = new CdteOperation($user);
-        $cdteOp->setCandidate($cdte);
-        $cdteOp->setStatus($status);
-        $cdteOp->setRole(implode(', ', $user->getRoles()));
+        $cdteOp->setCandidate($cdte)
+            ->setStatus($status)
+            ->setRole(implode(', ', $user->getRoles()));
+        if ('root' === $user->getFullName()) {
+            $cdteOp->setType(CdteOperation::TYPE_SYSTEM);
+        }
+        if (CdteOperation::STATUS_ANONYMOUS_DETAILS === $status) {
+            $cdteOp->setType(CdteOperation::TYPE_USER);
+        }
         $em->persist($cdteOp);
         $em->flush();
     }
@@ -30,10 +38,8 @@ class CdteOperationListener
     {
         $entity = $args->getEntity();
         $em = $args->getEntityManager();
-        $securityContext = $this->container->get('security.context');
-
         if ($entity instanceof Candidate) { // we store the operation
-            $this->storeCdteOperation($em, $entity, $securityContext->getToken()->getUser(), CdteOperation::STATUS_CREATE);  
+            $this->storeCdteOperation($em, $entity, CdteOperation::STATUS_CREATE);  
         }
     }
     
@@ -41,10 +47,8 @@ class CdteOperationListener
     {
         $entity = $args->getEntity();
         $em = $args->getEntityManager();
-        $securityContext = $this->container->get('security.context');
-
         if ($entity instanceof Candidate) { // we store the operation
-            $this->storeCdteOperation($em, $entity, $securityContext->getToken()->getUser(), CdteOperation::STATUS_EDIT);  
+            $this->storeCdteOperation($em, $entity, CdteOperation::STATUS_EDIT);  
         }
     }
 }

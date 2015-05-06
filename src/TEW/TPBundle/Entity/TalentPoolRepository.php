@@ -25,4 +25,29 @@ class TalentPoolRepository extends EntityRepository
         $result = $query->getResult();
         return $result[0]['nb'];
     }
+    
+    public function countCandidateStatusByTalentPool($id) {
+        $rsm = new ResultSetMapping();
+        $rsm->addScalarResult('nb', 'nb', 'integer');
+        $rsm->addScalarResult('status', 'status', 'string');
+        $query = $this->getEntityManager()->createNativeQuery(
+           "SELECT 
+              count(cdte.id) as nb, status.name AS status, status.color AS color
+            FROM
+              tew_cdtestatus status
+            LEFT JOIN 
+                (SELECT cdte1.id, cdte1.status_id FROM tew_candidate cdte1
+                  INNER JOIN tew_talentpool_candidates tpcdte ON cdte1.id = tpcdte.candidate_id 
+                  INNER JOIN tew_talentpool tp ON tp.id = tpcdte.talentpool_id 
+                  WHERE tp.id = ?) cdte
+            ON cdte.status_id = status.id 
+            GROUP BY status
+            ORDER BY status ASC",
+                $rsm);
+        $query->setParameter(1, $id);
+        
+        $result = $query->getResult();
+        return $result;
+    }
+    
 }

@@ -1,6 +1,7 @@
 {# TEW/TPBundle/src/Resources/views/TalentPool/show.html.twig #}
 {% extends '::base.html.twig' %}
-{% block title %}Pie chart - {{ title }}{% endblock title %}
+{% set thisTitle = (chartType=='pie'?'Pie':'Column')~' chart - '~title %}
+{% block title %}{{ thisTitle }}{% endblock title %}
 {% block scripts %}
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 <script type="text/javascript">
@@ -10,13 +11,13 @@
         chartType=='pie'?
             gchart_pie_chart(dataTable1, 'chart1', 800, 400, title):
         chartType=='column'?
-            gchart_column_chart(dataTable1, 'chart1', 800, 400, title)
+            gchart_column_chart(dataTable1, 'chart1', 800, 400, title, {'isStacked': 'true'})
     }}
     });
 </script>
 {% endblock %}
 {% block body -%}
-    <h1>Pie chart - {{ title }}</h1>
+    <h1>{{ thisTitle }}</h1>
     <div id="chart1">&nbsp;</div>
     {% block actions %}
     {% endblock actions %}
