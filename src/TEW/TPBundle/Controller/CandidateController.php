@@ -434,6 +434,7 @@ class CandidateController extends Controller {
         $content .= $this->getRequest()->server->get('SERVER_NAME').':'.$this->getRequest()->server->get('SERVER_PORT');
         $content .= $this->generateUrl('tew_candidate_edit', array('id' => $entity->getId()));
         $mail->setContent($content);
+        $mail->setCandidateDetailsRequest($id);
         $mailForm = $this->createMailForm($mail);
 
         return $this->render('TEWTPBundle:Candidate:show.html.twig', array(

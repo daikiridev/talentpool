@@ -34,6 +34,12 @@ class Mail
      *
      */
     private $to;
+    
+    /**
+     * @var integer
+     *
+     */
+    private $candidate_details_request;
  
     /**
      * Constructor
@@ -42,6 +48,7 @@ class Mail
     {
         $this->from = $fromUser?$fromUser->getEmail():null;
         $this->to = $toUser?$toUser->getEmail():null;
+        $this->candidate_details_request = -1;
     }
     
     /**
@@ -136,5 +143,27 @@ class Mail
         return $this->to;
     }
 
+    /**
+     * Set Candidate_details_request
+     *
+     * @param integer $id
+     * @return Mail
+     */
+    public function setCandidateDetailsRequest($id)
+    {
+        $this->candidate_details_request = $id;
+
+        return $this;
+    }
+
+    /**
+     * Get Candidate_details_request
+     *
+     * @return integer 
+     */
+    public function getCandidateDetailsRequest()
+    {
+        return $this->candidate_details_request;
+    }
 
 }

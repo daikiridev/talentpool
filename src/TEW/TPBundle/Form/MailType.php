@@ -19,6 +19,7 @@ class MailType extends AbstractType
             ->add('content', 'hidden')
             ->add('from', 'hidden')
             ->add('to', 'hidden')
+            ->add('candidate_details_request', 'hidden')
         ;
     }
     

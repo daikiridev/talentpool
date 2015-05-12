@@ -53,14 +53,19 @@ class CdteOperationListener
             $securityContext = $this->container->get('security.context');
             $user = $securityContext->getToken()->getUser();
             
-            $message = \Swift_Message::newInstance()
-                ->setSubject("[TEW / Candidate] newly created: $entity ".$entity->getFunction().' '.$entity->getLevel())
-                ->setFrom($user->getEmail())
-                ->setTo($destList)
-                ->setBody($content)
-                ;
-//            var_dump($message); exit;
-            $this->container->get('mailer')->send($message);
+            try {
+                $message = \Swift_Message::newInstance()
+                    ->setSubject("[TEW / Candidate] newly created: $entity ".$entity->getFunction().' '.$entity->getLevel())
+                    ->setFrom($user->getEmail())
+                    ->setTo($destList)
+                    ->setBody($content)
+                    ;
+    //            var_dump($message); exit;
+
+                $this->container->get('mailer')->send($message);
+            } catch(\Swift_TransportException $e) {
+                echo "Error while trying to send an informative email to ".  implode(' / ', $destList), $e->getMessage(), "<br>";
+            }
         }
     }
     
