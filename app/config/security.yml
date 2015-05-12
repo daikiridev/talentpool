@@ -28,6 +28,8 @@ security:
             - ROLE_USER_READER
             - ROLE_TEW_OBJECT_VIEW
             - ROLE_TEW_OBJECT_EDIT
+            
+        ROLE_TEW_STAFF: [ROLE_TICKET_ADMIN]
       
         # a USER is at least a candidate with an account
         # a client is a TEW Client

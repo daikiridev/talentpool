@@ -3,38 +3,38 @@
 {% set anonymous = (not fullview) and is_granted('ROLE_TEW_OBJECT_ANONYMOUS_VIEW', entity) %}
 
 {% if not (fullview or anonymous) %}
-        <h1>
+    <h1>
         Candidate view not allowed
-        </h1>
+    </h1>
 {% else %}
     <h1>
         Candidate {{ anonymous?' <small>(anonymous)</small>'}}
         {% if entity.picture %}
             <div class="mag pull-right">
-            <img height="100" data-toggle="magnify" src="{% path entity.picture, 'big' %}" alt="{{ entity.picture is null?'':entity.picture.name }}">
+                <img height="100" data-toggle="magnify" src="{% path entity.picture, 'big' %}" alt="{{ entity.picture is null?'':entity.picture.name }}">
             </div>
         {% endif %}
         <br>
         <small>
-        {% if entity.alert %}
-            <i class="icon-white icon-bell" style="color:red; cursor:help" title="alert"></i>
-        {% endif %}
-        {% if not entity.active %}
-            <i class="icon-remove" style="color:lightcoral; cursor:help" title="cancelled"></i>
-        {% endif %}
-        {% if entity.status %}
-            {{entity.status|status}}
-        {% endif %}
-        {% if entity.resume %}
-            <i class="icon icon-paperclip" style="cursor:help" title="resume attached"></i>
-        {% endif %}
+            {% if entity.alert %}
+                <i class="icon-white icon-bell" style="color:red; cursor:help" title="alert"></i>
+            {% endif %}
+            {% if not entity.active %}
+                <i class="icon-remove" style="color:lightcoral; cursor:help" title="cancelled"></i>
+            {% endif %}
+            {% if entity.status %}
+                {{entity.status|status}}
+            {% endif %}
+            {% if entity.resume %}
+                <i class="icon icon-paperclip" style="cursor:help" title="resume attached"></i>
+            {% endif %}
         </small>
     </h1>
     <div role="tabpanel">
         <!-- Nav tabs -->
         <ul class="nav nav-pills">
-            <li role="presentation" class="active"><a href="#details_{{entity.id}}" aria-controls="details" role="tab" data-toggle="tab">Details</a></li>
-            <li role="presentation" ><a href="#talentpools_{{entity.id}}" aria-controls="talentpools" role="tab" data-toggle="tab">Talent Pools &amp; User comments</a></li>
+            <li role="presentation" class="active"><a href="#details_{{entity.id}}" aria-controls="details" role="tab" data-toggle="tab">Profile</a></li>
+            <li role="presentation" ><a href="#talentpools_{{entity.id}}" aria-controls="talentpools" role="tab" data-toggle="tab">Fit w/Talent Pools &amp; User comments</a></li>
         </ul>
         <!-- Tab panes -->
         <div class="tab-content">
@@ -103,10 +103,10 @@
                                 </td>
                             </tr>
                         {% endif %}
-                            <tr>
-                                <th>Nationality</th>
-                                <td>{{ entity.nationality1|country }} {{ entity.nationality2|country }}</td>
-                            </tr>
+                        <tr>
+                            <th>Nationality</th>
+                            <td>{{ entity.nationality1|country }} {{ entity.nationality2|country }}</td>
+                        </tr>
                         {% if entity.mobilities %}
                             <tr>
                                 <th>Mobility</th>
@@ -118,117 +118,122 @@
                             <td>{% for tag in entity.tags %}
                                 <span class="tag">{{ tag }}</span>
                                 {% endfor %}
-                            </td>
-                        </tr>
-                        {% if not anonymous %}
-                            <tr>
-                                <th>Contact</th>
-                                <td>{{ entity.email|mail }} {{ entity.phone1?' / phone1: '~entity.phone1 }} {{ entity.phone2?' / phone2: '~entity.phone2 }}</td>
-                            </tr>
-                            <tr>
-                                <th>Addresses</th>
-                                <td>
-                                    {% for address in entity.addresses %}
-                                        <div>{{ address }}: {{ anonymous?'':address.street1 }} {{ anonymous?'':address.street2 }} {{ anonymous?'':address.zip }} {{ anonymous?'':address.city }} {{ address.country }}</div>
-                                    {% endfor %}
                                 </td>
                             </tr>
-                        {% endif %}
-                        {% if not anonymous and entity.resume %}
-                            <tr>
-                                <th>Resume</th>
-                                <td>
-                                    <a href="{% path entity.resume, 'reference' %}" target="_blank">
-                                        {% if entity.resume.contentType=='application/pdf' %}
-                                            <img width="32" src="{{ asset('bundles/tewtp/images/icons/pdf.png') }}">
-                                        {% elseif entity.resume.contentType=='application/msword' %}
-                                            <img width="32" src="{{ asset('bundles/tewtp/images/icons/word.png') }}">
-                                        {% endif %}
-                                        {{ entity.resume }}
-                                    </a>
-                                </td>
-                            </tr>
-                        {% endif %}
-                        {% if entity.anonymousResume and (anonymous or is_granted('ROLE_MASTER_EXECUTOR'))  %}
-                            <tr>
-                                <th>{{is_granted('ROLE_MASTER_EXECUTOR')?'Anonymous '}}Resume</th>
-                                <td>
-                                    <a href="{% path entity.anonymousResume, 'reference' %}" target="_blank">
-                                        {% if entity.anonymousResume.contentType=='application/pdf' %}
-                                            <img width="32" src="{{ asset('bundles/tewtp/images/icons/pdf.png') }}">
-                                        {% elseif entity.anonymousResume.contentType=='application/msword' %}
-                                            <img width="32" src="{{ asset('bundles/tewtp/images/icons/word.png') }}">
-                                        {% endif %}
-                                        {{ entity.anonymousResume }}
-                                    </a>
-                                </td>
-                            </tr>
-                        {% endif %}
-                        {% if not anonymous %}
-                            <tr>
-                                <th>Created by</th>
-                                <td>{{ entity.creator }} on {{ entity.createdAt|date('D d M Y \\a\\t g:ia', "Europe/Paris") }}</td>
-                            </tr>
-                            <tr>
-                                <th>Owner</th>
-                                <td>{{ entity.owningcompany }}</td>
-                            </tr>
-                        {% endif %}
-                    </tbody>
-                </table>
-            </div>
-            <div role="tabpanel" class="tab-pane col-lg-12" id="talentpools_{{entity.id}}">
-                <div class="row">
-                    <div class="col-lg-12">
-                        {% for tp in entity.talentpools %}
-                            {% set visible_tp = is_granted('ROLE_MASTER_EXECUTOR') or is_granted('ROLE_TEW_OBJECT_VIEW', tp) %}
-                            {% if visible_tp %}
-                                {% set tpcomments = entity.comments|commentsByTalentpool(tp) %}
-                                <div class="row">
-                                    <h4>{{ tp }} {{ tpcomments|commentsAverageScore|stars }}</h4>
-                                    <div class="col-lg-11 col-lg-offset-1">
-                                        {% for prof in tp.profiles %}
-                                            <div class="row">
-                                                Profile {{ prof }}:
-                                                {% if ((prof.function==entity.function or not prof.function) and (prof.level==entity.level or not prof.level))
-                                                   or ((prof.function==entity.targetFunction1 or not prof.function) and (prof.level==entity.targetLevel1 or not prof.level))
-                                                   or ((prof.function==entity.targetFunction2 or not prof.function) and (prof.level==entity.targetLevel2 or not prof.level))
-                                                   or ((prof.function==entity.targetFunction3 or not prof.function) and (prof.level==entity.targetLevel3 or not prof.level))
-                                                %}
-                                                    {{ ('<i class="icon icon-ok" style="color:green"></i> '~(prof.function?prof.function:'all'))|raw}}
-                                                    {{ ('<i class="icon icon-ok" style="color:green"></i> '~(prof.level?prof.level:'all'))|raw}}  
-                                                {% else %}
-                                                    {{ ((prof.function==entity.function or not prof.function)?'<i class="icon icon-ok" style="color:green"></i> '~(prof.function?prof.function:entity.function):'<i class="icon icon-remove" style="color:lightcoral"></i> '~(prof.function?prof.function:entity.function))|raw}}
-                                                    {{ ((prof.level==entity.level or not prof.level)?'<i class="icon icon-ok" style="color:green"></i> '~(prof.level?prof.level:entity.level):'<i class="icon icon-remove" style="color:lightcoral"></i> '~(prof.level?prof.level:entity.level))|raw}}
-                                                {% endif %}
-                                            </div>
+                            {% if not anonymous %}
+                                <tr>
+                                    <th>Contact</th>
+                                    <td>{{ entity.email|mail }} {{ entity.phone1?' / phone1: '~entity.phone1 }} {{ entity.phone2?' / phone2: '~entity.phone2 }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Addresses</th>
+                                    <td>
+                                        {% for address in entity.addresses %}
+                                            <div>{{ address }}: {{ anonymous?'':address.street1 }} {{ anonymous?'':address.street2 }} {{ anonymous?'':address.zip }} {{ anonymous?'':address.city }} {{ address.country }}</div>
                                         {% endfor %}
-                                    </div>
-                                    {% if is_granted('ROLE_MASTER_EXECUTOR') or is_granted('ROLE_TEW_OBJECT_VIEW', tp) %}
-                                        <div class="col-lg-11 col-lg-offset-1">
-                                            <div class='row'>
-                                                <h5>{{ (tpcomments is not empty)?'Users comments' }}</h5>
-                                            </div>
-                                            <div class='row'>
-
+                                    </td>
+                                </tr>
+                            {% endif %}
+                            {% if not anonymous and entity.resume %}
+                                <tr>
+                                    <th>Resume</th>
+                                    <td>
+                                        <a href="{% path entity.resume, 'reference' %}" target="_blank">
+                                            {% if entity.resume.contentType=='application/pdf' %}
+                                                <img width="32" src="{{ asset('bundles/tewtp/images/icons/pdf.png') }}">
+                                            {% elseif entity.resume.contentType=='application/msword' %}
+                                                <img width="32" src="{{ asset('bundles/tewtp/images/icons/word.png') }}">
+                                            {% endif %}
+                                            {{ entity.resume }}
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endif %}
+                            {% if entity.anonymousResume and (anonymous or is_granted('ROLE_MASTER_EXECUTOR'))  %}
+                                <tr>
+                                    <th>{{is_granted('ROLE_MASTER_EXECUTOR')?'Anonymous '}}Resume</th>
+                                    <td>
+                                        <a href="{% path entity.anonymousResume, 'reference' %}" target="_blank">
+                                            {% if entity.anonymousResume.contentType=='application/pdf' %}
+                                                <img width="32" src="{{ asset('bundles/tewtp/images/icons/pdf.png') }}">
+                                            {% elseif entity.anonymousResume.contentType=='application/msword' %}
+                                                <img width="32" src="{{ asset('bundles/tewtp/images/icons/word.png') }}">
+                                            {% endif %}
+                                            {{ entity.anonymousResume }}
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endif %}
+                            {% if not anonymous %}
+                                <tr>
+                                    <th>Created by</th>
+                                    <td>{{ entity.creator }} on {{ entity.createdAt|date('D d M Y \\a\\t g:ia', "Europe/Paris") }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Owner</th>
+                                    <td>{{ entity.owningcompany }}</td>
+                                </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+                <div role="tabpanel" class="tab-pane col-lg-12" id="talentpools_{{entity.id}}">
+                    <br>
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Talent Pool &gt; position</th>
+                                <th>Fit w/function</th>
+                                <th>Fit w/level</th>
+                                <th>Fit w/mobility</th>
+                                <th colspan="2">User comments</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for tp in entity.talentpools %}
+                                {% set visible_tp = is_granted('ROLE_MASTER_EXECUTOR') or is_granted('ROLE_TEW_OBJECT_VIEW', tp) %}
+                                {% if visible_tp %}
+                                    {% set tpcomments = entity.comments|commentsByTalentpool(tp) %}
+                                    <tr>
+                                        <td colspan="4">
+                                            <strong>{{ tp }} {{ tpcomments|commentsAverageScore|stars }}</strong>
+                                        </td>
+                                        <td rowspan="{{tp.profiles|length+1}}">
                                             {% for comment in tpcomments %}
-                                                <div class="col-lg-6"
+                                                <span 
                                                     data-toggle="popover" data-delay='{ "show": 500, "hide": 200 }' data-html="true" style="cursor:help" data-trigger='hover' data-placement="top"
                                                     data-content="{{ comment.comment }}" data-title="{{ comment }}<br><em>- by {{ comment.author }}, on {{ comment.date|date('d M Y') }}</em>">
-                                                    {{ comment.score|stars }} {{ comment }} - <em>{{ comment.date|date('d M Y') }}</em>
-                                                </div>
+                                                    <small>{{ comment.score|stars }} <em>{{ comment.date|date('d M Y') }}</em></small>
+                                                </span><br>
                                             {% endfor %}
-                                            </div>
-                                        </div>
-                                    {% endif %}
-                                </div>
-                            {% endif %}
-                        {% endfor %}
-                    </div>
+                                        </td>
+                                        <td>(add)</td>
+                                    </tr>
+                                    {% for prof in tp.profiles %}
+                                        <tr>
+                                            <td style="text-align: right">{{ prof }}</td>
+                                            {% if ((prof.function==entity.function or not prof.function) and (prof.level==entity.level or not prof.level))
+                                               or ((prof.function==entity.targetFunction1 or not prof.function) and (prof.level==entity.targetLevel1 or not prof.level))
+                                               or ((prof.function==entity.targetFunction2 or not prof.function) and (prof.level==entity.targetLevel2 or not prof.level))
+                                               or ((prof.function==entity.targetFunction3 or not prof.function) and (prof.level==entity.targetLevel3 or not prof.level))
+                                            %}
+                                            <td>{{ ('<i class="icon icon-ok" style="color:green"></i> '~(prof.function?prof.function:'all'))|raw}}</td>
+                                            <td>{{ ('<i class="icon icon-ok" style="color:green"></i> '~(prof.level?prof.level:'all'))|raw}}</td>
+                                            {% else %}
+                                                <td>{{ ((prof.function==entity.function or not prof.function)?'<i class="icon icon-ok" style="color:green"></i> '~(prof.function?prof.function:entity.function):'<i class="icon icon-remove" style="color:lightcoral"></i> '~(prof.function?prof.function:entity.function))|raw}}</td>
+                                                <td>{{ ((prof.level==entity.level or not prof.level)?'<i class="icon icon-ok" style="color:green"></i> '~(prof.level?prof.level:entity.level):'<i class="icon icon-remove" style="color:lightcoral"></i> '~(prof.level?prof.level:entity.level))|raw}}</td>
+                                            {% endif %}
+                                                <td>N/C</td>
+                                        </tr>
+                                    {% endfor %}
+                                {% endif %}
+                            {% endfor %}
+
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
-    </div>
 
     {% block actions %}
         <div class="btn-toolbar pull-right record_actions" role="group">
