@@ -59,7 +59,7 @@ class CdteOperationListener
                 ->setTo($destList)
                 ->setBody($content)
                 ;
-            var_dump($message); exit;
+//            var_dump($message); exit;
             $this->container->get('mailer')->send($message);
         }
     }
