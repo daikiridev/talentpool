@@ -179,14 +179,14 @@
                 </div>
                 <div role="tabpanel" class="tab-pane col-lg-12" id="talentpools_{{entity.id}}">
                     <br>
-                    <table class="table table-bordered table-striped">
+                    <table class="table table-bordered table-striped table-hover">
                         <thead>
                             <tr>
                                 <th>Talent Pool &gt; position</th>
                                 <th>Fit w/function</th>
                                 <th>Fit w/level</th>
                                 <th>Fit w/mobility</th>
-                                <th colspan="2">User comments</th>
+                                <th colspan="2" style="text-align: center">User comments</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -196,10 +196,10 @@
                                     {% set tpcomments = entity.comments|commentsByTalentpool(tp) %}
                                     <tr>
                                         <td colspan="4">
-                                            <strong>{{ tp }} {{ tpcomments|commentsAverageScoreStars }}</strong>
+                                            <strong>{{ tp }}</strong> {{ tpcomments|commentsAverageScoreStars }}
                                         </td>
                                         <td rowspan="{{tp.profiles|length+1}}">
-                                            {% for comment in tpcomments|slice(1, 5) %}
+                                            {% for comment in tpcomments|slice(0, 5) %}
                                                 <span 
                                                     data-toggle="popover" data-delay='{ "show": 500, "hide": 200 }' data-html="true" style="cursor:help" data-trigger='hover' data-placement="top"
                                                     data-content="{{ comment.comment }}" data-title="{{ comment }}<br><em>- by {{ comment.author }}, on {{ comment.date|date('d M Y') }}</em>">
@@ -207,7 +207,9 @@
                                                 </span><br>
                                             {% endfor %}
                                         </td>
-                                        <td>(add)</td>
+                                        <td style="vertical-align: middle" rowspan="{{tp.profiles|length+1}}">
+                                            <button class="btn btn-xs btn-warning">add</button>
+                                        </td>
                                     </tr>
                                     {% for prof in tp.profiles %}
                                         <tr>

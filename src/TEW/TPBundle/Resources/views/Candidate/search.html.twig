@@ -111,15 +111,17 @@
 
             <fieldset class="col-lg-4">
                 <legend>Status</legend>
-                <div class="col-lg-3">
-                    <span><i class="icon icon-bell" style="color:red; cursor:help" title="alert"></i></span>
+                <div class="col-lg-1">
+                    <span><i class="icon icon-bell" style="color:red; cursor:help" title="alert"></i></span><br>
                     {{ form_widget(this_form.alert) }}
                 </div>
+                
                 <div class="col-lg-3">
                     {{ form_row(this_form.invisible) }}
                 </div>
-                <div class="col-lg-6">
-                    {{ form_row(this_form.status) }}
+                
+                <div class="col-lg-8">
+                    {{ form_widget(this_form.status) }}
                 </div>
             </fieldset>
         </div>

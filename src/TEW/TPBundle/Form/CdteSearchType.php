@@ -28,9 +28,9 @@ class CdteSearchType extends AbstractType
                 'class' => 'TEWTPBundle:CdteStatus',
                 'label' => 'Status',
                 'multiple' => true,
-                'expanded' => true,
-                'empty_value' => 'All',
-                //'attr' => array('class' => 'form-control'),
+                'expanded' => false,
+//                'empty_value' => 'All',
+                'attr' => array('class' => 'select2', 'style' => 'width:190px'),
                 //'label_attr' => array('class' => 'col-md-2')
             ))
             ->add('function', 'entity', array(

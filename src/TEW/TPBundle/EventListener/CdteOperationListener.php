@@ -38,8 +38,29 @@ class CdteOperationListener
     {
         $entity = $args->getEntity();
         $em = $args->getEntityManager();
-        if ($entity instanceof Candidate) { // we store the operation
-            $this->storeCdteOperation($em, $entity, CdteOperation::STATUS_CREATE);  
+        if ($entity instanceof Candidate) {
+            // we store the operation for statistics purposes
+            $this->storeCdteOperation($em, $entity, CdteOperation::STATUS_CREATE);
+            
+            // we then send an email to all users belonging to the candidate's owner
+            $userList = $this->container->get('doctrine')->getRepository('TEWUserBundle:User')->findBy(array('company' => $entity->getOwningcompany()));
+            $destList = array_map(function($user) {
+                return $user->getEmail();
+            } , $userList);
+            
+            $content = "Please visit ".$this->container->get('router')->generate('tew_candidate_show', array('id' => $entity->getId()))." for details";
+            
+            $securityContext = $this->container->get('security.context');
+            $user = $securityContext->getToken()->getUser();
+            
+            $message = \Swift_Message::newInstance()
+                ->setSubject("[TEW / Candidate] newly created: $entity ".$entity->getFunction().' '.$entity->getLevel())
+                ->setFrom($user->getEmail())
+                ->setTo($destList)
+                ->setBody($content)
+                ;
+            var_dump($message); exit;
+            $this->container->get('mailer')->send($message);
         }
     }
     

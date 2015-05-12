@@ -300,6 +300,7 @@ class CandidateController extends Controller {
 
         // Adding tagging stuff - see https://github.com/FabienPennequin/FPNTagBundle
         $tagManager = $this->get('fpn_tag.tag_manager');
+        $tagManager->loadTagging($entity);
         
         $form->handleRequest($request);
 
@@ -484,14 +485,15 @@ class CandidateController extends Controller {
               $this->get('security.context')->isGranted('ROLE_MASTER_EXECUTOR'))) {
             throw new AccessDeniedException('Access Denied');
         }
+        // Adding tagging stuff - see https://github.com/FabienPennequin/FPNTagBundle
+        $tagManager = $this->get('fpn_tag.tag_manager');
+        $tagManager->loadTagging($entity); // this must be done before the createForm instruction!
+        
         $editForm = $this->createEditForm($entity);
         $deleteAccess = $this->get('security.context')->isGranted('ROLE_TEW_OBJECT_DELETE', $entity) ||
                         $this->get('security.context')->isGranted('ROLE_MASTER_EXECUTOR');
         $deleteFormView = $deleteAccess?$this->createDeleteForm($id)->createView():null;
         
-        // Adding tagging stuff - see https://github.com/FabienPennequin/FPNTagBundle
-        $tagManager = $this->get('fpn_tag.tag_manager');
-        $tagManager->loadTagging($entity);
 
         return $this->render('TEWTPBundle:Candidate:edit_form.html.twig', array(
                     'entity' => $entity,

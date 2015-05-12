@@ -327,7 +327,8 @@ class Candidate implements Taggable
     /**
      * @var comments
      *
-     * @ORM\OneToMany(targetEntity="CdteComment", mappedBy="candidate", cascade={"persist", "remove"})   
+     * @ORM\OneToMany(targetEntity="CdteComment", mappedBy="candidate", cascade={"persist", "remove"})
+     * @ORM\OrderBy({"date" = "DESC"})  
      * 
      */
     private $comments;
