@@ -17,15 +17,22 @@
         <title>{% block title %}TEW TalentPool{% endblock %}</title>
         {% block stylesheets %}	
             <!--link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"-->
-            {% if beta %}
-                <link rel="stylesheet" href="{{ asset('bundles/tewtp/css/bootstrap.min.css') }}">
-            {% else %}
-                <link rel="stylesheet" href="{{ asset('bundles/tewtp/css/bootstrap.test.min.css') }}">
-            {% endif %}
+            <link rel="stylesheet" href="{{ asset('bundles/tewtp/css/bootstrap.min.css') }}">
             <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css">
             <link rel="stylesheet" href="{{ asset('bundles/tewtp/css/talentpool.css') }}">
             <link rel="stylesheet" type="text/css" href="{{ asset('bundles/tewtp/css/bootstrap3-wysihtml5.css') }}" />
         {% endblock %}
+        {% if not beta %}
+        <style>
+            .navbar-default {
+                background-color: lime;
+                border-color: #e7e7e7;
+            }
+            body {
+                background-color: lightyellow;
+            }
+        </style>
+        {% endif %}
         {% block styles %}{% endblock %}
 
     </head>

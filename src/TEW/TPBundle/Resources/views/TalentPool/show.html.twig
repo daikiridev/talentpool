@@ -24,7 +24,7 @@
         <ul class="nav nav-pills">
             <li role="presentation" class="active"><a href="#details" aria-controls="details" role="tab" data-toggle="tab">Details</a></li>
                 {% for profile in entity.profiles %}
-                <li role="presentation" class="warning"><a href="#prof{{ loop.index }}" aria-controls="prof{{ loop.index }}" role="tab" data-toggle="tab">Profile {{ profile }}</a></li>
+                <li role="presentation" class="warning"><a href="#prof{{ loop.index }}" aria-controls="prof{{ loop.index }}" role="tab" data-toggle="tab">Position {{ profile }}</a></li>
                 {% endfor %}
         </ul>
         <!-- Tab panes -->
@@ -71,11 +71,21 @@
             </div>
         {% for profile in entity.profiles %}
             <div role="tabpanel" class="tab-pane  col-lg-12" id="prof{{ loop.index }}">
-                <h5>Position</h5> {{ profile.function?profile.function.indentedName:'All' }} {{ profile.level }}
-                {% if profile.locations|length >0 %}
-                    <h5>Location(s)</h5> {{ profile.locations|join(' / ') }}
-                {% endif %}
-                <h5>Description</h5> {{ profile.description|raw }}
+                <table class="record_properties">
+                    <tbody>
+                        <tr>
+                            <th>Position</th><td>{{ profile.function?profile.function.indentedName:'All' }} {{ profile.level }}</td>
+                        </tr>
+                    {% if profile.locations|length >0 %}
+                        <tr>
+                            <th>Location(s)</th><td>{{ profile.locations|join(' / ') }}</td>
+                        </tr>
+                    {% endif %}
+                        <tr>
+                            <th>Description</th><td>{{ profile.description|raw }}</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         {% endfor %}                    
 

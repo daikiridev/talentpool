@@ -64,14 +64,14 @@
             <tr>
                 <th><i class="icon icon-unchecked checkall"></i></th>
                 <th>&nbsp;</th>
-                <th>Cdte</th>
+                <th>Cdte / init. score</th>
                 <th>Curr. Pos.</th>
-                <th>Nationality</th>
+                <th>Passport country</th>
                 <th>Mobility</th>
                 <th>Target functions</th>
-                <th>Talent pools</th>
+                <th>Talent pools / avg score</th>
                 <th>Tags</th>
-                <th>Date</th>
+                <th>Entry date</th>
                 <th width="110">Actions</th>
             </tr>
         </thead>
@@ -111,11 +111,12 @@
                             {% endif %}
                         </td>
                         <td>
+                            {{ not anonymous?entity.firstName:'anonymous' }} {{ not anonymous?entity.lastName }} {{ not anonymous?entity.middleName }}<br>
                             <span data-toggle="popover" data-placement="top" data-delay='{ "show": 500, "hide": 200 }' data-html="true" style="cursor:help"
                                  data-content="{{ entity.globalComment }}" data-trigger='hover'>
                                 <small title="entry score">{{ entity.globalScore|stars }}</small>
                             </span>
-                        {{ not anonymous?entity.firstName:'anonymous' }} {{ not anonymous?entity.lastName }} {{ not anonymous?entity.middleName }}</td>
+                        </td>
                         {#
                         <td>{% if entity.dateOfBirth %}{{ entity.dateOfBirth|date('Y-m-d H:i:s') }}{% endif %}</td>
                         #}
@@ -143,7 +144,7 @@
                                 {% for tp in entity.talentpools %}
                                     {% set visible_tp = is_granted("ROLE_TEW_OBJECT_VIEW", tp) or is_granted('ROLE_STD_EXECUTOR') %}
                                     {% if visible_tp %}
-                                        <span class='tag'>{{ tp }} {{ entity.averageScore(tp)|stars }}</span>
+                                        <span class='tag'>{{ tp }} {{ entity.averageScore(tp)>0?entity.comments|commentsByTalentpool(tp)|commentsAverageScoreStars }}</span>
                                     {% endif %}
                                 {% endfor %}
                             </small>

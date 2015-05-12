@@ -55,8 +55,8 @@ class CheckCandidatesType extends AbstractType
         }
         $builder
             ->add('selectactions', 'choice', array(
-                'empty_value' => 'Select an action',
-                'choices' => array('compare' => 'Show selected candidates'),
+                'empty_value' => 'Pick an action on checked candidates',
+                'choices' => array('compare' => 'Show checked candidates'),
                 'attr' => array('class' => 'form-control'),
             ))
             ->add('submit', 'submit', array(

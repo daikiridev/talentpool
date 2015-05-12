@@ -77,6 +77,7 @@ class CandidateType extends AbstractType
                 'required' => false,
             ))
             ->add('nationality1', 'country', array(
+                'label' => 'Passport country',
                 'attr' => array('class' => 'select2')
             ))
             ->add('nationality2', 'country', array(

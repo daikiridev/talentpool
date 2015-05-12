@@ -8,7 +8,7 @@
     </h1>
 {% else %}
     <h1>
-        Candidate {{ anonymous?' <small>(anonymous)</small>'}}
+        {{ anonymous?'Candidate':entity }}
         {% if entity.picture %}
             <div class="mag pull-right">
                 <img height="100" data-toggle="magnify" src="{% path entity.picture, 'big' %}" alt="{{ entity.picture is null?'':entity.picture.name }}">
@@ -58,10 +58,10 @@
                         <tr>
                             <th>Name</th>
                             <td>
-                                {{ entity.gender|gender }}
-                                {{ ((not anonymous)?entity.firstName:'<em><a style="cursor:pointer" data-toggle="modal" data-target="#myModal'~entity.id~'">hidden</a></em>')|raw }}
+                                {{ (not anonymous)?entity.gender|gender }}
+                                {{ ((not anonymous)?entity.firstName:'<a style="cursor:pointer" data-toggle="modal" data-target="#myModal'~entity.id~'">X.</a>')|raw }}
                                 {{ ((not anonymous) and entity.middleName)?entity.middleName }}
-                                {{ (not anonymous)?entity.lastName }}
+                                {{ entity.lastName }}
                                 {% if entity.dateOfBirth %} / date of birth:
                                     {{ anonymous?entity.dateOfBirth|date('Y'):entity.dateOfBirth|date('d M Y') }} ({{ entity.age }} yrs old)
                                 {% endif %}
@@ -104,7 +104,7 @@
                             </tr>
                         {% endif %}
                         <tr>
-                            <th>Nationality</th>
+                            <th>Passport country</th>
                             <td>{{ entity.nationality1|country }} {{ entity.nationality2|country }}</td>
                         </tr>
                         {% if entity.mobilities %}
@@ -196,10 +196,10 @@
                                     {% set tpcomments = entity.comments|commentsByTalentpool(tp) %}
                                     <tr>
                                         <td colspan="4">
-                                            <strong>{{ tp }} {{ tpcomments|commentsAverageScore|stars }}</strong>
+                                            <strong>{{ tp }} {{ tpcomments|commentsAverageScoreStars }}</strong>
                                         </td>
                                         <td rowspan="{{tp.profiles|length+1}}">
-                                            {% for comment in tpcomments %}
+                                            {% for comment in tpcomments|slice(1, 5) %}
                                                 <span 
                                                     data-toggle="popover" data-delay='{ "show": 500, "hide": 200 }' data-html="true" style="cursor:help" data-trigger='hover' data-placement="top"
                                                     data-content="{{ comment.comment }}" data-title="{{ comment }}<br><em>- by {{ comment.author }}, on {{ comment.date|date('d M Y') }}</em>">
@@ -220,8 +220,8 @@
                                             <td>{{ ('<i class="icon icon-ok" style="color:green"></i> '~(prof.function?prof.function:'all'))|raw}}</td>
                                             <td>{{ ('<i class="icon icon-ok" style="color:green"></i> '~(prof.level?prof.level:'all'))|raw}}</td>
                                             {% else %}
-                                                <td>{{ ((prof.function==entity.function or not prof.function)?'<i class="icon icon-ok" style="color:green"></i> '~(prof.function?prof.function:entity.function):'<i class="icon icon-remove" style="color:lightcoral"></i> '~(prof.function?prof.function:entity.function))|raw}}</td>
-                                                <td>{{ ((prof.level==entity.level or not prof.level)?'<i class="icon icon-ok" style="color:green"></i> '~(prof.level?prof.level:entity.level):'<i class="icon icon-remove" style="color:lightcoral"></i> '~(prof.level?prof.level:entity.level))|raw}}</td>
+                                            <td>{{ ((prof.function==entity.function or not prof.function)?'<i class="icon icon-ok" style="color:green"></i> '~(prof.function?prof.function:entity.function):'<i class="icon icon-remove" style="color:lightcoral"></i> '~(prof.function?prof.function:entity.function))|raw}}</td>
+                                            <td>{{ ((prof.level==entity.level or not prof.level)?'<i class="icon icon-ok" style="color:green"></i> '~(prof.level?prof.level:entity.level):'<i class="icon icon-remove" style="color:lightcoral"></i> '~(prof.level?prof.level:entity.level))|raw}}</td>
                                             {% endif %}
                                                 <td>N/C</td>
                                         </tr>

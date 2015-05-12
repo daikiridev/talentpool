@@ -51,6 +51,7 @@ class TEWExtension extends \Twig_Extension
             new \Twig_SimpleFilter('status', array($this, 'statusFilter'), array('is_safe' => array('html'))),
             new \Twig_SimpleFilter('commentsByTalentpool', array($this, 'commentsByTalentpoolFilter')),
             new \Twig_SimpleFilter('commentsAverageScore', array($this, 'commentsAverageScoreFilter')),
+            new \Twig_SimpleFilter('commentsAverageScoreStars', array($this, 'commentsAverageScoreStarsFilter'), array('is_safe' => array('html'))),
         );
     }
 
@@ -130,6 +131,11 @@ class TEWExtension extends \Twig_Extension
             $result += $comment->getScore();
         }
         return $result/($i==0?1:$i);
+    }
+    
+    public function commentsAverageScoreStarsFilter(ArrayCollection $comments)
+    {
+        return $this->starsFilter($this->commentsAverageScoreFilter($comments)).' ('.$comments->count().')';
     }
     
     public function getName()
