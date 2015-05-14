@@ -23,17 +23,35 @@ class CdteCommentType extends AbstractType
                 'label' => 'Candidate overview',
             ))
             ->add('talentpool', 'entity', array(
-                'required' => true,
-                'label' => 'Target talentpool',
                 'class' => 'TEWTPBundle:TalentPool',
-                'attr' => array('class' => 'select2 form-control'),
-                //'empty_value' => 'All',
-                'multiple' => false, 'expanded' => false,
+                'label' => false,
+                'required' => false,
+                'attr' => array('style' => 'display:none')
             ))
+            ->add('candidate', 'entity', array(
+                'class' => 'TEWTPBundle:Candidate',
+                'label' => false,
+                'required' => false,
+                'attr' => array('style' => 'display:none')
+            ))
+            ->add('author', 'entity', array(
+                'class' => 'TEWUserBundle:User',
+                'label' => false,
+                'required' => false,
+                'attr' => array('style' => 'display:none')
+            ))
+//            ->add('talentpool', 'entity', array(
+//                'required' => true,
+//                'label' => 'Target talentpool',
+//                'class' => 'TEWTPBundle:TalentPool',
+//                'attr' => array('class' => 'select2 form-control'),
+//                //'empty_value' => 'All',
+//                'multiple' => false, 'expanded' => false,
+//            ))
             ->add('score', 'choice', array(
                 'choices' => range(0,5),
-                'empty_value'=> '',
-                //'expanded' => true, 'multiple' => false, // radio button : memory error!!!
+                //'empty_value'=> '',
+                'expanded' => true, 'multiple' => false, // radio button : memory error!!!
                 'attr' => array('class' => 'form-control'),
             ))
             //->add('comment', 'ckeditor', array('config_name' => 'user_config'))

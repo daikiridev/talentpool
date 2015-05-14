@@ -27,3 +27,14 @@ tew_json_allcandidatetags:
   pattern: /tags/allcandidate
   defaults: { _controller: TEWTPBundle:Tagging:jsonFindCandidateTags }
   requirements: { _method: get }
+  
+# Cdte - add comment
+tew_json_cdtecomment_add:
+  pattern: /cdteaddcomment
+  defaults: { _controller: TEWTPBundle:CdteComment:jsonCdteCommentAdd }
+  requirements: { _method: post }    
+# Tag management
+tew_json_allcandidatetags:
+  pattern: /tags/allcandidate
+  defaults: { _controller: TEWTPBundle:Tagging:jsonFindCandidateTags }
+  requirements: { _method: get }

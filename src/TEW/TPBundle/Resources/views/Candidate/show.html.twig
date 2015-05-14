@@ -13,8 +13,8 @@
             $('[data-toggle="popover"]').popover()
         })
     </script>
-    {#{ include('TEWTPBundle:Candidate:common/cdtedetails_request_script.js.twig', {'entity': entity} ) }#}
     {{ include('TEWTPBundle:Candidate:common/cdtedetails_request_script.js.twig') }}
+    {{ include('TEWTPBundle:Candidate:common/cdte_add_comment_script.js.twig') }}
 {% endblock %}
 
 {% block body -%}

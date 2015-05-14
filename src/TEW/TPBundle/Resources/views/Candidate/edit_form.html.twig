@@ -262,16 +262,18 @@
                                 {{ form_widget(this_form.targetFunction3) }}{{ form_widget(this_form.targetLevel3) }}
                             </div>
                         </div>
+                        {#
                         <div class="row"><br></div>
                         <div class="row">
                             <div class="col-lg-12">
                                 {{ form_label(this_form.comments) }}
                                 <div id="candidate_comments_new" class="form-collection" data-prototype="{{ form_widget(this_form.comments.vars.prototype)|e }}"></div>
-                                <div style="display: none"> {# older comments are hidden #}
+                                <div style="display: none"> <!-- older comments are hidden -->
                                     {{ form_row(this_form.comments) }}
                                 </div>
                             </div>
                         </div>
+                        #}
                     </fieldset>
                 </div>
             </div>

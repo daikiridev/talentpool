@@ -657,28 +657,6 @@ class Candidate implements Taggable
         return $this->resume;
     }
     
-    /**
-     * Set origin
-     *
-     * @param string $origin
-     * @return Candidate
-     */
-    public function setOrigin($origin = null)
-    {
-        $this->origin = $origin;
-
-        return $this;
-    }
-
-    /**
-     * Get origin
-     *
-     * @return string 
-     */
-    public function getOrigin()
-    {
-        return $this->origin;
-    }
 
     /**
      * Set income

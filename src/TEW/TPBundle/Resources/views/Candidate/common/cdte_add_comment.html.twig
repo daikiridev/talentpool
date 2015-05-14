@@ -1,0 +1,37 @@
+{#
+ # Params: cdte, tp, user
+ #}
+        <div class="modal fade" id="addCommentModal{{tp.id}}" data-talentpool="{{tp.id}}" tabindex="-1" aria-labelledby="addCommentModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Add user comment for talentpool {{tp}}</h4>
+                    </div>
+                    {#{ form_start(mail_form)}#}
+                    {{ form_start(this_form)}}
+                    <div class="modal-body">
+                        {{ form_row(this_form.title) }}
+                        {{ form_row(this_form.score) }}
+                        {{ form_row(this_form.comment) }}
+                        {#
+                        <form id="addcomment_form{{tp.id}}" action="{{ path() }}" method="POST">
+                            <input type="hidden" id="addcomment_form_tp_id" value="{{tp.id}}">
+                            <input type="hidden" id="addcomment_form_cdte_id" value="{{cdte.id}}">
+                            <input type="hidden" id="addcomment_form_user_id" value="{{user.id}}">
+                            <input type="text" id="addcomment_form_title" placeholder="title">
+                            <input type="text" id="addcomment_form_score" placeholder="score"><br><br>
+                            <textarea id="addcomment_form_comment" cols="80" placeholder="comment"></textarea>
+                        </form>
+                        #}
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-warning addcommentrequest" role="submit">Submit</button>
+                    </div>
+                    {{ form_end(this_form)}}
+                    
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->   
+        </div><!-- /.modal -->

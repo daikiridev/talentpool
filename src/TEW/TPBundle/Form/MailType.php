@@ -31,11 +31,6 @@ class MailType extends AbstractType
         $resolver->setDefaults(array(
         ));
     }
-
-//    public function getParent()
-//    {
-//        return 'collection';
-//    }
     
     /**
      * @return string

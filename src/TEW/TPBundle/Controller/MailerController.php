@@ -50,7 +50,7 @@ class MailerController extends Controller
                     $cdteOp = new CdteOperation($user);
                     $cdteOp->setCandidate($cdteRepository->find($mail_post['candidate_details_request']))
                         ->setStatus(CdteOperation::STATUS_ANONYMOUS_DETAILS)
-                        ->setType(CdteOperation::TYPE_USER)
+                        ->setType(CdteOperation::TYPE_REQUEST)
                         ->setRole(implode(', ', $user->getRoles()));
                     $em->persist($cdteOp);
                     $em->flush();

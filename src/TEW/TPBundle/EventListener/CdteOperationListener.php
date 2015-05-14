@@ -45,17 +45,23 @@ class CdteOperationListener
             // we then send an email to all users belonging to the candidate's owner
             $userList = $this->container->get('doctrine')->getRepository('TEWUserBundle:User')->findBy(array('company' => $entity->getOwningcompany()));
             $destList = array_map(function($user) {
-                return $user->getEmail();
-            } , $userList);
-            
-            $content = "Please visit ".$this->container->get('router')->generate('tew_candidate_show', array('id' => $entity->getId()))." for details";
+                    return $user->getEmail();
+                } , $userList);
             
             $securityContext = $this->container->get('security.context');
             $user = $securityContext->getToken()->getUser();
             
+            $context = $this->container->get('router')->getContext();
+            $url = $context->getScheme().'://';
+            $url .= $context->getHost().':';
+            $url .= $context->getScheme()==='https'?$context->getHttpsPort():$context->getHttpPort() ;
+            $url .= $this->container->get('router')->generate('tew_candidate_show', array('id' => $entity->getId()));
+            $content = "Please visit $url for details\n\n";
+            $content.= "Candidate created by ".$user->getUsername()." (".$user->getCompany().") on ".$entity->getCreatedAt()->format('Y-m-d H:i:s');
+            
             try {
                 $message = \Swift_Message::newInstance()
-                    ->setSubject("[TEW / Candidate] newly created: $entity ".$entity->getFunction().' '.$entity->getLevel())
+                    ->setSubject("[TEW / Cdte] newly created: $entity ".$entity->getFunction().' '.$entity->getLevel())
                     ->setFrom($user->getEmail())
                     ->setTo($destList)
                     ->setBody($content)

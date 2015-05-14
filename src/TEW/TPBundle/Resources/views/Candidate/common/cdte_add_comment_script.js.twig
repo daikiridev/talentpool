@@ -1,0 +1,49 @@
+<script>
+    $(document).ready(function () {
+        $('.addcommentrequest').click(function (event) {
+            event.preventDefault();
+            footer_div = $(this).parent('.modal-footer');
+            form = footer_div.parent('form');
+            content_div = form.children('.modal-body');
+            modal = form.parents('.modal');
+            tp_id = modal.attr('data-talentpool');
+            comments_div = $('#comments'+tp_id); // in view.html.twig
+            console.log('Posting to: ' + form.attr('action'));
+            $.ajax({
+                type: 'post',
+                url: form.attr('action'),
+                dataType: "json",
+                data: form.serialize()
+            })
+            .done(function (data) {
+                console.log(data);
+                if (data.error > 0) {
+                    alert(data.message);
+                } else {
+                    comment = '<span data-title="'+data.data.title+'<br><em>- by '+data.data.author+' on '+
+                            data.data.date+'</em>" data-content="'+data.data.comment+
+                            '" data-placement="top" data-trigger="hover" style="cursor:help" data-html="true" data-delay="{ "show": 500, "hide": 200 }" data-toggle="popover" data-original-title="" title="">'+
+                            '<small>'+data.data.stars+'<em>'+data.data.date+'</em></small></span><br>';
+                    // comments_div.children('span:first').before(comment);
+                    comments_div.prepend(comment);
+                    $('[data-toggle="popover"]').popover();                    
+                }
+                content = data.message;
+                
+            })
+            .fail(function (jqXHR, textStatus, error) {
+                alert("Communication issue (" + textStatus + ": " + error + ")");
+            })
+            .always(function () {
+                console.log("ajax request succeeded");
+            })
+            .then(function () {
+                footer_div.hide();
+                content_div.html(content);
+                setTimeout(function () {
+                    modal.modal('hide');
+                }, 2000);
+            });
+        });
+    });
+</script>

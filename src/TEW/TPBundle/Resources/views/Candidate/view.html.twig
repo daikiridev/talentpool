@@ -190,26 +190,30 @@
                             </tr>
                         </thead>
                         <tbody>
+                            {% set visible_tps = [] %}
                             {% for tp in entity.talentpools %}
                                 {% set visible_tp = is_granted('ROLE_MASTER_EXECUTOR') or is_granted('ROLE_TEW_OBJECT_VIEW', tp) %}
                                 {% if visible_tp %}
                                     {% set tpcomments = entity.comments|commentsByTalentpool(tp) %}
+                                    {% set visible_tps = visible_tps|merge([tp])%}
                                     <tr>
                                         <td colspan="4">
                                             <strong>{{ tp }}</strong> {{ tpcomments|commentsAverageScoreStars }}
                                         </td>
-                                        <td rowspan="{{tp.profiles|length+1}}">
+                                        <td rowspan="{{tp.profiles|length+1}}" id='comments{{tp.id}}'>
                                             {% for comment in tpcomments|slice(0, 5) %}
-                                                <span 
+                                                <span
                                                     data-toggle="popover" data-delay='{ "show": 500, "hide": 200 }' data-html="true" style="cursor:help" data-trigger='hover' data-placement="top"
                                                     data-content="{{ comment.comment }}" data-title="{{ comment }}<br><em>- by {{ comment.author }}, on {{ comment.date|date('d M Y') }}</em>">
                                                     <small>{{ comment.score|stars }} <em>{{ comment.date|date('d M Y') }}</em></small>
                                                 </span><br>
                                             {% endfor %}
                                         </td>
+                                        {% if not anonymous and addcomment_forms is defined %}
                                         <td style="vertical-align: middle" rowspan="{{tp.profiles|length+1}}">
-                                            <button class="btn btn-xs btn-warning">add</button>
+                                            <button class="btn btn-xs btn-warning" data-toggle="modal" data-target="#addCommentModal{{tp.id}}">add</button>
                                         </td>
+                                        {% endif %}
                                     </tr>
                                     {% for prof in tp.profiles %}
                                         <tr>
@@ -233,7 +237,11 @@
 
                         </tbody>
                     </table>
+                    {% for tp in visible_tps %}
+                        {{ addcomment_forms is defined?include('TEWTPBundle:Candidate:common/cdte_add_comment.html.twig', {'this_form':addcomment_forms[tp.id] ,'cdte': entity, 'tp': tp, 'user': app.user} ) }}
+                    {% endfor %}
                 </div>
+                                
             </div>
         </div>
 

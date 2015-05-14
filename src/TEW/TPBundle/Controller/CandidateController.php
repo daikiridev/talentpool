@@ -284,7 +284,7 @@ class CandidateController extends Controller {
                     'entities' => $entities,
                     'delete_forms' => $deleteForms,
                     'mail_forms' => $mailForms,
-        ));
+            ));
         } else {
             return $this->redirect($this->generateUrl('tew_candidate'));
         }
@@ -421,9 +421,26 @@ class CandidateController extends Controller {
         $deleteAccess = $this->get('security.context')->isGranted('ROLE_TEW_OBJECT_DELETE', $entity) ||
                         $this->get('security.context')->isGranted('ROLE_MASTER_EXECUTOR');
         $deleteFormView = $deleteAccess?$this->createDeleteForm($id)->createView():null;
-
-        // Adding Intl
-        //$this->get('twig')->addExtension(new Twig_Extensions_Extension_Intl());
+        
+        $fullview = $this->get('security.context')->isGranted('ROLE_PARTNER_STD_EXECUTOR') ||
+                $this->get('security.context')->isGranted('ROLE_TEW_OBJECT_VIEW', $entity);
+        $anonymous = (!$fullview) && $this->get('security.context')->isGranted('ROLE_TEW_OBJECT_ANONYMOUS_VIEW', $entity);
+        
+        // we build the 'add comment' form for each visible talentpool
+        foreach ($entity->getTalentpools() as $tp) {
+            if ($this->get('security.context')->isGranted('ROLE_MASTER_EXECUTOR') ||
+                    $this->get('security.context')->isGranted('ROLE_TEW_OBJECT_VIEW', $tp)) {
+                $comment = new \TEW\TPBundle\Entity\CdteComment($this->getUser());
+                $comment->setTalentpool($tp);
+                $comment->setCandidate($entity);
+//                $addcommentForms[$tp->getId()] = \TEW\TPBundle\Controller\CdteCommentController::createCdteCommentForm($comment);
+                $addcommentForms[$tp->getId()] = $this->createForm(new \TEW\TPBundle\Form\CdteCommentType, $comment, array(
+                    'action' => $this->generateUrl('tew_json_cdtecomment_add'),
+                    'method' => 'POST'
+                    )
+                    )->createView();
+            }
+        }
         // Adding tagging stuff - see https://github.com/FabienPennequin/FPNTagBundle
         $tagManager = $this->get('fpn_tag.tag_manager');
         $tagManager->loadTagging($entity);
@@ -443,6 +460,7 @@ class CandidateController extends Controller {
 //            'languages' => $languageRep->findAllLanguages(),
                     'delete_form' => $deleteFormView,
                     'mail_form' => $mailForm->createView(),
+                    'addcomment_forms' => $addcommentForms
         ));
     }
     

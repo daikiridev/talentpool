@@ -21,6 +21,7 @@ class CdteOperation
     const TYPE_USER = 'user';
     const TYPE_SYSTEM = 'system';
     const TYPE_AUTO = 'auto';
+    const TYPE_REQUEST = 'request';
     
     /**
      * @var id
@@ -129,7 +130,7 @@ class CdteOperation
      */
     public function getName()
     {
-        return "[".$this->type."] Candidate ".$this->status." (by ".$this->getUser()->getFullname().")";
+        return "[".$this->type."] Candidate ".$this->status." (by ".$this->user->getUsername().")";
     }
 
     /**

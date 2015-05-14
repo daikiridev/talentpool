@@ -287,15 +287,16 @@ class CandidateType extends AbstractType
                 'context'  => 'candidate',
                 'attr' => array('class' => 'span16') // doesn't work
             ))
-            ->add('comments', 'modalcollection', array(
-                'label' => 'User comments',
-                'attr' => array('class' => 'form-collection'), // in order to handle jquery functions of tew.candidate.edit.js
-                'type' => new CdteCommentType(),
-                'required' => false,
-                'allow_add' => true, // allows to add as many comments as we want
-                'allow_delete' => false,
-                'by_reference' => false, // 'false' forces setComments() to be called
-            ))
+                    
+//            ->add('comments', 'modalcollection', array(
+//                'label' => 'User comments',
+//                'attr' => array('class' => 'form-collection'), // in order to handle jquery functions of tew.candidate.edit.js
+//                'type' => new CdteCommentType(),
+//                'required' => false,
+//                'allow_add' => true, // allows to add as many comments as we want
+//                'allow_delete' => false,
+//                'by_reference' => false, // 'false' forces setComments() to be called
+//            ))
             ;
         $builder->get('picture')
                 ->add('binaryContent', 'file', ['label' => false,])
