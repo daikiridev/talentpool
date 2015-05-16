@@ -17,6 +17,7 @@ class CdteOperation
     const STATUS_EDIT = 'edit';
     const STATUS_VIEW = 'view';
     const STATUS_DELETE = 'delete';
+    const STATUS_COMMENT = 'comment';
     
     const TYPE_USER = 'user';
     const TYPE_SYSTEM = 'system';
@@ -141,7 +142,7 @@ class CdteOperation
      */
     public function setStatus($status)
     {
-        if (!in_array($status, array(self::STATUS_ANONYMOUS_DETAILS, self::STATUS_CREATE, self::STATUS_EDIT, self::STATUS_VIEW, self::STATUS_DELETE))) {
+        if (!in_array($status, array(self::STATUS_ANONYMOUS_DETAILS, self::STATUS_CREATE, self::STATUS_EDIT, self::STATUS_VIEW, self::STATUS_DELETE, self::STATUS_COMMENT))) {
             throw new \InvalidArgumentException("Invalid status for candidate operation: $status");
         }
         $this->status = $status;
@@ -237,7 +238,7 @@ class CdteOperation
      */
     public function setType($type)
     {
-        if (!in_array($type, array(self::TYPE_USER, self::TYPE_SYSTEM, self::TYPE_AUTO))) {
+        if (!in_array($type, array(self::TYPE_USER, self::TYPE_SYSTEM, self::TYPE_AUTO, self::TYPE_REQUEST))) {
             throw new \InvalidArgumentException("Invalid type for candidate operation: $type");
         }
         $this->type = $type;

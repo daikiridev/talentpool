@@ -6,19 +6,19 @@ tew_json_findzone:
 
 # Level search
 tew_json_findlevel:
-  pattern: /levels
+  pattern: /public/levels
   defaults: { _controller: TEWTPBundle:CdteLevel:jsonFindAllLevel}
   requirements: { _method: get }
   
 # Function search
 tew_json_findfunction:
-  pattern: /functions
+  pattern: /public/functions
   defaults: { _controller: TEWTPBundle:CdteFunction:jsonFindAllFunction}
   requirements: { _method: get }
 
 # Candidate search
 tew_json_anoncandidates:
-  pattern: /anoncdtes
+  pattern: /public/anoncdtes
   defaults: { _controller: TEWTPBundle:Candidate:jsonCdteAnonSearch }
   requirements: { _method: get|post }
 

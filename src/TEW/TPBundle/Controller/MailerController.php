@@ -5,10 +5,8 @@ namespace TEW\TPBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
-use TEW\TPBundle\Entity\Mail;
 use TEW\TPBundle\Entity\CdteOperation;
-use TEW\TPBundle\Entity\CandidateRepository;
+
 //use TEW\TPBundle\Form\MailerType;
 
 /**

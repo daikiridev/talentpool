@@ -9,7 +9,7 @@ security:
             
     firewalls:
         dev:
-            pattern:  ^/(_(profiler|wdt)|css|images|js|tew_ajax)/
+            pattern:  ^/(_(profiler|wdt)|css|images|js|tew_ajax\/public)/
             security: false
             
         login:

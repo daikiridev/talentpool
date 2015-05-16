@@ -6,6 +6,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use TEW\TPBundle\Entity\Candidate;
+use TEW\TPBundle\Entity\CdteComment;
 use TEW\TPBundle\Entity\CdteOperation;
 
 class CdteOperationListener
@@ -18,6 +19,7 @@ class CdteOperationListener
     }
     
     public function storeCdteOperation($em, $cdte, $status){
+        // WARNING: when launching any operation as a webservice, the security context is lost!
         $securityContext = $this->container->get('security.context');
         $user = $securityContext->getToken()->getUser();
         $cdteOp = new CdteOperation($user);
@@ -27,7 +29,7 @@ class CdteOperationListener
         if ('root' === $user->getFullName()) {
             $cdteOp->setType(CdteOperation::TYPE_SYSTEM);
         }
-        if (CdteOperation::STATUS_ANONYMOUS_DETAILS === $status) {
+        if (CdteOperation::STATUS_ANONYMOUS_DETAILS === $status || CdteOperation::STATUS_COMMENT === $status) {
             $cdteOp->setType(CdteOperation::TYPE_USER);
         }
         $em->persist($cdteOp);
@@ -72,6 +74,9 @@ class CdteOperationListener
             } catch(\Swift_TransportException $e) {
                 echo "Error while trying to send an informative email to ".  implode(' / ', $destList), $e->getMessage(), "<br>";
             }
+        } elseif ($entity instanceof CdteComment) {
+            // we store the operation for statistics purposes
+            $this->storeCdteOperation($em, $entity->getCandidate(), CdteOperation::STATUS_COMMENT);
         }
     }
     
