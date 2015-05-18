@@ -76,8 +76,19 @@
                         </tr>
                         <tr>
                             <th>Income</th>
-                            <td>
-                                {{ entity.income is not null and entity.income != 0?(('Base salary ' ~ entity.income|localizedcurrency(entity.currency)) ~ ' <em>(currency convertion to be implemented)</em>')|raw }}
+                            <td class="incomedata">
+                                <div class="curr_ori" style="display:none">{{entity.currency?entity.currency:'USD'}}</div>
+                                <div class="income_ori" style="display:none">{{entity.income?entity.income:0}}</div>
+                                Base salary&nbsp;
+                                <select class="currency">
+                                    <option value="EUR">Euros</option>
+                                    <option value="USD">US Dollars</option>
+                                    <option selected value="{{entity.currency?entity.currency:'USD'}}">{{entity.currency?entity.currency:'USD'}}</option>
+                                </select>
+                                <span class="income">
+                                    {{  (entity.income and (entity.income!=0))?entity.income:"0"}}
+                                </span>
+
                                 {#{ entity.incomeMonths?' on '~ entity.incomeMonths ~ 'months'}#}
                                 {{ entity.bonusbenefits?'. Bonus & details: '~entity.bonusbenefits }}
                             </td>

@@ -47,3 +47,53 @@
         });
     });
 </script>
+
+<!-- Currency conversion -->
+<script type="text/javascript" src="http://currencyconverter.55uk.net/currency_converter_json.js"></script>
+<script type="text/javascript">
+function getMyRate(jData) {
+        if (jData == null) {
+                alert("There was a problem parsing search results.");
+                return;
+        }
+        var myval = jData.ResultSet;
+        $('.income').html($(myval).html());
+}
+
+function thisRate(xvalue,xfrom,xto) {
+	if (xvalue > 0) {
+		request = 'http://currencyconverter.55uk.net/currencyxml.json.php?xfrom='+xfrom+'&xto='+xto+'&xvalue='+xvalue+'&xround=true&callback=getMyRate&mydiv=xxdiv13123';
+		aObj = new JSONscriptRequest(request);
+                aObj.buildScriptTag();
+		aObj.addScriptTag();
+	}
+}
+</script>
+	
+
+<script>
+    $('.currency').change(function(){
+        incomedata = $(this).parents('.incomedata');
+        income = incomedata.children('.income');
+        currency = $(this).val();
+        curr_ori = incomedata.children('.curr_ori').html();
+        income_ori = incomedata.children('.income_ori').html();
+        /*
+        $.ajax({
+                type: 'get',
+                //url: 'http://www.google.com/ig/calculator?hl=en&q=1'+curr_ori+'=?'+currency,
+                //url: 'http://www.webservicex.net/currencyconvertor.asmx/ConversionRate?FromCurrency='+curr_ori+'&ToCurrency='+currency,
+                url: 'http://currencyconverter.55uk.net/currencyxml.json.php?xfrom='+curr_ori+'&xto='+currency+'&xvalue='+income,
+                dataType: "jsonp",
+                crossDomain: true,
+            })
+            .done(function (data) {
+                console.log(data);
+            }).fail(function (jqXHR, textStatus, error) {
+                alert("Communication issue (" + textStatus + ": " + error + ")");
+            });
+        */
+       income.html("<img src='{{asset('bundles/tewtp/images/icons/ajax-loader.gif')}}'>");
+       thisRate(income_ori,curr_ori,currency);
+    });
+</script>
