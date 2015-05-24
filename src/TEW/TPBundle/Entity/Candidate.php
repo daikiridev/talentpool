@@ -22,7 +22,7 @@ use Locale;
  * 
  * @ORM\Table(name="tew_candidate")
  * @ORM\Entity(repositoryClass="TEW\TPBundle\Entity\CandidateRepository")
- * @UniqueEntity(fields="email", message="Email already taken")
+ * // @UniqueEntity(fields="email", message="Email already taken")
  */
 class Candidate implements Taggable
 {
@@ -75,7 +75,7 @@ class Candidate implements Taggable
     /**
      * @var string
      *
-     * @ORM\Column(name="nationality1", type="string", length=31, nullable=false)
+     * @ORM\Column(name="nationality1", type="string", length=31, nullable=true)
      */
     private $nationality1;
     
@@ -89,11 +89,17 @@ class Candidate implements Taggable
     /**
      * @var string
      *
-     * @ORM\Column(name="email", type="string", length=127)
-     * @Assert\Email()
+     * @ORM\Column(name="email1", type="string", length=127, nullable=true)
+     * // @Assert\Email()
      */
+    private $email1;
     
-    private $email;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="email2", type="string", length=127, nullable=true)
+     */
+    private $email2;
 
     /**
      * @var string
@@ -549,7 +555,7 @@ class Candidate implements Taggable
      */
     public function setEmail($email)
     {
-        $this->email = $email;
+        $this->email1 = $email;
 
         return $this;
     }
@@ -561,7 +567,7 @@ class Candidate implements Taggable
      */
     public function getEmail()
     {
-        return $this->email;
+        return $this->email1;
     }
 
     /**
@@ -1482,5 +1488,51 @@ class Candidate implements Taggable
     public function getAnonymousResume()
     {
         return $this->anonymousResume;
+    }
+
+    /**
+     * Set email1
+     *
+     * @param string $email1
+     * @return Candidate
+     */
+    public function setEmail1($email1)
+    {
+        $this->email1 = $email1;
+
+        return $this;
+    }
+
+    /**
+     * Get email1
+     *
+     * @return string 
+     */
+    public function getEmail1()
+    {
+        return $this->email1;
+    }
+
+    /**
+     * Set email2
+     *
+     * @param string $email2
+     * @return Candidate
+     */
+    public function setEmail2($email2)
+    {
+        $this->email2 = $email2;
+
+        return $this;
+    }
+
+    /**
+     * Get email2
+     *
+     * @return string 
+     */
+    public function getEmail2()
+    {
+        return $this->email2;
     }
 }

@@ -46,6 +46,8 @@ class MenuBuilder
                     ->setAttribute('icon', 'icon-eye-open');
             $menu['Candidates']->addChild('List', array('route' => 'tew_candidate'))
                     ->setAttribute('icon', 'icon-list');
+            $menu['Candidates']->addChild('Entry pool', array('route' => 'tew_candidate_sas'))
+                    ->setAttribute('icon', 'icon-signin');
             $menu['Candidates']->addChild('Add', array('route' => 'tew_candidate_new'))
                     ->setAttribute('icon', 'icon-plus-sign-alt');
         }

@@ -118,3 +118,7 @@ fieldset:hover {
 legend {
     color: darkblue;
 }
+
+label.required {
+    color: red;
+}

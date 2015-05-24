@@ -59,6 +59,18 @@ class CandidateController extends Controller {
         } 
     }
     
+/**
+     * Lists all Candidate entities without talentpools .
+     *
+     */
+    public function sasIndexAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $qb = $em->getRepository('TEWTPBundle:Candidate')->createQueryBuilder('c');
+        $qb->leftJoin('c.talentpools', 't')
+            ->where('t.id IS NULL');
+        $entities = $qb->getQuery()->getResult();
+        return $this->indexAction($request, $entities);   
+    }
     /**
      * Search form on candidates
      *
@@ -296,6 +308,7 @@ class CandidateController extends Controller {
      */
     public function createAction(Request $request) {
         $entity = new Candidate($this->getUser());
+        $entity->setOwningcompany($this->getUser()->getCompany());
         $form = $this->createCreateForm($entity);
 
         // Adding tagging stuff - see https://github.com/FabienPennequin/FPNTagBundle
@@ -427,6 +440,7 @@ class CandidateController extends Controller {
         $anonymous = (!$fullview) && $this->get('security.context')->isGranted('ROLE_TEW_OBJECT_ANONYMOUS_VIEW', $entity);
         
         // we build the 'add comment' form for each visible talentpool
+        $addcommentForms = array();
         foreach ($entity->getTalentpools() as $tp) {
             if ($this->get('security.context')->isGranted('ROLE_MASTER_EXECUTOR') ||
                     $this->get('security.context')->isGranted('ROLE_TEW_OBJECT_VIEW', $tp)) {

@@ -134,7 +134,7 @@
                             {% if not anonymous %}
                                 <tr>
                                     <th>Contact</th>
-                                    <td>{{ entity.email|mail }} {{ entity.phone1?' / phone1: '~entity.phone1 }} {{ entity.phone2?' / phone2: '~entity.phone2 }}</td>
+                                    <td>{{ entity.email1?entity.email1|mail }} {{ entity.email2?entity.email2|mail }} {{ entity.phone1?' / phone1: '~entity.phone1 }} {{ entity.phone2?' / phone2: '~entity.phone2 }}</td>
                                 </tr>
                                 <tr>
                                     <th>Addresses</th>

@@ -77,18 +77,26 @@ class CandidateType extends AbstractType
                 'required' => false,
             ))
             ->add('nationality1', 'country', array(
+                'required' => false,
                 'label' => 'Passport country',
-                'attr' => array('class' => 'select2')
+                'label_attr' => array('style' => 'color: green'),
+                'attr' => array('class' => 'select2'),
             ))
             ->add('nationality2', 'country', array(
                'required' => false,
                 'attr' => array('class' => 'select2')
             ))
-            ->add('email', 'email',  array(
-                'attr' => array('placeholder'=>'Email', 'class' => 'form-control')
+            ->add('email1', 'email',  array(
+                'required' => false,
+                'label_attr' => array('style' => 'color: green'),
+                'attr' => array('placeholder'=>'Email1', 'class' => 'form-control')
+            ))
+            ->add('email2', 'email',  array(
+                'required' => false,
+                'attr' => array('placeholder'=>'Email2', 'class' => 'form-control')
             ))
             ->add('phone1', 'text', array(
-                'required' => false,
+                'required' => true,
                 'attr' => array('placeholder'=>'Phone1', 'class' => 'form-control')
             ))
             ->add('phone2', 'text', array(

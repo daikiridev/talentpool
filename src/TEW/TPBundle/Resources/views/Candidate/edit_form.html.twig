@@ -123,10 +123,10 @@
                 </div>
                 <div class="row"><br></div>
                 <div class="row">
-                    <div class="col-lg-6">
+                    <div class="col-lg-5">
                         {{ form_row(this_form.dateOfBirth) }}
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-7">
                         {{ form_row(this_form.nationality1) }}
                     </div>
 
@@ -190,15 +190,22 @@
                     <fieldset class="col-lg-12">
                         <legend>Contact</legend>
                         <div class="row">
-                            <div class="col-lg-4">
-                                {{ form_label(this_form.email) }}
-                                {{ form_widget(this_form.email) }}
+                            <div class="col-lg-6">
+                                {{ form_label(this_form.email1) }}
+                                {{ form_widget(this_form.email1) }}
                             </div>
-                            <div class="col-lg-4">
+                            <div class="col-lg-6">
+                                {{ form_label(this_form.email2) }}
+                                {{ form_widget(this_form.email2) }}
+                            </div>
+                        </div>
+                        <div class="row"><br></div>
+                        <div class="row">
+                            <div class="col-lg-6">
                                 {{ form_label(this_form.phone1) }}
                                 {{ form_widget(this_form.phone1) }}
                             </div>
-                            <div class="col-lg-4">
+                            <div class="col-lg-6">
                                 {{ form_label(this_form.phone2) }}
                                 {{ form_widget(this_form.phone2) }}
                             </div>
@@ -213,7 +220,7 @@
                 </div>
                 <div class="row">
                     <fieldset class="col-lg-12">
-                        <legend>Initial feedback</legend>
+                        <legend>Initial feedback by candidate owner</legend>
                         <div class="row">
                             <div class="col-lg-6">{{ form_label(this_form.globalScore) }} {{ form_widget(this_form.globalScore) }}</div>
                             <div class="col-lg-6">{{ form_label(this_form.owningcompany) }} {{ form_widget(this_form.owningcompany) }}</div>

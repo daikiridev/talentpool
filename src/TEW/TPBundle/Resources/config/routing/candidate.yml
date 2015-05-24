@@ -2,6 +2,10 @@ tew_candidate:
     path:     /
     defaults: { _controller: "TEWTPBundle:Candidate:index" }
 
+tew_candidate_sas:
+    path:     /sas
+    defaults: { _controller: "TEWTPBundle:Candidate:sasIndex" }
+    
 tew_candidate_search:
     path:     /search
     defaults: { _controller: "TEWTPBundle:Candidate:cdteSearch" }
