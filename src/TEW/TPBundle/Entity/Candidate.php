@@ -22,7 +22,7 @@ use Locale;
  * 
  * @ORM\Table(name="tew_candidate")
  * @ORM\Entity(repositoryClass="TEW\TPBundle\Entity\CandidateRepository")
- * // @UniqueEntity(fields="email", message="Email already taken")
+ * // UniqueEntity(fields="email", message="Email already taken")
  */
 class Candidate implements Taggable
 {
