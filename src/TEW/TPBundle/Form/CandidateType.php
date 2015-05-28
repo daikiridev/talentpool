@@ -78,12 +78,15 @@ class CandidateType extends AbstractType
             ))
             ->add('nationality1', 'country', array(
                 'required' => false,
+                'empty_value' => 'Select',
                 'label' => 'Passport country',
                 'label_attr' => array('style' => 'color: green'),
                 'attr' => array('class' => 'select2'),
             ))
             ->add('nationality2', 'country', array(
-               'required' => false,
+                'required' => false,
+                'empty_value' => 'Select',
+                'label' => 'Passport country2',
                 'attr' => array('class' => 'select2')
             ))
             ->add('email1', 'email',  array(
@@ -167,7 +170,7 @@ class CandidateType extends AbstractType
 //                //'label_attr' => array('class' => 'col-md-2')
 //            ))
             ->add('bonusbenefits', 'text', array(
-                'label' => 'Bonus & details',
+                'label' => 'Additional',
                 'attr' => array('class' => 'form-control', 'size' => 80),
                 'required' => false,
             ))

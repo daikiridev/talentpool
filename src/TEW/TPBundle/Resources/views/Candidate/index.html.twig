@@ -50,7 +50,7 @@
   {{ form_errors(check_candidates_form) }}
 </div>
     
-  <h1>Candidate list <small>({{ check_candidates_form.candidates|length}} people)</small>
+  <h1>Candidate list
     {% if (filter_details is defined and filter_details|length>0) %}
         <small><em><i class="icon-filter" data-toggle="popover" data-placement="top" data-delay='{ "show": 500, "hide": 200 }' data-html="true" style="cursor:help"
                       data-title="Search filter" data-content="{{ filter_details|hashJoin(' <br> ') }}" data-trigger='hover'></i>
