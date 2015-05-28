@@ -111,7 +111,7 @@
                             {% endif %}
                         </td>
                         <td>
-                            {{ not anonymous?entity.firstName:'anonymous' }} {{ not anonymous?entity.lastName }} {{ not anonymous?entity.middleName }}<br>
+                            {{ not anonymous?entity.firstName:'X.' }} {{ entity.lastName }} {{ not anonymous?entity.middleName }}<br>
                             <span data-toggle="popover" data-placement="top" data-delay='{ "show": 500, "hide": 200 }' data-html="true" style="cursor:help"
                                  data-content="{{ entity.globalComment }}" data-trigger='hover'>
                                 <small title="entry score">{{ entity.globalScore|stars }}</small>
