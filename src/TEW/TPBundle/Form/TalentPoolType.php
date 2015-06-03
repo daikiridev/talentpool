@@ -8,6 +8,13 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class TalentPoolType extends AbstractType
 {
+    protected $companyId;
+    
+    public function __construct($id=null)
+    {
+        $this->companyId=$id;
+    }
+    
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
@@ -35,8 +42,9 @@ class TalentPoolType extends AbstractType
                 'attr' => array('class' => 'select2', 'style' => 'width:300px'),
             ))
             ->add('profiles', 'collection', array(
+                'label' => 'Positions',
                 'attr' => array('class' => 'form-collection'), // in order to handle jquery functions of tew.candidate.edit.js
-                'type' => new CdteProfileType(),
+                'type' => new CdteProfileType($this->companyId),
                 'required' => false,
                 'allow_add' => true, // allows to add as many locations as we want
                 'allow_delete' => false,

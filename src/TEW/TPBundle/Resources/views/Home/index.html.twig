@@ -56,7 +56,7 @@
                                 </li>
                                 {% endif %}
                             {% endif %}
-                            {% if is_granted("ROLE_MASTER_EXECUTOR") %}
+                            {% if is_granted("ROLE_STD_EXECUTOR") %}
                             <li><i class="icon icon-plus-sign-alt"></i>
                                 <a href="{{ path('tew_talentpool_new') }}">Add</a> a new Talent Pool 
                             </li>

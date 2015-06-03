@@ -9,8 +9,17 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class CdteProfileType extends AbstractType
 {
+    protected $companyId;
+    
+    public function __construct($id)
+    {
+        $this->companyId=$id;
+    }
+    
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $id = $this->companyId;
+        
         $builder
             ->add('title')
             ->add('function', 'entity', array(
@@ -21,9 +30,15 @@ class CdteProfileType extends AbstractType
                 'property' => 'indentedName',
                 'multiple' => false,
                 'expanded' => false ,
-                'query_builder' => function (\Gedmo\Tree\Entity\Repository\NestedTreeRepository $r){
-                        return $r->getChildrenQueryBuilder(null, null, 'root', 'asc', false);
-                    }
+//                'query_builder' => function (\Gedmo\Tree\Entity\Repository\NestedTreeRepository $r){
+//                        return $r->getChildrenQueryBuilder(null, null, 'root', 'asc', false);
+//                    }
+                'query_builder' => function(\Gedmo\Tree\Entity\Repository\NestedTreeRepository $er) use ($id) {
+                    return $er->createQueryBuilder('fun')
+                                ->join('fun.companies', 'cie')
+                                ->where('cie.id = :id')
+                                ->setParameter('id', $id);
+                },
             ))
             ->add('level', 'entity', array(
                 'required' => false,

@@ -97,6 +97,7 @@ class TalentPool
         $this->profiles = new \Doctrine\Common\Collections\ArrayCollection();
         $this->candidates = new \Doctrine\Common\Collections\ArrayCollection();
         $this->companies = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->owningcompany = $user->getCompany();
         $this->createdAt = new \DateTime();
         $this->creator = $user;
     }

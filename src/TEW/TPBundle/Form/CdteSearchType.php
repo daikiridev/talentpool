@@ -8,12 +8,21 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class CdteSearchType extends AbstractType
 {
+    protected $companyId;
+    
+    public function __construct($id)
+    {
+        $this->companyId=$id;
+    }
+    
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $id = $this->companyId;
+        
         $builder
             ->add('invisible', 'checkbox', array(
                 'required' => false,
@@ -42,10 +51,16 @@ class CdteSearchType extends AbstractType
                 'property' => 'indentedName',
                 'multiple' => false,
                 'expanded' => false ,
-                'query_builder' => function (\Gedmo\Tree\Entity\Repository\NestedTreeRepository $r)
-                    {
-                        return $r->getChildrenQueryBuilder(null, null, 'name', 'asc', false);
-                    }
+//                'query_builder' => function (\Gedmo\Tree\Entity\Repository\NestedTreeRepository $r)
+//                    {
+//                        return $r->getChildrenQueryBuilder(null, null, 'name', 'asc', false);
+//                    }
+                'query_builder' => function(\Gedmo\Tree\Entity\Repository\NestedTreeRepository $er) use ($id) {
+                    return $er->createQueryBuilder('fun')
+                                ->join('fun.companies', 'cie')
+                                ->where('cie.id = :id')
+                                ->setParameter('id', $id);
+                },
             ))
             ->add('level', 'entity', array(
                 'required' => false,

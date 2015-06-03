@@ -1,6 +1,8 @@
 {# TEW/src/TEW/TPBundle/Resources/views/Company/show.html.twig #}
 {% extends '::base.html.twig' %}
-
+{% block styles %}
+    <link rel="stylesheet" href="{{asset('bundles/tewtp/css/jquery.tagsinput.css')}}">
+{% endblock styles %}
 {% block scripts %}
     <script>
     $(function () {
@@ -37,7 +39,15 @@
                         <a href='{{ path('tew_talentpool_show', { 'id': tp.id }) }}' >{{ tp }}</a>
                     {% endfor %}
                 </td>
-    </tr>
+            </tr>
+            <tr>
+                <th>Available functions</th>
+                <td>
+                    {% for fun in entity.functions %}
+                        <span class="tag">{{fun}}</span>
+                    {% endfor %}
+                </td>
+            </tr>
             <tr>
                 <th>Creation date</th>
                 <td>{{ entity.createdAt|date('Y-m-d H:i:s') }}</td>

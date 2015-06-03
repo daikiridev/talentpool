@@ -31,6 +31,7 @@ class MenuBuilder
     {
         $is_client = $this->securityContext->isGranted(array('ROLE_CLIENT'));
         $is_master_executor = $this->securityContext->isGranted(array('ROLE_MASTER_EXECUTOR'));
+        $is_std_executor = $this->securityContext->isGranted(array('ROLE_STD_EXECUTOR'));
         $is_tew_staff = $this->securityContext->isGranted(array('ROLE_TEW_STAFF'));
         $is_admin = $this->securityContext->isGranted(array('ROLE_ADMIN'));
         
@@ -64,7 +65,7 @@ class MenuBuilder
                         ->setAttribute('dropdown', true);
                 $menu['Talent pools']->addChild('List', array('route' => 'tew_talentpool'))
                         ->setAttribute('icon', 'icon-list');
-                if ($is_master_executor) { // only executors can add talentpools
+                if ($is_std_executor) { // only executors can add talentpools
                     $menu['Talent pools']->addChild('Add', array('route' => 'tew_talentpool_new'))
                             ->setAttribute('icon', 'icon-plus-sign-alt');   
                 }

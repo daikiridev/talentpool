@@ -93,7 +93,7 @@ class TalentPoolController extends Controller
      */
     private function createCreateForm(TalentPool $entity)
     {
-        $form = $this->createForm(new TalentPoolType(), $entity, array(
+        $form = $this->createForm(new TalentPoolType($entity->getOwningcompany()->getId()), $entity, array(
             'action' => $this->generateUrl('tew_talentpool_create'),
             'method' => 'POST',
         ));
@@ -202,7 +202,7 @@ class TalentPoolController extends Controller
     */
     private function createEditForm(TalentPool $entity)
     {
-        $form = $this->createForm(new TalentPoolType(), $entity, array(
+        $form = $this->createForm(new TalentPoolType($entity->getOwningcompany()->getId()), $entity, array(
             'action' => $this->generateUrl('tew_talentpool_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));

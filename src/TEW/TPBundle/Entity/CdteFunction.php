@@ -68,6 +68,14 @@ class CdteFunction {
      * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", onDelete="CASCADE")
      * */
     private $parent;
+
+    /**
+     * @var companies
+     * 
+     * @ORM\ManyToMany(targetEntity="Company", mappedBy="functions")
+     * 
+     */
+    private $companies;
     
     /**
      * To be used by Sonata admin
@@ -265,4 +273,47 @@ class CdteFunction {
 //    {
 //        return $this->root;
 //    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->children = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->companies = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+
+
+    /**
+     * Add companies
+     *
+     * @param \TEW\TPBundle\Entity\Company $companies
+     * @return CdteFunction
+     */
+    public function addCompany(\TEW\TPBundle\Entity\Company $companies)
+    {
+        $this->companies[] = $companies;
+
+        return $this;
+    }
+
+    /**
+     * Remove companies
+     *
+     * @param \TEW\TPBundle\Entity\Company $companies
+     */
+    public function removeCompany(\TEW\TPBundle\Entity\Company $companies)
+    {
+        $this->companies->removeElement($companies);
+    }
+
+    /**
+     * Get companies
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCompanies()
+    {
+        return $this->companies;
+    }
 }

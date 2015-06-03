@@ -31,6 +31,14 @@ class CompanyType extends AbstractType
                 'expanded' => false, // checkboxes?
                 'attr' => array('class' => 'select2', 'style' => 'width:300px'),
             ))
+            ->add('functions', 'entity', array( 
+                'required'  => false,
+                'class'    => 'TEWTPBundle:CdteFunction',
+                'multiple' => true,
+                'expanded' => true, // checkboxes?
+                'property' => 'indentedName',
+                'attr' => array('class' => 'br', 'style' => 'width:300px'),
+            ))
         ;
         $builder->get('picture')
                 ->add('binaryContent', 'file', ['label' => false,])

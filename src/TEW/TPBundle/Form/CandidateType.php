@@ -8,12 +8,20 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class CandidateType extends AbstractType
 {
+    protected $companyId;
+    
+    public function __construct($id=null)
+    {
+        $this->companyId=$id;
+    }
+    
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $id = $this->companyId;
         $builder
             //->add('globalComment', 'ckeditor', array('config_name' => 'user_config'))
             ->add('globalComment', 'textarea', array(
@@ -132,9 +140,16 @@ class CandidateType extends AbstractType
                 'property' => 'indentedName',
                 'multiple' => false,
                 'expanded' => false ,
-                'query_builder' => function (\Gedmo\Tree\Entity\Repository\NestedTreeRepository $r)
+                'query_builder' => 
+                    function (\Gedmo\Tree\Entity\Repository\NestedTreeRepository $r) use ($id)
                     {
-                        return $r->getChildrenQueryBuilder(null, null, 'name', 'asc', false);
+                        return $id?
+                                $r->createQueryBuilder('fun')
+                                ->join('fun.companies', 'cie')
+                                ->where('cie.id = :id')
+                                ->setParameter('id', $id)
+                                :
+                                $r->getChildrenQueryBuilder(null, null, 'name', 'asc', false);
                     }
             ))
             ->add('level', 'entity', array(
@@ -189,9 +204,15 @@ class CandidateType extends AbstractType
                 'property' => 'indentedName',
                 'multiple' => false,
                 'expanded' => false ,
-                'query_builder' => function (\Gedmo\Tree\Entity\Repository\NestedTreeRepository $r)
+                'query_builder' => function (\Gedmo\Tree\Entity\Repository\NestedTreeRepository $r) use ($id)
                     {
-                        return $r->getChildrenQueryBuilder(null, null, 'name', 'asc', false);
+                        return $id?
+                                $r->createQueryBuilder('fun')
+                                ->join('fun.companies', 'cie')
+                                ->where('cie.id = :id')
+                                ->setParameter('id', $id)
+                                :
+                                $r->getChildrenQueryBuilder(null, null, 'name', 'asc', false);
                     }
             ))
             ->add('targetLevel1', 'entity', array(
@@ -210,8 +231,15 @@ class CandidateType extends AbstractType
                 'property' => 'indentedName',
                 'multiple' => false,
                 'expanded' => false ,
-                'query_builder' => function (\Gedmo\Tree\Entity\Repository\NestedTreeRepository $r){
-                        return $r->getChildrenQueryBuilder(null, null, 'name', 'asc', false);
+                'query_builder' => function (\Gedmo\Tree\Entity\Repository\NestedTreeRepository $r) use ($id)
+                    {
+                        return $id?
+                                $r->createQueryBuilder('fun')
+                                ->join('fun.companies', 'cie')
+                                ->where('cie.id = :id')
+                                ->setParameter('id', $id)
+                                :
+                                $r->getChildrenQueryBuilder(null, null, 'name', 'asc', false);
                     }
             ))
             ->add('targetLevel2', 'entity', array(
@@ -230,9 +258,15 @@ class CandidateType extends AbstractType
                 'property' => 'indentedName',
                 'multiple' => false,
                 'expanded' => false ,
-                'query_builder' => function (\Gedmo\Tree\Entity\Repository\NestedTreeRepository $r)
+                'query_builder' => function (\Gedmo\Tree\Entity\Repository\NestedTreeRepository $r) use ($id)
                     {
-                        return $r->getChildrenQueryBuilder(null, null, 'name', 'asc', false);
+                        return $id?
+                                $r->createQueryBuilder('fun')
+                                ->join('fun.companies', 'cie')
+                                ->where('cie.id = :id')
+                                ->setParameter('id', $id)
+                                :
+                                $r->getChildrenQueryBuilder(null, null, 'name', 'asc', false);
                     }
             ))
             ->add('targetLevel3', 'entity', array(

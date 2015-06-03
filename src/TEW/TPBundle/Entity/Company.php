@@ -73,6 +73,15 @@ class Company // implements Taggable
      * 
      */
     private $users;
+    
+    /**
+     * @var functions
+     * 
+     * @ORM\ManyToMany(targetEntity="CdteFunction", inversedBy="companies",cascade={"all"})
+     * @ORM\JoinTable(name="tew_company_functions")
+     * 
+     */
+    private $functions;
 
     /**
      * @var date
@@ -270,5 +279,38 @@ class Company // implements Taggable
     public function getUsers()
     {
         return $this->users;
+    }
+
+    /**
+     * Add functions
+     *
+     * @param \TEW\TPBundle\Entity\CdteFunction $functions
+     * @return Company
+     */
+    public function addFunction(\TEW\TPBundle\Entity\CdteFunction $functions)
+    {
+        $this->functions[] = $functions;
+
+        return $this;
+    }
+
+    /**
+     * Remove functions
+     *
+     * @param \TEW\TPBundle\Entity\CdteFunction $functions
+     */
+    public function removeFunction(\TEW\TPBundle\Entity\CdteFunction $functions)
+    {
+        $this->functions->removeElement($functions);
+    }
+
+    /**
+     * Get functions
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getFunctions()
+    {
+        return $this->functions;
     }
 }

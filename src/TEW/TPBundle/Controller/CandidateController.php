@@ -78,7 +78,7 @@ class CandidateController extends Controller {
     public function cdteSearchAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
 
-        $form = $this->createForm(new CdteSearchType());
+        $form = $this->createForm(new CdteSearchType($this->getUser()->getCompany()->getId()));
         $form->handleRequest($request);
         $deleteForms = array();
         if ($form->isValid()){
@@ -375,7 +375,7 @@ class CandidateController extends Controller {
      * @return \Symfony\Component\Form\Form The form
      */
     private function createCreateForm(Candidate $entity) {
-        $form = $this->createForm(new CandidateType(), $entity, array(
+        $form = $this->createForm(new CandidateType($this->getUser()->getCompany()->getId()), $entity, array(
             'action' => $this->generateUrl('tew_candidate_create'),
             'method' => 'POST',
         ));
