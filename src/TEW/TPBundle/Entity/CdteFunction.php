@@ -29,8 +29,6 @@ class CdteFunction {
      * @ORM\Column(name="name", type="string", length=127)
      */
     private $name;
-    
-    private $identedName;
 
     /**
      * @Gedmo\TreeLeft
@@ -91,7 +89,7 @@ class CdteFunction {
      */
     public function __construct()
     {
-        $this->children = new \Doctrine\Common\Collections\ArrayCollection();
+        // $this->children = new \Doctrine\Common\Collections\ArrayCollection();
         $this->companies = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
@@ -137,8 +135,12 @@ class CdteFunction {
      */
     public function setParent(\TEW\TPBundle\Entity\CdteFunction $parent = null) {
         $this->parent = $parent;
-        $parent->addChild($this);
-        $this->lvl = $parent->lvl+1;
+        if ($parent) {
+            $parent->addChild($this);
+            $this->lvl = $parent->lvl+1;
+        } else {
+//            $this->lvl=0; // to be checked!
+        }
         return $this;
     }
 
@@ -159,28 +161,28 @@ class CdteFunction {
      */
     public function addChild(\TEW\TPBundle\Entity\CdteFunction $children) {
         $this->children[] = $children;
-        $children->setParent($this);
+        //$children->setParent($this);
         return $this;
     }
-
-    /**
-     * Remove children
-     *
-     * @param \TEW\TPBundle\Entity\CdteFunction $children
-     */
-    public function removeChild(\TEW\TPBundle\Entity\CdteFunction $children) {
-        $this->children->removeElement($children);
-        $children->setParent(null);
-    }
-
-    /**
-     * Get children
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getChildren() {
-        return $this->children;
-    }
+//
+//    /**
+//     * Remove children
+//     *
+//     * @param \TEW\TPBundle\Entity\CdteFunction $children
+//     */
+//    public function removeChild(\TEW\TPBundle\Entity\CdteFunction $children) {
+//        $children->setParent(null);
+//        $this->children->removeElement($children);
+//    }
+//
+//    /**
+//     * Get children
+//     *
+//     * @return \Doctrine\Common\Collections\Collection 
+//     */
+//    public function getChildren() {
+//        return $this->children;
+//    }
 
 //
 //
