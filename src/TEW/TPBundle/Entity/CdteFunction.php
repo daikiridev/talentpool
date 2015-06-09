@@ -85,13 +85,15 @@ class CdteFunction {
     public function __toString() {
         return $this?$this->getName():'';
     }
-
-//    /**
-//     * Constructor
-//     */
-//    public function __construct() {
-//        $this->children = new \Doctrine\Common\Collections\ArrayCollection();
-//    }
+    
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->children = new \Doctrine\Common\Collections\ArrayCollection();
+//        $this->companies = new \Doctrine\Common\Collections\ArrayCollection();
+    }
     
     /**
      * Get id
@@ -273,14 +275,6 @@ class CdteFunction {
 //    {
 //        return $this->root;
 //    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->children = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->companies = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
 
 

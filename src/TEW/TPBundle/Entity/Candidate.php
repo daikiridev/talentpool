@@ -344,6 +344,15 @@ class Candidate implements Taggable
      * 
      */
     private $tags;
+    
+    /**
+     * @var keywords
+     * 
+     * @ORM\ManyToMany(targetEntity="CdteKeyword")
+     * @ORM\JoinTable(name="tew_keywords_candidates")
+     * 
+     */
+    private $keywords;
 
     /**
      * @var string
@@ -1534,5 +1543,38 @@ class Candidate implements Taggable
     public function getEmail2()
     {
         return $this->email2;
+    }
+
+    /**
+     * Add keywords
+     *
+     * @param \TEW\TPBundle\Entity\CdteKeywords $keywords
+     * @return Candidate
+     */
+    public function addKeyword(\TEW\TPBundle\Entity\CdteKeywords $keywords)
+    {
+        $this->keywords[] = $keywords;
+
+        return $this;
+    }
+
+    /**
+     * Remove keywords
+     *
+     * @param \TEW\TPBundle\Entity\CdteKeywords $keywords
+     */
+    public function removeKeyword(\TEW\TPBundle\Entity\CdteKeywords $keywords)
+    {
+        $this->keywords->removeElement($keywords);
+    }
+
+    /**
+     * Get keywords
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getKeywords()
+    {
+        return $this->keywords;
     }
 }

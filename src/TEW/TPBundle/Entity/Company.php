@@ -84,6 +84,15 @@ class Company // implements Taggable
     private $functions;
 
     /**
+     * @var keywords
+     * 
+     * @ORM\ManyToMany(targetEntity="CdteKeyword", inversedBy="companies",cascade={"all"})
+     * @ORM\JoinTable(name="tew_company_keywords")
+     * 
+     */
+    private $keywords;
+    
+    /**
      * @var date
      * 
      * @ORM\Column(name="createdat", type="datetime")
@@ -312,5 +321,38 @@ class Company // implements Taggable
     public function getFunctions()
     {
         return $this->functions;
+    }
+
+    /**
+     * Add keywords
+     *
+     * @param \TEW\TPBundle\Entity\CdteKeyword $keywords
+     * @return Company
+     */
+    public function addKeyword(\TEW\TPBundle\Entity\CdteKeyword $keywords)
+    {
+        $this->keywords[] = $keywords;
+
+        return $this;
+    }
+
+    /**
+     * Remove keywords
+     *
+     * @param \TEW\TPBundle\Entity\CdteKeyword $keywords
+     */
+    public function removeKeyword(\TEW\TPBundle\Entity\CdteKeyword $keywords)
+    {
+        $this->keywords->removeElement($keywords);
+    }
+
+    /**
+     * Get keywords
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getKeywords()
+    {
+        return $this->keywords;
     }
 }

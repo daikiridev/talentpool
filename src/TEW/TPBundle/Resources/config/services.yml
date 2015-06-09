@@ -73,6 +73,12 @@ services:
         tags:
             - {name: sonata.admin, manager_type: orm, group: admin, label: Functions}
             
+    tew_tp.admin.cdtekeyword:
+        class: TEW\TPBundle\Admin\CdteKeywordAdmin
+        arguments: [~, TEW\TPBundle\Entity\CdteKeyword, TEWTPBundle:CdteKeywordAdmin]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: admin, label: Keywords}
+            
     tew_tp.admin.cdtelevel:
         class: TEW\TPBundle\Admin\CdteLevelAdmin
         arguments: [~, TEW\TPBundle\Entity\CdteLevel, TEWTPBundle:CdteLevelAdmin]

@@ -318,6 +318,25 @@ class CandidateType extends AbstractType
                 'required' => false,
                 'attr' => array('class' => 'tags-field input-block-level', 'multiple' => 'multiple', 'style' => 'width:300px')
             ))
+            ->add('keywords', 'entity', array(
+                'required' => false,
+                'label' => 'Job keywords',
+                'class' => 'TEWTPBundle:CdteKeyword',
+                'attr' => array('class' => 'select2 form-control', 'style' => 'width:300px'),
+                'empty_value' => 'All',
+                'multiple' => true,
+                'expanded' => false, // checkboxes?
+                'query_builder' => function (\TEW\TPBundle\Entity\CdteKeywordRepository $r) use ($id)
+                    {
+                        return $id?
+                                $r->createQueryBuilder('k')
+                                ->join('k.companies', 'cie')
+                                ->where('cie.id = :id')
+                                ->setParameter('id', $id)
+                                :
+                                $r->createQueryBuilder('k');
+                    }
+            ))
             ->add('resume', 'sonata_media_type', array(
                 'label' => false,
                 'required' => false,

@@ -35,9 +35,16 @@ class CompanyType extends AbstractType
                 'required'  => false,
                 'class'    => 'TEWTPBundle:CdteFunction',
                 'multiple' => true,
-                'expanded' => true, // checkboxes?
+                'expanded' => false, // checkboxes?
                 'property' => 'indentedName',
-                'attr' => array('class' => 'br', 'style' => 'width:300px'),
+                'attr' => array('class' => 'select2', 'style' => 'width:300px'),
+            ))
+            ->add('keywords', 'entity', array( 
+                'required'  => false,
+                'class'    => 'TEWTPBundle:CdteKeyword',
+                'multiple' => true,
+                'expanded' => false, // checkboxes?
+                'attr' => array('class' => 'select2', 'style' => 'width:300px'),
             ))
         ;
         $builder->get('picture')
