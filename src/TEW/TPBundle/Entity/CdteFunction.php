@@ -92,7 +92,7 @@ class CdteFunction {
     public function __construct()
     {
         $this->children = new \Doctrine\Common\Collections\ArrayCollection();
-//        $this->companies = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->companies = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     /**

@@ -123,14 +123,6 @@ class CandidateType extends AbstractType
                 'allow_delete' => true,
                 'by_reference' => false, // 'false' forces setAddresses() to be called
                 ))
-            // changing position's label
-//            ->add('function', 'entity', array(
-//                'class' => 'TEWTPBundle:CdteFunction',
-//                'label' => 'Current function',
-//                'empty_value' => 'Select',
-//                'attr' => array('class' => 'select2 form-control'),
-//                //'label_attr' => array('class' => 'col-md-2')
-//                ))
             ->add('function', 'entity', array(
                 'required' => true,
                 'label' => 'Current function',

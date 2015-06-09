@@ -544,7 +544,7 @@ class CandidateController extends Controller {
      * @return \Symfony\Component\Form\Form The form
      */
     private function createEditForm(Candidate $entity) {
-        $form = $this->createForm(new CandidateType(), $entity, array(
+        $form = $this->createForm(new CandidateType($entity->getOwningcompany()->getId()), $entity, array(
             'action' => $this->generateUrl('tew_candidate_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
