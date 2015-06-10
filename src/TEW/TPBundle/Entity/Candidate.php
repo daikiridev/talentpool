@@ -1548,10 +1548,10 @@ class Candidate implements Taggable
     /**
      * Add keywords
      *
-     * @param \TEW\TPBundle\Entity\CdteKeywords $keywords
+     * @param \TEW\TPBundle\Entity\CdteKeyword $keywords
      * @return Candidate
      */
-    public function addKeyword(\TEW\TPBundle\Entity\CdteKeywords $keywords)
+    public function addKeyword(\TEW\TPBundle\Entity\CdteKeyword $keywords)
     {
         $this->keywords[] = $keywords;
 
@@ -1561,9 +1561,9 @@ class Candidate implements Taggable
     /**
      * Remove keywords
      *
-     * @param \TEW\TPBundle\Entity\CdteKeywords $keywords
+     * @param \TEW\TPBundle\Entity\CdteKeyword $keywords
      */
-    public function removeKeyword(\TEW\TPBundle\Entity\CdteKeywords $keywords)
+    public function removeKeyword(\TEW\TPBundle\Entity\CdteKeyword $keywords)
     {
         $this->keywords->removeElement($keywords);
     }
