@@ -49,6 +49,14 @@
                 </td>
             </tr>
             <tr>
+                <th>Job keywords</th>
+                <td>
+                    {% for jk in entity.keywords %}
+                        <span class="tag">{{jk}}</span>
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr>
                 <th>Creation date</th>
                 <td>{{ entity.createdAt|date('Y-m-d H:i:s') }}</td>
             </tr>
