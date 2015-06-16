@@ -36,11 +36,11 @@ class CandidateType extends AbstractType
                 //'expanded' => true, 'multiple' => false, // radio button
                 'attr' => array('class' => 'form-control'),
             ))
-            ->add('active', 'checkbox', array(
-                'label' => 'visible',
-                'required' => false,
-                //'attr' => array('class' => 'form-control'),
-            ))
+//            ->add('active', 'checkbox', array(
+//                'label' => 'visible',
+//                'required' => false,
+//                //'attr' => array('class' => 'form-control'),
+//            ))
             ->add('alert', 'checkbox', array(
                 'required' => false,
                 //'attr' => array('class' => 'form-control'),
@@ -312,7 +312,7 @@ class CandidateType extends AbstractType
             ))
             ->add('keywords', 'entity', array(
                 'required' => false,
-                'label' => 'Job keywords',
+                'label' => 'Keywords',
                 'class' => 'TEWTPBundle:CdteKeyword',
                 'attr' => array('class' => 'select2 form-control', 'style' => 'width:300px'),
                 'empty_value' => 'All',

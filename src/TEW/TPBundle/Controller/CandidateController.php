@@ -85,6 +85,7 @@ class CandidateController extends Controller {
             $data = $form->getData('cdtesearch');
             $repository = $em->getRepository('TEWTPBundle:Candidate');
             $qb = $repository->createQueryBuilder('c')->where('1=1');
+            $qb->join('c.function', 'f');
             $qb->orderBy('c.alert', 'DESC');
             $qb->addOrderBy('c.globalScore', 'DESC');
             $filterDetails = array();
@@ -98,11 +99,38 @@ class CandidateController extends Controller {
                         }
                         break;
                     case 'alert':
-                    case 'function':
-                    case 'level':
                     case 'owningcompany':
                         if ($value !='') {
                             $qb->andWhere("c.$key = :$key")->setParameter($key, $value);
+                            $filterDetails[$key] = gettype($value)=='object'?$value->getName():$value;
+                        }
+                        break;
+                    case 'level':
+                        if ($value !='') {
+                           $qb->andWhere(
+                                $qb->expr()->orX(
+                                    $qb->expr()->eq("c.level", ":$key"),
+                                    $qb->expr()->eq("c.targetLevel1", ":$key"),
+                                    $qb->expr()->eq("c.targetLevel2", ":$key"),
+                                    $qb->expr()->eq("c.targetLevel3", ":$key")
+                                )   
+                            );
+                            $qb->setParameter($key, $value);
+                            $filterDetails[$key] = gettype($value)=='object'?$value->getName():$value;
+                        }
+                        break;
+                    case 'function': // TODO: ADD TARGET PARENT FUNCTIONS
+                        if ($value !='') {
+                           $qb->andWhere(
+                                $qb->expr()->orX( // We either take the current function or the parent function
+                                    $qb->expr()->eq("c.function", ":$key"),
+                                    $qb->expr()->eq("c.targetFunction1", ":$key"),
+                                    $qb->expr()->eq("c.targetFunction2", ":$key"),
+                                    $qb->expr()->eq("c.targetFunction3", ":$key"),
+                                    $qb->expr()->eq("f.parent", ":$key")
+                                )   
+                            );
+                            $qb->setParameter($key, $value);
                             $filterDetails[$key] = gettype($value)=='object'?$value->getName():$value;
                         }
                         break;

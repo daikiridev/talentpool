@@ -75,7 +75,7 @@
                             </td>
                         </tr>
                         <tr>
-                        <th>Job keywords</th>
+                        <th>Keywords</th>
                         <td>{% for jk in entity.keywords %}
                             <span class="tag">{{ jk }}</span>
                             {% endfor %}
@@ -236,7 +236,7 @@
                                     {% for prof in tp.profiles %}
                                         <tr>
                                             <td style="text-align: right">{{ prof }}</td>
-                                            {% if ((prof.function==entity.function or not prof.function) and (prof.level==entity.level or not prof.level))
+                                            {% if (((prof.function and (prof.function==entity.function or prof.function.parent==entity.function or prof.function==entity.function.parent)) or not prof.function) and (prof.level==entity.level or not prof.level))
                                                or ((prof.function==entity.targetFunction1 or not prof.function) and (prof.level==entity.targetLevel1 or not prof.level))
                                                or ((prof.function==entity.targetFunction2 or not prof.function) and (prof.level==entity.targetLevel2 or not prof.level))
                                                or ((prof.function==entity.targetFunction3 or not prof.function) and (prof.level==entity.targetLevel3 or not prof.level))

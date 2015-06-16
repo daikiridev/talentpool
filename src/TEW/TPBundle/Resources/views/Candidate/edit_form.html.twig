@@ -152,9 +152,11 @@
                             <span><i class="icon icon-bell" style="color:red; cursor:help" title="alert"></i></span>
                             {{ form_widget(this_form.alert) }}
                         </div>
+                        {#
                         <div class="col-lg-3">
                             {{ form_row(this_form.active) }}
                         </div>
+                        #}
                         <div class="col-lg-6">
                             {{ form_row(this_form.status) }}
                         </div>
@@ -237,9 +239,14 @@
                                 {{ form_row(this_form.keywords) }}
                             </div>
                         </div>
+                        
                         <div class="row">
                             <div class="col-lg-12">
+                            {% if 'faurecia' not in (app.user.company|lower) %}
                                 {{ form_row(this_form.tags) }}
+                            {% else %}
+                                {{ form_widget(this_form.tags, { 'attr': {'class': "hidden"} }) }}
+                            {% endif %}
                             </div>
                         </div>
                     </fieldset>
