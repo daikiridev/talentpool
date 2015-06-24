@@ -13,6 +13,7 @@ use TEW\TPBundle\Entity\Candidate;
 use TEW\TPBundle\Form\CandidateType;
 use TEW\TPBundle\Form\CdteSearchType;
 use TEW\TPBundle\Form\CheckCandidatesType;
+use TEW\TPBundle\Entity\CdteOperation;
 use TEW\TPBundle\Entity\Mail;
 use TEW\TPBundle\Form\MailType;
 use TEW\TPBundle\Twig\Extension\TEWExtension;
@@ -459,19 +460,29 @@ class CandidateController extends Controller {
 //                $this->get('security.context')->isGranted('ROLE_TEW_STD_EXECUTOR'))) {
 //            throw new AccessDeniedException('Access Denied');
 //        }
-        $deleteAccess = $this->get('security.context')->isGranted('ROLE_TEW_OBJECT_DELETE', $entity) ||
-                        $this->get('security.context')->isGranted('ROLE_MASTER_EXECUTOR');
+        $securityContext = $this->get('security.context');
+        $deleteAccess = $securityContext->isGranted('ROLE_TEW_OBJECT_DELETE', $entity) ||
+                        $securityContext->isGranted('ROLE_MASTER_EXECUTOR');
         $deleteFormView = $deleteAccess?$this->createDeleteForm($id)->createView():null;
         
-        $fullview = $this->get('security.context')->isGranted('ROLE_PARTNER_STD_EXECUTOR') ||
-                $this->get('security.context')->isGranted('ROLE_TEW_OBJECT_VIEW', $entity);
-        $anonymous = (!$fullview) && $this->get('security.context')->isGranted('ROLE_TEW_OBJECT_ANONYMOUS_VIEW', $entity);
+        $fullview = $securityContext->isGranted('ROLE_PARTNER_STD_EXECUTOR') ||
+                $securityContext->isGranted('ROLE_TEW_OBJECT_VIEW', $entity);
+        $anonymous = (!$fullview) && $securityContext->isGranted('ROLE_TEW_OBJECT_ANONYMOUS_VIEW', $entity);
         
+        // Storing the 'view' action in CdtePperations
+        $user = $securityContext->getToken()->getUser();
+        $cdteOp = new CdteOperation($user);
+        $cdteOp->setCandidate($entity)
+            ->setStatus(\TEW\TPBundle\Entity\CdteOperation::STATUS_VIEW)
+            ->setRole(implode(', ', $user->getRoles()))
+            ->setType(CdteOperation::TYPE_USER);
+        $em->persist($cdteOp);
+        $em->flush();
         // we build the 'add comment' form for each visible talentpool
         $addcommentForms = array();
         foreach ($entity->getTalentpools() as $tp) {
-            if ($this->get('security.context')->isGranted('ROLE_MASTER_EXECUTOR') ||
-                    $this->get('security.context')->isGranted('ROLE_TEW_OBJECT_VIEW', $tp)) {
+            if ($securityContext->isGranted('ROLE_MASTER_EXECUTOR') ||
+                    $securityContext->isGranted('ROLE_TEW_OBJECT_VIEW', $tp)) {
                 $comment = new \TEW\TPBundle\Entity\CdteComment($this->getUser());
                 $comment->setTalentpool($tp);
                 $comment->setCandidate($entity);

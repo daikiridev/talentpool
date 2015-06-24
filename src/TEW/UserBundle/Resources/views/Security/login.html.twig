@@ -1,0 +1,134 @@
+{#
+
+This file is part of the Sonata package.
+
+(c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+
+#}
+
+{% extends "SonataUserBundle:Security:base_login.html.twig" %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{asset('bundles/tewuser/css/signin.css')}}">
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.5/css/jquery.dataTables.css">
+    <link rel="stylesheet" href="//cdn.datatables.net/tabletools/2.2.3/css/dataTables.tableTools.css">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0-beta.3/css/select2.min.css" rel="stylesheet" />
+    <style>
+        .jumbotron p {
+            font-size: 12px;
+            font-weight: 200;
+        }
+    </style>
+{% endblock styles %}
+
+{% block scripts %}
+    <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0-beta.3/js/select2.min.js"></script>
+    <script src="//cdn.datatables.net/1.10.5/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // loading of DB levels
+            $.get("{{ path('tew_json_findlevel')}}", function (data) {
+                $("#level").select2({
+                    placeholder: "Any level (current or target)",
+                    data: data['data']
+                }).select2('val', '');
+            });
+            // loading of DB functions
+            $.get("{{ path('tew_json_findfunction')}}", function (data) {
+                $("#function").select2({
+                    placeholder: "Any function (current or target)",
+                    data: data['data']
+                }).select2('val', '');
+            });
+
+            var table = $('#result-table')
+                    .on('order.dt', function () {
+                        $('[data-toggle="popover"]').popover();
+                    })
+                    .DataTable(
+                            {
+                                "dom": '<"top"i>rt<"bottom"flp><"clear">',
+                                "bFilter": false,
+                                "paging": false,
+                                "ordering": false,
+                                "info": false,
+                                "processing": true,
+                                "oLanguage": {
+                                    "sProcessing": "<img src='{{asset('bundles/tewtp/images/icons/ajax-loader.gif')}}'>"
+                                },
+                                "columns": [
+                                    {"data": "status"},
+                                    {"data": "globalScore", "bSortable": false},
+                                    {"data": "experience"},
+                                    {"data": "nationality1"},
+                                    {"data": "mobilities"}
+                                ]
+                            }
+                    );
+            $('.select2').change(function () {
+                table.ajax.url('{{ path('tew_json_anoncandidates') }}?level=' + $('#level').val() + '&function=' + $('#function').val()).load(
+                        function (jsondata) {
+                            $('[data-toggle="popover"]').popover();
+                        });
+            });
+        });
+    </script>
+{% endblock scripts %}
+
+{% block body %}
+    {% if error is defined and error %}
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            {{ error|trans({}, 'FOSUserBundle') }}
+        </div>
+    {% endif %}
+    <div class="row centered-form">
+        <div class="col-xs-12 col-sm-8 col-md-4 col-sm-offset-2 col-md-offset-4 body bg-gray">
+            <form class="form-signin" action="{{ path("fos_user_security_check") }}" method="post" role="form">
+                <h2 class="form-signin-heading">Authentication</h2>
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+                <label class="sr-only" for="username">User name</label>
+                <input type="text" class="form-control" id="username"  name="_username" value="{{ last_username is defined?last_username }}" required="required" placeholder="{{ 'security.login.username'|trans({}, 'FOSUserBundle') }}"/>
+                <label class="sr-only" for="password">Password</label>
+                <input type="password" class="form-control" id="password" name="_password" required="required" placeholder="{{ 'security.login.password'|trans({}, 'FOSUserBundle') }}"/>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" id="remember_me" name="_remember_me" value="on"/>
+                        {{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}
+                    </label>
+                </div>
+                <button type="submit" id="_submit" name="_submit" class="btn btn-lg btn-warning btn-block">{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}</button>
+            </form>
+            <br>
+        </div>
+    </div>
+            <div class="row">&nbsp<br><br><br></div>
+    <div class="jumbotron">
+        <div class="row">
+            <h2><span class="label label-info"
+                      style='cursor:help' data-delay='{ "show": 500, "hide": 200 }' data-placement='right'  data-trigger='hover' data-toggle='tooltip'
+                      title='search limited to 10 candidates'>Some of our candidates...</span></h2><br>
+        </div>
+        <div class="row centered-form">
+            <select class="select2 form-control" id="level" style="width: 40%"/></select>
+            <select class="select2 form-control" id="function" style="width: 40%"/></select>          
+        </div>
+        <div class="row centered-form">
+            <table id="result-table" class="table table-striped table-bordered" cellspacing="0" width="50%">
+                <thead>
+                    <tr>
+                        <th>Status</th>
+                        <th>Score</th>
+                        <th>Experience</th>
+                        <th>Nationality</th>
+                        <th>Mobility</th>
+                    </tr>
+                </thead>
+            </table>
+            <p class="result"></p>
+        </div>
+    </div>
+{% endblock body %}
