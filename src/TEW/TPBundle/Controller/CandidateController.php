@@ -404,7 +404,7 @@ class CandidateController extends Controller {
      * @return \Symfony\Component\Form\Form The form
      */
     private function createCreateForm(Candidate $entity) {
-        $form = $this->createForm(new CandidateType($this->getUser()->getCompany()->getId()), $entity, array(
+        $form = $this->createForm(new CandidateType($this->get('security.context'), $this->getUser()->getCompany()->getId()), $entity, array(
             'action' => $this->generateUrl('tew_candidate_create'),
             'method' => 'POST',
         ));
@@ -583,7 +583,7 @@ class CandidateController extends Controller {
      * @return \Symfony\Component\Form\Form The form
      */
     private function createEditForm(Candidate $entity) {
-        $form = $this->createForm(new CandidateType($entity->getOwningcompany()->getId()), $entity, array(
+        $form = $this->createForm(new CandidateType($this->get('security.context'), $entity->getOwningcompany()->getId()), $entity, array(
             'action' => $this->generateUrl('tew_candidate_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));

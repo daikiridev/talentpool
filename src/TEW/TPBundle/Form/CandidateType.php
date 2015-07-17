@@ -5,13 +5,17 @@ namespace TEW\TPBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Security\Core\SecurityContext;
 
 class CandidateType extends AbstractType
 {
     protected $companyId;
+    private $securityContext;
+
     
-    public function __construct($id=null)
+    public function __construct(SecurityContext $securityContext, $id=null)
     {
+        $this->securityContext = $securityContext;
         $this->companyId=$id;
     }
     
@@ -129,7 +133,7 @@ class CandidateType extends AbstractType
                 'class' => 'TEWTPBundle:CdteFunction',
                 'attr' => array('class' => 'select2 form-control'),
                 'empty_value' => 'All',
-                'property' => 'indentedName',
+//                'property' => 'indentedName',
                 'multiple' => false,
                 'expanded' => false ,
                 'query_builder' => 
@@ -193,7 +197,7 @@ class CandidateType extends AbstractType
                 'class' => 'TEWTPBundle:CdteFunction',
                 'attr' => array('class' => 'select2 form-control'),
                 'empty_value' => 'All',
-                'property' => 'indentedName',
+//                'property' => 'indentedName',
                 'multiple' => false,
                 'expanded' => false ,
                 'query_builder' => function (\Gedmo\Tree\Entity\Repository\NestedTreeRepository $r) use ($id)
@@ -220,7 +224,7 @@ class CandidateType extends AbstractType
                 'class' => 'TEWTPBundle:CdteFunction',
                 'attr' => array('class' => 'select2 form-control'),
                 'empty_value' => 'All',
-                'property' => 'indentedName',
+//                'property' => 'indentedName',
                 'multiple' => false,
                 'expanded' => false ,
                 'query_builder' => function (\Gedmo\Tree\Entity\Repository\NestedTreeRepository $r) use ($id)
@@ -247,7 +251,7 @@ class CandidateType extends AbstractType
                 'class' => 'TEWTPBundle:CdteFunction',
                 'attr' => array('class' => 'select2 form-control'),
                 'empty_value' => 'All',
-                'property' => 'indentedName',
+//                'property' => 'indentedName',
                 'multiple' => false,
                 'expanded' => false ,
                 'query_builder' => function (\Gedmo\Tree\Entity\Repository\NestedTreeRepository $r) use ($id)
@@ -291,6 +295,17 @@ class CandidateType extends AbstractType
                 'multiple' => true,
                 'expanded' => false, // checkboxes?
                 'attr' => array('class' => 'select2', 'style' => 'width:300px'),
+                'query_builder' => function (\TEW\TPBundle\Entity\TalentPoolRepository $r) use ($id)
+                    {
+                        return ($id && !$this->securityContext->isGranted('ROLE_MASTER_EXECUTOR'))?
+                                // BEWARE: TPs owned by the current user are missing!
+                                $r->createQueryBuilder('tp')
+                                ->join('tp.companies', 'cie')
+                                ->where('cie.id = :id')
+                                ->setParameter('id', $id)
+                                :
+                                $r->createQueryBuilder('tp');
+                    }
             ))
             ->add('owningcompany', 'entity', array( 
                 'label' => 'Owner',
