@@ -217,7 +217,7 @@ class CandidateType extends AbstractType
             ->add('targetLevel1', 'entity', array(
                 'class' => 'TEWTPBundle:CdteLevel',
                 'required' => false,
-                'label' => 'Target level #1',
+                'label' => 'Level',
                 'empty_value' => 'All',
                 'attr' => array('class' => 'select2'),           
             ))
@@ -244,7 +244,7 @@ class CandidateType extends AbstractType
             ->add('targetLevel2', 'entity', array(
                 'class' => 'TEWTPBundle:CdteLevel',
                 'required' => false,
-                'label' => 'Target level #2',
+                'label' => 'Level',
                 'empty_value' => 'All',
                 'attr' => array('class' => 'select2'),                   
             ))   
@@ -271,7 +271,7 @@ class CandidateType extends AbstractType
             ->add('targetLevel3', 'entity', array(
                 'class' => 'TEWTPBundle:CdteLevel',
                 'required' => false,
-                'label' => 'Target level #3',
+                'label' => 'Level',
                 'empty_value' => 'All',
                 'attr' => array('class' => 'select2'),                    
             ))
@@ -351,14 +351,14 @@ class CandidateType extends AbstractType
                     }
             ))
             ->add('resume', 'sonata_media_type', array(
-                'label' => 'resume with contacts',
+                'label' => 'Resume with contacts',
                 'required' => false,
                 'provider' => 'sonata.media.provider.file',
                 'context'  => 'candidate',
                 'attr' => array('class' => 'span16') // doesn't work
             ))
             ->add('anonymousResume', 'sonata_media_type', array(
-                'label' => false,
+                'label' => 'Anonymous resume',
                 'required' => false,
                 'provider' => 'sonata.media.provider.file',
                 'context'  => 'candidate',
