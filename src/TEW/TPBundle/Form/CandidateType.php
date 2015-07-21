@@ -31,14 +31,16 @@ class CandidateType extends AbstractType
             ->add('globalComment', 'textarea', array(
                 'label' => 'General comment',
                 'required' => false,
+                'label_attr' => array('style' => 'color: green'),
             ))
             ->add('globalScore', 'choice', array(
-                'label' => 'Score',
+                'label' => 'Score from interview',
                 'required' => false,
                 'choices' => range(0,5),
                 'empty_value'=> '',
                 //'expanded' => true, 'multiple' => false, // radio button
                 'attr' => array('class' => 'form-control'),
+                'label_attr' => array('style' => 'color: green'),
             ))
 //            ->add('active', 'checkbox', array(
 //                'label' => 'visible',
@@ -181,7 +183,7 @@ class CandidateType extends AbstractType
 //                //'label_attr' => array('class' => 'col-md-2')
 //            ))
             ->add('bonusbenefits', 'text', array(
-                'label' => 'Additional',
+                'label' => 'Salary: additional information',
                 'attr' => array('class' => 'form-control', 'size' => 80),
                 'required' => false,
             ))
@@ -193,9 +195,10 @@ class CandidateType extends AbstractType
             ))
             ->add('targetFunction1', 'entity', array(
                 'required' => false,
-                'label' => 'Target function #1',
+                'label' => 'Target position #1',
                 'class' => 'TEWTPBundle:CdteFunction',
                 'attr' => array('class' => 'select2 form-control'),
+                'label_attr' => array('style' => 'color: green'),
                 'empty_value' => 'All',
 //                'property' => 'indentedName',
                 'multiple' => false,
@@ -220,7 +223,7 @@ class CandidateType extends AbstractType
             ))
             ->add('targetFunction2', 'entity', array(
                 'required' => false,
-                'label' => 'Target function #2',
+                'label' => 'Target position #2',
                 'class' => 'TEWTPBundle:CdteFunction',
                 'attr' => array('class' => 'select2 form-control'),
                 'empty_value' => 'All',
@@ -247,7 +250,7 @@ class CandidateType extends AbstractType
             ))   
             ->add('targetFunction3', 'entity', array(
                 'required' => false,
-                'label' => 'Target function #3',
+                'label' => 'Target position #3',
                 'class' => 'TEWTPBundle:CdteFunction',
                 'attr' => array('class' => 'select2 form-control'),
                 'empty_value' => 'All',
@@ -274,6 +277,7 @@ class CandidateType extends AbstractType
             ))
             ->add('mobilities', 'modalcollection', array(
                 'attr' => array('class' => 'form-collection'), // in order to handle jquery functions of tew.candidate.edit.js
+                'label_attr' => array('style' => 'color: green'),
                 'type' => new CdteMobilityType(),
                 'required' => false,
                 'allow_add' => true, // allows to add as many locations as we want
@@ -283,6 +287,7 @@ class CandidateType extends AbstractType
             ->add('languagesSkills', 'modalcollection', array(
                 'label' => 'Languages',
                 'attr' => array('class' => 'form-collection'), // in order to handle jquery functions of tew.candidate.edit.js
+                'label_attr' => array('style' => 'color: green'),
                 'type' => new CdteLanguageType(),
                 'required' => false,
                 'allow_add' => true, // allows to add as many comments as we want
@@ -330,6 +335,7 @@ class CandidateType extends AbstractType
                 'label' => 'Keywords',
                 'class' => 'TEWTPBundle:CdteKeyword',
                 'attr' => array('class' => 'select2 form-control', 'style' => 'width:300px'),
+                'label_attr' => array('style' => 'color: green'),
                 'empty_value' => 'All',
                 'multiple' => true,
                 'expanded' => false, // checkboxes?
@@ -345,7 +351,7 @@ class CandidateType extends AbstractType
                     }
             ))
             ->add('resume', 'sonata_media_type', array(
-                'label' => false,
+                'label' => 'resume with contacts',
                 'required' => false,
                 'provider' => 'sonata.media.provider.file',
                 'context'  => 'candidate',
