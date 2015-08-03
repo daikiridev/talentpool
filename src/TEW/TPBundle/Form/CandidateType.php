@@ -31,7 +31,7 @@ class CandidateType extends AbstractType
             ->add('globalComment', 'textarea', array(
                 'label' => 'General comment',
                 'required' => false,
-                'label_attr' => array('style' => 'color: green'),
+                'label_attr' => array('style' => 'color: #5c5'),
             ))
             ->add('globalScore', 'choice', array(
                 'label' => 'Score from interview',
@@ -40,7 +40,7 @@ class CandidateType extends AbstractType
                 'empty_value'=> '',
                 //'expanded' => true, 'multiple' => false, // radio button
                 'attr' => array('class' => 'form-control'),
-                'label_attr' => array('style' => 'color: green'),
+                'label_attr' => array('style' => 'color: #5c5'),
             ))
 //            ->add('active', 'checkbox', array(
 //                'label' => 'visible',
@@ -94,7 +94,7 @@ class CandidateType extends AbstractType
                 'required' => false,
                 'empty_value' => 'Select',
                 'label' => 'Passport country',
-                'label_attr' => array('style' => 'color: green'),
+                'label_attr' => array('style' => 'color: #5c5'),
                 'attr' => array('class' => 'select2'),
             ))
             ->add('nationality2', 'country', array(
@@ -105,7 +105,7 @@ class CandidateType extends AbstractType
             ))
             ->add('email1', 'email',  array(
                 'required' => false,
-                'label_attr' => array('style' => 'color: green'),
+                'label_attr' => array('style' => 'color: #5c5'),
                 'attr' => array('placeholder'=>'Email1', 'class' => 'form-control')
             ))
             ->add('email2', 'email',  array(
@@ -134,7 +134,7 @@ class CandidateType extends AbstractType
                 'label' => 'Current function',
                 'class' => 'TEWTPBundle:CdteFunction',
                 'attr' => array('class' => 'select2 form-control'),
-                'empty_value' => 'All',
+//                'empty_value' => 'All',
 //                'property' => 'indentedName',
                 'multiple' => false,
                 'expanded' => false ,
@@ -153,7 +153,7 @@ class CandidateType extends AbstractType
             ->add('level', 'entity', array(
                 'class' => 'TEWTPBundle:CdteLevel',
                 'label' => 'Current level',
-                'empty_value' => 'All',
+//                'empty_value' => 'All',
                 'attr' => array('class' => 'select2  form-control'),
                 //'label_attr' => array('class' => 'col-md-2')
             ))
@@ -198,8 +198,8 @@ class CandidateType extends AbstractType
                 'label' => 'Target position #1',
                 'class' => 'TEWTPBundle:CdteFunction',
                 'attr' => array('class' => 'select2 form-control'),
-                'label_attr' => array('style' => 'color: green'),
-                'empty_value' => 'All',
+                'label_attr' => array('style' => 'color: #5c5'),
+//                'empty_value' => 'All',
 //                'property' => 'indentedName',
                 'multiple' => false,
                 'expanded' => false ,
@@ -218,7 +218,7 @@ class CandidateType extends AbstractType
                 'class' => 'TEWTPBundle:CdteLevel',
                 'required' => false,
                 'label' => 'Level',
-                'empty_value' => 'All',
+//                'empty_value' => 'All',
                 'attr' => array('class' => 'select2'),           
             ))
             ->add('targetFunction2', 'entity', array(
@@ -226,7 +226,7 @@ class CandidateType extends AbstractType
                 'label' => 'Target position #2',
                 'class' => 'TEWTPBundle:CdteFunction',
                 'attr' => array('class' => 'select2 form-control'),
-                'empty_value' => 'All',
+//                'empty_value' => 'All',
 //                'property' => 'indentedName',
                 'multiple' => false,
                 'expanded' => false ,
@@ -245,7 +245,7 @@ class CandidateType extends AbstractType
                 'class' => 'TEWTPBundle:CdteLevel',
                 'required' => false,
                 'label' => 'Level',
-                'empty_value' => 'All',
+//                'empty_value' => 'All',
                 'attr' => array('class' => 'select2'),                   
             ))   
             ->add('targetFunction3', 'entity', array(
@@ -253,7 +253,7 @@ class CandidateType extends AbstractType
                 'label' => 'Target position #3',
                 'class' => 'TEWTPBundle:CdteFunction',
                 'attr' => array('class' => 'select2 form-control'),
-                'empty_value' => 'All',
+//                'empty_value' => 'All',
 //                'property' => 'indentedName',
                 'multiple' => false,
                 'expanded' => false ,
@@ -272,12 +272,12 @@ class CandidateType extends AbstractType
                 'class' => 'TEWTPBundle:CdteLevel',
                 'required' => false,
                 'label' => 'Level',
-                'empty_value' => 'All',
+//                'empty_value' => 'All',
                 'attr' => array('class' => 'select2'),                    
             ))
             ->add('mobilities', 'modalcollection', array(
                 'attr' => array('class' => 'form-collection'), // in order to handle jquery functions of tew.candidate.edit.js
-                'label_attr' => array('style' => 'color: green'),
+                'label_attr' => array('style' => 'color: #5c5'),
                 'type' => new CdteMobilityType(),
                 'required' => false,
                 'allow_add' => true, // allows to add as many locations as we want
@@ -287,7 +287,7 @@ class CandidateType extends AbstractType
             ->add('languagesSkills', 'modalcollection', array(
                 'label' => 'Languages',
                 'attr' => array('class' => 'form-collection'), // in order to handle jquery functions of tew.candidate.edit.js
-                'label_attr' => array('style' => 'color: green'),
+                'label_attr' => array('style' => 'color: #5c5'),
                 'type' => new CdteLanguageType(),
                 'required' => false,
                 'allow_add' => true, // allows to add as many comments as we want
@@ -335,7 +335,7 @@ class CandidateType extends AbstractType
                 'label' => 'Keywords',
                 'class' => 'TEWTPBundle:CdteKeyword',
                 'attr' => array('class' => 'select2 form-control', 'style' => 'width:300px'),
-                'label_attr' => array('style' => 'color: green'),
+                'label_attr' => array('style' => 'color: #5c5'),
                 'empty_value' => 'All',
                 'multiple' => true,
                 'expanded' => false, // checkboxes?

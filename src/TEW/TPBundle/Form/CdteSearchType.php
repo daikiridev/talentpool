@@ -24,10 +24,10 @@ class CdteSearchType extends AbstractType
         $id = $this->companyId;
         
         $builder
-            ->add('invisible', 'checkbox', array(
-                'required' => false,
-                //'attr' => array('class' => 'form-control'),
-            ))
+//            ->add('invisible', 'checkbox', array(
+//                'required' => false,
+//                //'attr' => array('class' => 'form-control'),
+//            ))
             ->add('alert', 'checkbox', array(
                 'required' => false,
                 //'attr' => array('class' => 'form-control'),
@@ -47,7 +47,7 @@ class CdteSearchType extends AbstractType
                 'label' => 'Current function',
                 'class' => 'TEWTPBundle:CdteFunction',
                 'attr' => array('class' => 'select2 form-control'),
-//                'empty_value' => 'All',
+                'empty_value' => 'All',
                 'property' => 'indentedName',
                 'multiple' => false,
                 'expanded' => false ,
@@ -66,7 +66,7 @@ class CdteSearchType extends AbstractType
                 'required' => false,
                 'class' => 'TEWTPBundle:CdteLevel',
                 'label' => 'Current level',
-//                'empty_value' => 'All',
+                'empty_value' => 'All',
                 'attr' => array('class' => 'select2  form-control'),
                 //'label_attr' => array('class' => 'col-md-2')
             ))
@@ -74,15 +74,34 @@ class CdteSearchType extends AbstractType
                 'required' => false,
                 'label' => 'Experience (yrs)',
                 'choices' => array_combine(range(0, 50), array_map(function($y) {return ">$y"; }, range(0, 50))),
-//                'empty_value'=> 'All',
+                'empty_value'=> 'All',
                 'attr' => array('class' => 'form-control'),
                 //'label_attr' => array('class' => 'col-md-2')
+            ))
+            ->add('keywords', 'entity', array(
+                'required' => false,
+                'label' => 'Keywords',
+                'class' => 'TEWTPBundle:CdteKeyword',
+                'attr' => array('class' => 'select2 form-control', 'style' => 'width:300px'),
+                'empty_value' => 'All',
+                'multiple' => true,
+                'expanded' => false ,
+//                'query_builder' => function (\Gedmo\Tree\Entity\Repository\NestedTreeRepository $r)
+//                    {
+//                        return $r->getChildrenQueryBuilder(null, null, 'name', 'asc', false);
+//                    }
+                'query_builder' => function(\TEW\TPBundle\Entity\CdteKeywordRepository $er) use ($id) {
+                    return $er->createQueryBuilder('kw')
+                                ->join('kw.companies', 'cie')
+                                ->where('cie.id = :id')
+                                ->setParameter('id', $id);
+                },
             ))
             ->add("owningcompany", 'entity', array(
                 'required' => false,
                 'class' => 'TEWTPBundle:Company',
                 'label' => 'Owner',
-//                'empty_value' => 'All',
+                'empty_value' => 'All',
                 'attr' => array('class' => 'select2  form-control'),
                 //'label_attr' => array('class' => 'col-md-2')
             ))

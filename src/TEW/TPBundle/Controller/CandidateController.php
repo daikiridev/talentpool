@@ -150,6 +150,16 @@ class CandidateController extends Controller {
                             $filterDetails[$key] = ' in ('.implode(', ',$statuses).')';
                         }
                         break;
+                    case 'keywords':
+                        if (count($value)>0) {
+                            $qb->join('c.keywords', 'kwds');
+                            foreach($value as $kw) {
+                                $keywords[] = $kw->getId();
+                            }
+                            $qb->andWhere('kwds.id IN (:ids)')->setParameter('ids', $keywords);
+                            $filterDetails[$key] = ' in ('.implode(', ',$keywords).')';
+                        }
+                        break;
                 }   
             }
             // we add access restrictions

@@ -1222,6 +1222,20 @@ class Candidate implements Taggable
         if ($this->targetFunction3) { $result[] = $this->targetFunction3; }
         return $result;
     }
+    
+    /**
+     * Returns the collection of functions
+     *
+     * @return Doctrine\Common\Collections\Collection
+     */
+    public function getTargetPositions()
+    {
+        $result = new ArrayCollection();
+        $result[1] = array($this->targetFunction1, $this->targetLevel1);
+        $result[2] = array($this->targetFunction2, $this->targetLevel2);
+        $result[3] = array($this->targetFunction3, $this->targetLevel3);
+        return $result;
+    }
 
     /**
      * Set active

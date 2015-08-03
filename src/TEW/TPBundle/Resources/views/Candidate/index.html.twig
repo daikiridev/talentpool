@@ -32,6 +32,7 @@
                     {"bSearchable": true, "bSortable": false}, // Target functions
                     {"bSearchable": true, "bSortable": false}, // Talent pools
                     {"bSearchable": true, "bSortable": false}, // Tags
+                    {"bSearchable": true, "bSortable": false}, // keywords
                     {"bSearchable": true}, // Added on
                     {"bSearchable": false, "bSortable": false} // Actions     
                 ]
@@ -68,9 +69,10 @@
                 <th>Curr. Pos.</th>
                 <th>Passport country</th>
                 <th>Mobility</th>
-                <th>Target functions</th>
+                <th>Target positions</th>
                 <th>Talent pools / avg score</th>
                 <th>Tags</th>
+                <th>Keywords</th>
                 <th>Entry date</th>
                 <th width="110">Actions</th>
             </tr>
@@ -132,10 +134,21 @@
                                 {% endfor %}
                             </small>
                         </td>
+                        {#
                         <td>
                             <small>
                                 {% for func in entity.targetFunctions %}
                                     <span class='tag'>{{ func }}</span>
+                                {% endfor %}
+                            </small>
+                        </td>
+                        #}
+                        <td>
+                            <small>
+                                {% for pos in entity.targetPositions %}
+                                    {% if pos[0] or pos[1] %}
+                                    <span class='tag'>{{ pos[0] }} {{ pos[1] }}</span>
+                                    {% endif %}
                                 {% endfor %}
                             </small>
                         </td>
@@ -153,6 +166,13 @@
                             <small>
                                 {% for tag in entity.tags %}
                                     <span class='tag'>{{ tag }}</span>
+                                {% endfor %}
+                            </small>
+                        </td>
+                        <td>
+                            <small>
+                                {% for kw in entity.keywords %}
+                                    <span class='tag'>{{ kw }}</span>
                                 {% endfor %}
                             </small>
                         </td>
