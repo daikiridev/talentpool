@@ -26,12 +26,15 @@
                     {"bSearchable": false, "bSortable": false}, // Check
                     {"bSearchable": false, "bSortable": false}, // Pictos
                     {"bSearchable": true}, // Name
-                    {"bSearchable": true}, // Current position
+                    {"bSearchable": true}, // Current function
+                    {"bSearchable": true}, // Current level
                     {"bSearchable": true, "bSortable": false}, // Nationality
                     {"bSearchable": true, "bSortable": false}, // Mobilities
-                    {"bSearchable": true, "bSortable": false}, // Target functions
                     {"bSearchable": true, "bSortable": false}, // Talent pools
+                    {"bSearchable": true, "bSortable": false}, // Target functions / levels                
+                    {% if 'faurecia' not in (app.user.company|lower) %}
                     {"bSearchable": true, "bSortable": false}, // Tags
+                    {% endif %}
                     {"bSearchable": true, "bSortable": false}, // keywords
                     {"bSearchable": true}, // Added on
                     {"bSearchable": false, "bSortable": false} // Actions     
@@ -64,14 +67,17 @@
         <thead>
             <tr>
                 <th><i class="icon icon-unchecked checkall"></i></th>
-                <th>&nbsp;</th>
+                <th>Status</th>
                 <th>Cdte / init. score</th>
-                <th>Curr. Pos.</th>
-                <th>Passport country</th>
+                <th>Current function / years exp</th>
+                <th>Current level</th>
+                <th>Nationality</th>
                 <th>Mobility</th>
-                <th>Target positions</th>
                 <th>Talent pools / avg score</th>
+                <th>Target functions / levels</th>
+                {% if 'faurecia' not in (app.user.company|lower) %}
                 <th>Tags</th>
+                {% endif %}
                 <th>Keywords</th>
                 <th>Entry date</th>
                 <th width="110">Actions</th>
@@ -125,12 +131,23 @@
                         {#
                         <td>{{ entity.age }}</td>
                         #}
-                        <td>{{ entity.function }} {{ entity.level }} {{ entity.ageExperience }}&nbsp;yrs</td>
+                        <td>{{ entity.function }} {{ entity.ageExperience }}&nbsp;yrs</td>
+                        <td>{{ entity.level }} </td>
                         <td>{{ entity.nationality1|country }} {{ entity.nationality2|country }}</td>
                         <td>
                             <small>
                                 {% for mob in entity.mobilities %}
                                     <span class='tag'>{{ mob }}</span>
+                                {% endfor %}
+                            </small>
+                        </td>
+                        <td>
+                            <small>
+                                {% for tp in entity.talentpools %}
+                                    {% set visible_tp = is_granted("ROLE_TEW_OBJECT_VIEW", tp) or is_granted('ROLE_STD_EXECUTOR') %}
+                                    {% if visible_tp %}
+                                        <span class='tag'>{{ tp }} {{ entity.averageScore(tp)>0?entity.comments|commentsByTalentpool(tp)|commentsAverageScoreStars }}</span>
+                                    {% endif %}
                                 {% endfor %}
                             </small>
                         </td>
@@ -147,21 +164,13 @@
                             <small>
                                 {% for pos in entity.targetPositions %}
                                     {% if pos[0] or pos[1] %}
-                                    <span class='tag'>{{ pos[0] }} {{ pos[1] }}</span>
+                                    <span class='tag'>{{ pos[0] }} {{ pos[1] and pos[0]?' / '~pos[1]:pos[1] }}</span>
                                     {% endif %}
                                 {% endfor %}
                             </small>
                         </td>
-                        <td>
-                            <small>
-                                {% for tp in entity.talentpools %}
-                                    {% set visible_tp = is_granted("ROLE_TEW_OBJECT_VIEW", tp) or is_granted('ROLE_STD_EXECUTOR') %}
-                                    {% if visible_tp %}
-                                        <span class='tag'>{{ tp }} {{ entity.averageScore(tp)>0?entity.comments|commentsByTalentpool(tp)|commentsAverageScoreStars }}</span>
-                                    {% endif %}
-                                {% endfor %}
-                            </small>
-                        </td>
+                        
+                        {% if 'faurecia' not in (app.user.company|lower) %}
                         <td>
                             <small>
                                 {% for tag in entity.tags %}
@@ -169,6 +178,7 @@
                                 {% endfor %}
                             </small>
                         </td>
+                        {% endif %}
                         <td>
                             <small>
                                 {% for kw in entity.keywords %}

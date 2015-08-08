@@ -149,8 +149,11 @@
                     <fieldset class="col-lg-12">
                         <legend>Status</legend>
                         <div class="col-lg-3">
-                            <span><i class="icon icon-bell" style="color:red; cursor:help" title="alert"></i></span>
+                            <span style='cursor:help' data-delay='{ "show": 500, "hide": 200 }' data-placement='right'  data-trigger='hover' data-toggle='tooltip'
+                                  title='alert is an invitation to look at this talent profile'>
+                                <i class="icon icon-bell" style="color:red; cursor:help"></i>
                             {{ form_widget(this_form.alert) }}
+                            </span>
                         </div>
                         {#
                         <div class="col-lg-3">

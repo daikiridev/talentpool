@@ -16,10 +16,11 @@ class CdteLanguageType extends AbstractType
     {
         $builder
             ->add('language', 'language', array(
-                'attr' => array('class' => 'select2')
+                'attr' => array('class' => 'select2'),
+                'preferred_choices' => array('en', 'fr', 'de', 'zh'),
             ))
             ->add('skill', 'choice', array(
-                'choices' => array('none','beginner','intermediate','fluent', 'mother tongue'),
+                'choices' => array('','beginner','intermediate','fluent', 'mother tongue'),
                 //'attr' => array('class' => 'select2')
             ))
         ;

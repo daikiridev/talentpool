@@ -57,7 +57,7 @@ class CdteCommentType extends AbstractType
             //->add('comment', 'ckeditor', array('config_name' => 'user_config'))
             ->add('comment', 'textarea', array(
                 'label' => 'Detailed comment',
-                'required' => false,
+                'required' => true,
             ))
         ;
     }

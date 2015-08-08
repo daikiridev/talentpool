@@ -49,7 +49,7 @@
                         </tr>
                         {% if entity.globalScore>=0 %}
                             <tr>
-                                <th>Entry score</th>
+                                <th>Initial score</th>
                                 <td data-toggle="popover" data-placement="bottom" data-content="{{ entity.globalComment }}" data-delay='{ "show": 500, "hide": 200 }' data-html="true" style="cursor:help" data-trigger='hover'>
                                     {{ entity.globalScore|stars }}
                                 </td>
@@ -75,12 +75,15 @@
                             </td>
                         </tr>
                         <tr>
+                        {% if entity.keywords|length>0 %}
                         <th>Keywords</th>
                         <td>{% for jk in entity.keywords %}
                             <span class="tag">{{ jk }}</span>
                             {% endfor %}
                             </td>
                         </tr>
+                        {% endif %}
+                        {% if entity.income %}
                         <tr>
                             <th>Income</th>
                             <td class="incomedata">
@@ -100,6 +103,7 @@
                                 {{ entity.bonusbenefits?'. Additional: '~entity.bonusbenefits }}
                             </td>
                         </tr>
+                        {% endif %}
                         {% if entity.targetFunction1 or entity.targetFunction3 or entity.targetFunction3 %}
                             <tr>
                                 <th>Target position(s)</th>
@@ -110,7 +114,7 @@
                                 </td>
                             </tr>
                         {% endif %}
-                        {% if entity.languagesSkills %}
+                        {% if entity.languagesSkills|length>0 %}
                             <tr>
                                 <th>Languages</th>
                                 <td>
@@ -121,77 +125,83 @@
                                 </td>
                             </tr>
                         {% endif %}
+                        {% if entity.nationality1 %}
                         <tr>
-                            <th>Passport country</th>
+                            <th>Nationality</th>
                             <td>{{ entity.nationality1|country }} {{ entity.nationality2|country }}</td>
                         </tr>
-                        {% if entity.mobilities %}
+                        {% endif %}
+                        {% if entity.mobilities|length>0 %}
                             <tr>
                                 <th>Mobility</th>
                                 <td>{{ entity.mobilities|join(' / ') }}</td>
                             </tr>
                         {% endif %}
+                        {% if entity.tags|length>0 %}
                         <tr>
                             <th>Tags</th>
                             <td>{% for tag in entity.tags %}
                                 <span class="tag">{{ tag }}</span>
                                 {% endfor %}
+                            </td>
+                        </tr>
+                        {% endif %}
+                        {% if not anonymous %}
+                            <tr>
+                                <th>Contact</th>
+                                <td>{{ entity.email1?entity.email1|mail }} {{ entity.email2?entity.email2|mail }} {{ entity.phone1?' phone1: '~entity.phone1 }} {{ entity.phone2?' phone2: '~entity.phone2 }}</td>
+                            </tr>
+                            {% if entity.addresses|length>0 %}
+                            <tr>
+                                <th>Addresses</th>
+                                <td>
+                                    {% for address in entity.addresses %}
+                                        <div>{{ address }}: {{ anonymous?'':address.street1 }} {{ anonymous?'':address.street2 }} {{ anonymous?'':address.zip }} {{ anonymous?'':address.city }} {{ address.country }}</div>
+                                    {% endfor %}
                                 </td>
                             </tr>
-                            {% if not anonymous %}
-                                <tr>
-                                    <th>Contact</th>
-                                    <td>{{ entity.email1?entity.email1|mail }} {{ entity.email2?entity.email2|mail }} {{ entity.phone1?' phone1: '~entity.phone1 }} {{ entity.phone2?' phone2: '~entity.phone2 }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Addresses</th>
-                                    <td>
-                                        {% for address in entity.addresses %}
-                                            <div>{{ address }}: {{ anonymous?'':address.street1 }} {{ anonymous?'':address.street2 }} {{ anonymous?'':address.zip }} {{ anonymous?'':address.city }} {{ address.country }}</div>
-                                        {% endfor %}
-                                    </td>
-                                </tr>
                             {% endif %}
-                            {% if not anonymous and entity.resume %}
-                                <tr>
-                                    <th>Resume</th>
-                                    <td>
-                                        <a href="{% path entity.resume, 'reference' %}" target="_blank">
-                                            {% if entity.resume.contentType=='application/pdf' %}
-                                                <img width="32" src="{{ asset('bundles/tewtp/images/icons/pdf.png') }}">
-                                            {% elseif entity.resume.contentType=='application/msword' %}
-                                                <img width="32" src="{{ asset('bundles/tewtp/images/icons/word.png') }}">
-                                            {% endif %}
-                                            {{ entity.resume }}
-                                        </a>
-                                    </td>
-                                </tr>
-                            {% endif %}
-                            {% if entity.anonymousResume and (anonymous or is_granted('ROLE_MASTER_EXECUTOR'))  %}
-                                <tr>
-                                    <th>{{is_granted('ROLE_MASTER_EXECUTOR')?'Anonymous '}}Resume</th>
-                                    <td>
-                                        <a href="{% path entity.anonymousResume, 'reference' %}" target="_blank">
-                                            {% if entity.anonymousResume.contentType=='application/pdf' %}
-                                                <img width="32" src="{{ asset('bundles/tewtp/images/icons/pdf.png') }}">
-                                            {% elseif entity.anonymousResume.contentType=='application/msword' %}
-                                                <img width="32" src="{{ asset('bundles/tewtp/images/icons/word.png') }}">
-                                            {% endif %}
-                                            {{ entity.anonymousResume }}
-                                        </a>
-                                    </td>
-                                </tr>
-                            {% endif %}
-                            {% if not anonymous %}
-                                <tr>
-                                    <th>Created by</th>
-                                    <td>{{ entity.creator }} on {{ entity.createdAt|date('D d M Y \\a\\t g:ia', "Europe/Paris") }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Owner</th>
-                                    <td>{{ entity.owningcompany }}</td>
-                                </tr>
-                            {% endif %}
+                        {% endif %}
+                        {% if not anonymous and entity.resume %}
+                            <tr>
+                                <th>Resume</th>
+                                <td>
+                                    <a href="{% path entity.resume, 'reference' %}" target="_blank">
+                                        {% if entity.resume.contentType=='application/pdf' %}
+                                            <img width="32" src="{{ asset('bundles/tewtp/images/icons/pdf.png') }}">
+                                        {% elseif entity.resume.contentType=='application/msword' %}
+                                            <img width="32" src="{{ asset('bundles/tewtp/images/icons/word.png') }}">
+                                        {% endif %}
+                                        {{ entity.resume }}
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endif %}
+                        {% if entity.anonymousResume and (anonymous or is_granted('ROLE_MASTER_EXECUTOR'))  %}
+                            <tr>
+                                <th>{{is_granted('ROLE_MASTER_EXECUTOR')?'Anonymous '}}Resume</th>
+                                <td>
+                                    <a href="{% path entity.anonymousResume, 'reference' %}" target="_blank">
+                                        {% if entity.anonymousResume.contentType=='application/pdf' %}
+                                            <img width="32" src="{{ asset('bundles/tewtp/images/icons/pdf.png') }}">
+                                        {% elseif entity.anonymousResume.contentType=='application/msword' %}
+                                            <img width="32" src="{{ asset('bundles/tewtp/images/icons/word.png') }}">
+                                        {% endif %}
+                                        {{ entity.anonymousResume }}
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endif %}
+                        {% if not anonymous %}
+                            <tr>
+                                <th>Created by</th>
+                                <td>{{ entity.creator }} on {{ entity.createdAt|date('D d M Y \\a\\t g:ia', "Europe/Paris") }}</td>
+                            </tr>
+                            <tr>
+                                <th>Owner</th>
+                                <td>{{ entity.owningcompany }}</td>
+                            </tr>
+                        {% endif %}
                         </tbody>
                     </table>
                 </div>
