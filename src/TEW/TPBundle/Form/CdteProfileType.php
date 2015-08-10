@@ -25,7 +25,7 @@ class CdteProfileType extends AbstractType
             ->add('function', 'entity', array(
                 'required' => false,
                 'class' => 'TEWTPBundle:CdteFunction',
-                'attr' => array('class' => 'select2 form-control'),
+                'attr' => array('class' => 'select2 form-control', 'style' => 'width:300px'),
                 'empty_value' => 'All',
                 'property' => 'indentedName',
                 'multiple' => false,
@@ -43,7 +43,7 @@ class CdteProfileType extends AbstractType
             ->add('level', 'entity', array(
                 'required' => false,
                 'class' => 'TEWTPBundle:CdteLevel',
-                'attr' => array('class' => 'select2 form-control'),
+                'attr' => array('class' => 'select2 form-control', 'style' => 'width:300px'),
                 'empty_value' => 'All',
                 'property' => 'name',
                 'multiple' => false,

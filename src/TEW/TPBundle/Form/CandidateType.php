@@ -30,17 +30,17 @@ class CandidateType extends AbstractType
             //->add('globalComment', 'ckeditor', array('config_name' => 'user_config'))
             ->add('globalComment', 'textarea', array(
                 'label' => 'General comment',
-                'required' => false,
-                'label_attr' => array('style' => 'color: #5c5'),
+                'required' => true,
+//                'label_attr' => array('style' => 'color: #5c5'),
             ))
             ->add('globalScore', 'choice', array(
                 'label' => 'Score from interview',
-                'required' => false,
+                'required' => true,
                 'choices' => range(0,5),
                 'empty_value'=> '',
                 //'expanded' => true, 'multiple' => false, // radio button
                 'attr' => array('class' => 'form-control'),
-                'label_attr' => array('style' => 'color: #5c5'),
+//                'label_attr' => array('style' => 'color: #5c5'),
             ))
 //            ->add('active', 'checkbox', array(
 //                'label' => 'visible',
@@ -91,10 +91,10 @@ class CandidateType extends AbstractType
                 'required' => false,
             ))
             ->add('nationality1', 'country', array(
-                'required' => false,
+                'required' => true,
                 'empty_value' => 'Select',
                 'label' => 'Nationality',
-                'label_attr' => array('style' => 'color: #5c5'),
+//                'label_attr' => array('style' => 'color: #5c5'),
                 'attr' => array('class' => 'select2'),
             ))
             ->add('nationality2', 'country', array(
@@ -105,7 +105,7 @@ class CandidateType extends AbstractType
             ))
             ->add('email1', 'email',  array(
                 'required' => true,
-                'label_attr' => array('style' => 'color: #5c5'),
+//                'label_attr' => array('style' => 'color: #5c5'),
                 'attr' => array('placeholder'=>'Email1', 'class' => 'form-control')
             ))
             ->add('email2', 'email',  array(
@@ -194,11 +194,11 @@ class CandidateType extends AbstractType
                 'required' => false,
             ))
             ->add('targetFunction1', 'entity', array(
-                'required' => false,
+                'required' => true,
                 'label' => 'Target position #1',
                 'class' => 'TEWTPBundle:CdteFunction',
                 'attr' => array('class' => 'select2 form-control'),
-                'label_attr' => array('style' => 'color: #5c5'),
+//                'label_attr' => array('style' => 'color: #5c5'),
 //                'empty_value' => 'All',
 //                'property' => 'indentedName',
                 'multiple' => false,
@@ -277,7 +277,7 @@ class CandidateType extends AbstractType
             ))
             ->add('mobilities', 'modalcollection', array(
                 'attr' => array('class' => 'form-collection'), // in order to handle jquery functions of tew.candidate.edit.js
-                'label_attr' => array('style' => 'color: #5c5'),
+//                'label_attr' => array('style' => 'color: #5c5'),
                 'type' => new CdteMobilityType(),
                 'required' => false,
                 'allow_add' => true, // allows to add as many locations as we want
@@ -287,7 +287,7 @@ class CandidateType extends AbstractType
             ->add('languagesSkills', 'modalcollection', array(
                 'label' => 'Languages',
                 'attr' => array('class' => 'form-collection'), // in order to handle jquery functions of tew.candidate.edit.js
-                'label_attr' => array('style' => 'color: #5c5'),
+//                'label_attr' => array('style' => 'color: #5c5'),
                 'type' => new CdteLanguageType(),
                 'required' => false,
                 'allow_add' => true, // allows to add as many comments as we want
