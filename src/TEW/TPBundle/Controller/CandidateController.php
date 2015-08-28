@@ -747,6 +747,11 @@ class CandidateController extends Controller {
 //            foreach ($comments as $comment) {
 //                $em->remove($comment);
 //            }
+            // CdteOperations must be programatically removed
+            $operations = $em->getRepository('TEWTPBundle:CdteOperation')->findByCandidate($entity->getId());
+            foreach ($operations as $op) {
+                $em->remove($op);
+            }
             // Adding tagging stuff - see https://github.com/FabienPennequin/FPNTagBundle
             $tagManager = $this->get('fpn_tag.tag_manager');
             $tagManager->deleteTagging($entity);

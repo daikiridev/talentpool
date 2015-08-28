@@ -60,7 +60,7 @@ class CdteOperation
      * @var candidate
      *
      * @ORM\ManyToOne(targetEntity="Candidate")
-     * @ORM\JoinColumn(name="candidate_id", nullable=false)
+     * @ORM\JoinColumn(name="candidate_id", nullable=true)
      */
     private $candidate;
     

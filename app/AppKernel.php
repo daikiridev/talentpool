@@ -58,7 +58,7 @@ class AppKernel extends Kernel
             
             // MISC
             //new AppBundle\AppBundle(),
-            new CoreSphere\ConsoleBundle\CoreSphereConsoleBundle(),
+            //new CoreSphere\ConsoleBundle\CoreSphereConsoleBundle(),
         
             // TEW BUNDLE
             new TEW\TPBundle\TEWTPBundle(),

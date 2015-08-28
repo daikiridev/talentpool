@@ -21,8 +21,6 @@
         "doctrine/doctrine-migrations-bundle": "dev-master",
         "gedmo/doctrine-extensions": "dev-master",
         
-        "coresphere/console-bundle": "dev-master",
-        
         "twig/extensions": "1.2.*",
         
         "symfony/assetic-bundle": "2.3.*",
