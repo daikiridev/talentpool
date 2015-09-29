@@ -54,7 +54,11 @@ class OwnerVoter implements VoterInterface
  
             // ...except for the owner of the object
             if ($object->getOwningCompany()->getId() === $user->getCompany()->getId()) { // the user's company is the same as the object's one
-                return ('ROLE_TEW_OBJECT_DELETE'!==$attribute)?VoterInterface::ACCESS_GRANTED:VoterInterface::ACCESS_DENIED;
+                // an owner can't create nor edit his/her talentpool
+                if (('ROLE_TEW_OBJECT_EDIT'===$attribute || 'ROLE_TEW_OBJECT_CREATE'===$attribute) && "TEW\TPBundle\Entity\TalentPool"===$classname) {
+                    return VoterInterface::ACCESS_DENIED;
+                }
+                else return ('ROLE_TEW_OBJECT_DELETE'!==$attribute)?VoterInterface::ACCESS_GRANTED:VoterInterface::ACCESS_DENIED;
             } else { // The user is not owner but has the role to do it 
                 switch ($attribute) {
                     case "ROLE_TEW_OBJECT_VIEW":
