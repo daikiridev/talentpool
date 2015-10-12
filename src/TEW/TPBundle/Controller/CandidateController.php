@@ -79,7 +79,7 @@ class CandidateController extends Controller {
     public function cdteSearchAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
 
-        $form = $this->createForm(new CdteSearchType($this->getUser()->getCompany()->getId()));
+        $form = $this->createForm(new CdteSearchType($this->get('security.context'), $this->getUser()->getCompany()->getId()));
         $form->handleRequest($request);
         $deleteForms = array();
         if ($form->isValid()){

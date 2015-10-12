@@ -5,13 +5,17 @@ namespace TEW\TPBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Security\Core\SecurityContext;
 
 class CdteSearchType extends AbstractType
 {
     protected $companyId;
+    private $securityContext;
+
     
-    public function __construct($id)
+    public function __construct(SecurityContext $securityContext, $id=null)
     {
+        $this->securityContext = $securityContext;
         $this->companyId=$id;
     }
     
@@ -48,7 +52,7 @@ class CdteSearchType extends AbstractType
                 'class' => 'TEWTPBundle:CdteFunction',
                 'attr' => array('class' => 'select2 form-control'),
                 'empty_value' => 'All',
-                'property' => 'indentedName',
+                'property' => $this->securityContext->isGranted('ROLE_TEW_STD_EXECUTOR')?'indentedName':'name',
                 'multiple' => false,
                 'expanded' => false ,
 //                'query_builder' => function (\Gedmo\Tree\Entity\Repository\NestedTreeRepository $r)
@@ -85,11 +89,7 @@ class CdteSearchType extends AbstractType
                 'attr' => array('class' => 'select2 form-control', 'style' => 'width:300px'),
                 'empty_value' => 'All',
                 'multiple' => true,
-                'expanded' => false ,
-//                'query_builder' => function (\Gedmo\Tree\Entity\Repository\NestedTreeRepository $r)
-//                    {
-//                        return $r->getChildrenQueryBuilder(null, null, 'name', 'asc', false);
-//                    }
+                'expanded' => false,
                 'query_builder' => function(\TEW\TPBundle\Entity\CdteKeywordRepository $er) use ($id) {
                     return $er->createQueryBuilder('kw')
                                 ->join('kw.companies', 'cie')
@@ -104,6 +104,15 @@ class CdteSearchType extends AbstractType
                 'empty_value' => 'All',
                 'attr' => array('class' => 'select2  form-control'),
                 //'label_attr' => array('class' => 'col-md-2')
+                'query_builder' => function (\TEW\TPBundle\Entity\CompanyRepository $r) use ($id)
+                    {
+                        return ($id && !$this->securityContext->isGranted('ROLE_TEW_MASTER_EXECUTOR'))?
+                                $r->createQueryBuilder('cie')
+                                ->where('cie.id = :id')
+                                ->setParameter('id', $id)
+                                :
+                                $r->createQueryBuilder('cie');
+                    }
             ))
 /*
             ->add('firstName', 'text', array(
