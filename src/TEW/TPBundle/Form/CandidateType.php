@@ -302,7 +302,7 @@ class CandidateType extends AbstractType
                 'attr' => array('class' => 'select2', 'style' => 'width:300px'),
                 'query_builder' => function (\TEW\TPBundle\Entity\TalentPoolRepository $r) use ($id)
                     {
-                        return ($id && !$this->securityContext->isGranted('ROLE_MASTER_EXECUTOR'))?
+                        return ($id && !$this->securityContext->isGranted('ROLE_TEW_MASTER_EXECUTOR'))?
                                 // BEWARE: TPs owned by the current user are missing!
                                 $r->createQueryBuilder('tp')
                                 ->join('tp.companies', 'cie')
@@ -319,6 +319,15 @@ class CandidateType extends AbstractType
                 'multiple' => false,
                 'expanded' => false, // checkboxes?
 //                'attr' => array('class' => 'select2', 'style' => 'width:300px'),
+                'query_builder' => function (\TEW\TPBundle\Entity\CompanyRepository $r) use ($id)
+                    {
+                        return ($id && !$this->securityContext->isGranted('ROLE_TEW_MASTER_EXECUTOR'))?
+                                $r->createQueryBuilder('cie')
+                                ->where('cie.id = :id')
+                                ->setParameter('id', $id)
+                                :
+                                $r->createQueryBuilder('cie');
+                    }
             ))
 //            ->add('origin', 'choice', array(
 //                'choices' => array(

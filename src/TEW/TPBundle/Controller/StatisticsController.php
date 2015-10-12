@@ -19,7 +19,12 @@ class StatisticsController extends Controller {
      */
     public function cdteNumberByTalentPoolsAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
-        $tps = $em->getRepository('TEWTPBundle:TalentPool')->findAll();
+        if ($this->get('security.context')->isGranted('ROLE_TEW_STD_EXECUTOR')) { // all TPs are displayed
+            $tps = $em->getRepository('TEWTPBundle:TalentPool')->findAll();
+        } else { // user's TPs are displayed
+            $tps = $em->getRepository('TEWTPBundle:TalentPool')->findByOwningcompany($this->getUser()->getCompany()->getId());
+            
+        }
           
         foreach ($tps as $tp) {
             $nb = $em->getRepository('TEWTPBundle:TalentPool')->countCandidatesByTalentPool($tp->getId());
@@ -64,7 +69,12 @@ class StatisticsController extends Controller {
      */
     public function cdteNumberByStatusByTalentPoolsAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
-        $tps = $em->getRepository('TEWTPBundle:TalentPool')->findAll();
+        if ($this->get('security.context')->isGranted('ROLE_TEW_STD_EXECUTOR')) { // all TPs are displayed
+            $tps = $em->getRepository('TEWTPBundle:TalentPool')->findAll();
+        } else { // user's TPs are displayed
+            $tps = $em->getRepository('TEWTPBundle:TalentPool')->findByOwningcompany($this->getUser()->getCompany()->getId());
+            
+        }
         $rows = array();  
         foreach ($tps as $tp) {
             $nb_array = $em->getRepository('TEWTPBundle:TalentPool')->countCandidateStatusByTalentPool($tp->getId());
