@@ -220,6 +220,7 @@
                         <tbody>
                             {% set visible_tps = [] %}
                             {% for tp in entity.talentpools %}
+                                {% set fits_position = false %}
                                 {% set visible_tp = is_granted('ROLE_MASTER_EXECUTOR') or is_granted('ROLE_TEW_OBJECT_VIEW', tp) %}
                                 {% if visible_tp %}
                                     {% set tpcomments = entity.comments|commentsByTalentpool(tp) %}
@@ -254,8 +255,10 @@
                                             <td>{{ ('<i class="icon icon-ok" style="color:green"></i> '~(prof.function?prof.function:'all'))|raw}}</td>
                                             <td>{{ ('<i class="icon icon-ok" style="color:green"></i> '~(prof.level?prof.level:'all'))|raw}}</td>
                                             {% else %}
-                                            <td>{{ ((prof.function==entity.function or not prof.function)?'<i class="icon icon-ok" style="color:green"></i> '~(prof.function?prof.function:entity.function):'<i class="icon icon-remove" style="color:lightcoral"></i> '~(prof.function?prof.function:entity.function))|raw}}</td>
-                                            <td>{{ ((prof.level==entity.level or not prof.level)?'<i class="icon icon-ok" style="color:green"></i> '~(prof.level?prof.level:entity.level):'<i class="icon icon-remove" style="color:lightcoral"></i> '~(prof.level?prof.level:entity.level))|raw}}</td>
+                                                {% set funct_ok = prof.function==entity.function or not prof.function %}
+                                                {% set level_ok = prof.level==entity.level or not prof.level %}
+                                            <td>{{ (funct_ok?'<i class="icon icon-ok" style="color:green"></i> '~(prof.function?prof.function:entity.function):'<i class="icon icon-remove" style="color:lightcoral"></i> '~(prof.function?prof.function:entity.function))|raw}}</td>
+                                            <td>{{ (level_ok?'<i class="icon icon-ok" style="color:green"></i> '~(prof.level?prof.level:entity.level):'<i class="icon icon-remove" style="color:lightcoral"></i> '~(prof.level?prof.level:entity.level))|raw}}</td>
                                             {% endif %}
                                                 <td>N/C</td>
                                         </tr>

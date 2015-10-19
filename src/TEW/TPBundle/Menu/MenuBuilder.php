@@ -5,8 +5,9 @@ namespace TEW\TPBundle\Menu;
 
 use Knp\Menu\FactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
+//use Symfony\Component\DependencyInjection\ContainerAware;
 
-class MenuBuilder
+class MenuBuilder // extends ContainerAware
 {
     /**
      * @var Symfony\Component\Form\FormFactory $factory
@@ -19,12 +20,18 @@ class MenuBuilder
     private $securityContext;
     
     /**
+     * @var Symfony\Component\DependencyInjection\Containert $container
+     */
+    protected $container;
+    
+    /**
      * @param FactoryInterface $factory
      */
-    public function __construct(FactoryInterface $factory, $securityContext)
+    public function __construct(FactoryInterface $factory, $securityContext, $container)
     {
         $this->factory = $factory;
         $this->securityContext = $securityContext;
+        $this->container = $container;
     }
 
     public function createMainMenu(Request $request)    
@@ -37,6 +44,8 @@ class MenuBuilder
         
         $menu = $this->factory->createItem('root');
         $menu->setChildrenAttribute('class', 'nav navbar-nav');
+        
+        $em = $this->container->get('doctrine')->getManager();
         
         // Candidates
         if ($is_client) {
@@ -65,6 +74,18 @@ class MenuBuilder
                         ->setAttribute('dropdown', true);
                 $menu['Talent pools']->addChild('List', array('route' => 'tew_talentpool'))
                         ->setAttribute('icon', 'icon-list');
+                if ($is_tew_staff) {
+                    $tps = $em->getRepository('TEWTPBundle:TalentPool')->findAll();
+                    $menu['Talent pools']['List']
+                        ->setAttribute('dropdown',true)
+                        ->setAttribute('class', 'dropdown-submenu');
+                    foreach ($tps as $tp) {
+                        $menu['Talent pools']['List']->addChild($tp, array(
+                                    'route' => 'tew_talentpool_show',
+                                    'routeParameters' => array( 'id' => $tp->getId() )))
+                            ;
+                    }
+                }
                 if ($is_std_executor) { // only executors can add talentpools
                     $menu['Talent pools']->addChild('Add', array('route' => 'tew_talentpool_new'))
                             ->setAttribute('icon', 'icon-plus-sign-alt');   
@@ -89,7 +110,7 @@ class MenuBuilder
                             'routeParameters' => array( 'id' => $workingtp->getId() )
                         ))
                         ->setAttribute('icon', 'icon-bookmark');
-                if ($is_master_executor) { // only execmaster utors can edit talentpools
+                if ($is_master_executor) { // only master executors can edit talentpools
                     $menu[$workingtp->getName()]->addChild('Edit '.$workingtp->getName(), array(
                                 'route' => 'tew_talentpool_edit',
                                 'routeParameters' => array( 'id' => $workingtp->getId() )
@@ -107,7 +128,18 @@ class MenuBuilder
                     ->setAttribute('icon', 'icon-folder-open')
                     ->setAttribute('dropdown', true);
             $menu['Companies']->addChild('List', array('route' => 'tew_company'))
-                    ->setAttribute('icon', 'icon-list');
+                    ->setAttribute('icon', 'icon-list')
+                    ->setAttribute('dropdown',true)
+                    ->setAttribute('class', 'dropdown-submenu')
+                    ;
+            
+            $cies = $em->getRepository('TEWTPBundle:Company')->findAll();
+            foreach ($cies as $cie) {
+                $menu['Companies']['List']->addChild($cie, array(
+                            'route' => 'tew_company_show',
+                            'routeParameters' => array( 'id' => $cie->getId() )))
+                    ;
+            }
             if ($is_admin) {
                 $menu['Companies']->addChild('Add', array('route' => 'tew_company_new'))
                         ->setAttribute('icon', 'icon-plus-sign-alt');
@@ -136,6 +168,24 @@ class MenuBuilder
             $menu['Bugs and improvements']->addChild('Add', array('route' => 'hackzilla_ticket_new'))
                     ->setAttribute('icon', 'icon-plus-sign-alt');
         }        
+        
+        // Other stuff
+        if ($is_tew_staff) {
+            $users = $em->getRepository('TEWUserBundle:User')->getActive();
+            $user_title = \count($users)." online users";
+            $menu->addChild($user_title)
+                    ->setAttribute('icon', 'icon-group')
+                    ->setAttribute('dropdown', true);
+            foreach ($users as $user) { // displays each connected user
+                $menu[$user_title]->addChild("$user (".$user->getCompany().")", [
+                    'route' => 'admin_tew_user_user_show',
+                    'routeParameters' => array('id' => $user->getId())
+                    ])
+                    ->setAttribute('icon', 'icon-user')
+                    ->setLinkAttribute('target', '_blank');
+                
+            }
+        }
         
         return $menu;
     }

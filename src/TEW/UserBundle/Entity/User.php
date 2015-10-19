@@ -40,6 +40,13 @@ class User extends BaseUser
      * )
      */
     protected $groups;
+    
+    /**
+     * @var date
+     * 
+     * @ORM\Column(name="lastactivity", type="datetime", nullable=true)
+     */
+    private $lastActivity;
 
     /**
      * Constructor
@@ -111,5 +118,41 @@ class User extends BaseUser
         $roles[] = static::ROLE_DEFAULT;
 
         return array_unique($roles);
+    }
+    
+    /**
+     * Get LastActivity
+     *
+     * @return date
+     */
+    public function getLastActivity()
+    {
+        return $this->lastActivity;
+    }
+    
+    /**
+     * Set lastActivity
+     *
+     * @param \DateTime $date
+     * @return User
+     */
+    public function setLastActivity($date)
+    {
+        $this->lastActivity = $date;
+
+        return $this;
+    }
+    
+    /**
+     * isActiveNow
+     *
+     * @param \DateTime $date
+     * @return User
+     */
+    public function isActiveNow()
+    {
+        $this->setLastActivity(new \DateTime);
+
+        return $this;
     }
 }

@@ -225,7 +225,7 @@
 <div class='col-lg-6'>
     {{ form_widget(check_candidates_form.submit) }}
 </div>
-{{ form_end(check_candidates_form) }}
+{#{ form_end(check_candidates_form) }#}
 {% if is_granted('ROLE_TEW_OBJECT_CREATE') %} 
     {% block actions %}
         <div class="btn-toolbar pull-right record_actions" role="group">

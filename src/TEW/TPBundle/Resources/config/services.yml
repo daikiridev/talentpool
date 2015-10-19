@@ -120,7 +120,7 @@ services:
     # factory menu service
     tew_tp.menu_builder:
         class: TEW\TPBundle\Menu\MenuBuilder
-        arguments: ["@knp_menu.factory", "@security.context"]
+        arguments: ["@knp_menu.factory", "@security.context", "@service_container"]
 
     # main front office menu
     tew_tp.menu.main:

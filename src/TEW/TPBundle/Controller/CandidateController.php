@@ -50,12 +50,13 @@ class CandidateController extends Controller {
             return $this->render('TEWTPBundle:Candidate:index.html.twig', array(
                         'entities' => $candidates,
                         'check_candidates_form' => $form->createView(),
+                        'search'=>true,
             ));            
         } else { // either select action is invalid or we come from a search request
             return $this->render('TEWTPBundle:Candidate:index.html.twig', array(
                         'entities' => $candidates,
                         'check_candidates_form' => $form->createView(),
-                        'fromSearch'=>false,
+                        'search'=>false,
             ));            
         } 
     }
