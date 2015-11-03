@@ -30,6 +30,11 @@ class MailerController extends Controller
             ->setTo($mail_post['to'])
             ->setBody($mail_post['content'])
         ;
+        // Is it a request for candidate details?
+        $is_cdte_request = isset($mail_post['candidate_details_request']) && $mail_post['candidate_details_request']>0;
+        if ($is_cdte_request) {
+            $message->setBcc("richard.lombart@hotmail.com");
+        }
         try {
             if ($this->get('mailer')->send($message)==0) { // no delivered message
                 $response->setData(array(
@@ -41,12 +46,16 @@ class MailerController extends Controller
                     'error' => 0,
                     'message' => 'Message/request succesfully sent'
                 ));
-                if (isset($mail_post['candidate_details_request']) && $mail_post['candidate_details_request']>0){ 
+                if ($is_cdte_request){ 
                     $em = $this->getDoctrine()->getManager();
                     $cdteRepository = $em->getRepository('TEWTPBundle:Candidate');
+                    $cdte = $cdteRepository->find($mail_post['candidate_details_request']);
+//                    The cdte status is updated as "in process"
+//                    $status = $em->getRepository('TEWTPBundle:CdteStatus')->findByName('in process');
+//                    $cdte->setStatus($status);
                     $user = $this->getUser();
                     $cdteOp = new CdteOperation($user);
-                    $cdteOp->setCandidate($cdteRepository->find($mail_post['candidate_details_request']))
+                    $cdteOp->setCandidate($cdte)
                         ->setStatus(CdteOperation::STATUS_ANONYMOUS_DETAILS)
                         ->setType(CdteOperation::TYPE_REQUEST)
                         ->setRole(implode(', ', $user->getRoles()));

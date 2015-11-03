@@ -61,6 +61,32 @@ class CandidateController extends Controller {
         } 
     }
     
+    /**
+     * Lists all Candidate entities for a given talentpool
+     *
+     */
+    public function indexByTalentPoolAction($id) {
+        $em = $this->getDoctrine()->getManager();
+        $tagManager = $this->get('fpn_tag.tag_manager');
+  
+        $tp = $em->getRepository('TEWTPBundle:TalentPool')->find($id);
+        $candidates = $tp->getCandidates();
+        //$em->getRepository('TEWTPBundle:Candidate')->findByTalentpool($tp);
+        
+        foreach ($candidates as $cdte) {
+            $tagManager->loadTagging($cdte);
+        }
+        
+        $form = $this->createCheckCdtesForm();
+        
+        return $this->render('TEWTPBundle:Candidate:index.html.twig', array(
+                    'entities' => $candidates,
+                    'check_candidates_form' => $form->createView(),
+                    'subtitle' => "for talentpool $tp",
+        ));            
+        
+    }
+    
 /**
      * Lists all Candidate entities without talentpools .
      *

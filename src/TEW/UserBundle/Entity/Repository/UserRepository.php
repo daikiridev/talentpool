@@ -16,7 +16,7 @@ class UserRepository extends EntityRepository
     {
         // Comme vous le voyez, le délais est redondant ici, l'idéale serait de le rendre configurable via votre bundle
         $delay = new \DateTime();
-        $delay->setTimestamp(strtotime('2 minutes ago'));
+        $delay->setTimestamp(strtotime('15 minutes ago'));
  
         $qb = $this->createQueryBuilder('u')
             ->where('u.lastActivity > :delay')

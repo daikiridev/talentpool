@@ -113,5 +113,56 @@ class StatisticsController extends Controller {
                     'dataTable1' => $dataTable1->toArray(),
                         //'rawDataTable1' => $dataTable1,
         ));
-    }    
+    }
+    
+    /**
+     *
+     *
+     */
+    public function cdteOperationsByUserAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        if ($this->get('security.context')->isGranted('ROLE_TEW_MASTER_EXECUTOR')) { // all users are displayed
+            $ops = $em->getRepository('TEWUserBundle:User')->findAll();
+        } else { // operations for only company users are displayed
+//            $ops = $em->getRepository('TEWTPBundle:TalentPool')->findByOwningcompany($this->getUser()->getCompany()->getId());
+        }
+        $rows = array();  
+        foreach ($ops as $op) {
+            $nb_array = $em->getRepository('TEWTPBundle:CdteOperation')->countOperationsByUser($op->getId());
+//            print_r($nb_array);
+            // we extract status values from $nb_array and put them into cols labels
+            $cols = array_map(
+                    function($row){
+                        return array('id'=> $row['status'], 'label' => $row['status'], 'type' => 'number'/*, 'color' => $row['color']*/);
+                    }, $nb_array);
+            // we now compute the rows
+            $rowData = array();
+            foreach ($nb_array as $nb_row) {
+                $rowData[] = $nb_row['nb'];
+            }
+
+            $rows[] = array_merge(
+                array(array('v' => $op->getName())),
+
+                array_map(function($nb){
+                    return array('v' => $nb, 'f' => "$nb cdte".($nb>1?'s':''));
+                }, $rowData)
+            );
+
+        }
+//                    print_r($rows);
+        $dataTable1 = new DataTable\DataTable(
+            array(
+                'cols' => array_merge( array(array('id'=>'TalentPool', 'label'=>'TalentPool', 'type'=>'string')), $cols),
+                'rows' => $rows
+            )
+        );
+        return $this->render('TEWTPBundle:Statistics:chart.html.twig', array(
+                    'title' => '#cdtes / status / talentpool',
+//                    'chartType' => 'pie',
+                                'chartType' => 'column',
+                    'dataTable1' => $dataTable1->toArray(),
+                        //'rawDataTable1' => $dataTable1,
+        ));
+    }
 }

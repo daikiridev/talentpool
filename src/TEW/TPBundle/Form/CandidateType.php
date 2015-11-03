@@ -141,7 +141,7 @@ class CandidateType extends AbstractType
                 'query_builder' => 
                     function (\Gedmo\Tree\Entity\Repository\NestedTreeRepository $r) use ($id)
                     {
-                        return $id?
+                        return $id && !$this->securityContext->isGranted('ROLE_TEW_STAFF')? // User is not in TEW staff
                                 $r->createQueryBuilder('fun')
                                 ->join('fun.companies', 'cie')
                                 ->where('cie.id = :id')
@@ -205,7 +205,7 @@ class CandidateType extends AbstractType
                 'expanded' => false ,
                 'query_builder' => function (\Gedmo\Tree\Entity\Repository\NestedTreeRepository $r) use ($id)
                     {
-                        return $id?
+                        return $id && !$this->securityContext->isGranted('ROLE_TEW_STAFF')? // User is not in TEW staff
                                 $r->createQueryBuilder('fun')
                                 ->join('fun.companies', 'cie')
                                 ->where('cie.id = :id')
@@ -232,7 +232,7 @@ class CandidateType extends AbstractType
                 'expanded' => false ,
                 'query_builder' => function (\Gedmo\Tree\Entity\Repository\NestedTreeRepository $r) use ($id)
                     {
-                        return $id?
+                        return $id && !$this->securityContext->isGranted('ROLE_TEW_STAFF')? // User is not in TEW staff
                                 $r->createQueryBuilder('fun')
                                 ->join('fun.companies', 'cie')
                                 ->where('cie.id = :id')
@@ -259,7 +259,7 @@ class CandidateType extends AbstractType
                 'expanded' => false ,
                 'query_builder' => function (\Gedmo\Tree\Entity\Repository\NestedTreeRepository $r) use ($id)
                     {
-                        return $id?
+                        return $id && !$this->securityContext->isGranted('ROLE_TEW_STAFF')? // User is not in TEW staff
                                 $r->createQueryBuilder('fun')
                                 ->join('fun.companies', 'cie')
                                 ->where('cie.id = :id')
@@ -350,7 +350,7 @@ class CandidateType extends AbstractType
                 'expanded' => false, // checkboxes?
                 'query_builder' => function (\TEW\TPBundle\Entity\CdteKeywordRepository $r) use ($id)
                     {
-                        return $id?
+                        return $id && !$this->securityContext->isGranted('ROLE_TEW_STAFF')?
                                 $r->createQueryBuilder('k')
                                 ->join('k.companies', 'cie')
                                 ->where('cie.id = :id')

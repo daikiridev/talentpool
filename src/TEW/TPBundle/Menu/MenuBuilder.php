@@ -36,16 +36,17 @@ class MenuBuilder // extends ContainerAware
 
     public function createMainMenu(Request $request)    
     {
-        $is_client = $this->securityContext->isGranted(array('ROLE_CLIENT'));
-        $is_master_executor = $this->securityContext->isGranted(array('ROLE_MASTER_EXECUTOR'));
-        $is_std_executor = $this->securityContext->isGranted(array('ROLE_STD_EXECUTOR'));
-        $is_tew_staff = $this->securityContext->isGranted(array('ROLE_TEW_STAFF'));
-        $is_admin = $this->securityContext->isGranted(array('ROLE_ADMIN'));
+        $is_client = $this->securityContext->isGranted('ROLE_CLIENT');
+        $is_master_executor = $this->securityContext->isGranted('ROLE_MASTER_EXECUTOR');
+        $is_std_executor = $this->securityContext->isGranted('ROLE_STD_EXECUTOR');
+        $is_tew_staff = $this->securityContext->isGranted('ROLE_TEW_STAFF');
+        $is_admin = $this->securityContext->isGranted('ROLE_ADMIN');
         
         $menu = $this->factory->createItem('root');
         $menu->setChildrenAttribute('class', 'nav navbar-nav');
         
         $em = $this->container->get('doctrine')->getManager();
+        $user = $this->securityContext->getToken()->getUser();
         
         // Candidates
         if ($is_client) {
@@ -56,6 +57,19 @@ class MenuBuilder // extends ContainerAware
                     ->setAttribute('icon', 'icon-eye-open');
             $menu['Candidates']->addChild('List', array('route' => 'tew_candidate'))
                     ->setAttribute('icon', 'icon-list');
+            $tps = $is_tew_staff ? $em->getRepository('TEWTPBundle:TalentPool')->findAll()
+                        : $em->getRepository('TEWTPBundle:TalentPool')->findByOwningcompany($user->getCompany());
+            $menu['Candidates']['List']
+                ->setAttribute('dropdown',true)
+                ->setAttribute('class', 'dropdown-submenu');
+            $menu['Candidates']['List']->addChild('All', array('route' => 'tew_candidate'))
+                    ->setAttribute('icon', 'icon-list');
+            foreach ($tps as $tp) {
+                $menu['Candidates']['List']->addChild($tp, array(
+                            'route' => 'tew_candidate_by_tp',
+                            'routeParameters' => array( 'id' => $tp->getId() )))
+                    ;
+            }
             $menu['Candidates']->addChild('Entry pool', array('route' => 'tew_candidate_sas'))
                     ->setAttribute('icon', 'icon-signin');
             $menu['Candidates']->addChild('Add', array('route' => 'tew_candidate_new'))
@@ -193,8 +207,8 @@ class MenuBuilder // extends ContainerAware
     public function createUserMenu(Request $request)
     {
         $user = $this->securityContext->getToken()->getUser();
-        $is_granted = $this->securityContext->isGranted(array('ROLE_USER'));
-        $is_admin = $this->securityContext->isGranted(array('ROLE_ADMIN'));
+        $is_granted = $this->securityContext->isGranted('ROLE_USER');
+        $is_admin = $this->securityContext->isGranted('ROLE_ADMIN');
         
         $menu = $this->factory->createItem('root');
         $menu->setChildrenAttribute('class', 'nav navbar-nav pull-right');
@@ -220,7 +234,7 @@ class MenuBuilder // extends ContainerAware
                 ->setAttribute('icon', 'icon-off');
             
             // Backoffice
-            if ($this->securityContext->isGranted(array('ROLE_SONATA_ADMIN'))){
+            if ($this->securityContext->isGranted('ROLE_SONATA_ADMIN')){
                 $menu->addChild('Backoffice', array('route' => 'sonata_admin_redirect'))
                     ->setAttribute('icon', 'icon-dashboard')
                     ->setLinkAttribute('target', '_new');

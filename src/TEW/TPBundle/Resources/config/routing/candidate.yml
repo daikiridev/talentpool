@@ -1,6 +1,10 @@
 tew_candidate:
     path:     /
     defaults: { _controller: "TEWTPBundle:Candidate:index" }
+    
+tew_candidate_by_tp:
+    path:     /tp/{id}
+    defaults: { _controller: "TEWTPBundle:Candidate:indexByTalentPool" }
 
 tew_candidate_sas:
     path:     /sas
