@@ -31,3 +31,8 @@ TEWTPBundle_tew_ajaxrequests:
 TEWTPBundle_tew_statistics:
     resource: "@TEWTPBundle/Resources/config/routing/statistics.yml"
     prefix:   /tew_statistics
+
+# Candidate operations routes
+TEWTPBundle_tew_cdteoperation:
+    resource: "@TEWTPBundle/Resources/config/routing/cdteoperation.yml"
+    prefix:   /tew_cdteoperation

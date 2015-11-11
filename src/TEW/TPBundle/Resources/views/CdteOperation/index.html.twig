@@ -1,0 +1,71 @@
+{% extends '::base.html.twig' %}
+{% block styles %}
+    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.5/css/jquery.dataTables.css">
+    <link rel="stylesheet" href="//cdn.datatables.net/tabletools/2.2.3/css/dataTables.tableTools.css">
+{% endblock styles %}
+{% block scripts %}
+    <script src="//cdn.datatables.net/1.10.5/js/jquery.dataTables.min.js"></script>
+    <script>
+    $(function () {
+      $('[data-toggle="popover"]').popover()
+    })
+    $(document).ready(function() {
+        $('#list').dataTable({
+            "bJQueryUI": true,
+            // "sPaginationType": "full_numbers",
+            "bStateSave": true,
+            "bProcessing": true,
+            //  "sAjaxSource": '{#{url('_ajaxlistes', {'registrantTypeId': registrantType.id})}#}', 
+            //  "sAjaxDataProp": "listes"
+            "aoColumns":[
+                { "bSearchable": true }, // User
+                { "bSearchable": true }, // Candidate
+                { "bSearchable": false }, // Date
+                { "bSearchable": true }, // Operation
+                { "bSearchable": true }, // Type
+                { "bSearchable": false, "bSortable": false } // Actions         
+            ]            
+        }); 
+    });
+    </script>
+{% endblock %}
+{% block body -%}
+    <h1>CdteOperation list</h1>
+
+    <table id="list" class="display" cellspacing="0">
+        <thead>
+            <tr>
+                <th>User</th>
+                <th>on candidate</th>
+                <th>at</th>
+                <th>did</th>
+                <th>manual / auto</th>
+                <th>More...</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td>{{ entity.user }}</td>
+                <td><a href="{{ path('tew_candidate_show', { 'id': entity.candidate.id }) }}">{{ entity.candidate }}</a></td>
+                <td><a href="{{ path('tew_cdteoperation_show', { 'id': entity.id }) }}">{% if entity.createdAt %}{{ entity.createdAt|date('Y-m-d H:i:s') }}{% endif %}</a></td>
+                <td>{{ entity.status }}</td>
+                <td>{{ entity.type }}</td>
+                <td>
+                    <div class="btn-group btn-group-xs pull-right record_actions" role="group">
+                            <a role="button"  class="btn btn-info" href="{{ path('tew_cdteoperation_show', { 'id': entity.id }) }}">
+                                show
+                            </a>
+                    {#
+                            <a role="button"  class="btn btn-warning" href="{{ path('tew_cdteoperation_edit', { 'id': entity.id }) }}">
+                                edit
+                            </a>
+                    #}
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% endblock %}

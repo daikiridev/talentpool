@@ -145,7 +145,7 @@ label.required {
 }
 .dropdown-submenu>a:after {
     display:block;
-    content:" ";
+//    content:" ";
     float:right;
     width:0;
     height:0;
@@ -168,4 +168,10 @@ label.required {
     -webkit-border-radius:6px 0 6px 6px;
     -moz-border-radius:6px 0 6px 6px;
     border-radius:6px 0 6px 6px;
+}
+
+/* jQuery / bootstrap corrections
+*/
+table.dataTable thead .sorting {
+    background: rgba(0, 0, 0, 0)!important;
 }

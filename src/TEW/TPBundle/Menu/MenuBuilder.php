@@ -93,6 +93,8 @@ class MenuBuilder // extends ContainerAware
                     $menu['Talent pools']['List']
                         ->setAttribute('dropdown',true)
                         ->setAttribute('class', 'dropdown-submenu');
+                    $menu['Talent pools']['List']->addChild('All', array('route' => 'tew_talentpool'))
+                        ->setAttribute('icon', 'icon-list');
                     foreach ($tps as $tp) {
                         $menu['Talent pools']['List']->addChild($tp, array(
                                     'route' => 'tew_talentpool_show',
@@ -146,6 +148,8 @@ class MenuBuilder // extends ContainerAware
                     ->setAttribute('dropdown',true)
                     ->setAttribute('class', 'dropdown-submenu')
                     ;
+            $menu['Companies']['List']->addChild('All', array('route' => 'tew_company'))
+                        ->setAttribute('icon', 'icon-list');
             
             $cies = $em->getRepository('TEWTPBundle:Company')->findAll();
             foreach ($cies as $cie) {
@@ -169,6 +173,12 @@ class MenuBuilder // extends ContainerAware
                     ->setAttribute('icon', 'icon-sitemap');
             $menu['Statistics']->addChild('#cdte / status / talentpool', array('route' => 'tew_stats_cdtestatustalentpool'))
                     ->setAttribute('icon', 'icon-sitemap');
+            if ($is_tew_staff) {
+                $menu['Statistics']->addChild('Users operations', [
+                        'route' => "tew_cdteoperation"
+                    ])
+                    ->setAttribute('icon', 'icon-wrench');
+            }
         }
         
         // Bug tracking

@@ -1,0 +1,30 @@
+tew_cdteoperation:
+    path:     /
+    defaults: { _controller: "TEWTPBundle:CdteOperation:index" }
+
+tew_cdteoperation_show:
+    path:     /{id}/show
+    defaults: { _controller: "TEWTPBundle:CdteOperation:show" }
+
+tew_cdteoperation_new:
+    path:     /new
+    defaults: { _controller: "TEWTPBundle:CdteOperation:new" }
+
+tew_cdteoperation_create:
+    path:     /create
+    defaults: { _controller: "TEWTPBundle:CdteOperation:create" }
+    requirements: { _method: post }
+
+tew_cdteoperation_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "TEWTPBundle:CdteOperation:edit" }
+
+tew_cdteoperation_update:
+    path:     /{id}/update
+    defaults: { _controller: "TEWTPBundle:CdteOperation:update" }
+    requirements: { _method: post|put }
+
+tew_cdteoperation_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "TEWTPBundle:CdteOperation:delete" }
+    requirements: { _method: post|delete }
