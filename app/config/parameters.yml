@@ -12,3 +12,4 @@ parameters:
     mailer_password: null
     locale: en
     secret: 04892509379169960642bcc0eb7030fd1fc1865d
+    dizda_cloud_archive_password: talentpool

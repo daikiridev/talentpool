@@ -2,10 +2,7 @@
 // « add » button
 function addButton(name) {
     return $('<a href="#" class="add_item_link btn-xs btn-warning">Add '+name+'</a>');
-    //return $('<span></span>').append($addItemLink);
-    //return $($addItemLink);
 }
-;
 
 // adapted from http://symfony.com/doc/2.3/cookbook/form/form_collections.html
 function addItemForm(collectionHolder, length) {
@@ -60,36 +57,12 @@ function addItemFormDeleteLink($itemFormLi, name) {
     });
 }
 
-// not needed anymore, since we put this in the 'modalcollection' widget
-function modalCollection(name, content) {
-    var id = 'modal_' + name;
-    var result = '<div class="modal fade" role="dialog" id="' + id + '">\
-  <div class="modal-dialog">\
-    <div class="modal-content">\
-      <div class="modal-header">\
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>\
-        <h4 class="modal-title">' + content.prev('label').html() + '</h4>\
-      </div>\
-      <div class="modal-body">\
-      ' + content.html() + addButton(name).html() + '\
-      </div>\
-      <div class="modal-footer">\
-        <button type="button" data-dismiss="modal" class="btn btn-primary">Close</button>\
-      </div>\
-    </div><!-- /.modal-content -->\
-  </div><!-- /.modal-dialog -->\
-</div><!-- /.modal -->';
-    content.html(result);
-    content.after('<button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#' + id + '">View</button>');
-}
-
 // Google places API
 var autocomplete = new Array();
 
 // Handle the way form inputs are filled in by google values
 // eg addressPrefix: 'talentpool_profiles_0_mobilities_3_'
 function convertForm(addressPrefix, field) {
-    //console.log("convertForm('"+addressPrefix+"'): "+addressPrefix.replace((/.*_([^_]+)(_\d+_)?[^_]*$/), "$1"));
     switch (addressPrefix.replace((/.*_([^_]+)(_\d+_)?[^_]*$/), "$1")) {
         case 'mobilities':
         case 'locations':
@@ -177,8 +150,6 @@ $(document).ready(function () {
         e.preventDefault();
         var collection = $(this).parent('div').children('.form-collection');
         // if this is the comments collection, start numbering at the end index stored in DB
-//        var length = collection.is("#candidate_comments_new") ? commentCollectionDB.children().length :
-//                collection.children('.child-count').length > 0 ? collection.children('.child-count').children().length : collection.children().length;
         // computes collection's length
         var length = 0;
         if (collection.is("#candidate_comments_new")) { // we start at the end of the comments stored in DB
@@ -201,7 +172,6 @@ $(document).ready(function () {
 
     $('.form-collection').each(function () {
         var collection = $(this);
-//        var children = $(this).find('.modal-body').length>0?$(this).find('.modal-body').children('div'):$(this).children('div');
         var children = collection.children('div');
         children.each(function () { // adds a remove button to each item of the collection
             //console.log(collection.attr('id')+'>child content: '+$(this).html());

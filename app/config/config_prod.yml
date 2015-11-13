@@ -22,3 +22,23 @@ monolog:
             type:  stream
             path:  "%kernel.logs_dir%/%kernel.environment%.log"
             level: debug
+
+# Backup configuration
+dizda_cloud_backup:
+    # By default backup files will have your servers hostname as prefix
+    # such as: hostname_2014-01-01_21-08-39.tar
+    output_file_prefix: tew_prod
+    processor:
+        type: tar
+        options:
+            password: %dizda_cloud_archive_password%
+    #folders: [ web/uploads , other/folder ]
+    folders: [ web/uploads ]
+    cloud_storages:
+        # Local storage definition
+        local:
+            path: /srv/123vpc-backup/tew
+    databases:
+        mysql:
+            all_databases: false
+            database: talentpool_prod

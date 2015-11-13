@@ -120,7 +120,6 @@ doctrine_migrations:
     table_name: migration_versions
     name: Application Migrations
 
-
 # Swiftmailer Configuration
 swiftmailer:
     transport: "%mailer_transport%"

@@ -14,14 +14,14 @@
         "symfony/symfony": "2.3.*",
         
         "doctrine/orm": "~2.2,>=2.2.3",
-        "doctrine/doctrine-bundle": "1.2.*",
+        "doctrine/doctrine-bundle": "dev-master",
         "doctrine/doctrine-fixtures-bundle": "dev-master",
         "doctrine/data-fixtures": "dev-master",
         "doctrine/migrations": "dev-master",
         "doctrine/doctrine-migrations-bundle": "dev-master",
         "gedmo/doctrine-extensions": "dev-master",
         
-        "twig/extensions": "1.2.*",
+        "twig/extensions": "dev-master",
         
         "symfony/assetic-bundle": "2.3.*",
         
@@ -55,16 +55,18 @@
         
         "jms/serializer-bundle": "dev-master",
         
-        "knplabs/knp-menu": "2.0.0",
-        "knplabs/knp-menu-bundle": "2.0.0",
-        "knplabs/knp-paginator-bundle": "~2.0",
+        "knplabs/knp-menu": "dev-master",
+        "knplabs/knp-menu-bundle": "dev-master",
+        "knplabs/knp-paginator-bundle": "dev-master",
         
         "fpn/doctrine-extensions-taggable": "v0.9.0",
         "fpn/tag-bundle":"dev-master",
         
         "saad-tazi/g-chart-bundle": "dev-master",
         
-        "hackzilla/ticket-bundle": "dev-master"
+        "hackzilla/ticket-bundle": "dev-master",
+        
+        "dizda/cloud-backup-bundle": "dev-master"
 
     },
     "repositories": [

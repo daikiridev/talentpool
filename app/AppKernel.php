@@ -22,6 +22,9 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(), // Test packs
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
             
+            // BACKUP
+            new Dizda\CloudBackupBundle\DizdaCloudBackupBundle(),
+            
             // USER
             new FOS\UserBundle\FOSUserBundle(), // User management
             new Sonata\UserBundle\SonataUserBundle('FOSUserBundle'), // User managment via Sonata

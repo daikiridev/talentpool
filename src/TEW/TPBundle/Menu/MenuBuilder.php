@@ -173,7 +173,7 @@ class MenuBuilder // extends ContainerAware
                     ->setAttribute('icon', 'icon-sitemap');
             $menu['Statistics']->addChild('#cdte / status / talentpool', array('route' => 'tew_stats_cdtestatustalentpool'))
                     ->setAttribute('icon', 'icon-sitemap');
-            if ($is_tew_staff) {
+            if ($is_admin) {
                 $menu['Statistics']->addChild('Users operations', [
                         'route' => "tew_cdteoperation"
                     ])
