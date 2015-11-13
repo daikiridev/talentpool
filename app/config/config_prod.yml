@@ -31,7 +31,7 @@ dizda_cloud_backup:
     processor:
         type: tar
         options:
-            password: %dizda_cloud_archive_password%
+            password: talentpool
     #folders: [ web/uploads , other/folder ]
     folders: [ web/uploads ]
     cloud_storages:
