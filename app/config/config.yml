@@ -155,32 +155,11 @@ fpn_tag:
         tag_class:     \TEW\TPBundle\Entity\Tag
         tagging_class: \TEW\TPBundle\Entity\Tagging
 
-## Sonata TP Bundle configuration
-#sonata_tp:
-#    security_acl:           false
-#
-#    manager_type: orm # Can be orm or mongodb
-#
-#    class:                  # Entity Classes
-#        language:           TEW\TPBundle\Entity\Language
-#
-#    admin:                  # Admin Classes
-#        language:
-#            class:          TEW\TPBundle\Admin\LanguageAdmin
-#            controller:     SonataAdminBundle:CRUD
-##            translation:    SonataUserBundle
-            
 
-#templates:
-#    layout: SonataAdminBundle::standard_layout_override.html.twig
-
-# Customizing Sonata admin classes
+# Customizing Sonata classes
 parameters:
-#    sonata.user.admin.user.class: TEW\UserBundle\Admin\UserAdmin
-#    sonata.user.admin.user.entity: TEW\UserBundle\Entity\User
-
-#    sonata.user.admin.user.class: Application\Sonata\UserBundle\Admin\UserAdmin
-#    sonata.user.admin.user.entity: Application\Sonata\UserBundle\Entity\User
+# overloading the class, in order to change name of the files
+    sonata.media.provider.file.class: Application\Sonata\MediaBundle\Provider\FileProvider
 
 # Services (see src/TEW/TPBundle/Ressources/config/services.yml)
 services:
@@ -188,12 +167,3 @@ services:
         class: Twig_Extensions_Extension_Intl
         tags:
             - { name: twig.extension }
-#    tew.admin.user:
-#        class: TEW\UserBundle\Admin\UserAdmin
-#        tags:
-#            - { name: sonata.admin, manager_type: doctrine_orm, group: "Content", label: "User" }
-#        arguments:
-#            - ~
-#            - Acme\MediaBundle\Document\Media
-#            - '%sonata.media.admin.media.controller%'
-#            - @sonata.media.pool

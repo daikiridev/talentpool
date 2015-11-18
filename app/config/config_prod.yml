@@ -24,6 +24,7 @@ monolog:
             level: debug
 
 # Backup configuration
+# See https://github.com/dizda/CloudBackupBundle
 dizda_cloud_backup:
     # By default backup files will have your servers hostname as prefix
     # such as: hostname_2014-01-01_21-08-39.tar
@@ -42,3 +43,7 @@ dizda_cloud_backup:
         mysql:
             all_databases: false
             database: talentpool_prod
+# Instructions for cron installation:
+# $ crontab -u www-data -e
+# m h  dom mon dow   command
+# 0 6 * * * cd /srv/123vpc/www/talentpool.theexecutiveway.com && php app/console --env=prod dizda:backup:start > /dev/null 2>&1
