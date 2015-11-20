@@ -23,7 +23,7 @@
                 <i class="icon-remove" style="color:lightcoral; cursor:help" title="cancelled"></i>
             {% endif %}
             {% if entity.status %}
-                {{entity.status|status}}
+                {{entity.status|status(' since '~entity.statusDate|date('D d M Y \\a\\t g:ia', "Europe/Paris"))}}
             {% endif %}
             {% if entity.resume %}
                 <i class="icon icon-paperclip" style="cursor:help" title="resume attached"></i>

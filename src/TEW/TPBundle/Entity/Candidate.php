@@ -228,6 +228,23 @@ class Candidate implements Taggable
     private $status;
     
     /**
+     * @var date
+     * 
+     * @ORM\Column(name="statusdate", type="datetime")
+     */
+    private $statusDate;
+    
+    /**
+     * @var lastStatus
+     *
+     * @ORM\ManyToOne(targetEntity="CdteStatus")
+     * @ORM\JoinColumns={
+     *      @ORM\JoinColumn(name="last_status_id", referencedColumnName="id", nullable=true)
+     *  })
+     */
+    private $lastStatus;
+    
+    /**
      * @var bool $alert
      *
      * @ORM\Column(name="alert", type="boolean")
@@ -1429,8 +1446,11 @@ class Candidate implements Taggable
      */
     public function setStatus(\TEW\TPBundle\Entity\CdteStatus $status)
     {
+        if ($this->status->getName() !== 'in process') {
+            $this->lastStatus = $this->status;
+        }
         $this->status = $status;
-
+        $this->statusDate = new \DateTime();
         return $this;
     }
 
@@ -1442,6 +1462,26 @@ class Candidate implements Taggable
     public function getStatus()
     {
         return $this->status;
+    }
+    
+    /**
+     * Get lastStatus
+     *
+     * @return \TEW\TPBundle\Entity\CdteStatus 
+     */
+    public function getLastStatus()
+    {
+        return $this->lastStatus;
+    }
+    
+    /**
+     * Get statusDate
+     *
+     * @return \DateTime 
+     */
+    public function getStatusDate()
+    {
+        return $this->statusDate;
     }
 
     /**

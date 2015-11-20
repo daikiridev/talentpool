@@ -29,13 +29,19 @@ class CdteOperationListener
         if ('root' === $user->getFullName()) {
             $cdteOp->setType(CdteOperation::TYPE_SYSTEM);
         }
-        if (CdteOperation::STATUS_ANONYMOUS_DETAILS === $status || CdteOperation::STATUS_COMMENT === $status) {
-            $cdteOp->setType(CdteOperation::TYPE_USER);
+        switch($status) {
+            case CdteOperation::STATUS_ANONYMOUS_DETAILS:  
+                $cdte->setStatus($em->getRepository('TEWTPBundle:CdteStatus')->findOneByName('in process'));
+                $em->persist($cdte);
+            case CdteOperation::STATUS_COMMENT:
+                $cdteOp->setType(CdteOperation::TYPE_USER);
         }
+        
         $em->persist($cdteOp);
         $em->flush();
     }
 
+    // Whenever an object is persisted in DB...
     public function postPersist(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
@@ -80,6 +86,7 @@ class CdteOperationListener
         }
     }
     
+    // Whenever there is a DB update...
     public function postUpdate(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();

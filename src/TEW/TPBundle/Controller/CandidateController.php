@@ -245,7 +245,7 @@ class CandidateController extends Controller {
         if ($request->isXmlHttpRequest()) {
 //        if (true) {
             $response = new JsonResponse();
-            $max = $em->createQuery('SELECT MAX(c.id) FROM TEWTPBundle:Candidate c')->getSingleScalarResult();
+//            $max = $em->createQuery('SELECT MAX(c.id) FROM TEWTPBundle:Candidate c')->getSingleScalarResult();
             $qb = $repository->createQueryBuilder('c')->where('1=1')
                 //->select(array('c.level', 'c.function', 'c.experience', 'c.nationality1', 'c.globalScore'))
                 ->select(array('c.id', 's.name as status', 'l.name as level', 'f.name as function', 'c.globalComment', 'c.globalScore', 'c.experience', 'c.nationality1'))

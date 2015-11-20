@@ -106,9 +106,13 @@ class TEWExtension extends \Twig_Extension
         return $result;
     }
     
-    public function statusFilter(\TEW\TPBundle\Entity\CdteStatus $status = null)
+    public function statusFilter(\TEW\TPBundle\Entity\CdteStatus $status = null, $moreInfo=null)
     {
-        $result = '<i class="icon icon-'.$status->getIcon().'" style="cursor:help; color:'.$status->getColor().'" title="'.$status->getName().'"></i>';
+        $result = '<i class="icon icon-'.$status->getIcon().
+                '" style="cursor:help; color:'.$status->getColor().
+                '" title="'.$status->getName().
+                $moreInfo.
+                '"></i>';
         return $result;
     }
     

@@ -105,7 +105,7 @@
                                 <i class="icon-remove" style="color:lightcoral; cursor:help" title="cancelled"></i>
                             {% endif %}
                             {% if entity.status %}
-                                {{entity.status|status}}
+                                {{entity.status|status(' since '~entity.statusDate|date('D d M Y \\a\\t g:ia', "Europe/Paris"))}}
                             {% endif %}
                             {% if entity.resume and (not anonymous) %}
                                 <a href="{% path entity.resume, 'reference' %}" target="_blank" style="text-decoration: none; cursor: pointer">
