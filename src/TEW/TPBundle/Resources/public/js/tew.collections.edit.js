@@ -163,10 +163,16 @@ $(document).ready(function () {
         // if this is an address form, initialise google place API
         var id = collection.attr('id');
         if (id.match(/_addresses$/)) {
-            googleInit(id + '_' + length + '_', 'street1'); // location google search is done in the 'street1' field
+            var prefix = id + '_' + length + '_';
+            googleInit(prefix, 'street1'); // location google search is done in the 'street1' field
+            idfield = document.getElementById(prefix + 'street1');
+            $(idfield).attr('placeholder', 'Do not overwrite the Google field with your own value');
         }
         else if (id.match(/_mobilities$/) || id.match(/_locations$/)) {
-            googleInit(id + '_' + +length + '_', 'location'); // location google search is done in the 'location' field
+            var prefix = id + '_' + length + '_';
+            googleInit(prefix, 'location'); // location google search is done in the 'location' field
+            idfield = document.getElementById(prefix + 'location');
+            $(idfield).attr('placeholder', 'Do not overwrite the Google field with your own value');
         }
     });
 
