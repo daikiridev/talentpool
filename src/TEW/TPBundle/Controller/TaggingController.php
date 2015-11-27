@@ -6,10 +6,6 @@ namespace TEW\TPBundle\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-/**
- * CountryZone controller for service requests
- *
- */
 class TaggingController extends Controller {
 
     /**
@@ -18,10 +14,10 @@ class TaggingController extends Controller {
      */
     public function jsonFindCandidateTagsAction() {
         $request = $this->container->get('request');
-        //if ($request->isXmlHttpRequest()) {
-        if (true) {
+        if ($request->isXmlHttpRequest()) {
+//        if (true) {
             $response = new JsonResponse();
-            $array = $this->getDoctrine()->getEntityManager()->getRepository('TEWTPBundle:Tagging')->findAllCandidateTags();
+            $array = $this->getDoctrine()->getEntityManager()->getRepository('TEWTPBundle:Tagging')->findAllCandidateTags($request->get('term'));
             $response->setData($array);
             return $response;
         }

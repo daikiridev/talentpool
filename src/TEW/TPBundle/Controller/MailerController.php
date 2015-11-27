@@ -34,7 +34,7 @@ class MailerController extends Controller
         // Is it a request for candidate details?
         $is_cdte_request = isset($mail_post['candidate_details_request']) && $mail_post['candidate_details_request']>0;
         if ($is_cdte_request) {
-            $message->setBcc("richard.lombart@hotmail.com");
+            $message->setBcc("rlombart@me.com");
         }
         $error = true;
         // send an email in production environment

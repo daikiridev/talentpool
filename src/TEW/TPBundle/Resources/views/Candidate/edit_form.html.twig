@@ -18,13 +18,12 @@
         $(document).ready(function () {
             $('.tags-field').tagsInput({
                 'autocomplete_url': '{{ path('tew_json_allcandidatetags') }}',
-                'autocomplete': {selectFirst: true, width: '4px', autoFill: true},
                 'height': '30px',
                 'width': '400px',
                 'interactive': true,
                 'defaultText': 'add a tag',
             });
-            $('.select2').select2(); // trouble with modal popups
+            $('.select2').select2({ allowClear: true, placeholder: "value?" }); // trouble with modal popups
             $('.modal .select2').select2({dropdownParent: $('.modal')});
             $(function () {
                 $('[data-toggle="popover"]').popover();

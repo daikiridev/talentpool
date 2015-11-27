@@ -10,7 +10,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0-beta.3/js/select2.min.js"></script>
     <script>
         $(document).ready(function(){
-            $('.select2').select2(); // trouble with modal popups
+            $('.select2').select2({ allowClear: true, placeholder: "value?" });
             $('#tew_tpbundle_company_picture_contentType').parent('div').hide();
             {#
             $('#tew_tpbundle_company_functions').children('label').each(function(){
