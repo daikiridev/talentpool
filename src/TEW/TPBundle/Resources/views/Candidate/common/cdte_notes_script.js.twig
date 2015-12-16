@@ -1,0 +1,48 @@
+<script>
+    $(document).ready(function () {
+        $('.addnote').click(function (event) {
+            event.preventDefault();
+            content_div = $(this).parents('.modal-content');
+            modal = content_div.parents('.modal');
+            body_div = $(this).parents('.modal-body');
+            notes_tbody =  content_div.find('tbody');
+            form = content_div.find('form');
+            url = form.attr('action');
+            console.log('Posting to: ' + url );
+            $(this).parent().html("<img src='{{asset('bundles/tewtp/images/icons/ajax-loader.gif')}}'>");
+            $.ajax({
+                type: 'post',
+                url: url,
+                dataType: "json",
+                data: form.serialize()
+            })
+            .done(function (data) {
+                console.log(data);
+                if (data.error > 0) {
+                    alert(data.message);
+                } else {
+                    note = '<tr data-content="'+data.data.note+
+                            '" data-placement="bottom" data-trigger="hover" style="cursor:help" data-html="true" data-delay="{ "show": 500, "hide": 200 }" data-toggle="popover" data-original-title="" title=""><td>'+
+                            data.data.date+'</td><td>'+data.data.title+'</td><td>'+data.data.author+'</td></tr>';
+                    notes_tbody.prepend(note);
+                    $('[data-toggle="popover"]').popover();                    
+                }
+                content = data.message;
+                
+            })
+            .fail(function (jqXHR, textStatus, error) {
+                alert("Communication issue (" + textStatus + ": " + error + ")");
+            })
+            .always(function () {
+                console.log("ajax request succeeded");
+            })
+            .then(function () {
+                alert(content);
+                body_div.html(content);
+                setTimeout(function () {
+                    modal.modal('hide');
+                }, 2000);
+            });
+        });
+    });
+</script>

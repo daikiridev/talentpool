@@ -33,6 +33,13 @@ tew_json_cdtecomment_add:
   pattern: /cdteaddcomment
   defaults: { _controller: TEWTPBundle:CdteComment:jsonCdteCommentAdd }
   requirements: { _method: post }    
+
+# Cdte - add note
+tew_json_cdtenote_add:
+  pattern: /cdteaddnote
+  defaults: { _controller: TEWTPBundle:CdteNote:jsonCdteNoteAdd }
+  requirements: { _method: post }
+  
 # Tag management
 tew_json_allcandidatetags:
   pattern: /tags/allcandidate

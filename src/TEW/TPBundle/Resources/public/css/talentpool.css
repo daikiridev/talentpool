@@ -102,6 +102,13 @@ li.warning > a:focus {
     z-index: 9999 !important;
 }
 
+/* Postit styles */
+.left-postit {
+    position: relative;
+    right: 45px;
+    top: 56px;
+}
+
 /* customizing form layout */
 h1, .h1 {
     color: darkblue;

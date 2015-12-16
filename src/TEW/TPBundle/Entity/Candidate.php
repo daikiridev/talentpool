@@ -357,6 +357,15 @@ class Candidate implements Taggable
     private $comments;
     
     /**
+     * @var notes
+     *
+     * @ORM\OneToMany(targetEntity="CdteNote", mappedBy="candidate", cascade={"persist", "remove"})
+     * @ORM\OrderBy({"date" = "DESC"})  
+     * 
+     */
+    private $notes;
+    
+    /**
      * @var \Doctrine\Common\Collections\Collection
      * 
      */
@@ -767,6 +776,39 @@ class Candidate implements Taggable
     public function getComments()
     {
         return $this->comments;
+    }
+    
+    /**
+     * Add notes
+     *
+     * @param \TEW\TPBundle\Entity\CdteNote $notes
+     * @return Candidate
+     */
+    public function addNote(\TEW\TPBundle\Entity\CdteNote $notes)
+    {
+        $this->notes[] = $notes;
+
+        return $this;
+    }
+
+    /**
+     * Remove notes
+     *
+     * @param \TEW\TPBundle\Entity\CdteNote $notes
+     */
+    public function removeNote(\TEW\TPBundle\Entity\CdteNote $notes)
+    {
+        $this->notes->removeElement($notes);
+    }
+
+    /**
+     * Get notes
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getNotes()
+    {
+        return $this->notes;
     }
     
     /**

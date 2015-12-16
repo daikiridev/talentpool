@@ -15,7 +15,10 @@
     </script>
     {{ include('TEWTPBundle:Candidate:common/cdtedetails_request_script.js.twig') }}
     {{ include('TEWTPBundle:Candidate:common/cdte_add_comment_script.js.twig') }}
-{% endblock %}
+    {% if is_granted("ROLE_TEW_STAFF") %}
+        {{ include('TEWTPBundle:Candidate:common/cdte_notes_script.js.twig') }}
+    {% endif %}
+{% endblock scripts %}
 
 {% block body -%}
     {{ include('TEWTPBundle:Candidate:view.html.twig', {'entity': entity} ) }}

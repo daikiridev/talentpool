@@ -49,3 +49,7 @@ tew_candidate_delete:
     path:     /{id}/delete
     defaults: { _controller: "TEWTPBundle:Candidate:delete" }
     requirements: { _method: post|delete }
+    
+tew_candidate_notes:
+    path:     /{id}/notes
+    defaults: { _controller: "TEWTPBundle:CdteNote:index" }

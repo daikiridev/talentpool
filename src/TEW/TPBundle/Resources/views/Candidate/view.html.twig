@@ -7,6 +7,16 @@
         Candidate view not allowed
     </h1>
 {% else %}
+    {% if is_granted("ROLE_TEW_STAFF") %}
+        <div class='left-postit'>
+            {{ note_form is defined?include('TEWTPBundle:Candidate:common/cdte_notes.html.twig', {'this_form':note_form ,'cdte': entity, 'user': app.user} ) }}
+            <div class="btn-group">
+                <a style="cursor: pointer" role="button" data-toggle="modal" data-target="#noteModal{{entity.id}}">
+                    <img height='32' src="{{ asset('bundles/tewtp/images/icons/postit.png') }}">
+                </a>
+            </div>
+                </div>
+    {% endif %}
     <h1>
         {{ anonymous?'Candidate':entity }}
         {% if entity.picture %}

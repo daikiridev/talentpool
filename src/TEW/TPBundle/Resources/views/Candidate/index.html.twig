@@ -195,16 +195,16 @@
                                     </a>
                                 </div>
                                 {% if is_granted("ROLE_TEW_OBJECT_EDIT", entity) or is_granted("ROLE_MASTER_EXECUTOR") %}
-                                    <div class="btn-group">
-                                        <a role="button"  class="btn btn-xs btn-warning" href="{{ path('tew_candidate_edit', { 'id': entity.id }) }}">
-                                            edit
-                                        </a>
-                                    </div>
+                                <div class="btn-group">
+                                    <a role="button"  class="btn btn-xs btn-warning" href="{{ path('tew_candidate_edit', { 'id': entity.id }) }}">
+                                        edit
+                                    </a>
+                                </div>
                                 {% endif %}
                                 {% if delete_forms[entity.id] is defined and (is_granted("ROLE_TEW_OBJECT_DELETE", entity) or is_granted("ROLE_MASTER_EXECUTOR")) %}
-                                    <div class="btn-group">        
-                                        {{ form(delete_forms[entity.id]) }}
-                                    </div>
+                                <div class="btn-group">        
+                                    {{ form(delete_forms[entity.id]) }}
+                                </div>
                                 {% endif %}
                             </div>
                         </td>

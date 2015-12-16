@@ -531,6 +531,15 @@ class CandidateController extends Controller {
                     )->createView();
             }
         }
+        // webuild the 'add note' form
+        $note = new \TEW\TPBundle\Entity\CdteNote($this->getUser());
+        $note->setCandidate($entity);
+        $noteForm = $this->createForm(new \TEW\TPBundle\Form\CdteNoteType, $note, array(
+            'action' => $this->generateUrl('tew_json_cdtenote_add'),
+            'method' => 'POST'
+            )
+            )->createView();
+
         // Adding tagging stuff - see https://github.com/FabienPennequin/FPNTagBundle
         $tagManager = $this->get('fpn_tag.tag_manager');
         $tagManager->loadTagging($entity);
@@ -550,7 +559,8 @@ class CandidateController extends Controller {
 //            'languages' => $languageRep->findAllLanguages(),
                     'delete_form' => $deleteFormView,
                     'mail_form' => $mailForm->createView(),
-                    'addcomment_forms' => $addcommentForms
+                    'addcomment_forms' => $addcommentForms,
+                    'note_form' => $noteForm,
         ));
     }
     

@@ -16,7 +16,8 @@ class ResetCdteStatusCommand extends ContainerAwareCommand {
     protected function configure() {
         $this
                 ->setName('tew:resetcdtestatus')
-                ->setDescription('Unset "in process" status for candidates when their status is older than 15 days')
+                ->setDescription('Unset "in process" status for candidates when their status is older than 15 days\n'.
+                        'To be treated by a cron job');
 //                ->addArgument('name', InputArgument::OPTIONAL, 'Qui voulez vous saluer??')
 //                ->addOption('yell', null, InputOption::VALUE_NONE, 'Si définie, la tâche criera en majuscules')
             ;
@@ -71,7 +72,7 @@ class ResetCdteStatusCommand extends ContainerAwareCommand {
             $q = $qb_update->getQuery();
             $output->writeln($q->getSql());
             $p = $q->execute();
-            $output->writeln($p);
+            $output->writeln('Done');
         }
     }
 
