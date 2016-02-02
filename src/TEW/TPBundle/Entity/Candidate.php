@@ -425,6 +425,7 @@ class Candidate implements Taggable
         $this->languagesSkills = new \Doctrine\Common\Collections\ArrayCollection();
         $this->talentpools = new \Doctrine\Common\Collections\ArrayCollection();
         $this->tags = new \Doctrine\Common\Collections\ArrayCollection();
+//        $this->status = new CdteStatus();
         $this->createdAt = new \DateTime();
         $this->creator = $user;
     }
@@ -1488,7 +1489,7 @@ class Candidate implements Taggable
      */
     public function setStatus(\TEW\TPBundle\Entity\CdteStatus $status)
     {
-        if ($this->status->getName() !== 'in process') {
+        if ($this->status && ($this->status->getName() !== 'in process')) {
             $this->lastStatus = $this->status;
         }
         $this->status = $status;
