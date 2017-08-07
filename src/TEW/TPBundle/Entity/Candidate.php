@@ -209,6 +209,12 @@ class Candidate implements Taggable
      * @ORM\Column(name="bonusbenefits", type="string", length=127, nullable=true)
      */
     private $bonusbenefits;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="linkedinurl", type="string", length=127, nullable=true)
+     */
+    private $linkedinurl;
     
     /**
      * @var bool $active
@@ -1410,6 +1416,29 @@ class Candidate implements Taggable
     public function getBonusbenefits()
     {
         return $this->bonusbenefits;
+    }
+    
+    /**
+     * Set linkedinurl
+     *
+     * @param string $bonusbenefits
+     * @return Candidate
+     */
+    public function setLinkedinurl($linkedinurl)
+    {
+        $this->linkedinurl = $linkedinurl;
+
+        return $this;
+    }
+
+    /**
+     * Get linkedinurl
+     *
+     * @return string 
+     */
+    public function getLinkedinurl()
+    {
+        return $this->linkedinurl;
     }
 
     /**

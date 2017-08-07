@@ -187,6 +187,11 @@ class CandidateType extends AbstractType
                 'attr' => array('class' => 'form-control', 'size' => 80),
                 'required' => false,
             ))
+            ->add('linkedinurl', 'text', array(
+                'label' => 'LinkedIn URL:',
+                'attr' => array('class' => 'form-control', 'size' => 80),
+                'required' => false,
+            ))
             ->add('currency', 'currency', array(
                 'attr' => array('class' => 'select2'),
                 'empty_value' => 'Select',

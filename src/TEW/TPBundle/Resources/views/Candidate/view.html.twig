@@ -38,11 +38,14 @@
             {% if entity.resume %}
                 <i class="icon icon-paperclip" style="cursor:help" title="resume attached"></i>
             {% endif %}
+            {% if entity.linkedinurl %}
+                <a target="_blank" href="{{ entity.linkedinurl }}"<i class="icon icon-linkedin" style="cursor:help" title="LinkedIn"></i></a>
+            {% endif %}
         </small>
     </h1>
     <div role="tabpanel">
         <!-- Nav tabs -->
-        <ul class="nav nav-pills">
+        <ul class="nav nav-tabs">
             <li role="presentation" class="active"><a href="#details_{{entity.id}}" aria-controls="details" role="tab" data-toggle="tab">Profile</a></li>
             <li role="presentation" ><a href="#talentpools_{{entity.id}}" aria-controls="talentpools" role="tab" data-toggle="tab">Fit w/Talent Pools &amp; User comments</a></li>
         </ul>
@@ -284,7 +287,7 @@
                 </div>
                                 
             </div>
-        </div>
+    </div>
 
     {% block actions %}
         <div class="btn-toolbar pull-right record_actions" role="group">
