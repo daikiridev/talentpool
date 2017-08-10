@@ -119,7 +119,10 @@
                             {% endif %}
                         </td>
                         <td>
-                            {{ not anonymous?entity.firstName:'X.' }} {{ entity.lastName }} {{ not anonymous?entity.middleName }}<br>
+                            {{ not anonymous?entity.firstName:'X.' }} {{ entity.lastName }} {{ not anonymous?entity.middleName }}
+                            {% if entity.linkedinurl and (not anonymous) %}
+                                <a target="_blank" href="{{ entity.linkedinurl }}" style="text-decoration: none; cursor: pointer"><i class="icon icon-linkedin" style="cursor:help" title="LinkedIn"></i></a>
+                            {% endif %}<br>
                             <span data-toggle="popover" data-placement="top" data-delay='{ "show": 500, "hide": 200 }' data-html="true" style="cursor:help"
                                  data-content="{{ entity.globalComment }}" data-trigger='hover'>
                                 <small title="entry score">{{ entity.globalScore|stars }}</small>
